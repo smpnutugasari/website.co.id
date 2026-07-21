@@ -357,234 +357,240 @@
   }
   input[type="file"].input::file-selector-button:hover { background: var(--accent-2); color: #fff; }
 
-  /* PPDB Card Print Style - Elegant Abstract Design */
-.ppdb-card-container {
-  background: #ffffff;
-  border-radius: 18px;
-  width: 100%;
-  max-width: 380px;
-  box-shadow: 0 25px 70px rgba(0,0,0,0.18), 0 0 0 1px rgba(212,175,55,0.15);
-  position: relative;
-  overflow: hidden;
-  font-family: 'Inter', sans-serif;
-}
+  /* ======================================= */
+  /* PPDB CARD - ABSTRACT ELEGANT DESIGN      */
+  /* ======================================= */
+  .ppdb-card-container {
+    background: #ffffff;
+    border-radius: 18px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.18), 0 0 0 1px rgba(212,175,55,0.15);
+    position: relative;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+  }
 
-/* Abstract Background - Top Section */
-.ppdb-card-bg {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 150px;
-  background: linear-gradient(135deg, #1a1d21 0%, #2a2e35 50%, #1a1d21 100%);
-  overflow: hidden;
-}
+  /* Abstract Background - Top Section */
+  .ppdb-card-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 150px;
+    background: linear-gradient(135deg, #1a1d21 0%, #2a2e35 50%, #1a1d21 100%);
+    overflow: hidden;
+  }
 
-/* Abstract Orbs */
-.ppdb-card-bg::before {
-  content: '';
-  position: absolute;
-  top: -60px; right: -40px;
-  width: 220px; height: 220px;
-  background: radial-gradient(circle, rgba(212,175,55,0.35) 0%, transparent 65%);
-  border-radius: 50%;
-  filter: blur(10px);
-}
+  /* Abstract Orbs */
+  .ppdb-card-bg::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -40px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(212,175,55,0.35) 0%, transparent 65%);
+    border-radius: 50%;
+    filter: blur(10px);
+  }
 
-.ppdb-card-bg::after {
-  content: '';
-  position: absolute;
-  bottom: -70px; left: -30px;
-  width: 180px; height: 180px;
-  background: radial-gradient(circle, rgba(0,106,62,0.3) 0%, transparent 65%);
-  border-radius: 50%;
-  filter: blur(8px);
-}
+  .ppdb-card-bg::after {
+    content: '';
+    position: absolute;
+    bottom: -70px; left: -30px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(0,106,62,0.3) 0%, transparent 65%);
+    border-radius: 50%;
+    filter: blur(8px);
+  }
 
-/* Abstract Geometric Pattern Overlay */
-.ppdb-card-pattern {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 150px;
-  background-image: 
-    repeating-linear-gradient(45deg, transparent, transparent 18px, rgba(212,175,55,0.06) 18px, rgba(212,175,55,0.06) 19px),
-    repeating-linear-gradient(-45deg, transparent, transparent 18px, rgba(212,175,55,0.04) 18px, rgba(212,175,55,0.04) 19px);
-  pointer-events: none;
-}
+  /* Abstract Geometric Pattern Overlay */
+  .ppdb-card-pattern {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 150px;
+    background-image: 
+      repeating-linear-gradient(45deg, transparent, transparent 18px, rgba(212,175,55,0.06) 18px, rgba(212,175,55,0.06) 19px),
+      repeating-linear-gradient(-45deg, transparent, transparent 18px, rgba(212,175,55,0.04) 18px, rgba(212,175,55,0.04) 19px);
+    pointer-events: none;
+  }
 
-/* Abstract SVG Lines */
-.ppdb-card-lines {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 150px;
-  pointer-events: none;
-  opacity: 0.5;
-}
+  /* Abstract SVG Lines */
+  .ppdb-card-lines {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 150px;
+    pointer-events: none;
+    opacity: 0.5;
+  }
 
-/* Gold corner accent */
-.ppdb-card-corner {
-  position: absolute;
-  top: 12px; right: 12px;
-  width: 40px; height: 40px;
-  border-top: 2px solid rgba(212,175,55,0.5);
-  border-right: 2px solid rgba(212,175,55,0.5);
-  border-radius: 0 8px 0 0;
-  pointer-events: none;
-}
+  /* Gold corner accent */
+  .ppdb-card-corner {
+    position: absolute;
+    top: 12px; right: 12px;
+    width: 40px; height: 40px;
+    border-top: 2px solid rgba(212,175,55,0.5);
+    border-right: 2px solid rgba(212,175,55,0.5);
+    border-radius: 0 8px 0 0;
+    pointer-events: none;
+  }
 
-.ppdb-card-corner-bl {
-  position: absolute;
-  bottom: 12px; left: 12px;
-  width: 40px; height: 40px;
-  border-bottom: 2px solid rgba(212,175,55,0.3);
-  border-left: 2px solid rgba(212,175,55,0.3);
-  border-radius: 0 0 0 8px;
-  pointer-events: none;
-}
+  .ppdb-card-corner-bl {
+    position: absolute;
+    bottom: 12px; left: 12px;
+    width: 40px; height: 40px;
+    border-bottom: 2px solid rgba(212,175,55,0.3);
+    border-left: 2px solid rgba(212,175,55,0.3);
+    border-radius: 0 0 0 8px;
+    pointer-events: none;
+  }
 
-/* Content Wrapper */
-.ppdb-card-content {
-  position: relative;
-  z-index: 2;
-  padding: 24px;
-}
+  /* Content Wrapper */
+  .ppdb-card-content {
+    position: relative;
+    z-index: 2;
+    padding: 24px;
+  }
 
-.ppdb-card-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding-bottom: 16px;
-  margin-bottom: 20px;
-  position: relative;
-}
+  .ppdb-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    position: relative;
+  }
 
-.ppdb-card-header::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-soft) 50%, transparent 100%);
-}
+  .ppdb-card-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent-soft) 50%, transparent 100%);
+  }
 
-.ppdb-card-logo {
-  width: 52px;
-  height: 52px;
-  object-fit: contain;
-  background: rgba(255,255,255,0.95);
-  border-radius: 10px;
-  padding: 4px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
+  .ppdb-card-logo {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    background: rgba(255,255,255,0.95);
+    border-radius: 10px;
+    padding: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
 
-.ppdb-card-title {
-  font-family: 'Oswald', sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 17px;
-  line-height: 1.2;
-  color: #ffffff;
-  letter-spacing: 0.02em;
-}
+  .ppdb-card-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 17px;
+    line-height: 1.2;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+  }
 
-.ppdb-card-subtitle {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-top: 2px;
-}
+  .ppdb-card-subtitle {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 2px;
+  }
 
-.ppdb-card-body {
-  background: #fafafa;
-  border-radius: 10px;
-  padding: 16px 18px;
-  border: 1px solid #ececec;
-  position: relative;
-}
+  .ppdb-card-body {
+    background: #fafafa;
+    border-radius: 10px;
+    padding: 16px 18px;
+    border: 1px solid #ececec;
+    position: relative;
+  }
 
-.ppdb-card-detail {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  font-size: 12px;
-}
+  .ppdb-card-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
 
-.ppdb-card-detail:last-child {
-  margin-bottom: 0;
-}
+  .ppdb-card-detail:last-child {
+    margin-bottom: 0;
+  }
 
-.ppdb-card-detail span:first-child {
-  font-weight: 600;
-  color: var(--muted);
-  text-transform: uppercase;
-  font-size: 10px;
-  letter-spacing: 0.06em;
-  flex-shrink: 0;
-}
+  .ppdb-card-detail span:first-child {
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+  }
 
-.ppdb-card-detail span:last-child {
-  font-weight: 700;
-  color: var(--fg);
-  text-align: right;
-  font-size: 12px;
-}
+  .ppdb-card-detail span:last-child {
+    font-weight: 700;
+    color: var(--fg);
+    text-align: right;
+    font-size: 12px;
+  }
 
-.ppdb-card-barcode {
-  text-align: center;
-  margin-top: 18px;
-  padding: 14px 16px 10px;
-  background: linear-gradient(180deg, #fafafa 0%, #f0f0f0 100%);
-  border-radius: 10px;
-  border: 1px solid #ececec;
-  position: relative;
-}
+  .ppdb-card-barcode {
+    text-align: center;
+    margin-top: 18px;
+    padding: 14px 16px 10px;
+    background: linear-gradient(180deg, #fafafa 0%, #f0f0f0 100%);
+    border-radius: 10px;
+    border: 1px solid #ececec;
+    position: relative;
+  }
 
-.ppdb-card-barcode::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 60px; height: 3px;
-  background: var(--accent);
-  border-radius: 0 0 4px 4px;
-}
+  .ppdb-card-barcode::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 60px; height: 3px;
+    background: var(--accent);
+    border-radius: 0 0 4px 4px;
+  }
 
-.ppdb-card-barcode svg {
-  display: block;
-  margin: 0 auto;
-}
+  .ppdb-card-barcode svg {
+    display: block;
+    margin: 0 auto;
+  }
 
-.ppdb-card-barcode p {
-  font-size: 9px;
-  color: var(--muted);
-  margin-top: 6px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-}
+  .ppdb-card-barcode p {
+    font-size: 9px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
 
-.ppdb-card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px dashed #ddd;
-  font-size: 9px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 600;
-}
+  .ppdb-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed #ddd;
+    font-size: 9px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
 
-.ppdb-card-footer .accent-dot {
-  width: 6px; height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 6px;
-}
+  .ppdb-card-footer .accent-dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="noise-overlay"></div>
 
 <!-- ============================================== -->
 <!-- ============== LANDING PAGE ================== -->
@@ -874,34 +880,8 @@
       </p>
     </div>
     
-    <div class="grid sm:grid-cols-2 gap-6">
-      <div class="card p-8 reveal">
-        <div class="w-14 h-14 rounded-xl bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)] text-2xl mb-6">
-          <i class="fa-solid fa-quran"></i>
-        </div>
-        <h3 class="font-display text-2xl font-bold uppercase mb-3">Tahfidz Al-Qur'an</h3>
-        <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 font-medium">
-          Program pembiasaan hafalan Al-Qur'an harian dengan metode talaqqi, dibimbing oleh ustadz/ustadzah bersanad.
-        </p>
-        <ul class="text-xs text-[var(--fg-2)] space-y-2 font-medium">
-          <li><i class="fa-solid fa-check text-[var(--accent)] mr-2"></i> Target hafalan minimal 2 Juz</li>
-          <li><i class="fa-solid fa-check text-[var(--accent)] mr-2"></i> Tahsin bacaan setiap pagi</li>
-        </ul>
-      </div>
-
-      <div class="card p-8 reveal" style="margin-top: 24px;">
-        <div class="w-14 h-14 rounded-xl bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)] text-2xl mb-6">
-          <i class="fa-solid fa-laptop-code"></i>
-        </div>
-        <h3 class="font-display text-2xl font-bold uppercase mb-3">IT & Multimedia</h3>
-        <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 font-medium">
-          Pembekalan keterampilan digital, desain grafis, dan literasi komputer yang relevan dengan era industri 4.0.
-        </p>
-        <ul class="text-xs text-[var(--fg-2)] space-y-2 font-medium">
-          <li><i class="fa-solid fa-check text-[var(--accent)] mr-2"></i> Lab Komputer lengkap</li>
-          <li><i class="fa-solid fa-check text-[var(--accent)] mr-2"></i> Pelatihan Coding Dasar</li>
-        </ul>
-      </div>
+    <div class="grid sm:grid-cols-2 gap-6" id="landingProgramGrid">
+      <!-- Diisi Dinamis oleh JS -->
     </div>
   </div>
 </section>
@@ -919,43 +899,8 @@
       </p>
     </div>
     
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      <div class="card overflow-hidden reveal">
-        <div class="photo-frame" style="aspect-ratio: 1/1;">
-          <img src="https://picsum.photos/seed/teacher1/400/400.jpg" alt="Kepala Sekolah">
-          <div class="absolute bottom-3 left-3 right-3">
-            <div class="text-[10px] uppercase tracking-widest text-[var(--accent)] mb-1 font-bold">Kepala Sekolah</div>
-            <div class="font-display text-xl font-bold leading-tight uppercase text-white">Drs. H. Ahmad Fauzi, M.Pd</div>
-          </div>
-        </div>
-      </div>
-      <div class="card overflow-hidden reveal" style="margin-top: 32px;">
-        <div class="photo-frame" style="aspect-ratio: 1/1;">
-          <img src="https://picsum.photos/seed/teacher2/400/400.jpg" alt="Waka Kurikulum">
-          <div class="absolute bottom-3 left-3 right-3">
-            <div class="text-[10px] uppercase tracking-widest text-[var(--accent)] mb-1 font-bold">Waka Kurikulum</div>
-            <div class="font-display text-xl font-bold leading-tight uppercase text-white">Siti Aminah, S.Pd</div>
-          </div>
-        </div>
-      </div>
-      <div class="card overflow-hidden reveal">
-        <div class="photo-frame" style="aspect-ratio: 1/1;">
-          <img src="https://picsum.photos/seed/teacher3/400/400.jpg" alt="Pembina Tahfidz">
-          <div class="absolute bottom-3 left-3 right-3">
-            <div class="text-[10px] uppercase tracking-widest text-[var(--accent)] mb-1 font-bold">Pembina Tahfidz</div>
-            <div class="font-display text-xl font-bold leading-tight uppercase text-white">Ust. Muhammad Ridwan, Lc</div>
-          </div>
-        </div>
-      </div>
-      <div class="card overflow-hidden reveal" style="margin-top: 32px;">
-        <div class="photo-frame" style="aspect-ratio: 1/1;">
-          <img src="https://picsum.photos/seed/teacher4/400/400.jpg" alt="Guru IT">
-          <div class="absolute bottom-3 left-3 right-3">
-            <div class="text-[10px] uppercase tracking-widest text-[var(--accent)] mb-1 font-bold">Guru IT & Multimedia</div>
-            <div class="font-display text-xl font-bold leading-tight uppercase text-white">Budi Santoso, S.Kom</div>
-          </div>
-        </div>
-      </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" id="landingTeacherGrid">
+      <!-- Diisi Dinamis oleh JS -->
     </div>
   </div>
 </section>
@@ -981,67 +926,8 @@
       </div>
     </div>
     
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="galleryGrid">
-      <div class="card overflow-hidden reveal">
-        <div class="aspect-[4/3] overflow-hidden">
-          <img src="https://picsum.photos/seed/school1/600/450.jpg" class="w-full h-full object-cover transition duration-500 hover:scale-105">
-        </div>
-        <div class="p-4">
-          <span class="pill pill-accent text-[10px] mb-2">Keagamaan</span>
-          <h4 class="font-display text-lg font-bold uppercase">Pesantren Ramadhan</h4>
-          <p class="text-xs text-[var(--muted)] mt-1">Kegiatan tahunan untuk meningkatkan spiritualitas siswa.</p>
-        </div>
-      </div>
-      <div class="card overflow-hidden reveal" style="margin-top: 24px;">
-        <div class="aspect-[4/3] overflow-hidden">
-          <img src="https://picsum.photos/seed/school2/600/450.jpg" class="w-full h-full object-cover transition duration-500 hover:scale-105">
-        </div>
-        <div class="p-4">
-          <span class="pill pill-accent text-[10px] mb-2">Akademik</span>
-          <h4 class="font-display text-lg font-bold uppercase">Juara Olimpiade Sains</h4>
-          <p class="text-xs text-[var(--muted)] mt-1">Siswa kelas IX meraih juara 1 Olimpiade Matematika tingkat Kabupaten.</p>
-        </div>
-      </div>
-      <div class="card overflow-hidden reveal">
-        <div class="aspect-[4/3] overflow-hidden">
-          <img src="https://picsum.photos/seed/school3/600/450.jpg" class="w-full h-full object-cover transition duration-500 hover:scale-105">
-        </div>
-        <div class="p-4">
-          <span class="pill pill-accent text-[10px] mb-2">Ekstrakurikuler</span>
-          <h4 class="font-display text-lg font-bold uppercase">Latihan Marching Band</h4>
-          <p class="text-xs text-[var(--muted)] mt-1">Persiapan untuk parade kemerdekaan 17 Agustus.</p>
-        </div>
-      </div>
-      <div class="card overflow-hidden reveal">
-        <div class="aspect-[4/3] overflow-hidden">
-          <img src="https://picsum.photos/seed/school4/600/450.jpg" class="w-full h-full object-cover transition duration-500 hover:scale-105">
-        </div>
-        <div class="p-4">
-          <span class="pill pill-accent text-[10px] mb-2">Keagamaan</span>
-          <h4 class="font-display text-lg font-bold uppercase">Wisuda Tahfidz</h4>
-          <p class="text-xs text-[var(--muted)] mt-1">Syukuran atas kelulusan hafalan 2 Juz Al-Qur'an siswa kelas IX.</p>
-        </div>
-      </div>
-      <div class="card overflow-hidden reveal" style="margin-top: 24px;">
-        <div class="aspect-[4/3] overflow-hidden">
-          <img src="https://picsum.photos/seed/school5/600/450.jpg" class="w-full h-full object-cover transition duration-500 hover:scale-105">
-        </div>
-        <div class="p-4">
-          <span class="pill pill-accent text-[10px] mb-2">Akademik</span>
-          <h4 class="font-display text-lg font-bold uppercase">Class Meeting</h4>
-          <p class="text-xs text-[var(--muted)] mt-1">Aksi kebersamaan dan kompetisi antar kelas di akhir semester.</p>
-        </div>
-      </div>
-      <div class="card overflow-hidden reveal">
-        <div class="aspect-[4/3] overflow-hidden">
-          <img src="https://picsum.photos/seed/school6/600/450.jpg" class="w-full h-full object-cover transition duration-500 hover:scale-105">
-        </div>
-        <div class="p-4">
-          <span class="pill pill-accent text-[10px] mb-2">Ekstrakurikuler</span>
-          <h4 class="font-display text-lg font-bold uppercase">Olahraga Basket</h4>
-          <p class="text-xs text-[var(--muted)] mt-1">Latihan rutin tim basket SMP NU Tugasari.</p>
-        </div>
-      </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="landingGalleryGrid">
+      <!-- Diisi Dinamis oleh JS -->
     </div>
   </div>
 </section>
@@ -1278,56 +1164,68 @@
       
       <p class="text-sm text-[var(--muted)] mb-6 font-medium">Silakan simpan kartu pendaftaran di bawah ini. Tunjukkan kartu (cetak atau tunjukkan PDF) saat tes seleksi.</p>
       
-<div id="ppdbCard" class="ppdb-card-container">
-  <!-- Abstract Elegant Background -->
-  <div class="ppdb-card-bg"></div>
-  <div class="ppdb-card-pattern"></div>
-  <svg class="ppdb-card-lines" viewBox="0 0 380 150" preserveAspectRatio="none">
-    <path d="M0,100 Q95,50 190,80 T380,60" stroke="rgba(212,175,55,0.15)" stroke-width="1" fill="none"/>
-    <path d="M0,120 Q95,70 190,100 T380,80" stroke="rgba(212,175,55,0.1)" stroke-width="1" fill="none"/>
-    <path d="M0,80 Q95,30 190,60 T380,40" stroke="rgba(0,106,62,0.15)" stroke-width="1" fill="none"/>
-    <circle cx="320" cy="40" r="3" fill="rgba(212,175,55,0.4)"/>
-    <circle cx="340" cy="60" r="2" fill="rgba(212,175,55,0.3)"/>
-    <circle cx="300" cy="65" r="1.5" fill="rgba(212,175,55,0.5)"/>
-  </svg>
-  <div class="ppdb-card-corner"></div>
-  
-  <div class="ppdb-card-content">
-    <div class="ppdb-card-header">
-      <img src="https://z-cdn-media.chatglm.cn/files/dd240060-6936-4c05-9ad3-2b14cff1995e.png?auth_key=1884567944-3e51c961820f4ac7b3e8694628b084f7-0-816e4a82c56215ce545839e6d415c56b" alt="Logo" class="ppdb-card-logo">
-      <div>
-        <div class="ppdb-card-title">SMP NU TUGASARI</div>
-        <div class="ppdb-card-subtitle">Kartu Pendaftaran PPDB</div>
+      <div id="ppdbCard" class="ppdb-card-container">
+        <!-- Abstract Elegant Background -->
+        <div class="ppdb-card-bg"></div>
+        <div class="ppdb-card-pattern"></div>
+        <svg class="ppdb-card-lines" viewBox="0 0 380 150" preserveAspectRatio="none">
+          <path d="M0,100 Q95,50 190,80 T380,60" stroke="rgba(212,175,55,0.15)" stroke-width="1" fill="none"/>
+          <path d="M0,120 Q95,70 190,100 T380,80" stroke="rgba(212,175,55,0.1)" stroke-width="1" fill="none"/>
+          <path d="M0,80 Q95,30 190,60 T380,40" stroke="rgba(0,106,62,0.15)" stroke-width="1" fill="none"/>
+          <circle cx="320" cy="40" r="3" fill="rgba(212,175,55,0.4)"/>
+          <circle cx="340" cy="60" r="2" fill="rgba(212,175,55,0.3)"/>
+          <circle cx="300" cy="65" r="1.5" fill="rgba(212,175,55,0.5)"/>
+        </svg>
+        <div class="ppdb-card-corner"></div>
+        
+        <div class="ppdb-card-content">
+          <div class="ppdb-card-header">
+            <img src="https://z-cdn-media.chatglm.cn/files/dd240060-6936-4c05-9ad3-2b14cff1995e.png?auth_key=1884567944-3e51c961820f4ac7b3e8694628b084f7-0-816e4a82c56215ce545839e6d415c56b" alt="Logo" class="ppdb-card-logo">
+            <div>
+              <div class="ppdb-card-title">SMP NU TUGASARI</div>
+              <div class="ppdb-card-subtitle">Kartu Pendaftaran PPDB</div>
+            </div>
+          </div>
+          
+          <div class="ppdb-card-body">
+            <div class="ppdb-card-detail">
+              <span>No. Pendaftaran</span>
+              <span id="cardRegNum">-</span>
+            </div>
+            <div class="ppdb-card-detail">
+              <span>Nama Siswa</span>
+              <span id="cardName">-</span>
+            </div>
+            <div class="ppdb-card-detail">
+              <span>Asal Sekolah</span>
+              <span id="cardSchool">-</span>
+            </div>
+            <div class="ppdb-card-detail">
+              <span>Tanggal Daftar</span>
+              <span id="cardDate">-</span>
+            </div>
+          </div>
+          
+          <div class="ppdb-card-barcode">
+            <svg id="barcodeSvg"></svg>
+            <p>Pindai untuk verifikasi</p>
+          </div>
+          
+          <div class="ppdb-card-footer">
+            <span><span class="accent-dot"></span> PPDB 2025/2026</span>
+            <span>smpnutugasari.sch.id</span>
+          </div>
+        </div>
       </div>
-    </div>
-    
-    <div class="ppdb-card-body">
-      <div class="ppdb-card-detail">
-        <span>No. Pendaftaran</span>
-        <span id="cardRegNum">-</span>
+      
+      <div class="flex gap-3 mt-8">
+        <button onclick="downloadPPDBCard()" class="btn btn-accent flex-1" style="padding: 12px;">
+          <i class="fa-solid fa-download mr-2"></i> Download PDF
+        </button>
+        <button onclick="hidePPDBCard()" class="btn btn-ghost flex-1" style="padding: 12px;">
+          Selesai
+        </button>
       </div>
-      <div class="ppdb-card-detail">
-        <span>Nama Siswa</span>
-        <span id="cardName">-</span>
-      </div>
-      <div class="ppdb-card-detail">
-        <span>Asal Sekolah</span>
-        <span id="cardSchool">-</span>
-      </div>
-      <div class="ppdb-card-detail">
-        <span>Tanggal Daftar</span>
-        <span id="cardDate">-</span>
-      </div>
-    </div>
-    
-    <div class="ppdb-card-barcode">
-      <svg id="barcodeSvg"></svg>
-      <p>Pindai untuk verifikasi</p>
-    </div>
-    
-    <div class="ppdb-card-footer">
-      <span><span class="accent-dot"></span> PPDB 2025/2026</span>
-      <span>smpnutugasari.sch.id</span>
     </div>
   </div>
 </div>
@@ -2146,13 +2044,11 @@ function loadDB() {
     if (stored) {
       try {
         const parsedDB = JSON.parse(stored);
-        // Merge keys: prioritaskan data di LocalStorage agar tidak tertimpa dummy
         DB = {
           ...DEFAULT_DB,
           ...parsedDB,
           settings: { ...DEFAULT_DB.settings, ...(parsedDB.settings || {}) }
         };
-        // Pastikan semua Array ada, jika tidak ada gunakan array kosong (agar tidak kembali ke dummy)
         DB.ppdb = parsedDB.ppdb || [];
         DB.siswa = parsedDB.siswa || [];
         DB.guru = parsedDB.guru || [];
@@ -2164,12 +2060,10 @@ function loadDB() {
         saveDB();
       }
     } else {
-      // Jika pertama kali dibuka (belum ada data sama sekali), masukkan dummy
       DB = JSON.parse(JSON.stringify(DEFAULT_DB));
       saveDB();
     }
   } catch (e) {
-    // Fallback jika localStorage di-disable browser (misal: file:// protocol)
     console.error("LocalStorage tidak tersedia, memori sementara digunakan.", e);
     DB = JSON.parse(JSON.stringify(DEFAULT_DB));
   }
@@ -2185,6 +2079,81 @@ function saveDB() {
 
 loadDB(); // Load DB on startup
 
+/* ============== DYNAMIC LANDING PAGE RENDERING ============== */
+function renderLandingPrograms() {
+  const grid = document.getElementById('landingProgramGrid');
+  if (!grid) return;
+  grid.innerHTML = DB.program.map((p, idx) => `
+    <div class="card p-8 reveal ${idx % 2 === 1 ? 'md:mt-6' : ''}">
+      <div class="w-14 h-14 rounded-xl ${p.color==='gold'?'bg-[var(--accent)]/10 text-[var(--accent-2)]':'bg-[var(--nu-green)]/10 text-[var(--nu-green)]'} flex items-center justify-center text-2xl mb-6">
+        <i class="fa-solid ${p.icon}"></i>
+      </div>
+      <h3 class="font-display text-2xl font-bold uppercase mb-3">${p.title}</h3>
+      <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 font-medium">${p.desc}</p>
+    </div>
+  `).join('');
+}
+
+function renderLandingTeachers() {
+  const grid = document.getElementById('landingTeacherGrid');
+  if (!grid) return;
+  grid.innerHTML = DB.guru.map((g, idx) => `
+    <div class="card overflow-hidden reveal ${idx % 2 === 1 ? 'md:mt-8' : ''}">
+      <div class="photo-frame" style="aspect-ratio: 1/1;">
+        <img src="${g.img}" alt="${g.name}">
+        <div class="absolute bottom-3 left-3 right-3 z-10">
+          <div class="text-[10px] uppercase tracking-widest text-[var(--accent)] mb-1 font-bold">${g.role}</div>
+          <div class="font-display text-xl font-bold leading-tight uppercase text-white">${g.name}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  // Re-observe new elements
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+let landingGalleryFilter = 'all';
+function renderLandingGallery(cat) {
+  if (cat) landingGalleryFilter = cat;
+  const grid = document.getElementById('landingGalleryGrid');
+  if (!grid) return;
+  
+  let data = DB.galeri;
+  if (landingGalleryFilter !== 'all') data = data.filter(g => g.cat === landingGalleryFilter);
+  
+  grid.innerHTML = data.length ? data.map((g, idx) => `
+    <div class="card overflow-hidden reveal ${idx % 2 === 1 ? 'md:mt-6' : ''}">
+      <div class="aspect-[4/3] overflow-hidden">
+        <img src="${g.img}" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+      </div>
+      <div class="p-4">
+        <span class="pill pill-accent text-[10px] mb-2">${g.cat}</span>
+        <h4 class="font-display text-lg font-bold uppercase">${g.title}</h4>
+        <p class="text-xs text-[var(--muted)] mt-1">${g.desc}</p>
+      </div>
+    </div>
+  `).join('') : `<div class="col-span-full text-center py-16 text-[var(--muted)]"><i class="fa-solid fa-images text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada foto.</p></div>`;
+  
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => { 
+      b.classList.remove('border-[var(--accent)]', 'bg-[var(--accent)]', 'text-[var(--fg)]');
+      b.classList.add('border-[var(--border-2)]', 'text-[var(--fg-2)]');
+    });
+    btn.classList.add('border-[var(--accent)]', 'bg-[var(--accent)]', 'text-[var(--fg)]');
+    btn.classList.remove('border-[var(--border-2)]', 'text-[var(--fg-2)]');
+    renderLandingGallery(btn.dataset.filter);
+  });
+});
+
+// Initial render for landing page
+renderLandingPrograms();
+renderLandingTeachers();
+renderLandingGallery('all');
+
 /* ============== PPDB PUBLIC FORM LOGIC ============== */
 function showPPDBForm() {
   document.getElementById('ppdbFormOverlay').classList.remove('is-hidden');
@@ -2194,13 +2163,12 @@ function hidePPDBForm() {
 }
 function hidePPDBCard() {
   document.getElementById('ppdbCardOverlay').classList.add('is-hidden');
-  // Tidak reload halaman agar data di memori tetap ada jika LocalStorage bermasalah
 }
 
 document.getElementById('ppdbPublicForm').addEventListener('submit', (e) => {
   e.preventDefault();
   
-  loadDB(); // Pastikan DB load dulu sebelum menambahkan data
+  loadDB();
   
   const regNum = 'PPDB-2025-' + Math.floor(1000 + Math.random() * 9000);
   
@@ -2229,17 +2197,17 @@ document.getElementById('ppdbPublicForm').addEventListener('submit', (e) => {
   document.getElementById('cardDate').textContent = newApplicant.date;
   
   JsBarcode("#barcodeSvg", regNum, {
-  format: "CODE128",
-  lineColor: "#1a1d21",
-  width: 1.5,      // Sebelumnya 2 → diperkecil
-  height: 40,       // Sebelumnya 60 → diperkecil
-  displayValue: true,
-  fontSize: 11,     // Sebelumnya 14 → diperkecil
-  fontOptions: "bold",
-  textMargin: 4,
-  margin: 0,
-  padding: 0
-});
+    format: "CODE128",
+    lineColor: "#1a1d21",
+    width: 1.5,
+    height: 40,
+    displayValue: true,
+    fontSize: 11,
+    fontOptions: "bold",
+    textMargin: 4,
+    margin: 0,
+    padding: 0
+  });
   
   document.getElementById('ppdbFormOverlay').classList.add('is-hidden');
   document.getElementById('ppdbCardOverlay').classList.remove('is-hidden');
@@ -2306,6 +2274,10 @@ function logout() {
 function backToSite() {
   document.getElementById('adminLayout').classList.add('is-hidden');
   document.getElementById('landingPage').classList.remove('is-hidden');
+  // Render ulang data landing page agar terupdate
+  renderLandingPrograms();
+  renderLandingTeachers();
+  renderLandingGallery(landingGalleryFilter);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -2361,7 +2333,7 @@ function readFileAsDataURL(file) {
 
 /* ============== ADMIN INIT & RENDER ============== */
 function initDashboard() {
-  loadDB(); // Ensure latest data
+  loadDB();
   renderRecentPPDB();
   renderPPDBTable();
   renderSiswaTable();
@@ -2388,11 +2360,9 @@ function updateBadges() {
   document.getElementById('cntApproved').textContent = DB.ppdb.filter(p => p.status === 'approved').length;
   document.getElementById('cntRejected').textContent = DB.ppdb.filter(p => p.status === 'rejected').length;
 
-  // Dashboard Stats
   document.getElementById('statSiswa').textContent = DB.siswa.length;
   document.getElementById('statGuru').textContent = DB.guru.length;
 
-  // Siswa Stats
   document.getElementById('cntKelasVII').textContent = DB.siswa.filter(s => s.kelas.startsWith('VII')).length;
   document.getElementById('cntKelasVIII').textContent = DB.siswa.filter(s => s.kelas.startsWith('VIII')).length;
   document.getElementById('cntKelasIX').textContent = DB.siswa.filter(s => s.kelas.startsWith('IX')).length;
@@ -2607,14 +2577,14 @@ function openGuruModal(id = null) {
     };
     if (id) { Object.assign(DB.guru.find(x => x.id === id), data); showToast('Data guru diperbarui.', 'success'); }
     else { DB.guru.push({ id: Date.now(), ...data }); showToast('Guru baru ditambahkan.', 'success'); }
-    saveDB(); renderGuru(); updateBadges(); closeModal('modalDynamic');
+    saveDB(); renderGuru(); updateBadges(); renderLandingTeachers(); closeModal('modalDynamic');
   });
 }
 
 function deleteGuru(id) {
   if (!confirm('Hapus data guru ini?')) return;
   DB.guru = DB.guru.filter(g => g.id !== id);
-  saveDB(); renderGuru(); updateBadges();
+  saveDB(); renderGuru(); updateBadges(); renderLandingTeachers();
   showToast('Data guru dihapus.', 'success');
 }
 
@@ -2666,14 +2636,14 @@ function openProgramModal(id = null) {
     };
     if (id) { Object.assign(DB.program.find(x => x.id === id), data); showToast('Program diperbarui.', 'success'); }
     else { DB.program.push({ id: Date.now(), ...data }); showToast('Program baru ditambahkan.', 'success'); }
-    saveDB(); renderProgram(); closeModal('modalDynamic');
+    saveDB(); renderProgram(); renderLandingPrograms(); closeModal('modalDynamic');
   });
 }
 
 function deleteProgram(id) {
   if (!confirm('Hapus program ini?')) return;
   DB.program = DB.program.filter(p => p.id !== id);
-  saveDB(); renderProgram();
+  saveDB(); renderProgram(); renderLandingPrograms();
   showToast('Program dihapus.', 'success');
 }
 
@@ -2736,14 +2706,14 @@ function openGaleriModal(id = null) {
     };
     if (id) { Object.assign(DB.galeri.find(x => x.id === id), data); showToast('Foto diperbarui.', 'success'); }
     else { DB.galeri.unshift({ id: Date.now(), ...data }); showToast('Foto ditambahkan.', 'success'); }
-    saveDB(); renderGaleri(); closeModal('modalDynamic');
+    saveDB(); renderGaleri(); renderLandingGallery(landingGalleryFilter); closeModal('modalDynamic');
   });
 }
 
 function deleteGaleri(id) {
   if (!confirm('Hapus foto ini?')) return;
   DB.galeri = DB.galeri.filter(g => g.id !== id);
-  saveDB(); renderGaleri();
+  saveDB(); renderGaleri(); renderLandingGallery(landingGalleryFilter);
   showToast('Foto dihapus.', 'success');
 }
 
