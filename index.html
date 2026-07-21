@@ -1,0 +1,2917 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMP NU TUGASARI — Membentuk Generasi Qur'ani & Cerdas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<!-- Library Barcode & PDF -->
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --bg-2: #e9ecef;
+    --card: #ffffff;
+    --card-2: #f8f9fa;
+    --fg: #1a1d21;
+    --fg-2: #4a5057;
+    --muted: #8b929b;
+    --accent: #d4af37; /* Emas */
+    --accent-2: #b8941e;
+    --accent-soft: #e6c869;
+    --nu-green: #006a3e; /* Hijau NU */
+    --border: #d1d5db;
+    --border-2: #c4c9cf;
+    --danger: #dc2626;
+    --success: #16a34a;
+    --warning: #ea580c;
+    --info: #2563eb;
+  }
+  
+  * { -webkit-font-smoothing: antialiased; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+  
+  .font-display { font-family: 'Rajdhani', sans-serif; }
+  .font-heading { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.02em; }
+  
+  .noise-overlay {
+    position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: 0.02;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  
+  .hero-bg {
+    background: 
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(212,175,55,0.1), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 90% 80%, rgba(0,106,62,0.05), transparent 60%),
+      linear-gradient(180deg, #ffffff 0%, #f4f5f7 100%);
+  }
+  
+  .orb {
+    position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; pointer-events: none;
+    animation: float 18s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(30px,-40px) scale(1.1); }
+    66% { transform: translate(-20px,30px) scale(0.95); }
+  }
+  
+  .thread-line {
+    position: absolute; height: 1px; background: linear-gradient(90deg, transparent, var(--border-2), transparent);
+    opacity: 0.6;
+  }
+  
+  .btn-primary {
+    background: var(--fg);
+    color: #fff; font-weight: 700; padding: 14px 28px; border-radius: 6px;
+    transition: all 0.3s cubic-bezier(.4,0,.2,1); position: relative; overflow: hidden;
+    text-transform: uppercase; letter-spacing: 0.05em; font-size: 14px;
+    border: 2px solid var(--fg);
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); color: var(--fg); transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(212,175,55,0.4); }
+  
+  .btn-ghost {
+    border: 2px solid var(--border-2); color: var(--fg); padding: 13px 26px; border-radius: 6px;
+    transition: all 0.3s; background: transparent; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 14px;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: rgba(212,175,55,0.05); }
+  
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px; transition: all 0.3s cubic-bezier(.4,0,.2,1);
+    position: relative; overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+  }
+  .card:hover {
+    border-color: var(--border-2); transform: translateY(-4px);
+    box-shadow: 0 20px 40px -15px rgba(0,0,0,0.1);
+  }
+  .card:hover::before { transform: scaleX(1); }
+  
+  .photo-frame {
+    position: relative; overflow: hidden; border-radius: 8px;
+    aspect-ratio: 3/4; background: var(--bg-2);
+  }
+  .photo-frame img {
+    width:100%; height:100%; object-fit: cover;
+    transition: transform 0.5s cubic-bezier(.4,0,.2,1);
+    filter: grayscale(20%) contrast(1.05);
+  }
+  .photo-frame:hover img { transform: scale(1.05); filter: grayscale(0%) contrast(1.1); }
+  .photo-frame::after {
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(180deg, transparent 50%, rgba(26,29,33,0.85) 100%);
+    pointer-events: none;
+  }
+  
+  .stat-num {
+    font-family: 'Oswald', sans-serif; font-weight: 700; color: var(--fg);
+  }
+  
+  .input {
+    background: var(--card-2); border: 1px solid var(--border); border-radius: 6px;
+    padding: 14px 16px; color: var(--fg); width: 100%; transition: all 0.2s;
+    font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500;
+  }
+  .input:focus { outline: none; border-color: var(--accent); background: #fff; box-shadow: 0 0 0 3px rgba(212,175,55,0.15); }
+  .input::placeholder { color: var(--muted); }
+  
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px;
+    background: var(--fg); border: 1px solid var(--fg);
+    border-radius: 4px; font-size: 11px; font-weight: 700; color: #fff;
+    letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Rajdhani', sans-serif;
+  }
+  .pill-accent {
+    background: var(--accent); border-color: var(--accent); color: var(--fg);
+  }
+  
+  .section-num {
+    font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 600;
+    color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase;
+  }
+  
+  .marquee {
+    display: flex; gap: 60px; animation: marquee 40s linear infinite; white-space: nowrap;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  
+  .logo-float { animation: logoFloat 6s ease-in-out infinite; }
+  @keyframes logoFloat {
+    0%,100% { transform: translateY(0) rotate(-1deg); }
+    50% { transform: translateY(-12px) rotate(1deg); }
+  }
+  
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  
+  .timeline-item {
+    position: relative; padding-left: 32px; padding-bottom: 28px;
+    border-left: 2px solid var(--border);
+  }
+  .timeline-item:last-child { border-left-color: transparent; }
+  .timeline-item::before {
+    content:''; position:absolute; left:-6px; top:4px; width:10px; height:10px;
+    background: var(--accent); border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(212,175,55,0.2);
+  }
+  
+  .pattern-grid {
+    background-image: 
+      linear-gradient(rgba(26,29,33,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26,29,33,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  
+  /* Custom Dropdown */
+  .nav-item {
+    position: relative;
+  }
+  .dropdown-menu {
+    position: absolute; top: 100%; left: 0; min-width: 200px;
+    background: #fff; border: 1px solid var(--border); border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); opacity: 0; visibility: hidden;
+    transform: translateY(10px); transition: all 0.3s; z-index: 50; padding: 8px;
+  }
+  .nav-item:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .dropdown-menu a {
+    display: block; padding: 8px 12px; border-radius: 4px; font-size: 12px;
+    font-weight: 600; color: var(--fg-2); text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .dropdown-menu a:hover { background: var(--bg-2); color: var(--accent-2); }
+
+  /* Toast Styling */
+  .toast {
+    position: fixed; top: 24px; right: 24px; z-index: 2000;
+    background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--success);
+    padding: 14px 18px; border-radius: 8px; max-width: 360px;
+    transform: translateX(120%); transition: transform 0.4s cubic-bezier(.2,.8,.2,1);
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.2);
+  }
+  .toast.show { transform: translateX(0); }
+  .toast.error { border-left-color: var(--danger); }
+  .toast.warning { border-left-color: var(--warning); }
+
+  @media (max-width: 768px) {
+    .hero-title { font-size: 48px !important; line-height: 1 !important; }
+  }
+
+  /* ====================================
+     DASHBOARD ADMIN STYLES
+  ==================================== */
+  .is-hidden { display: none !important; }
+  
+  .sidebar {
+    background: var(--fg); color: #fff; width: 260px;
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 50;
+    transition: transform 0.3s cubic-bezier(.4,0,.2,1); overflow-y: auto;
+    display: flex; flex-direction: column;
+  }
+  .sidebar::-webkit-scrollbar { width: 6px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+  
+  .nav-link {
+    display: flex; align-items: center; gap: 12px; padding: 11px 16px; border-radius: 8px;
+    color: rgba(255,255,255,0.65); font-size: 13px; font-weight: 600; transition: all 0.2s; cursor: pointer;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .nav-link:hover { background: rgba(255,255,255,0.06); color: #fff; }
+  .nav-link.active { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%); color: var(--fg); font-weight: 700; }
+  .nav-link i { width: 18px; text-align: center; font-size: 14px; }
+  .nav-link .badge { margin-left: auto; background: var(--danger); color: #fff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 10px; }
+  .nav-link.active .badge { background: var(--fg); color: var(--accent); }
+  .nav-section-title { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; color: rgba(255,255,255,0.3); text-transform: uppercase; padding: 16px 16px 8px; margin-top: 8px; }
+  
+  .main-content { margin-left: 260px; min-height: 100vh; transition: margin 0.3s; }
+  .topbar { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 14px 28px; position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 16px; }
+  
+  .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: all 0.3s; position: relative; overflow: hidden; }
+  .stat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
+  .stat-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px -10px rgba(0,0,0,0.1); }
+  .stat-card:hover::before { transform: scaleX(1); }
+  
+  .panel { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .panel-header { padding: 18px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--card-2); }
+  
+  .data-table { width: 100%; border-collapse: collapse; }
+  .data-table thead th { text-align: left; padding: 12px 16px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); background: var(--card-2); border-bottom: 1px solid var(--border); }
+  .data-table tbody td { padding: 14px 16px; font-size: 13px; font-weight: 500; border-bottom: 1px solid var(--bg-2); }
+  .data-table tbody tr:hover { background: var(--card-2); }
+  .data-table tbody tr:last-child td { border-bottom: none; }
+  
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 9px 16px; border-radius: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: all 0.2s; border: none; font-family: 'Rajdhani', sans-serif; }
+  .btn-primary { background: var(--fg); color: #fff; }
+  .btn-primary:hover { background: var(--accent); color: var(--fg); }
+  .btn-accent { background: var(--accent); color: var(--fg); }
+  .btn-accent:hover { background: var(--accent-2); }
+  .btn-ghost { background: transparent; border: 1px solid var(--border-2); color: var(--fg-2); }
+  .btn-ghost:hover { border-color: var(--fg); color: var(--fg); }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-danger:hover { background: #b91c1c; }
+  .btn-success { background: var(--success); color: #fff; }
+  .btn-success:hover { background: #15803d; }
+  .btn-sm { padding: 6px 10px; font-size: 11px; }
+  .btn-icon { width: 32px; height: 32px; padding: 0; border-radius: 6px; background: var(--bg-2); color: var(--fg-2); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+  .btn-icon:hover { background: var(--accent); color: var(--fg); border-color: var(--accent); }
+  .btn-icon.danger:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
+  
+  .select, .textarea { background: var(--card-2); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; color: var(--fg); width: 100%; transition: all 0.2s; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; }
+  .select:focus, .textarea:focus { outline: none; border-color: var(--accent); background: #fff; box-shadow: 0 0 0 3px rgba(212,175,55,0.15); }
+  .label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--fg-2); margin-bottom: 6px; }
+  
+  .badge-status { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-family: 'Rajdhani', sans-serif; }
+  .badge-pending { background: #fef3c7; color: #92400e; }
+  .badge-approved { background: #d1fae5; color: #065f46; }
+  .badge-rejected { background: #fee2e2; color: #991b1b; }
+  .badge-verified { background: #dbeafe; color: #1e40af; }
+  
+  .modal-overlay { position: fixed; inset: 0; background: rgba(26,29,33,0.6); backdrop-filter: blur(4px); z-index: 1500; display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s; }
+  .modal-overlay.show { display: flex; opacity: 1; }
+  .modal { background: #fff; border-radius: 12px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; transform: scale(0.95); transition: transform 0.3s; }
+  .modal-overlay.show .modal { transform: scale(1); }
+  .modal-header { padding: 18px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .modal-body { padding: 24px; }
+  .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; background: var(--card-2); }
+  
+  .login-overlay { position: fixed; inset: 0; z-index: 9999; background: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(212,175,55,0.15), transparent 60%), radial-gradient(ellipse 60% 50% at 90% 80%, rgba(0,106,62,0.1), transparent 60%), var(--fg); display: flex; align-items: center; justify-content: center; padding: 24px; overflow-y: auto; }
+  
+  .view { display: none; animation: fadeIn 0.4s; }
+  .view.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  
+  .toggle { position: relative; width: 42px; height: 22px; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider { position: absolute; cursor: pointer; inset: 0; background: var(--border-2); border-radius: 22px; transition: 0.3s; }
+  .toggle-slider::before { content:''; position: absolute; height: 16px; width: 16px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: 0.3s; }
+  .toggle input:checked + .toggle-slider { background: var(--accent); }
+  .toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+  
+  .dropdown { position: relative; }
+  .dropdown-menu { position: absolute; top: calc(100% + 8px); right: 0; min-width: 220px; background: #fff; border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15); opacity: 0; visibility: hidden; transform: translateY(-8px); transition: all 0.25s; z-index: 60; padding: 8px; }
+  .dropdown.open .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .dropdown-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; color: var(--fg-2); cursor: pointer; transition: all 0.15s; }
+  .dropdown-item:hover { background: var(--bg-2); color: var(--fg); }
+  .dropdown-item.danger:hover { background: #fee2e2; color: var(--danger); }
+  
+  .avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: var(--fg); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; font-family: 'Rajdhani', sans-serif; flex-shrink: 0; }
+  .avatar-lg { width: 80px; height: 80px; font-size: 28px; }
+  .avatar-sm { width: 28px; height: 28px; font-size: 11px; }
+  
+  #sidebarToggle { display: none; }
+  @media (max-width: 1024px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .main-content { margin-left: 0; }
+    #sidebarToggle { display: inline-flex; }
+  }
+  
+  .search-box { position: relative; flex: 1; max-width: 400px; }
+  .search-box input { padding-left: 38px; }
+  .search-box i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 13px; }
+  
+  .chart-container { position: relative; height: 280px; }
+  
+  .activity-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--bg-2); }
+  .activity-item:last-child { border-bottom: none; }
+  .activity-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 6px; background: var(--accent); flex-shrink: 0; box-shadow: 0 0 0 3px rgba(212,175,55,0.2); }
+  
+  .progress { height: 6px; background: var(--bg-2); border-radius: 3px; overflow: hidden; }
+  .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius: 3px; transition: width 0.6s; }
+  
+  .gallery-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; transition: all 0.3s; }
+  .gallery-card:hover { transform: translateY(-3px); box-shadow: 0 12px 25px -10px rgba(0,0,0,0.15); }
+  .gallery-card img { width: 100%; height: 160px; object-fit: cover; }
+  
+  /* File Input Customization */
+  input[type="file"].input { padding: 10px; cursor: pointer; background: #fff; }
+  input[type="file"].input::file-selector-button {
+    background: var(--accent); color: var(--fg); border: none; padding: 8px 14px;
+    border-radius: 4px; font-weight: 700; text-transform: uppercase; font-size: 11px;
+    letter-spacing: 0.05em; cursor: pointer; transition: all 0.2s; margin-right: 12px;
+  }
+  input[type="file"].input::file-selector-button:hover { background: var(--accent-2); color: #fff; }
+
+  /* PPDB Card Print Style - Elegant Abstract Design */
+.ppdb-card-container {
+  background: #ffffff;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.18), 0 0 0 1px rgba(212,175,55,0.15);
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Abstract Background - Top Section */
+.ppdb-card-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 150px;
+  background: linear-gradient(135deg, #1a1d21 0%, #2a2e35 50%, #1a1d21 100%);
+  overflow: hidden;
+}
+
+/* Abstract Orbs */
+.ppdb-card-bg::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -40px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(212,175,55,0.35) 0%, transparent 65%);
+  border-radius: 50%;
+  filter: blur(10px);
+}
+
+.ppdb-card-bg::after {
+  content: '';
+  position: absolute;
+  bottom: -70px; left: -30px;
+  width: 180px; height: 180px;
+  background: radial-gradient(circle, rgba(0,106,62,0.3) 0%, transparent 65%);
+  border-radius: 50%;
+  filter: blur(8px);
+}
+
+/* Abstract Geometric Pattern Overlay */
+.ppdb-card-pattern {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 150px;
+  background-image: 
+    repeating-linear-gradient(45deg, transparent, transparent 18px, rgba(212,175,55,0.06) 18px, rgba(212,175,55,0.06) 19px),
+    repeating-linear-gradient(-45deg, transparent, transparent 18px, rgba(212,175,55,0.04) 18px, rgba(212,175,55,0.04) 19px);
+  pointer-events: none;
+}
+
+/* Abstract SVG Lines */
+.ppdb-card-lines {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 150px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Gold corner accent */
+.ppdb-card-corner {
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 40px; height: 40px;
+  border-top: 2px solid rgba(212,175,55,0.5);
+  border-right: 2px solid rgba(212,175,55,0.5);
+  border-radius: 0 8px 0 0;
+  pointer-events: none;
+}
+
+.ppdb-card-corner-bl {
+  position: absolute;
+  bottom: 12px; left: 12px;
+  width: 40px; height: 40px;
+  border-bottom: 2px solid rgba(212,175,55,0.3);
+  border-left: 2px solid rgba(212,175,55,0.3);
+  border-radius: 0 0 0 8px;
+  pointer-events: none;
+}
+
+/* Content Wrapper */
+.ppdb-card-content {
+  position: relative;
+  z-index: 2;
+  padding: 24px;
+}
+
+.ppdb-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.ppdb-card-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-soft) 50%, transparent 100%);
+}
+
+.ppdb-card-logo {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  background: rgba(255,255,255,0.95);
+  border-radius: 10px;
+  padding: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.ppdb-card-title {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 17px;
+  line-height: 1.2;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+.ppdb-card-subtitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 2px;
+}
+
+.ppdb-card-body {
+  background: #fafafa;
+  border-radius: 10px;
+  padding: 16px 18px;
+  border: 1px solid #ececec;
+  position: relative;
+}
+
+.ppdb-card-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.ppdb-card-detail:last-child {
+  margin-bottom: 0;
+}
+
+.ppdb-card-detail span:first-child {
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+.ppdb-card-detail span:last-child {
+  font-weight: 700;
+  color: var(--fg);
+  text-align: right;
+  font-size: 12px;
+}
+
+.ppdb-card-barcode {
+  text-align: center;
+  margin-top: 18px;
+  padding: 14px 16px 10px;
+  background: linear-gradient(180deg, #fafafa 0%, #f0f0f0 100%);
+  border-radius: 10px;
+  border: 1px solid #ececec;
+  position: relative;
+}
+
+.ppdb-card-barcode::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 60px; height: 3px;
+  background: var(--accent);
+  border-radius: 0 0 4px 4px;
+}
+
+.ppdb-card-barcode svg {
+  display: block;
+  margin: 0 auto;
+}
+
+.ppdb-card-barcode p {
+  font-size: 9px;
+  color: var(--muted);
+  margin-top: 6px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.ppdb-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed #ddd;
+  font-size: 9px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.ppdb-card-footer .accent-dot {
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+<!-- ============================================== -->
+<!-- ============== LANDING PAGE ================== -->
+<!-- ============================================== -->
+<div id="landingPage">
+
+<!-- TOP INFO BAR -->
+<div class="bg-[var(--fg)] text-white text-xs py-2 hidden md:block">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 flex justify-between items-center">
+    <div class="flex items-center gap-6">
+      <span class="flex items-center gap-2 opacity-80"><i class="fa-solid fa-location-dot text-[var(--accent)]"></i> Jl. Raya Tugasari, Kec. Tugasari, Kab. [Nama Kabupaten]</span>
+      <span class="flex items-center gap-2 opacity-80"><i class="fa-solid fa-phone text-[var(--accent)]"></i> (0281) 123456</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <a href="#" class="hover:text-[var(--accent)] transition"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#" class="hover:text-[var(--accent)] transition"><i class="fa-brands fa-youtube"></i></a>
+      <a href="#" class="hover:text-[var(--accent)] transition"><i class="fa-brands fa-whatsapp"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<nav id="nav" class="sticky top-0 z-50 transition-all duration-500 bg-white/95 backdrop-blur border-b border-[var(--border)]">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-3 flex items-center justify-between">
+    <a href="#hero" class="flex items-center gap-3 group">
+      <img src="https://z-cdn-media.chatglm.cn/files/dd240060-6936-4c05-9ad3-2b14cff1995e.png?auth_key=1884567944-3e51c961820f4ac7b3e8694628b084f7-0-816e4a82c56215ce545839e6d415c56b" alt="Logo SMP NU Tugasari" class="w-12 h-12 object-contain">
+      <div class="leading-none">
+        <div class="font-heading text-lg font-bold tracking-wider text-[var(--fg)]">SMP NU TUGASARI</div>
+        <div class="text-[10px] tracking-[0.2em] text-[var(--accent-2)] uppercase mt-1 font-bold">Yayasan Pendidikan Ma'arif</div>
+      </div>
+    </a>
+    
+    <div class="hidden lg:flex items-center gap-8 text-sm font-semibold text-[var(--fg-2)]">
+      <div class="nav-item">
+        <a href="#hero" class="flex items-center gap-1 hover:text-[var(--accent)] transition uppercase tracking-wide text-xs">Beranda <i class="fa-solid fa-chevron-down text-[8px]"></i></a>
+        <div class="dropdown-menu">
+          <a href="#about">Profil Sekolah</a>
+          <a href="#visi-misi">Visi & Misi</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="#programs" class="flex items-center gap-1 hover:text-[var(--accent)] transition uppercase tracking-wide text-xs">Program <i class="fa-solid fa-chevron-down text-[8px]"></i></a>
+        <div class="dropdown-menu">
+          <a href="#programs">Tahfidz Al-Qur'an</a>
+          <a href="#programs">IT & Multimedia</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="#activities" class="flex items-center gap-1 hover:text-[var(--accent)] transition uppercase tracking-wide text-xs">Kegiatan <i class="fa-solid fa-chevron-down text-[8px]"></i></a>
+        <div class="dropdown-menu">
+          <a href="#activities">Ekstrakurikuler</a>
+          <a href="#activities">Prestasi</a>
+          <a href="#activities">Galeri</a>
+        </div>
+      </div>
+      <a href="#teachers" class="hover:text-[var(--accent)] transition uppercase tracking-wide text-xs">Guru</a>
+      <a href="#contact" class="hover:text-[var(--accent)] transition uppercase tracking-wide text-xs">Kontak</a>
+    </div>
+    
+    <div class="flex items-center gap-2 md:gap-3">
+      <button onclick="showPPDBForm()" class="hidden md:inline-flex items-center gap-2 px-4 py-2.5 rounded-md text-xs font-bold uppercase tracking-wider bg-[var(--accent)] text-[var(--fg)] hover:bg-[var(--fg)] hover:text-[var(--accent)] transition cursor-pointer">
+        <i class="fa-solid fa-file-pen"></i> PPDB Online
+      </button>
+      <button onclick="showAdminLogin('dashboard')" class="hidden md:inline-flex items-center gap-2 px-4 py-2.5 rounded-md text-xs font-bold uppercase tracking-wider border-2 border-[var(--border-2)] text-[var(--fg-2)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition cursor-pointer">
+        <i class="fa-solid fa-lock"></i> Admin
+      </button>
+      <button id="menuBtn" class="lg:hidden text-xl text-[var(--fg)]"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+  <div id="mobileMenu" class="hidden lg:hidden border-t border-[var(--border)] bg-white">
+    <div class="px-6 py-4 flex flex-col gap-3 text-sm font-semibold">
+      <a href="#about" class="py-2">Profil Sekolah</a>
+      <a href="#visi-misi" class="py-2">Visi & Misi</a>
+      <a href="#programs" class="py-2">Program Unggulan</a>
+      <a href="#activities" class="py-2">Kegiatan & Galeri</a>
+      <a href="#teachers" class="py-2">Guru</a>
+      <a href="#contact" class="py-2">Kontak</a>
+      <div class="grid grid-cols-2 gap-2 mt-2">
+        <button onclick="showPPDBForm()" class="btn-primary text-xs">PPDB Online</button>
+        <button onclick="showAdminLogin('dashboard')" class="btn-ghost text-xs">Login Admin</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero" class="hero-bg relative min-h-screen flex items-center pt-16 pb-20 overflow-hidden">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent);top:-100px;left:-100px;"></div>
+  <div class="orb" style="width:400px;height:400px;background:var(--nu-green);bottom:-50px;right:-50px;opacity:0.1;animation-delay:-6s;"></div>
+  <div class="thread-line" style="top:30%;left:0;right:0;"></div>
+  <div class="thread-line" style="top:70%;left:0;right:0;opacity:0.4;"></div>
+  
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 w-full relative z-10">
+    <div class="grid lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-7">
+        <div class="flex items-center gap-3 mb-8">
+          <span class="pill pill-accent"><span class="w-2 h-2 rounded-full bg-[var(--fg)] animate-pulse"></span> Penerimaan Peserta Didik Baru (PPDB) 2025/2026 Telah Dibuka!</span>
+        </div>
+        
+        <h1 class="hero-title font-display font-bold text-[60px] lg:text-[80px] leading-[0.9] tracking-tight mb-8 uppercase">
+          Membentuk <span style="color:var(--nu-green);">Generasi</span><br>
+          <span style="color:var(--accent);">Qur'ani</span> & Cerdas
+        </h1>
+        
+        <p class="text-lg text-[var(--fg-2)] max-w-xl mb-10 leading-relaxed font-medium">
+          Selamat datang di SMP NU TUGASARI. Sekolah Menengah Pertama di bawah naungan Yayasan Pendidikan Ma'arif Nahdlatul Ulama yang berkomitmen mencetak siswa berakhlak mulia, mandiri, dan menguasai IPTEK.
+        </p>
+        
+        <div class="flex flex-wrap gap-4 mb-12">
+          <button onclick="showPPDBForm()" class="btn-primary">
+            <i class="fa-solid fa-user-plus mr-2"></i> Pendaftaran Online
+          </button>
+          <a href="#about" class="btn-ghost"><i class="fa-solid fa-circle-info mr-2"></i> Tentang Kami</a>
+        </div>
+        
+        <div class="grid grid-cols-3 gap-6 max-w-xl pt-8 border-t border-[var(--border)]">
+          <div>
+            <div class="stat-num text-5xl">A</div>
+            <div class="text-[10px] text-[var(--muted)] uppercase tracking-widest mt-1 font-bold">Terakreditasi</div>
+          </div>
+          <div>
+            <div class="stat-num text-5xl">100%</div>
+            <div class="text-[10px] text-[var(--muted)] uppercase tracking-widest mt-1 font-bold">Lulusan Diterima</div>
+          </div>
+          <div>
+            <div class="stat-num text-5xl">10+</div>
+            <div class="text-[10px] text-[var(--muted)] uppercase tracking-widest mt-1 font-bold">Ekstrakurikuler</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="lg:col-span-5 relative">
+        <div class="relative">
+          <div class="absolute inset-0 pattern-grid rounded-3xl opacity-50"></div>
+          <div class="relative logo-float flex justify-center items-center bg-white border border-[var(--border)] rounded-3xl shadow-2xl p-12">
+            <img src="https://z-cdn-media.chatglm.cn/files/dd240060-6936-4c05-9ad3-2b14cff1995e.png?auth_key=1884567944-3e51c961820f4ac7b3e8694628b084f7-0-816e4a82c56215ce545839e6d415c56b" alt="Logo SMP NU Tugasari" class="w-full max-w-sm object-contain">
+          </div>
+          
+          <div class="mt-6 grid grid-cols-2 gap-4">
+            <div class="bg-white border border-[var(--border)] rounded-lg p-4 shadow-xl">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-md bg-[var(--accent)]/15 flex items-center justify-center text-[var(--accent-2)]">
+                  <i class="fa-solid fa-quran"></i>
+                </div>
+                <div>
+                  <div class="text-[10px] text-[var(--muted)] uppercase font-bold">Program</div>
+                  <div class="text-sm font-bold font-display uppercase">Tahfidz</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-white border border-[var(--border)] rounded-lg p-4 shadow-xl">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-md bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)]">
+                  <i class="fa-solid fa-laptop-code"></i>
+                </div>
+                <div>
+                  <div class="text-[10px] text-[var(--muted)] uppercase font-bold">Unggulan</div>
+                  <div class="text-sm font-bold font-display uppercase">IT</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="absolute bottom-0 left:0 right:0 border-t border-[var(--border)] py-4 overflow-hidden bg-white/50 backdrop-blur">
+    <div class="marquee text-sm font-bold font-display uppercase tracking-widest text-[var(--fg-2)]">
+      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> BERAKHLAK MULIA</span>
+      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> MANDIRI</span>
+      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> BERPIKIR KRITIS</span>
+      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> CINTA AL-QUR'AN</span>
+      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> MELESTARIKAN BUDAYA BANGSA</span>
+      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> BERAKHLAK MULIA</span>
+      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> MANDIRI</span>
+      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> BERPIKIR KRITIS</span>
+      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> CINTA AL-QUR'AN</span>
+      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> MELESTARIKAN BUDAYA BANGSA</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT / PROFIL SEKOLAH -->
+<section id="about" class="py-28 relative">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid lg:grid-cols-12 gap-16 items-center">
+      <div class="lg:col-span-5 reveal">
+        <div class="section-num mb-4">— 01 / Tentang Kami</div>
+        <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none mb-8 uppercase">
+          Pendidikan Berbasis <span style="color:var(--accent);">Nilai Islami</span>
+        </h2>
+        <p class="text-[var(--fg-2)] leading-relaxed mb-6 font-medium">
+          SMP NU TUGASARI adalah lembaga pendidikan formal di bawah Yayasan Pendidikan Ma'arif yang berdedikasi menggabungkan kurikulum nasional dengan pendidikan karakter keislaman Ahlussunnah wal Jama'ah.
+        </p>
+        <p class="text-[var(--fg-2)] leading-relaxed mb-8 font-medium">
+          Dengan lingkungan asri dan fasilitas yang mendukung, kami menyiapkan generasi muda yang tidak hanya cerdas secara akademik, tetapi juga teguh dalam memegang nilai-nilai agama.
+        </p>
+        
+        <div class="space-y-4">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-md bg-[var(--accent)]/10 flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-bullseye text-[var(--accent-2)]"></i>
+            </div>
+            <div>
+              <div class="font-bold font-display uppercase mb-1 text-lg">Visi</div>
+              <div class="text-sm text-[var(--muted)] font-medium">Terwujudnya generasi yang Qur'ani, berakhlak mulia, cerdas, dan mandiri.</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-md bg-[var(--nu-green)] flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-handshake text-[var(--accent)]"></i>
+            </div>
+            <div>
+              <div class="font-bold font-display uppercase mb-1 text-lg">Misi</div>
+              <div class="text-sm text-[var(--muted)] font-medium">Menyelenggarakan pendidikan holistik yang memadukan IPTEK dan IMTAK.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="lg:col-span-7 reveal">
+        <div class="grid grid-cols-2 gap-5">
+          <div class="card p-6">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)] text-xl">
+                <i class="fa-solid fa-school"></i>
+              </div>
+              <span class="text-[10px] text-[var(--muted)] uppercase font-bold">Akreditasi</span>
+            </div>
+            <div class="font-display text-4xl font-bold mb-1 uppercase">Grade A</div>
+            <div class="text-sm text-[var(--muted)] font-medium">Terakreditasi Unggul</div>
+          </div>
+          
+          <div class="card p-6" style="margin-top: 32px;">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-lg bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)] text-xl">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              <span class="text-[10px] text-[var(--muted)] uppercase font-bold">Siswa</span>
+            </div>
+            <div class="font-display text-4xl font-bold mb-1 uppercase">450+</div>
+            <div class="text-sm text-[var(--muted)] font-medium">Siswa Aktif</div>
+          </div>
+          
+          <div class="card p-6">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)] text-xl">
+                <i class="fa-solid fa-chalkboard-user"></i>
+              </div>
+              <span class="text-[10px] text-[var(--muted)] uppercase font-bold">Pengajar</span>
+            </div>
+            <div class="font-display text-4xl font-bold mb-1 uppercase">35+</div>
+            <div class="text-sm text-[var(--muted)] font-medium">Guru & Staf Profesional</div>
+          </div>
+          
+          <div class="card p-6" style="margin-top: 32px;">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-lg bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)] text-xl">
+                <i class="fa-solid fa-award"></i>
+              </div>
+              <span class="text-[10px] text-[var(--muted)] uppercase font-bold">Prestasi</span>
+            </div>
+            <div class="font-display text-4xl font-bold mb-1 uppercase">50+</div>
+            <div class="text-sm text-[var(--muted)] font-medium">Penghargaan Tingkat Daerah & Nasional</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAM UNGGULAN -->
+<section id="programs" class="py-28 relative" style="background: var(--bg-2);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16 reveal">
+      <div>
+        <div class="section-num mb-4">— 02 / Program Unggulan</div>
+        <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase">
+          Keunggulan <span style="color:var(--accent);">Akademik</span><br>
+          & Ekstrakurikuler
+        </h2>
+      </div>
+      <p class="text-[var(--muted)] max-w-md text-sm leading-relaxed font-medium">
+        Program dirancang untuk mengembangkan potensi akademik, spiritual, dan sosial siswa secara menyeluruh.
+      </p>
+    </div>
+    
+    <div class="grid sm:grid-cols-2 gap-6">
+      <div class="card p-8 reveal">
+        <div class="w-14 h-14 rounded-xl bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)] text-2xl mb-6">
+          <i class="fa-solid fa-quran"></i>
+        </div>
+        <h3 class="font-display text-2xl font-bold uppercase mb-3">Tahfidz Al-Qur'an</h3>
+        <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 font-medium">
+          Program pembiasaan hafalan Al-Qur'an harian dengan metode talaqqi, dibimbing oleh ustadz/ustadzah bersanad.
+        </p>
+        <ul class="text-xs text-[var(--fg-2)] space-y-2 font-medium">
+          <li><i class="fa-solid fa-check text-[var(--accent)] mr-2"></i> Target hafalan minimal 2 Juz</li>
+          <li><i class="fa-solid fa-check text-[var(--accent)] mr-2"></i> Tahsin bacaan setiap pagi</li>
+        </ul>
+      </div>
+
+      <div class="card p-8 reveal" style="margin-top: 24px;">
+        <div class="w-14 h-14 rounded-xl bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)] text-2xl mb-6">
+          <i class="fa-solid fa-laptop-code"></i>
+        </div>
+        <h3 class="font-display text-2xl font-bold uppercase mb-3">IT & Multimedia</h3>
+        <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 font-medium">
+          Pembekalan keterampilan digital, desain grafis, dan literasi komputer yang relevan dengan era industri 4.0.
+        </p>
+        <ul class="text-xs text-[var(--fg-2)] space-y-2 font-medium">
+          <li><i class="fa-solid fa-check text-[var(--accent)] mr-2"></i> Lab Komputer lengkap</li>
+          <li><i class="fa-solid fa-check text-[var(--accent)] mr-2"></i> Pelatihan Coding Dasar</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEACHERS / GURU -->
+<section id="teachers" class="py-28 relative">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="text-center mb-16 reveal">
+      <div class="section-num mb-4">— 03 / Tenaga Pendidik</div>
+      <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase">
+        Tim <span style="color:var(--accent);">Pendidik</span> Profesional
+      </h2>
+      <p class="text-[var(--muted)] max-w-xl mx-auto mt-4 font-medium">
+        Didukung oleh guru-guru berpengalaman dan berkompeten di bidangnya masing-masing.
+      </p>
+    </div>
+    
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="card overflow-hidden reveal">
+        <div class="photo-frame" style="aspect-ratio: 1/1;">
+          <img src="https://picsum.photos/seed/teacher1/400/400.jpg" alt="Kepala Sekolah">
+          <div class="absolute bottom-3 left-3 right-3">
+            <div class="text-[10px] uppercase tracking-widest text-[var(--accent)] mb-1 font-bold">Kepala Sekolah</div>
+            <div class="font-display text-xl font-bold leading-tight uppercase text-white">Drs. H. Ahmad Fauzi, M.Pd</div>
+          </div>
+        </div>
+      </div>
+      <div class="card overflow-hidden reveal" style="margin-top: 32px;">
+        <div class="photo-frame" style="aspect-ratio: 1/1;">
+          <img src="https://picsum.photos/seed/teacher2/400/400.jpg" alt="Waka Kurikulum">
+          <div class="absolute bottom-3 left-3 right-3">
+            <div class="text-[10px] uppercase tracking-widest text-[var(--accent)] mb-1 font-bold">Waka Kurikulum</div>
+            <div class="font-display text-xl font-bold leading-tight uppercase text-white">Siti Aminah, S.Pd</div>
+          </div>
+        </div>
+      </div>
+      <div class="card overflow-hidden reveal">
+        <div class="photo-frame" style="aspect-ratio: 1/1;">
+          <img src="https://picsum.photos/seed/teacher3/400/400.jpg" alt="Pembina Tahfidz">
+          <div class="absolute bottom-3 left-3 right-3">
+            <div class="text-[10px] uppercase tracking-widest text-[var(--accent)] mb-1 font-bold">Pembina Tahfidz</div>
+            <div class="font-display text-xl font-bold leading-tight uppercase text-white">Ust. Muhammad Ridwan, Lc</div>
+          </div>
+        </div>
+      </div>
+      <div class="card overflow-hidden reveal" style="margin-top: 32px;">
+        <div class="photo-frame" style="aspect-ratio: 1/1;">
+          <img src="https://picsum.photos/seed/teacher4/400/400.jpg" alt="Guru IT">
+          <div class="absolute bottom-3 left-3 right-3">
+            <div class="text-[10px] uppercase tracking-widest text-[var(--accent)] mb-1 font-bold">Guru IT & Multimedia</div>
+            <div class="font-display text-xl font-bold leading-tight uppercase text-white">Budi Santoso, S.Kom</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITIES / GALERI -->
+<section id="activities" class="py-28 relative" style="background: var(--bg-2);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12 reveal">
+      <div>
+        <div class="section-num mb-4">— 04 / Galeri & Kegiatan</div>
+        <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase mb-3">
+          Momen <span style="color:var(--accent);">Membanggakan</span>
+        </h2>
+        <p class="text-[var(--fg-2)] max-w-xl font-medium">
+          Dokumentasi berbagai kegiatan dan prestasi siswa-siswi SMP NU Tugasari.
+        </p>
+      </div>
+      <div class="flex gap-2 flex-wrap" id="filterBtns">
+        <button data-filter="all" class="filter-btn px-4 py-2 rounded-md text-xs font-bold uppercase border-2 border-[var(--accent)] bg-[var(--accent)] text-[var(--fg)]">Semua</button>
+        <button data-filter="akademik" class="filter-btn px-4 py-2 rounded-md text-xs font-bold uppercase border-2 border-[var(--border-2)] text-[var(--fg-2)] hover:border-[var(--fg)]">Akademik</button>
+        <button data-filter="religi" class="filter-btn px-4 py-2 rounded-md text-xs font-bold uppercase border-2 border-[var(--border-2)] text-[var(--fg-2)] hover:border-[var(--fg)]">Keagamaan</button>
+        <button data-filter="ekskul" class="filter-btn px-4 py-2 rounded-md text-xs font-bold uppercase border-2 border-[var(--border-2)] text-[var(--fg-2)] hover:border-[var(--fg)]">Ekstrakurikuler</button>
+      </div>
+    </div>
+    
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="galleryGrid">
+      <div class="card overflow-hidden reveal">
+        <div class="aspect-[4/3] overflow-hidden">
+          <img src="https://picsum.photos/seed/school1/600/450.jpg" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+        </div>
+        <div class="p-4">
+          <span class="pill pill-accent text-[10px] mb-2">Keagamaan</span>
+          <h4 class="font-display text-lg font-bold uppercase">Pesantren Ramadhan</h4>
+          <p class="text-xs text-[var(--muted)] mt-1">Kegiatan tahunan untuk meningkatkan spiritualitas siswa.</p>
+        </div>
+      </div>
+      <div class="card overflow-hidden reveal" style="margin-top: 24px;">
+        <div class="aspect-[4/3] overflow-hidden">
+          <img src="https://picsum.photos/seed/school2/600/450.jpg" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+        </div>
+        <div class="p-4">
+          <span class="pill pill-accent text-[10px] mb-2">Akademik</span>
+          <h4 class="font-display text-lg font-bold uppercase">Juara Olimpiade Sains</h4>
+          <p class="text-xs text-[var(--muted)] mt-1">Siswa kelas IX meraih juara 1 Olimpiade Matematika tingkat Kabupaten.</p>
+        </div>
+      </div>
+      <div class="card overflow-hidden reveal">
+        <div class="aspect-[4/3] overflow-hidden">
+          <img src="https://picsum.photos/seed/school3/600/450.jpg" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+        </div>
+        <div class="p-4">
+          <span class="pill pill-accent text-[10px] mb-2">Ekstrakurikuler</span>
+          <h4 class="font-display text-lg font-bold uppercase">Latihan Marching Band</h4>
+          <p class="text-xs text-[var(--muted)] mt-1">Persiapan untuk parade kemerdekaan 17 Agustus.</p>
+        </div>
+      </div>
+      <div class="card overflow-hidden reveal">
+        <div class="aspect-[4/3] overflow-hidden">
+          <img src="https://picsum.photos/seed/school4/600/450.jpg" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+        </div>
+        <div class="p-4">
+          <span class="pill pill-accent text-[10px] mb-2">Keagamaan</span>
+          <h4 class="font-display text-lg font-bold uppercase">Wisuda Tahfidz</h4>
+          <p class="text-xs text-[var(--muted)] mt-1">Syukuran atas kelulusan hafalan 2 Juz Al-Qur'an siswa kelas IX.</p>
+        </div>
+      </div>
+      <div class="card overflow-hidden reveal" style="margin-top: 24px;">
+        <div class="aspect-[4/3] overflow-hidden">
+          <img src="https://picsum.photos/seed/school5/600/450.jpg" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+        </div>
+        <div class="p-4">
+          <span class="pill pill-accent text-[10px] mb-2">Akademik</span>
+          <h4 class="font-display text-lg font-bold uppercase">Class Meeting</h4>
+          <p class="text-xs text-[var(--muted)] mt-1">Aksi kebersamaan dan kompetisi antar kelas di akhir semester.</p>
+        </div>
+      </div>
+      <div class="card overflow-hidden reveal">
+        <div class="aspect-[4/3] overflow-hidden">
+          <img src="https://picsum.photos/seed/school6/600/450.jpg" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+        </div>
+        <div class="p-4">
+          <span class="pill pill-accent text-[10px] mb-2">Ekstrakurikuler</span>
+          <h4 class="font-display text-lg font-bold uppercase">Olahraga Basket</h4>
+          <p class="text-xs text-[var(--muted)] mt-1">Latihan rutin tim basket SMP NU Tugasari.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE / PPDB -->
+<section class="py-28 relative">
+  <div class="max-w-6xl mx-auto px-6 lg:px-10">
+    <div class="text-center mb-16 reveal">
+      <div class="section-num mb-4">— 05 / Penerimaan Siswa Baru</div>
+      <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase">
+        Alur <span style="color:var(--accent);">PPDB 2025</span>
+      </h2>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-x:12 gap-y-2">
+      <div class="reveal">
+        <div class="timeline-item">
+          <div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 1</div>
+          <h4 class="font-display text-xl font-bold mb-2 uppercase">Pendaftaran Online</h4>
+          <p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Pengisian formulir pendaftaran secara online melalui website resmi atau datang langsung ke sekretariat sekolah.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 2</div>
+          <h4 class="font-display text-xl font-bold mb-2 uppercase">Tes Seleksi & Wawancara</h4>
+          <p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Tes potensi akademik, wawancara calon siswa, dan tes potensi Tahfidz untuk kelas khusus.</p>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="timeline-item">
+          <div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 3</div>
+          <h4 class="font-display text-xl font-bold mb-2 uppercase">Pengumuman</h4>
+          <p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Pengumuman hasil seleksi dapat dilihat di website atau papan pengumuman sekolah.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 4</div>
+          <h4 class="font-display text-xl font-bold mb-2 uppercase">Daftar Ulang</h4>
+          <p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Pembayaran Daftar Ulang dan pengukuran seragam untuk persiapan Masuk Sekolah (MOS).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-28 relative" style="background: var(--bg-2);">
+  <div class="max-w-6xl mx-auto px-6 lg:px-10">
+    <div class="card p-10 lg:p-16 relative overflow-hidden reveal">
+      <div class="orb" style="width:300px;height:300px;background:var(--accent);top:-100px;right:-50px;opacity:0.15;"></div>
+      <div class="grid lg:grid-cols-2 gap-12 relative z-10">
+        <div>
+          <div class="section-num mb-4">— 06 / Hubungi Kami</div>
+          <h2 class="font-display font-bold text-4xl lg:text-5xl leading-none mb-6 uppercase">
+            Daftar atau <span style="color:var(--accent);">Tanya Jawab</span>
+          </h2>
+          <p class="text-[var(--fg-2)] mb-8 leading-relaxed font-medium">
+            Hubungi kami untuk informasi lebih lanjut mengenai pendaftaran, kurikulum, atau kerja sama pendidikan.
+          </p>
+          
+          <div class="space-y-4">
+            <div class="flex items-center gap-4">
+              <div class="w-11 h-11 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)]">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+              <div>
+                <div class="text-[10px] text-[var(--muted)] uppercase font-bold">Alamat Sekolah</div>
+                <div class="text-sm font-bold font-display uppercase">Jl. Raya Tugasari No. 01, Tugasari, [Kabupaten]</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="w-11 h-11 rounded-lg bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)]">
+                <i class="fa-solid fa-phone"></i>
+              </div>
+              <div>
+                <div class="text-[10px] text-[var(--muted)] uppercase font-bold">Telepon / WhatsApp</div>
+                <div class="text-sm font-bold font-display uppercase">(0281) 123456 / 0812-3456-7890</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="w-11 h-11 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)]">
+                <i class="fa-solid fa-envelope"></i>
+              </div>
+              <div>
+                <div class="text-[10px] text-[var(--muted)] uppercase font-bold">Email Resmi</div>
+                <div class="text-sm font-bold font-display lowercase">info@smpnutugasari.sch.id</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <form class="space-y-4" onsubmit="event.preventDefault(); showToast('Pesan terkirim. Tim kami akan merespons dalam 1x24 jam.', 'success'); this.reset();">
+          <input type="text" class="input" placeholder="Nama Lengkap" required>
+          <input type="email" class="input" placeholder="Email Aktif" required>
+          <input type="text" class="input" placeholder="Nomor Telepon" required>
+          <textarea class="input" rows="4" placeholder="Pertanyaan atau Pesan Anda..." required></textarea>
+          <button type="submit" class="btn-primary w-full justify-center">
+            <i class="fa-solid fa-paper-plane mr-2"></i> Kirim Pesan
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-[var(--border)] py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex flex-col md:flex-row justify-between gap-8 mb-8">
+      <div class="max-w-sm">
+        <div class="flex items-center gap-3 mb-4">
+          <img src="https://z-cdn-media.chatglm.cn/files/dd240060-6936-4c05-9ad3-2b14cff1995e.png?auth_key=1884567944-3e51c961820f4ac7b3e8694628b084f7-0-816e4a82c56215ce545839e6d415c56b" alt="Logo" class="w-12 h-12 object-contain">
+          <div>
+            <div class="font-heading text-base font-bold tracking-wider">SMP NU TUGASARI</div>
+            <div class="text-[10px] tracking-[0.2em] text-[var(--accent-2)] uppercase mt-1 font-bold">Yayasan Pendidikan Ma'arif</div>
+          </div>
+        </div>
+        <p class="text-sm text-[var(--muted)] leading-relaxed font-medium">
+          Mencetak generasi muda yang berakhlak Qur'ani, cerdas, mandiri, dan siap menghadapi tantangan masa depan.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-2 gap-8 text-sm">
+        <div>
+          <div class="text-[10px] uppercase tracking-widest text-[var(--accent-2)] mb-3 font-bold">Menu</div>
+          <ul class="space-y-2 text-[var(--muted)] font-medium">
+            <li><a href="#about" class="hover:text-[var(--fg)]">Profil Sekolah</a></li>
+            <li><a href="#programs" class="hover:text-[var(--fg)]">Program</a></li>
+            <li><a href="#teachers" class="hover:text-[var(--fg)]">Tenaga Pendidik</a></li>
+            <li><a href="#contact" class="hover:text-[var(--fg)]">Kontak</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-[10px] uppercase tracking-widest text-[var(--accent-2)] mb-3 font-bold">Program</div>
+          <ul class="space-y-2 text-[var(--muted)] font-medium">
+            <li>Tahfidz Al-Qur'an</li>
+            <li>IT & Multimedia</li>
+            <li>Karya Ilmiah Remaja</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="border-t border-[var(--border)] pt-6">
+      <div class="flex flex-col md:flex-row justify-between gap-4 text-xs text-[var(--muted)] font-medium">
+        <div class="flex items-center gap-3">
+          <span>© 2024 SMP NU TUGASARI. Hak Cipta Dilindungi.</span>
+          <button onclick="showAdminLogin('dashboard')" class="opacity-50 hover:opacity-100 hover:text-[var(--accent-2)] transition" title="Admin Panel">
+            <i class="fa-solid fa-lock"></i>
+          </button>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="#" class="hover:text-[var(--accent-2)]"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="hover:text-[var(--accent-2)]"><i class="fa-brands fa-youtube"></i></a>
+          <a href="#" class="hover:text-[var(--accent-2)]"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="#" class="hover:text-[var(--accent-2)]"><i class="fa-brands fa-facebook"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+</div><!-- End of Landing Page -->
+
+<!-- ============================================== -->
+<!-- ============== PPDB FORM OVERLAY ============= -->
+<!-- ============================================== -->
+<div id="ppdbFormOverlay" class="login-overlay is-hidden">
+  <div class="w-full max-w-2xl">
+    <div class="bg-white rounded-2xl p-8 shadow-2xl">
+      <button onclick="hidePPDBForm()" class="text-xs text-gray-400 hover:text-gray-700 mb-4 font-bold uppercase tracking-wider"><i class="fa-solid fa-arrow-left mr-1"></i> Kembali ke Beranda</button>
+      
+      <div class="flex items-center gap-3 mb-6">
+        <img src="https://z-cdn-media.chatglm.cn/files/dd240060-6936-4c05-9ad3-2b14cff1995e.png?auth_key=1884567944-3e51c961820f4ac7b3e8694628b084f7-0-816e4a82c56215ce545839e6d415c56b" alt="Logo" class="w-12 h-12 object-contain">
+        <div>
+          <h2 class="font-display text-2xl font-bold uppercase">Formulir PPDB 2025/2026</h2>
+          <p class="text-xs text-[var(--accent-2)] font-bold uppercase tracking-wider">SMP NU Tugasari</p>
+        </div>
+      </div>
+      
+      <form id="ppdbPublicForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="label">Nama Lengkap Calon Siswa</label>
+          <input type="text" class="input" id="regName" placeholder="Nama sesuai AKTA/KK" required>
+        </div>
+        <div>
+          <label class="label">Jenis Kelamin</label>
+          <select class="select" id="regGender" required>
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+          </select>
+        </div>
+        <div>
+          <label class="label">Asal Sekolah (SD/MI)</label>
+          <input type="text" class="input" id="regSchool" placeholder="Contoh: SDN Tugasari 01" required>
+        </div>
+        <div>
+          <label class="label">Tanggal Lahir</label>
+          <input type="date" class="input" id="regDob" required>
+        </div>
+        <div>
+          <label class="label">Nama Ayah</label>
+          <input type="text" class="input" id="regFather" placeholder="Nama Ayah" required>
+        </div>
+        <div>
+          <label class="label">Nama Ibu</label>
+          <input type="text" class="input" id="regMother" placeholder="Nama Ibu" required>
+        </div>
+        <div class="md:col-span-2">
+          <label class="label">No. WhatsApp Orang Tua</label>
+          <input type="tel" class="input" id="regPhone" placeholder="08xx-xxxx-xxxx" required>
+        </div>
+        <div class="md:col-span-2">
+          <label class="label">Alamat Lengkap</label>
+          <textarea class="textarea" rows="2" id="regAddress" placeholder="Jl. Raya No. 01, RT/RW, Desa, Kecamatan, Kabupaten" required></textarea>
+        </div>
+        
+        <div class="md:col-span-2 mt-4">
+          <button type="submit" class="btn btn-primary w-full" style="padding: 14px;">
+            <i class="fa-solid fa-paper-plane mr-2"></i> Daftar Sekarang
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- ============== PPDB CARD OVERLAY ============= -->
+<!-- ============================================== -->
+<div id="ppdbCardOverlay" class="login-overlay is-hidden" style="background: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(212,175,55,0.15), transparent 60%), var(--bg);">
+  <div class="w-full max-w-md text-center">
+    <div class="bg-white rounded-2xl p-8 shadow-2xl mb-6">
+      <div class="flex items-center justify-center gap-2 text-[var(--success)] font-bold font-display text-xl uppercase mb-6">
+        <i class="fa-solid fa-circle-check"></i> Pendaftaran Berhasil!
+      </div>
+      
+      <p class="text-sm text-[var(--muted)] mb-6 font-medium">Silakan simpan kartu pendaftaran di bawah ini. Tunjukkan kartu (cetak atau tunjukkan PDF) saat tes seleksi.</p>
+      
+<div id="ppdbCard" class="ppdb-card-container">
+  <!-- Abstract Elegant Background -->
+  <div class="ppdb-card-bg"></div>
+  <div class="ppdb-card-pattern"></div>
+  <svg class="ppdb-card-lines" viewBox="0 0 380 150" preserveAspectRatio="none">
+    <path d="M0,100 Q95,50 190,80 T380,60" stroke="rgba(212,175,55,0.15)" stroke-width="1" fill="none"/>
+    <path d="M0,120 Q95,70 190,100 T380,80" stroke="rgba(212,175,55,0.1)" stroke-width="1" fill="none"/>
+    <path d="M0,80 Q95,30 190,60 T380,40" stroke="rgba(0,106,62,0.15)" stroke-width="1" fill="none"/>
+    <circle cx="320" cy="40" r="3" fill="rgba(212,175,55,0.4)"/>
+    <circle cx="340" cy="60" r="2" fill="rgba(212,175,55,0.3)"/>
+    <circle cx="300" cy="65" r="1.5" fill="rgba(212,175,55,0.5)"/>
+  </svg>
+  <div class="ppdb-card-corner"></div>
+  
+  <div class="ppdb-card-content">
+    <div class="ppdb-card-header">
+      <img src="https://z-cdn-media.chatglm.cn/files/dd240060-6936-4c05-9ad3-2b14cff1995e.png?auth_key=1884567944-3e51c961820f4ac7b3e8694628b084f7-0-816e4a82c56215ce545839e6d415c56b" alt="Logo" class="ppdb-card-logo">
+      <div>
+        <div class="ppdb-card-title">SMP NU TUGASARI</div>
+        <div class="ppdb-card-subtitle">Kartu Pendaftaran PPDB</div>
+      </div>
+    </div>
+    
+    <div class="ppdb-card-body">
+      <div class="ppdb-card-detail">
+        <span>No. Pendaftaran</span>
+        <span id="cardRegNum">-</span>
+      </div>
+      <div class="ppdb-card-detail">
+        <span>Nama Siswa</span>
+        <span id="cardName">-</span>
+      </div>
+      <div class="ppdb-card-detail">
+        <span>Asal Sekolah</span>
+        <span id="cardSchool">-</span>
+      </div>
+      <div class="ppdb-card-detail">
+        <span>Tanggal Daftar</span>
+        <span id="cardDate">-</span>
+      </div>
+    </div>
+    
+    <div class="ppdb-card-barcode">
+      <svg id="barcodeSvg"></svg>
+      <p>Pindai untuk verifikasi</p>
+    </div>
+    
+    <div class="ppdb-card-footer">
+      <span><span class="accent-dot"></span> PPDB 2025/2026</span>
+      <span>smpnutugasari.sch.id</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- ============== ADMIN PANEL =================== -->
+<!-- ============================================== -->
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen" class="login-overlay is-hidden">
+  <div class="w-full max-w-md">
+    <div class="text-center mb-8">
+      <img src="https://z-cdn-media.chatglm.cn/files/dd240060-6936-4c05-9ad3-2b14cff1995e.png?auth_key=1884567944-3e51c961820f4ac7b3e8694628b084f7-0-816e4a82c56215ce545839e6d415c56b" alt="Logo" class="w-20 h-20 object-contain mx-auto mb-4">
+      <h1 class="font-heading text-2xl font-bold text-white tracking-wider">SMP NU TUGASARI</h1>
+      <p class="text-xs tracking-[0.2em] text-[var(--accent)] uppercase mt-1 font-bold">Admin Control Panel</p>
+    </div>
+    
+    <div class="bg-white rounded-2xl p-8 shadow-2xl">
+      <button onclick="hideAdminLogin()" class="text-xs text-gray-400 hover:text-gray-700 mb-4 font-bold uppercase tracking-wider"><i class="fa-solid fa-arrow-left mr-1"></i> Kembali ke Situs</button>
+      <h2 class="font-display text-2xl font-bold uppercase mb-1">Masuk ke Dashboard</h2>
+      <p class="text-sm text-[var(--muted)] mb-6 font-medium">Silakan masuk dengan akun administrator Anda.</p>
+      
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label class="label">Username</label>
+          <div class="relative">
+            <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)] text-sm"></i>
+            <input type="text" id="loginUser" class="input" style="padding-left: 42px;" placeholder="admin" value="admin" required>
+          </div>
+        </div>
+        <div>
+          <label class="label">Password</label>
+          <div class="relative">
+            <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)] text-sm"></i>
+            <input type="password" id="loginPass" class="input" style="padding-left: 42px; padding-right: 42px;" placeholder="••••••••" value="admin123" required>
+            <button type="button" id="togglePass" class="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--muted)] hover:text-[var(--fg)]">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <div class="flex items-center justify-between text-xs">
+          <label class="flex items-center gap-2 cursor-pointer font-medium text-[var(--fg-2)]">
+            <input type="checkbox" class="accent-[var(--accent)]"> Ingat saya
+          </label>
+          <a href="#" class="text-[var(--accent-2)] font-bold hover:underline">Lupa password?</a>
+        </div>
+        <button type="submit" class="btn btn-primary w-full" style="padding: 13px;">
+          <i class="fa-solid fa-right-to-bracket"></i> Masuk
+        </button>
+      </form>
+      
+      <div class="mt-6 p-3 bg-[var(--bg-2)] rounded-lg text-xs text-[var(--muted)] font-medium">
+        <i class="fa-solid fa-circle-info text-[var(--accent-2)] mr-1"></i>
+        Demo: <strong>admin</strong> / <strong>admin123</strong>
+      </div>
+    </div>
+    
+    <p class="text-center text-xs text-white/50 mt-6 font-medium">© 2024 SMP NU Tugasari. Sistem Admin.</p>
+  </div>
+</div>
+
+<!-- ADMIN LAYOUT -->
+<div id="adminLayout" class="is-hidden">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="p-5 border-b border-white/10">
+      <div class="flex items-center gap-3">
+        <img src="https://z-cdn-media.chatglm.cn/files/dd240060-6936-4c05-9ad3-2b14cff1995e.png?auth_key=1884567944-3e51c961820f4ac7b3e8694628b084f7-0-816e4a82c56215ce545839e6d415c56b" alt="Logo" class="w-10 h-10 object-contain">
+        <div>
+          <div class="font-heading text-sm font-bold tracking-wider">SMP NU TUGASARI</div>
+          <div class="text-[9px] tracking-[0.15em] text-[var(--accent)] uppercase font-bold">Admin Panel</div>
+        </div>
+      </div>
+    </div>
+    
+    <nav class="flex-1 p-3 overflow-y-auto">
+      <div class="nav-section-title">Utama</div>
+      <div class="nav-link active" data-view="dashboard"><i class="fa-solid fa-gauge-high"></i> Dashboard</div>
+      <div class="nav-link" data-view="ppdb"><i class="fa-solid fa-user-plus"></i> PPDB <span class="badge" id="ppdbBadge">0</span></div>
+      <div class="nav-link" data-view="siswa"><i class="fa-solid fa-users"></i> Siswa</div>
+      <div class="nav-link" data-view="guru"><i class="fa-solid fa-chalkboard-user"></i> Guru & Staf</div>
+      
+      <div class="nav-section-title">Konten</div>
+      <div class="nav-link" data-view="program"><i class="fa-solid fa-book-open"></i> Program</div>
+      <div class="nav-link" data-view="galeri"><i class="fa-solid fa-images"></i> Galeri</div>
+      <div class="nav-link" data-view="pesan"><i class="fa-solid fa-envelope"></i> Pesan <span class="badge" id="pesanBadge">0</span></div>
+      
+      <div class="nav-section-title">Sistem</div>
+      <div class="nav-link" data-view="pengaturan"><i class="fa-solid fa-gear"></i> Pengaturan</div>
+      <div class="nav-link" data-view="laporan"><i class="fa-solid fa-chart-pie"></i> Laporan</div>
+    </nav>
+    
+    <div class="p-3 border-t border-white/10">
+      <div class="nav-link" onclick="backToSite()"><i class="fa-solid fa-globe"></i> Lihat Situs</div>
+      <div class="nav-link" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Keluar</div>
+    </div>
+  </aside>
+  
+  <!-- MAIN -->
+  <div class="main-content">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <button id="sidebarToggle" class="btn-icon"><i class="fa-solid fa-bars"></i></button>
+      <div class="search-box">
+        <i class="fa-solid fa-search"></i>
+        <input type="text" class="input" placeholder="Cari siswa, guru, pesan...">
+      </div>
+      <div class="flex-1"></div>
+      <button class="btn-icon relative" title="Notifikasi">
+        <i class="fa-solid fa-bell"></i>
+        <span class="absolute -top-1 -right-1 w-4 h-4 bg-[var(--danger)] text-white text-[9px] font-bold rounded-full flex items-center justify-center">3</span>
+      </button>
+      <button class="btn-icon" title="Bantuan"><i class="fa-solid fa-circle-question"></i></button>
+      
+      <div class="dropdown" id="profileDropdown">
+        <button class="flex items-center gap-3 p-1 pr-3 rounded-lg hover:bg-[var(--bg-2)] transition" onclick="document.getElementById('profileDropdown').classList.toggle('open')">
+          <div class="avatar">AD</div>
+          <div class="text-left hidden md:block">
+            <div class="text-xs font-bold font-display uppercase leading-tight">Admin</div>
+            <div class="text-[10px] text-[var(--muted)] font-medium">Super Admin</div>
+          </div>
+          <i class="fa-solid fa-chevron-down text-[10px] text-[var(--muted)]"></i>
+        </button>
+        <div class="dropdown-menu">
+          <div class="px-3 py-2 mb-1 border-b border-[var(--border)]">
+            <div class="text-sm font-bold font-display uppercase">Administrator</div>
+            <div class="text-xs text-[var(--muted)]">admin@smpnutugasari.sch.id</div>
+          </div>
+          <div class="dropdown-item"><i class="fa-solid fa-user w-4"></i> Profil Saya</div>
+          <div class="dropdown-item"><i class="fa-solid fa-gear w-4"></i> Pengaturan Akun</div>
+          <div class="dropdown-item"><i class="fa-solid fa-shield-halved w-4"></i> Keamanan</div>
+          <div class="border-t border-[var(--border)] my-1"></div>
+          <div class="dropdown-item danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket w-4"></i> Keluar</div>
+        </div>
+      </div>
+    </header>
+    
+    <!-- CONTENT -->
+    <main class="p-6 lg:p-8">
+      <!-- DASHBOARD VIEW -->
+      <section class="view active" id="view-dashboard">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <div>
+            <div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Selamat Datang Kembali</div>
+            <h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Dashboard Overview</h1>
+          </div>
+          <div class="flex gap-2">
+            <button class="btn btn-ghost"><i class="fa-solid fa-calendar"></i> Tahun Ajaran 2024/2025</button>
+            <button class="btn btn-accent" onclick="openModal('modalAddProgram')"><i class="fa-solid fa-download"></i> Export Data</button>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+          <div class="stat-card">
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-11 h-11 rounded-lg bg-[var(--accent)]/15 flex items-center justify-center text-[var(--accent-2)] text-lg">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              <span class="text-[10px] font-bold text-[var(--success)] uppercase"><i class="fa-solid fa-arrow-up"></i> 12%</span>
+            </div>
+            <div class="font-display text-3xl font-bold" id="statSiswa">0</div>
+            <div class="text-xs text-[var(--muted)] uppercase font-bold tracking-wider mt-1">Total Siswa Aktif</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-11 h-11 rounded-lg bg-[var(--nu-green)]/15 flex items-center justify-center text-[var(--nu-green)] text-lg">
+                <i class="fa-solid fa-user-plus"></i>
+              </div>
+              <span class="text-[10px] font-bold text-[var(--warning)] uppercase"><i class="fa-solid fa-clock"></i> Pending</span>
+            </div>
+            <div class="font-display text-3xl font-bold" id="statPPDB">0</div>
+            <div class="text-xs text-[var(--muted)] uppercase font-bold tracking-wider mt-1">Pendaftar PPDB Baru</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-11 h-11 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 text-lg">
+                <i class="fa-solid fa-chalkboard-user"></i>
+              </div>
+              <span class="text-[10px] font-bold text-[var(--muted)] uppercase">Tetap</span>
+            </div>
+            <div class="font-display text-3xl font-bold" id="statGuru">0</div>
+            <div class="text-xs text-[var(--muted)] uppercase font-bold tracking-wider mt-1">Guru & Staf</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-11 h-11 rounded-lg bg-orange-100 flex items-center justify-center text-orange-600 text-lg">
+                <i class="fa-solid fa-envelope"></i>
+              </div>
+              <span class="text-[10px] font-bold text-[var(--danger)] uppercase">Baru</span>
+            </div>
+            <div class="font-display text-3xl font-bold" id="statPesan">0</div>
+            <div class="text-xs text-[var(--muted)] uppercase font-bold tracking-wider mt-1">Pesan Belum Dibaca</div>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <div class="panel lg:col-span-2">
+            <div class="panel-header">
+              <div>
+                <h3 class="font-display text-lg font-bold uppercase">Tren Pendaftaran PPDB</h3>
+                <p class="text-xs text-[var(--muted)] font-medium">6 bulan terakhir</p>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-ghost btn-sm">Bulanan</button>
+                <button class="btn btn-ghost btn-sm">Tahunan</button>
+              </div>
+            </div>
+            <div class="p-5">
+              <div class="chart-container">
+                <canvas id="chartPPDB"></canvas>
+              </div>
+            </div>
+          </div>
+          
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h3 class="font-display text-lg font-bold uppercase">Distribusi Siswa</h3>
+                <p class="text-xs text-[var(--muted)] font-medium">Per kelas</p>
+              </div>
+            </div>
+            <div class="p-5">
+              <div class="chart-container">
+                <canvas id="chartKelas"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="panel lg:col-span-2">
+            <div class="panel-header">
+              <h3 class="font-display text-lg font-bold uppercase">Pendaftar PPDB Terbaru</h3>
+              <button class="btn btn-ghost btn-sm" onclick="switchView('ppdb')">Lihat Semua <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Nama</th>
+                    <th>Asal Sekolah</th>
+                    <th>Tanggal</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="recentPPDB"></tbody>
+              </table>
+            </div>
+          </div>
+          
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="font-display text-lg font-bold uppercase">Aktivitas Terbaru</h3>
+            </div>
+            <div class="p-5">
+              <div class="activity-item">
+                <div class="activity-dot"></div>
+                <div>
+                  <div class="text-xs font-semibold">Pendaftar baru: <span class="text-[var(--accent-2)]">Ahmad Zaki</span></div>
+                  <div class="text-[10px] text-[var(--muted)] mt-0.5">2 menit yang lalu</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot" style="background:var(--nu-green);box-shadow:0 0 0 3px rgba(0,106,62,0.2);"></div>
+                <div>
+                  <div class="text-xs font-semibold">Pesan baru dari <span class="text-[var(--accent-2)]">Budi Santoso</span></div>
+                  <div class="text-[10px] text-[var(--muted)] mt-0.5">25 menit yang lalu</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot" style="background:var(--info);box-shadow:0 0 0 3px rgba(37,99,235,0.2);"></div>
+                <div>
+                  <div class="text-xs font-semibold">Guru baru ditambahkan: <span class="text-[var(--accent-2)]">Siti Khodijah</span></div>
+                  <div class="text-[10px] text-[var(--muted)] mt-0.5">1 jam yang lalu</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot" style="background:var(--success);box-shadow:0 0 0 3px rgba(22,163,74,0.2);"></div>
+                <div>
+                  <div class="text-xs font-semibold">PPDB disetujui: <span class="text-[var(--accent-2)]">5 siswa</span></div>
+                  <div class="text-[10px] text-[var(--muted)] mt-0.5">3 jam yang lalu</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot" style="background:var(--warning);box-shadow:0 0 0 3px rgba(234,88,12,0.2);"></div>
+                <div>
+                  <div class="text-xs font-semibold">Galeri diperbarui: <span class="text-[var(--accent-2)]">3 foto baru</span></div>
+                  <div class="text-[10px] text-[var(--muted)] mt-0.5">5 jam yang lalu</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- PPDB VIEW -->
+      <section class="view" id="view-ppdb">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <div>
+            <div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Manajemen PPDB</div>
+            <h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Penerimaan Peserta Didik Baru</h1>
+          </div>
+          <div class="flex gap-2">
+            <button class="btn btn-ghost" onclick="exportCSV('ppdb')"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+            <button class="btn btn-accent" onclick="openPPDBModal()"><i class="fa-solid fa-plus"></i> Tambah Pendaftar</button>
+          </div>
+        </div>
+        
+        <div class="flex gap-2 mb-6 flex-wrap">
+          <button class="btn btn-primary btn-sm filter-ppdb active" data-status="all">Semua (<span id="cntAll">0</span>)</button>
+          <button class="btn btn-ghost btn-sm filter-ppdb" data-status="pending">Pending (<span id="cntPending">0</span>)</button>
+          <button class="btn btn-ghost btn-sm filter-ppdb" data-status="approved">Disetujui (<span id="cntApproved">0</span>)</button>
+          <button class="btn btn-ghost btn-sm filter-ppdb" data-status="rejected">Ditolak (<span id="cntRejected">0</span>)</button>
+        </div>
+        
+        <div class="panel">
+          <div class="panel-header">
+            <div class="search-box" style="max-width:300px;">
+              <i class="fa-solid fa-search"></i>
+              <input type="text" id="searchPPDB" class="input" placeholder="Cari nama pendaftar...">
+            </div>
+            <div class="flex gap-2">
+              <select class="select" style="width:auto;" id="sortPPDB">
+                <option value="newest">Terbaru</option>
+                <option value="oldest">Terlama</option>
+                <option value="name">Nama A-Z</option>
+              </select>
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th><input type="checkbox" class="accent-[var(--accent)]"></th>
+                  <th>Nama Lengkap</th>
+                  <th>Asal Sekolah</th>
+                  <th>Orang Tua</th>
+                  <th>Tgl Daftar</th>
+                  <th>Status</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="ppdbTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      
+      <!-- SISWA VIEW -->
+      <section class="view" id="view-siswa">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <div>
+            <div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Manajemen Siswa</div>
+            <h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Database Siswa Aktif</h1>
+          </div>
+          <button class="btn btn-accent" onclick="openSiswaModal()"><i class="fa-solid fa-plus"></i> Tambah Siswa</button>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div class="stat-card">
+            <div class="text-xs text-[var(--muted)] uppercase font-bold mb-1">Kelas VII</div>
+            <div class="font-display text-2xl font-bold" id="cntKelasVII">0</div>
+            <div class="progress mt-2"><div class="progress-bar" style="width:34%"></div></div>
+          </div>
+          <div class="stat-card">
+            <div class="text-xs text-[var(--muted)] uppercase font-bold mb-1">Kelas VIII</div>
+            <div class="font-display text-2xl font-bold" id="cntKelasVIII">0</div>
+            <div class="progress mt-2"><div class="progress-bar" style="width:33%"></div></div>
+          </div>
+          <div class="stat-card">
+            <div class="text-xs text-[var(--muted)] uppercase font-bold mb-1">Kelas IX</div>
+            <div class="font-display text-2xl font-bold" id="cntKelasIX">0</div>
+            <div class="progress mt-2"><div class="progress-bar" style="width:33%"></div></div>
+          </div>
+          <div class="stat-card">
+            <div class="text-xs text-[var(--muted)] uppercase font-bold mb-1">L : P</div>
+            <div class="font-display text-2xl font-bold" id="cntRatio">0 : 0</div>
+            <div class="text-[10px] text-[var(--muted)] mt-2">Rasio seimbang</div>
+          </div>
+        </div>
+        
+        <div class="panel">
+          <div class="panel-header">
+            <div class="search-box" style="max-width:300px;">
+              <i class="fa-solid fa-search"></i>
+              <input type="text" id="searchSiswa" class="input" placeholder="Cari nama atau NIS...">
+            </div>
+            <select class="select" style="width:auto;" id="filterKelasSiswa">
+              <option value="all">Semua Kelas</option>
+              <option value="VII">Kelas VII</option>
+              <option value="VIII">Kelas VIII</option>
+              <option value="IX">Kelas IX</option>
+            </select>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>NIS</th>
+                  <th>Nama Siswa</th>
+                  <th>Kelas</th>
+                  <th>Jenis Kelamin</th>
+                  <th>Wali</th>
+                  <th>Status</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="siswaTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      
+      <!-- GURU VIEW -->
+      <section class="view" id="view-guru">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <div>
+            <div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Manajemen Pendidik</div>
+            <h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Guru & Staf Sekolah</h1>
+          </div>
+          <button class="btn btn-accent" onclick="openGuruModal()"><i class="fa-solid fa-plus"></i> Tambah Guru</button>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5" id="guruGrid"></div>
+      </section>
+      
+      <!-- PROGRAM VIEW -->
+      <section class="view" id="view-program">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <div>
+            <div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Manajemen Konten</div>
+            <h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Program Unggulan</h1>
+          </div>
+          <button class="btn btn-accent" onclick="openProgramModal()"><i class="fa-solid fa-plus"></i> Tambah Program</button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="programGrid"></div>
+      </section>
+      
+      <!-- GALERI VIEW -->
+      <section class="view" id="view-galeri">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <div>
+            <div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Manajemen Konten</div>
+            <h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Galeri Kegiatan</h1>
+          </div>
+          <button class="btn btn-accent" onclick="openGaleriModal()"><i class="fa-solid fa-plus"></i> Upload Foto</button>
+        </div>
+        
+        <div class="flex gap-2 mb-6 flex-wrap">
+          <button class="btn btn-primary btn-sm filter-gallery active" data-cat="all">Semua</button>
+          <button class="btn btn-ghost btn-sm filter-gallery" data-cat="akademik">Akademik</button>
+          <button class="btn btn-ghost btn-sm filter-gallery" data-cat="religi">Keagamaan</button>
+          <button class="btn btn-ghost btn-sm filter-gallery" data-cat="ekskul">Ekstrakurikuler</button>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="galeriGrid"></div>
+      </section>
+      
+      <!-- PESAN VIEW -->
+      <section class="view" id="view-pesan">
+        <div class="mb-8">
+          <div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Kotak Masuk</div>
+          <h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Pesan & Kontak</h1>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="panel lg:col-span-1">
+            <div class="panel-header">
+              <h3 class="font-display text-lg font-bold uppercase">Inbox</h3>
+              <span class="badge-status badge-pending" id="unreadCount">0 baru</span>
+            </div>
+            <div id="pesanList" style="max-height: 600px; overflow-y: auto;"></div>
+          </div>
+          
+          <div class="panel lg:col-span-2">
+            <div class="panel-header">
+              <div class="flex items-center gap-3">
+                <div class="avatar" id="pesanAvatar">?</div>
+                <div>
+                  <div class="font-display font-bold uppercase text-sm" id="pesanSender">Pilih Pesan</div>
+                  <div class="text-xs text-[var(--muted)]" id="pesanEmail">—</div>
+                </div>
+              </div>
+              <div class="flex gap-1">
+                <button class="btn-icon" title="Tandai dibaca"><i class="fa-solid fa-envelope-open"></i></button>
+                <button class="btn-icon" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+            <div class="p-6" id="pesanDetail">
+              <div class="text-center py-16 text-[var(--muted)]">
+                <i class="fa-solid fa-envelope-open text-5xl mb-4 opacity-30"></i>
+                <p class="font-medium">Pilih pesan dari daftar untuk membaca</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- PENGATURAN VIEW -->
+      <section class="view" id="view-pengaturan">
+        <div class="mb-8">
+          <div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Konfigurasi Sistem</div>
+          <h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Pengaturan Sekolah</h1>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-6">
+            <div class="panel">
+              <div class="panel-header">
+                <h3 class="font-display text-lg font-bold uppercase">Profil Sekolah</h3>
+              </div>
+              <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="label">Nama Sekolah</label>
+                  <input type="text" class="input" id="setSchoolName" value="SMP NU Tugasari">
+                </div>
+                <div>
+                  <label class="label">NPSN</label>
+                  <input type="text" class="input" id="setNpsn" value="20365478">
+                </div>
+                <div class="md:col-span-2">
+                  <label class="label">Alamat</label>
+                  <input type="text" class="input" id="setAddress" value="Jl. Raya Tugasari No. 01, Tugasari">
+                </div>
+                <div>
+                  <label class="label">Telepon</label>
+                  <input type="text" class="input" id="setPhone" value="(0281) 123456">
+                </div>
+                <div>
+                  <label class="label">Email</label>
+                  <input type="email" class="input" id="setEmail" value="info@smpnutugasari.sch.id">
+                </div>
+                <div>
+                  <label class="label">Tahun Berdiri</label>
+                  <input type="text" class="input" id="setYear" value="1998">
+                </div>
+                <div>
+                  <label class="label">Akreditasi</label>
+                  <select class="select" id="setAkreditasi">
+                    <option>A</option>
+                    <option>B</option>
+                    <option>C</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            
+            <div class="panel">
+              <div class="panel-header">
+                <h3 class="font-display text-lg font-bold uppercase">Pengaturan PPDB</h3>
+              </div>
+              <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="label">Tahun Ajaran</label>
+                  <input type="text" class="input" id="setTA" value="2025/2026">
+                </div>
+                <div>
+                  <label class="label">Kuota Siswa</label>
+                  <input type="number" class="input" id="setKuota" value="160">
+                </div>
+                <div>
+                  <label class="label">Buka Pendaftaran</label>
+                  <input type="date" class="input" id="setBuka" value="2025-01-15">
+                </div>
+                <div>
+                  <label class="label">Tutup Pendaftaran</label>
+                  <input type="date" class="input" id="setTutup" value="2025-06-30">
+                </div>
+                <div class="md:col-span-2 flex items-center justify-between p-4 bg-[var(--bg-2)] rounded-lg">
+                  <div>
+                    <div class="font-bold text-sm">Status PPDB</div>
+                    <div class="text-xs text-[var(--muted)]">Buka/tutup pendaftaran online</div>
+                  </div>
+                  <label class="toggle">
+                    <input type="checkbox" id="setPPDBStatus" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="space-y-6">
+            <div class="panel">
+              <div class="panel-header">
+                <h3 class="font-display text-lg font-bold uppercase">Media Sosial</h3>
+              </div>
+              <div class="p-6 space-y-4">
+                <div>
+                  <label class="label"><i class="fa-brands fa-instagram mr-1"></i> Instagram</label>
+                  <input type="text" class="input" id="setIg" value="@smpnutugasari">
+                </div>
+                <div>
+                  <label class="label"><i class="fa-brands fa-youtube mr-1"></i> YouTube</label>
+                  <input type="text" class="input" id="setYt" value="SMP NU Tugasari Official">
+                </div>
+                <div>
+                  <label class="label"><i class="fa-brands fa-facebook mr-1"></i> Facebook</label>
+                  <input type="text" class="input" id="setFb" value="SMP NU Tugasari">
+                </div>
+                <div>
+                  <label class="label"><i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp</label>
+                  <input type="text" class="input" id="setWa" value="0812-3456-7890">
+                </div>
+              </div>
+            </div>
+            
+            <div class="panel">
+              <div class="panel-header">
+                <h3 class="font-display text-lg font-bold uppercase">Keamanan</h3>
+              </div>
+              <div class="p-6 space-y-3">
+                <button class="btn btn-ghost w-full justify-start"><i class="fa-solid fa-key"></i> Ubah Password</button>
+                <button class="btn btn-ghost w-full justify-start"><i class="fa-solid fa-shield-halved"></i> Two-Factor Auth</button>
+                <button class="btn btn-ghost w-full justify-start"><i class="fa-solid fa-history"></i> Log Aktivitas</button>
+              </div>
+            </div>
+            
+            <button class="btn btn-accent w-full" style="padding: 14px;" onclick="saveSettings()">
+              <i class="fa-solid fa-save"></i> Simpan Perubahan
+            </button>
+          </div>
+        </div>
+      </section>
+      
+      <!-- LAPORAN VIEW -->
+      <section class="view" id="view-laporan">
+        <div class="mb-8">
+          <div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Analisis Data</div>
+          <h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Laporan & Statistik</h1>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="font-display text-lg font-bold uppercase">Program Populer</h3>
+            </div>
+            <div class="p-5">
+              <div class="chart-container"><canvas id="chartProgram"></canvas></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <h3 class="font-display text-lg font-bold uppercase">Tren Kehadiran</h3>
+            </div>
+            <div class="p-5">
+              <div class="chart-container"><canvas id="chartHadir"></canvas></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="panel">
+          <div class="panel-header">
+            <h3 class="font-display text-lg font-bold uppercase">Ringkasan Akademik per Kelas</h3>
+            <button class="btn btn-ghost btn-sm"><i class="fa-solid fa-download"></i> Download PDF</button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Kelas</th>
+                  <th>Jumlah Siswa</th>
+                  <th>Rata-rata Nilai</th>
+                  <th>Kehadiran</th>
+                  <th>Prestasi</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>VII A</strong></td><td>32</td><td>85.4</td><td>96%</td><td>5</td><td><span class="badge-status badge-approved">Excellent</span></td></tr>
+                <tr><td><strong>VII B</strong></td><td>30</td><td>83.2</td><td>94%</td><td>3</td><td><span class="badge-status badge-approved">Good</span></td></tr>
+                <tr><td><strong>VIII A</strong></td><td>31</td><td>87.1</td><td>97%</td><td>8</td><td><span class="badge-status badge-approved">Excellent</span></td></tr>
+                <tr><td><strong>VIII B</strong></td><td>29</td><td>81.5</td><td>92%</td><td>2</td><td><span class="badge-status badge-verified">Fair</span></td></tr>
+                <tr><td><strong>IX A</strong></td><td>30</td><td>88.9</td><td>98%</td><td>12</td><td><span class="badge-status badge-approved">Excellent</span></td></tr>
+                <tr><td><strong>IX B</strong></td><td>31</td><td>86.3</td><td>95%</td><td>7</td><td><span class="badge-status badge-approved">Good</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<!-- MODALS DYNAMIC -->
+<div class="modal-overlay" id="modalDynamic">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="font-display text-xl font-bold uppercase" id="modalTitle">Tambah Data</h3>
+      <button class="btn-icon" onclick="closeModal('modalDynamic')"><i class="fa-solid fa-times"></i></button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modalDynamic')">Batal</button>
+      <button class="btn btn-primary" id="modalSaveBtn"><i class="fa-solid fa-save"></i> Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast">
+  <div class="flex items-start gap-3">
+    <i id="toastIcon" class="fa-solid fa-circle-check text-[var(--success)] text-lg mt-0.5"></i>
+    <div>
+      <div id="toastTitle" class="font-bold font-display uppercase text-sm mb-1">Berhasil</div>
+      <div id="toastMsg" class="text-xs text-[var(--muted)] font-medium">Aksi berhasil dilakukan.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============== SHARED / LANDING SCRIPTS ============== */
+document.getElementById('menuBtn').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.toggle('hidden');
+});
+document.getElementById('mobileMenu').addEventListener('click', (e) => {
+  if (e.target.tagName === 'A' || e.target.closest('button')) {
+    document.getElementById('mobileMenu').classList.add('hidden');
+  }
+});
+
+function showToast(msg, type = 'success') {
+  const toast = document.getElementById('toast');
+  const icon = document.getElementById('toastIcon');
+  const title = document.getElementById('toastTitle');
+  const message = document.getElementById('toastMsg');
+  
+  toast.className = 'toast';
+  if (type === 'error') { toast.classList.add('error'); icon.className = 'fa-solid fa-circle-exclamation text-[var(--danger)] text-lg mt-0.5'; title.textContent = 'Kesalahan'; }
+  else if (type === 'warning') { toast.classList.add('warning'); icon.className = 'fa-solid fa-triangle-exclamation text-[var(--warning)] text-lg mt-0.5'; title.textContent = 'Peringatan'; }
+  else { icon.className = 'fa-solid fa-circle-check text-[var(--success)] text-lg mt-0.5'; title.textContent = 'Berhasil'; }
+  
+  message.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 4000);
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* ============== LOCAL STORAGE DATABASE ============== */
+const DEFAULT_DB = {
+  settings: {
+    schoolName: 'SMP NU Tugasari', npsn: '20365478', address: 'Jl. Raya Tugasari No. 01, Tugasari',
+    phone: '(0281) 123456', email: 'info@smpnutugasari.sch.id', year: '1998', akreditasi: 'A',
+    ta: '2025/2026', kuota: 160, buka: '2025-01-15', tutup: '2025-06-30', statusPPDB: true,
+    ig: '@smpnutugasari', yt: 'SMP NU Tugasari Official', fb: 'SMP NU Tugasari', wa: '0812-3456-7890'
+  },
+  ppdb: [
+    {id:1, name:'Ahmad Zaki Mubarok', school:'SDN Tugasari 01', parent:'Budi Mubarok', phone:'0812-1111-2222', date:'2025-01-15', status:'pending'},
+    {id:2, name:'Siti Khadijah Nur', school:'MI Maarif Tugasari', parent:'H. Nur Hidayat', phone:'0813-2222-3333', date:'2025-01-15', status:'pending'},
+    {id:3, name:'Muhammad Faiz Rizqi', school:'SDN 02 Kec. Tugasari', parent:'Rizqi Abdullah', phone:'0857-3333-4444', date:'2025-01-14', status:'approved'},
+    {id:4, name:'Aisyah Putri Salsabila', school:'SDIT Al-Furqan', parent:'Putri Mahfudz', phone:'0812-5555-6666', date:'2025-01-14', status:'approved'},
+    {id:5, name:'Abdul Rahman Hakim', school:'SDN Tugasari 03', parent:'Hakim Yusuf', phone:'0858-7777-8888', date:'2025-01-13', status:'pending'},
+  ],
+  siswa: [
+    {id:1, nis:'2024001', name:'Ahmad Zaki Mubarok', kelas:'VII A', jk:'L', wali:'Budi Mubarok', status:'Aktif'},
+    {id:2, nis:'2024002', name:'Siti Khadijah Nur', kelas:'VII A', jk:'P', wali:'Nur Hidayat', status:'Aktif'},
+    {id:3, nis:'2024003', name:'Muhammad Faiz', kelas:'VII B', jk:'L', wali:'Rizqi Abdullah', status:'Aktif'},
+    {id:4, nis:'2023015', name:'Aisyah Putri', kelas:'VIII A', jk:'P', wali:'Mahfudz', status:'Aktif'},
+    {id:5, nis:'2023016', name:'Abdul Rahman', kelas:'VIII A', jk:'L', wali:'Hakim Yusuf', status:'Aktif'},
+    {id:6, nis:'2023017', name:'Nadia Zahra', kelas:'VIII B', jk:'P', wali:'Aulia Rahman', status:'Aktif'},
+    {id:7, nis:'2022030', name:'Umar Faruq', kelas:'IX A', jk:'L', wali:'Andika Pratama', status:'Aktif'},
+    {id:8, nis:'2022031', name:'Khansa Bilqis', kelas:'IX A', jk:'P', wali:'Bilqis Family', status:'Aktif'},
+    {id:9, nis:'2022032', name:'Yusuf Hamzah', kelas:'IX B', jk:'L', wali:'Hamzah Ali', status:'Aktif'},
+    {id:10, nis:'2022033', name:'Zahra Aminah', kelas:'IX B', jk:'P', wali:'Aminah Wati', status:'Non-Aktif'},
+  ],
+  guru: [
+    {id:1, name:'Drs. H. Ahmad Fauzi, M.Pd', role:'Kepala Sekolah', subject:'-', img:'https://picsum.photos/seed/teacher1/400/400.jpg'},
+    {id:2, name:'Siti Aminah, S.Pd', role:'Waka Kurikulum', subject:'Bahasa Indonesia', img:'https://picsum.photos/seed/teacher2/400/400.jpg'},
+    {id:3, name:'Ust. Muhammad Ridwan, Lc', role:'Pembina Tahfidz', subject:'Al-Qur\'an', img:'https://picsum.photos/seed/teacher3/400/400.jpg'},
+    {id:4, name:'Budi Santoso, S.Kom', role:'Guru IT', subject:'Informatika', img:'https://picsum.photos/seed/teacher4/400/400.jpg'},
+    {id:5, name:'Hj. Fatimah Zahra, M.Pd', role:'Waka Kesiswaan', subject:'Bimbingan Konseling', img:'https://picsum.photos/seed/teacher5/400/400.jpg'},
+    {id:6, name:'Abdullah Hakim, S.Pd', role:'Guru Matematika', subject:'Matematika', img:'https://picsum.photos/seed/teacher6/400/400.jpg'},
+    {id:7, name:'Nur Hidayah, S.Pd', role:'Guru IPA', subject:'Sains', img:'https://picsum.photos/seed/teacher7/400/400.jpg'},
+    {id:8, name:'Ustz. Khadijah, Lc', role:'Guru Akidah Akhlak', subject:'Akidah Akhlak', img:'https://picsum.photos/seed/teacher8/400/400.jpg'},
+  ],
+  program: [
+    {id:1, icon:'fa-quran', title:'Tahfidz Al-Qur\'an', desc:'Program pembiasaan hafalan Al-Qur\'an harian dengan metode talaqqi.', color:'gold'},
+    {id:2, icon:'fa-laptop-code', title:'IT & Multimedia', desc:'Pembekalan keterampilan digital, desain grafis, dan literasi komputer.', color:'green'},
+  ],
+  galeri: [
+    {id:1, img:'https://picsum.photos/seed/school1/600/450.jpg', title:'Pesantren Ramadhan', cat:'religi', desc:'Kegiatan tahunan untuk meningkatkan spiritualitas siswa.'},
+    {id:2, img:'https://picsum.photos/seed/school2/600/450.jpg', title:'Juara Olimpiade Sains', cat:'akademik', desc:'Siswa kelas IX meraih juara 1 Olimpiade Matematika.'},
+    {id:3, img:'https://picsum.photos/seed/school3/600/450.jpg', title:'Latihan Marching Band', cat:'ekskul', desc:'Persiapan parade kemerdekaan 17 Agustus.'},
+    {id:4, img:'https://picsum.photos/seed/school4/600/450.jpg', title:'Wisuda Tahfidz', cat:'religi', desc:'Syukuran kelulusan hafalan 2 Juz Al-Qur\'an.'},
+    {id:5, img:'https://picsum.photos/seed/school5/600/450.jpg', title:'Class Meeting', cat:'akademik', desc:'Aksi kebersamaan dan kompetisi antar kelas.'},
+    {id:6, img:'https://picsum.photos/seed/school6/600/450.jpg', title:'Olahraga Basket', cat:'ekskul', desc:'Latihan rutin tim basket SMP NU Tugasari.'},
+    {id:7, img:'https://picsum.photos/seed/school7/600/450.jpg', title:'Lomba Tahfidz', cat:'religi', desc:'Kompetisi hafalan Al-Qur\'an antar kelas.'},
+    {id:8, img:'https://picsum.photos/seed/school8/600/450.jpg', title:'Praktikum Lab', cat:'akademik', desc:'Kegiatan praktikum di laboratorium IPA.'},
+  ],
+  pesan: [
+    {id:1, name:'Budi Santoso', email:'budi@email.com', phone:'0812-3456-7890', subject:'Tanya PPDB 2025', msg:'Assalamualaikum, saya ingin menanyakan mengenai jadwal pendaftaran PPDB tahun ajaran 2025/2026. Apakah sudah dibuka?', date:'15 Jan 2025, 09:30', read:false},
+    {id:2, name:'Siti Aminah', email:'siti.aminah@email.com', phone:'0813-1111-2222', subject:'Info Beasiswa', msg:'Selamat pagi, apakah SMP NU Tugasari menyediakan program beasiswa untuk siswa kurang mampu? Terima kasih.', date:'14 Jan 2025, 14:20', read:false},
+    {id:3, name:'H. Ahmad Rifai', email:'rifai@email.com', phone:'0857-9999-8888', subject:'Kerja sama pendidikan', msg:'Saya mewakili yayasan X, ingin menjajaki kerja sama dalam program pertukaran pelajar.', date:'13 Jan 2025, 10:15', read:false},
+    {id:4, name:'Dewi Lestari', email:'dewi.lestari@email.com', phone:'0821-7777-6666', subject:'Pendaftaran Anak', msg:'Halo, anak saya saat ini kelas 6 SD. Kapan pendaftaran dibuka dan apa saja syaratnya?', date:'12 Jan 2025, 16:45', read:false},
+    {id:5, name:'Muhammad Yunus', email:'yunus@email.com', phone:'0852-5555-4444', subject:'Donasi Buku', msg:'Saya ingin mendonasikan beberapa buku referensi untuk perpustakaan sekolah. Bagaimana prosedurnya?', date:'11 Jan 2025, 11:00', read:false},
+    {id:6, name:'Khadijah Nur', email:'khadijah@email.com', phone:'0812-2222-3333', subject:'Tahfidz Program', msg:'Apakah ada kelas tahfidz khusus untuk siswa yang sudah hafal 5 juz?', date:'10 Jan 2025, 08:30', read:true},
+    {id:7, name:'Rahmat Hidayat', email:'rahmat@email.com', phone:'0813-4444-5555', subject:'Kunjungan Sekolah', msg:'Kami dari SD X ingin mengadakan kunjungan ke SMP NU Tugasari.', date:'09 Jan 2025, 13:00', read:true},
+  ]
+};
+
+let DB = {};
+
+function loadDB() {
+  try {
+    const stored = localStorage.getItem('smpnu_db');
+    if (stored) {
+      try {
+        const parsedDB = JSON.parse(stored);
+        // Merge keys: prioritaskan data di LocalStorage agar tidak tertimpa dummy
+        DB = {
+          ...DEFAULT_DB,
+          ...parsedDB,
+          settings: { ...DEFAULT_DB.settings, ...(parsedDB.settings || {}) }
+        };
+        // Pastikan semua Array ada, jika tidak ada gunakan array kosong (agar tidak kembali ke dummy)
+        DB.ppdb = parsedDB.ppdb || [];
+        DB.siswa = parsedDB.siswa || [];
+        DB.guru = parsedDB.guru || [];
+        DB.program = parsedDB.program || [];
+        DB.galeri = parsedDB.galeri || [];
+        DB.pesan = parsedDB.pesan || [];
+      } catch (e) {
+        DB = JSON.parse(JSON.stringify(DEFAULT_DB));
+        saveDB();
+      }
+    } else {
+      // Jika pertama kali dibuka (belum ada data sama sekali), masukkan dummy
+      DB = JSON.parse(JSON.stringify(DEFAULT_DB));
+      saveDB();
+    }
+  } catch (e) {
+    // Fallback jika localStorage di-disable browser (misal: file:// protocol)
+    console.error("LocalStorage tidak tersedia, memori sementara digunakan.", e);
+    DB = JSON.parse(JSON.stringify(DEFAULT_DB));
+  }
+}
+
+function saveDB() {
+  try {
+    localStorage.setItem('smpnu_db', JSON.stringify(DB));
+  } catch (e) {
+    console.error("Gagal menyimpan ke LocalStorage.", e);
+  }
+}
+
+loadDB(); // Load DB on startup
+
+/* ============== PPDB PUBLIC FORM LOGIC ============== */
+function showPPDBForm() {
+  document.getElementById('ppdbFormOverlay').classList.remove('is-hidden');
+}
+function hidePPDBForm() {
+  document.getElementById('ppdbFormOverlay').classList.add('is-hidden');
+}
+function hidePPDBCard() {
+  document.getElementById('ppdbCardOverlay').classList.add('is-hidden');
+  // Tidak reload halaman agar data di memori tetap ada jika LocalStorage bermasalah
+}
+
+document.getElementById('ppdbPublicForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  loadDB(); // Pastikan DB load dulu sebelum menambahkan data
+  
+  const regNum = 'PPDB-2025-' + Math.floor(1000 + Math.random() * 9000);
+  
+  const newApplicant = {
+    id: Date.now(),
+    regNum: regNum,
+    name: document.getElementById('regName').value,
+    gender: document.getElementById('regGender').value,
+    school: document.getElementById('regSchool').value,
+    dob: document.getElementById('regDob').value,
+    parent: document.getElementById('regFather').value,
+    mother: document.getElementById('regMother').value,
+    phone: document.getElementById('regPhone').value,
+    address: document.getElementById('regAddress').value,
+    date: new Date().toISOString().split('T')[0],
+    status: 'pending'
+  };
+  
+  if (!DB.ppdb) DB.ppdb = [];
+  DB.ppdb.unshift(newApplicant);
+  saveDB();
+  
+  document.getElementById('cardRegNum').textContent = regNum;
+  document.getElementById('cardName').textContent = newApplicant.name;
+  document.getElementById('cardSchool').textContent = newApplicant.school;
+  document.getElementById('cardDate').textContent = newApplicant.date;
+  
+  JsBarcode("#barcodeSvg", regNum, {
+  format: "CODE128",
+  lineColor: "#1a1d21",
+  width: 1.5,      // Sebelumnya 2 → diperkecil
+  height: 40,       // Sebelumnya 60 → diperkecil
+  displayValue: true,
+  fontSize: 11,     // Sebelumnya 14 → diperkecil
+  fontOptions: "bold",
+  textMargin: 4,
+  margin: 0,
+  padding: 0
+});
+  
+  document.getElementById('ppdbFormOverlay').classList.add('is-hidden');
+  document.getElementById('ppdbCardOverlay').classList.remove('is-hidden');
+});
+
+function downloadPPDBCard() {
+  const cardElement = document.getElementById('ppdbCard');
+  showToast('Sedang membuat PDF...', 'success');
+  
+  html2canvas(cardElement, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
+    const imgData = canvas.toDataURL('image/png');
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    
+    const imgWidth = 100; 
+    const imgHeight = canvas.height * imgWidth / canvas.width;
+    const x = (210 - imgWidth) / 2; 
+    const y = 50; 
+    
+    pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
+    pdf.save("Kartu_PPDB_SMP_NU_Tugasari.pdf");
+    showToast('PDF berhasil diunduh!', 'success');
+  });
+}
+
+/* ============== ADMIN TRIGGER & AUTH ============== */
+function showAdminLogin(view = 'dashboard') {
+  document.getElementById('loginScreen').classList.remove('is-hidden');
+}
+function hideAdminLogin() {
+  document.getElementById('loginScreen').classList.add('is-hidden');
+}
+
+document.getElementById('loginForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const user = document.getElementById('loginUser').value;
+  const pass = document.getElementById('loginPass').value;
+  
+  if (user === 'admin' && pass === 'admin123') {
+    showToast('Selamat datang, Admin!', 'success');
+    document.getElementById('loginScreen').classList.add('is-hidden');
+    document.getElementById('landingPage').classList.add('is-hidden');
+    document.getElementById('adminLayout').classList.remove('is-hidden');
+    document.body.style.overflow = 'auto';
+    initDashboard();
+  } else {
+    showToast('Username atau password salah.', 'error');
+  }
+});
+
+document.getElementById('togglePass').addEventListener('click', () => {
+  const inp = document.getElementById('loginPass');
+  const icon = document.querySelector('#togglePass i');
+  if (inp.type === 'password') { inp.type = 'text'; icon.className = 'fa-solid fa-eye-slash'; }
+  else { inp.type = 'password'; icon.className = 'fa-solid fa-eye'; }
+});
+
+function logout() {
+  document.getElementById('adminLayout').classList.add('is-hidden');
+  document.getElementById('landingPage').classList.remove('is-hidden');
+  showToast('Anda telah keluar dari sistem.', 'success');
+}
+
+function backToSite() {
+  document.getElementById('adminLayout').classList.add('is-hidden');
+  document.getElementById('landingPage').classList.remove('is-hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ============== ADMIN NAVIGATION ============== */
+document.querySelectorAll('.nav-link[data-view]').forEach(link => {
+  link.addEventListener('click', () => switchView(link.dataset.view));
+});
+
+function switchView(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + view).classList.add('active');
+  document.querySelectorAll('.nav-link[data-view]').forEach(l => l.classList.remove('active'));
+  document.querySelector(`.nav-link[data-view="${view}"]`).classList.add('active');
+  document.getElementById('sidebar').classList.remove('open');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+document.getElementById('sidebarToggle').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.toggle('open');
+});
+
+document.addEventListener('click', (e) => {
+  const dd = document.getElementById('profileDropdown');
+  if (dd && !dd.contains(e.target)) dd.classList.remove('open');
+});
+
+/* ============== MODALS & CRUD LOGIC ============== */
+function openModal(id) { document.getElementById(id).classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', (e) => { if (e.target === m) m.classList.remove('show'); });
+});
+
+function setupModal(title, bodyHtml, onSave) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalBody').innerHTML = bodyHtml;
+  const saveBtn = document.getElementById('modalSaveBtn');
+  const newSaveBtn = saveBtn.cloneNode(true);
+  saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+  newSaveBtn.addEventListener('click', onSave);
+  openModal('modalDynamic');
+}
+
+function readFileAsDataURL(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+/* ============== ADMIN INIT & RENDER ============== */
+function initDashboard() {
+  loadDB(); // Ensure latest data
+  renderRecentPPDB();
+  renderPPDBTable();
+  renderSiswaTable();
+  renderGuru();
+  renderProgram();
+  renderGaleri('all');
+  renderPesan();
+  loadSettingsForm();
+  updateBadges();
+  initCharts();
+}
+
+function updateBadges() {
+  const pendingCount = DB.ppdb.filter(p => p.status === 'pending').length;
+  const unreadCount = DB.pesan.filter(p => !p.read).length;
+  document.getElementById('ppdbBadge').textContent = pendingCount;
+  document.getElementById('pesanBadge').textContent = unreadCount;
+  document.getElementById('statPPDB').textContent = pendingCount;
+  document.getElementById('statPesan').textContent = unreadCount;
+  document.getElementById('unreadCount').textContent = unreadCount + ' baru';
+  
+  document.getElementById('cntAll').textContent = DB.ppdb.length;
+  document.getElementById('cntPending').textContent = pendingCount;
+  document.getElementById('cntApproved').textContent = DB.ppdb.filter(p => p.status === 'approved').length;
+  document.getElementById('cntRejected').textContent = DB.ppdb.filter(p => p.status === 'rejected').length;
+
+  // Dashboard Stats
+  document.getElementById('statSiswa').textContent = DB.siswa.length;
+  document.getElementById('statGuru').textContent = DB.guru.length;
+
+  // Siswa Stats
+  document.getElementById('cntKelasVII').textContent = DB.siswa.filter(s => s.kelas.startsWith('VII')).length;
+  document.getElementById('cntKelasVIII').textContent = DB.siswa.filter(s => s.kelas.startsWith('VIII')).length;
+  document.getElementById('cntKelasIX').textContent = DB.siswa.filter(s => s.kelas.startsWith('IX')).length;
+  const lCount = DB.siswa.filter(s => s.jk === 'L').length;
+  const pCount = DB.siswa.filter(s => s.jk === 'P').length;
+  document.getElementById('cntRatio').textContent = `${lCount} : ${pCount}`;
+}
+
+// PPDB CRUD
+function renderRecentPPDB() {
+  document.getElementById('recentPPDB').innerHTML = DB.ppdb.slice(0, 5).map(p => `
+    <tr><td><div class="font-bold">${p.name}</div></td><td>${p.school}</td><td>${p.date}</td><td><span class="badge-status badge-${p.status}">${p.status}</span></td></tr>
+  `).join('');
+}
+
+let ppdbFilter = 'all';
+function renderPPDBTable() {
+  let data = DB.ppdb;
+  if (ppdbFilter !== 'all') data = data.filter(p => p.status === ppdbFilter);
+  const search = document.getElementById('searchPPDB')?.value.toLowerCase() || '';
+  if (search) data = data.filter(p => p.name.toLowerCase().includes(search) || p.school.toLowerCase().includes(search));
+  
+  document.getElementById('ppdbTable').innerHTML = data.length ? data.map(p => `
+    <tr>
+      <td><input type="checkbox" class="accent-[var(--accent)]"></td>
+      <td><div class="flex items-center gap-3"><div class="avatar avatar-sm">${p.name.charAt(0)}</div><div><div class="font-bold">${p.name}</div><div class="text-[10px] text-[var(--muted)]">${p.phone || '-'}</div></div></div></td>
+      <td>${p.school}</td><td>${p.parent || p.father || '-'}</td><td>${p.date}</td>
+      <td><span class="badge-status badge-${p.status}">${p.status}</span></td>
+      <td><div class="flex gap-1">
+        ${p.status === 'pending' ? `
+          <button class="btn-icon btn-sm" title="Setujui" onclick="updatePPDBStatus(${p.id}, 'approved')"><i class="fa-solid fa-check"></i></button>
+          <button class="btn-icon btn-sm" title="Tolak" onclick="updatePPDBStatus(${p.id}, 'rejected')"><i class="fa-solid fa-times"></i></button>` : ''}
+        <button class="btn-icon btn-sm" title="Edit" onclick="openPPDBModal(${p.id})"><i class="fa-solid fa-pen"></i></button>
+        <button class="btn-icon btn-sm danger" title="Hapus" onclick="deletePPDB(${p.id})"><i class="fa-solid fa-trash"></i></button>
+      </div></td>
+    </tr>
+  `).join('') : `<tr><td colspan="7" class="text-center py-8 text-[var(--muted)]">Tidak ada data ditemukan.</td></tr>`;
+}
+
+function openPPDBModal(id = null) {
+  const p = id ? DB.ppdb.find(x => x.id === id) : {};
+  setupModal(id ? 'Edit Pendaftar PPDB' : 'Tambah Pendaftar PPDB', `
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div><label class="label">Nama Lengkap</label><input type="text" class="input" id="ppdbName" value="${p.name || ''}" placeholder="Nama calon siswa"></div>
+      <div><label class="label">Asal Sekolah</label><input type="text" class="input" id="ppdbSchool" value="${p.school || ''}" placeholder="SD Asal"></div>
+      <div><label class="label">Nama Orang Tua</label><input type="text" class="input" id="ppdbParent" value="${p.parent || ''}" placeholder="Nama wali"></div>
+      <div><label class="label">No. Telepon</label><input type="text" class="input" id="ppdbPhone" value="${p.phone || ''}" placeholder="08xx"></div>
+      <div><label class="label">Tanggal Daftar</label><input type="date" class="input" id="ppdbDate" value="${p.date || new Date().toISOString().split('T')[0]}"></div>
+      <div><label class="label">Status</label><select class="select" id="ppdbStatus">
+        <option value="pending" ${p.status === 'pending' ? 'selected' : ''}>Pending</option>
+        <option value="approved" ${p.status === 'approved' ? 'selected' : ''}>Disetujui</option>
+        <option value="rejected" ${p.status === 'rejected' ? 'selected' : ''}>Ditolak</option>
+      </select></div>
+    </div>
+  `, () => {
+    const name = document.getElementById('ppdbName').value;
+    const school = document.getElementById('ppdbSchool').value;
+    if (!name || !school) { showToast('Nama dan Asal Sekolah wajib diisi.', 'error'); return; }
+    const data = {
+      name, school,
+      parent: document.getElementById('ppdbParent').value,
+      phone: document.getElementById('ppdbPhone').value,
+      date: document.getElementById('ppdbDate').value,
+      status: document.getElementById('ppdbStatus').value
+    };
+    if (id) { Object.assign(DB.ppdb.find(x => x.id === id), data); showToast('Data PPDB diperbarui.', 'success'); }
+    else { DB.ppdb.unshift({ id: Date.now(), ...data }); showToast('Pendaftar baru ditambahkan.', 'success'); }
+    saveDB(); renderPPDBTable(); renderRecentPPDB(); updateBadges(); closeModal('modalDynamic');
+  });
+}
+
+function updatePPDBStatus(id, status) {
+  DB.ppdb.find(x => x.id === id).status = status;
+  saveDB(); renderPPDBTable(); renderRecentPPDB(); updateBadges();
+  showToast(`Status pendaftar diperbarui menjadi ${status}.`, 'success');
+}
+
+function deletePPDB(id) {
+  if (!confirm('Hapus data pendaftar ini?')) return;
+  DB.ppdb = DB.ppdb.filter(p => p.id !== id);
+  saveDB(); renderPPDBTable(); renderRecentPPDB(); updateBadges();
+  showToast('Data pendaftar dihapus.', 'success');
+}
+
+document.querySelectorAll('.filter-ppdb').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-ppdb').forEach(b => { b.classList.remove('btn-primary'); b.classList.add('btn-ghost'); });
+    btn.classList.remove('btn-ghost'); btn.classList.add('btn-primary');
+    ppdbFilter = btn.dataset.status;
+    renderPPDBTable();
+  });
+});
+document.addEventListener('input', (e) => { if (e.target.id === 'searchPPDB') renderPPDBTable(); });
+
+// SISWA CRUD
+function renderSiswaTable() {
+  let data = DB.siswa;
+  const search = document.getElementById('searchSiswa')?.value.toLowerCase() || '';
+  const kelas = document.getElementById('filterKelasSiswa')?.value || 'all';
+  if (search) data = data.filter(s => s.name.toLowerCase().includes(search) || s.nis.includes(search));
+  if (kelas !== 'all') data = data.filter(s => s.kelas.startsWith(kelas));
+  
+  document.getElementById('siswaTable').innerHTML = data.length ? data.map(s => `
+    <tr>
+      <td><strong>${s.nis}</strong></td>
+      <td><div class="flex items-center gap-3"><div class="avatar avatar-sm" style="background:${s.jk==='L'?'linear-gradient(135deg,#2563eb,#1e40af)':'linear-gradient(135deg,#db2777,#9d174d)'}">${s.name.charAt(0)}</div><span class="font-bold">${s.name}</span></div></td>
+      <td><span class="badge-status badge-verified">${s.kelas}</span></td>
+      <td>${s.jk === 'L' ? 'Laki-laki' : 'Perempuan'}</td>
+      <td>${s.wali}</td>
+      <td><span class="badge-status badge-${s.status==='Aktif'?'approved':'rejected'}">${s.status}</span></td>
+      <td><div class="flex gap-1">
+        <button class="btn-icon btn-sm" title="Edit" onclick="openSiswaModal(${s.id})"><i class="fa-solid fa-pen"></i></button>
+        <button class="btn-icon btn-sm danger" title="Hapus" onclick="deleteSiswa(${s.id})"><i class="fa-solid fa-trash"></i></button>
+      </div></td>
+    </tr>
+  `).join('') : `<tr><td colspan="7" class="text-center py-8 text-[var(--muted)]">Tidak ada data ditemukan.</td></tr>`;
+}
+
+function openSiswaModal(id = null) {
+  const s = id ? DB.siswa.find(x => x.id === id) : {};
+  setupModal(id ? 'Edit Siswa' : 'Tambah Siswa Baru', `
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div><label class="label">NIS</label><input type="text" class="input" id="siswaNis" value="${s.nis || ''}" placeholder="2024001"></div>
+      <div><label class="label">Nama Lengkap</label><input type="text" class="input" id="siswaName" value="${s.name || ''}" placeholder="Nama siswa"></div>
+      <div><label class="label">Kelas</label><select class="select" id="siswaKelas">
+        ${['VII A','VII B','VIII A','VIII B','IX A','IX B'].map(k => `<option value="${k}" ${s.kelas === k ? 'selected' : ''}>${k}</option>`).join('')}
+      </select></div>
+      <div><label class="label">Jenis Kelamin</label><select class="select" id="siswaJk">
+        <option value="L" ${s.jk === 'L' ? 'selected' : ''}>Laki-laki</option>
+        <option value="P" ${s.jk === 'P' ? 'selected' : ''}>Perempuan</option>
+      </select></div>
+      <div><label class="label">Nama Wali</label><input type="text" class="input" id="siswaWali" value="${s.wali || ''}" placeholder="Nama orang tua"></div>
+      <div><label class="label">Status</label><select class="select" id="siswaStatus">
+        <option value="Aktif" ${s.status === 'Aktif' ? 'selected' : ''}>Aktif</option>
+        <option value="Non-Aktif" ${s.status === 'Non-Aktif' ? 'selected' : ''}>Non-Aktif</option>
+      </select></div>
+    </div>
+  `, () => {
+    const name = document.getElementById('siswaName').value;
+    const nis = document.getElementById('siswaNis').value;
+    if (!name || !nis) { showToast('Nama dan NIS wajib diisi.', 'error'); return; }
+    const data = {
+      nis, name,
+      kelas: document.getElementById('siswaKelas').value,
+      jk: document.getElementById('siswaJk').value,
+      wali: document.getElementById('siswaWali').value,
+      status: document.getElementById('siswaStatus').value
+    };
+    if (id) { Object.assign(DB.siswa.find(x => x.id === id), data); showToast('Data siswa diperbarui.', 'success'); }
+    else { DB.siswa.push({ id: Date.now(), ...data }); showToast('Siswa baru ditambahkan.', 'success'); }
+    saveDB(); renderSiswaTable(); updateBadges(); closeModal('modalDynamic');
+  });
+}
+
+function deleteSiswa(id) {
+  if (!confirm('Hapus data siswa ini?')) return;
+  DB.siswa = DB.siswa.filter(s => s.id !== id);
+  saveDB(); renderSiswaTable(); updateBadges();
+  showToast('Data siswa dihapus.', 'success');
+}
+document.addEventListener('input', (e) => { if (e.target.id === 'searchSiswa' || e.target.id === 'filterKelasSiswa') renderSiswaTable(); });
+
+// GURU CRUD
+function renderGuru() {
+  document.getElementById('guruGrid').innerHTML = DB.guru.map(g => `
+    <div class="panel overflow-hidden">
+      <div class="relative">
+        <img src="${g.img}" alt="${g.name}" class="w-full aspect-square object-cover">
+        <div class="absolute top-3 right-3"><span class="badge-status badge-approved">${g.role.split(' ')[0]}</span></div>
+      </div>
+      <div class="p-5">
+        <div class="text-[10px] uppercase tracking-wider text-[var(--accent-2)] font-bold mb-1">${g.role}</div>
+        <h4 class="font-display text-lg font-bold uppercase leading-tight mb-2">${g.name}</h4>
+        ${g.subject !== '-' ? `<div class="text-xs text-[var(--muted)] font-medium mb-3"><i class="fa-solid fa-book mr-1"></i> ${g.subject}</div>` : '<div class="mb-3"></div>'}
+        <div class="flex gap-1">
+          <button class="btn-icon btn-sm flex-1" title="Edit" onclick="openGuruModal(${g.id})"><i class="fa-solid fa-pen"></i></button>
+          <button class="btn-icon btn-sm danger flex-1" title="Hapus" onclick="deleteGuru(${g.id})"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openGuruModal(id = null) {
+  const g = id ? DB.guru.find(x => x.id === id) : {};
+  setupModal(id ? 'Edit Guru / Staf' : 'Tambah Guru / Staf', `
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div><label class="label">Nama Lengkap</label><input type="text" class="input" id="guruName" value="${g.name || ''}" placeholder="Dr. ..."></div>
+      <div><label class="label">Jabatan</label><input type="text" class="input" id="guruRole" value="${g.role || ''}" placeholder="Guru Matematika"></div>
+      <div><label class="label">Mata Pelajaran</label><input type="text" class="input" id="guruSubject" value="${g.subject || ''}" placeholder="Matematika"></div>
+      <div>
+        <label class="label">Upload Foto</label>
+        <input type="file" class="input" id="guruImgFile" accept="image/*">
+        ${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-16 h-16 rounded-lg object-cover"></div>` : ''}
+      </div>
+    </div>
+  `, async () => {
+    const name = document.getElementById('guruName').value;
+    const role = document.getElementById('guruRole').value;
+    if (!name || !role) { showToast('Nama dan Jabatan wajib diisi.', 'error'); return; }
+    
+    let img = g.img || 'https://picsum.photos/seed/defaultguru/400/400.jpg';
+    const fileInput = document.getElementById('guruImgFile');
+    if (fileInput.files && fileInput.files[0]) {
+      img = await readFileAsDataURL(fileInput.files[0]);
+    }
+    
+    const data = {
+      name, role,
+      subject: document.getElementById('guruSubject').value || '-',
+      img: img
+    };
+    if (id) { Object.assign(DB.guru.find(x => x.id === id), data); showToast('Data guru diperbarui.', 'success'); }
+    else { DB.guru.push({ id: Date.now(), ...data }); showToast('Guru baru ditambahkan.', 'success'); }
+    saveDB(); renderGuru(); updateBadges(); closeModal('modalDynamic');
+  });
+}
+
+function deleteGuru(id) {
+  if (!confirm('Hapus data guru ini?')) return;
+  DB.guru = DB.guru.filter(g => g.id !== id);
+  saveDB(); renderGuru(); updateBadges();
+  showToast('Data guru dihapus.', 'success');
+}
+
+// PROGRAM CRUD
+function renderProgram() {
+  document.getElementById('programGrid').innerHTML = DB.program.map(p => `
+    <div class="panel p-6">
+      <div class="flex items-start justify-between mb-4">
+        <div class="w-12 h-12 rounded-xl ${p.color==='gold'?'bg-[var(--accent)]/10 text-[var(--accent-2)]':'bg-[var(--nu-green)]/10 text-[var(--nu-green)]'} flex items-center justify-center text-xl">
+          <i class="fa-solid ${p.icon}"></i>
+        </div>
+        <div class="flex gap-1">
+          <button class="btn-icon btn-sm" title="Edit" onclick="openProgramModal(${p.id})"><i class="fa-solid fa-pen"></i></button>
+          <button class="btn-icon btn-sm danger" title="Hapus" onclick="deleteProgram(${p.id})"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      </div>
+      <h4 class="font-display text-xl font-bold uppercase mb-2">${p.title}</h4>
+      <p class="text-xs text-[var(--muted)] leading-relaxed font-medium mb-4">${p.desc}</p>
+      <div class="flex items-center justify-between text-xs">
+        <span class="text-[var(--muted)] font-medium"><i class="fa-solid fa-users mr-1"></i> ${Math.floor(Math.random()*50)+30} siswa</span>
+        <span class="badge-status badge-approved">Aktif</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openProgramModal(id = null) {
+  const p = id ? DB.program.find(x => x.id === id) : {};
+  setupModal(id ? 'Edit Program' : 'Tambah Program', `
+    <div class="space-y-4">
+      <div><label class="label">Nama Program</label><input type="text" class="input" id="progTitle" value="${p.title || ''}" placeholder="Contoh: Tahfidz Al-Qur'an"></div>
+      <div><label class="label">Deskripsi Singkat</label><textarea class="textarea" rows="3" id="progDesc" placeholder="Deskripsi program...">${p.desc || ''}</textarea></div>
+      <div class="grid grid-cols-2 gap-4">
+        <div><label class="label">Ikon (FontAwesome)</label><input type="text" class="input" id="progIcon" value="${p.icon || 'fa-book'}" placeholder="fa-quran"></div>
+        <div><label class="label">Warna</label><select class="select" id="progColor">
+          <option value="gold" ${p.color === 'gold' ? 'selected' : ''}>Emas</option>
+          <option value="green" ${p.color === 'green' ? 'selected' : ''}>Hijau NU</option>
+        </select></div>
+      </div>
+    </div>
+  `, () => {
+    const title = document.getElementById('progTitle').value;
+    if (!title) { showToast('Nama program wajib diisi.', 'error'); return; }
+    const data = {
+      title,
+      desc: document.getElementById('progDesc').value,
+      icon: document.getElementById('progIcon').value,
+      color: document.getElementById('progColor').value
+    };
+    if (id) { Object.assign(DB.program.find(x => x.id === id), data); showToast('Program diperbarui.', 'success'); }
+    else { DB.program.push({ id: Date.now(), ...data }); showToast('Program baru ditambahkan.', 'success'); }
+    saveDB(); renderProgram(); closeModal('modalDynamic');
+  });
+}
+
+function deleteProgram(id) {
+  if (!confirm('Hapus program ini?')) return;
+  DB.program = DB.program.filter(p => p.id !== id);
+  saveDB(); renderProgram();
+  showToast('Program dihapus.', 'success');
+}
+
+// GALERI CRUD
+let galeriFilter = 'all';
+function renderGaleri(cat) {
+  if (cat) galeriFilter = cat;
+  let data = DB.galeri;
+  if (galeriFilter !== 'all') data = data.filter(g => g.cat === galeriFilter);
+  
+  document.getElementById('galeriGrid').innerHTML = data.length ? data.map(g => `
+    <div class="gallery-card">
+      <div class="relative">
+        <img src="${g.img}" alt="${g.title}">
+        <div class="absolute top-2 right-2"><button class="btn-icon btn-sm danger" onclick="deleteGaleri(${g.id})" title="Hapus"><i class="fa-solid fa-trash"></i></button></div>
+        <div class="absolute top-2 left-2"><span class="badge-status badge-approved">${g.cat}</span></div>
+      </div>
+      <div class="p-3">
+        <h4 class="font-display text-sm font-bold uppercase leading-tight mb-1">${g.title}</h4>
+        <p class="text-[10px] text-[var(--muted)] font-medium line-clamp-2">${g.desc}</p>
+        <button class="btn btn-ghost btn-sm w-full mt-2" onclick="openGaleriModal(${g.id})"><i class="fa-solid fa-pen mr-1"></i> Edit</button>
+      </div>
+    </div>
+  `).join('') : `<div class="col-span-full text-center py-16 text-[var(--muted)]"><i class="fa-solid fa-images text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada foto.</p></div>`;
+}
+
+function openGaleriModal(id = null) {
+  const g = id ? DB.galeri.find(x => x.id === id) : {};
+  setupModal(id ? 'Edit Foto Galeri' : 'Upload Foto Galeri', `
+    <div class="space-y-4">
+      <div>
+        <label class="label">Upload Gambar</label>
+        <input type="file" class="input" id="galImgFile" accept="image/*">
+        ${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-32 h-20 rounded-lg object-cover"></div>` : ''}
+      </div>
+      <div><label class="label">Judul Foto</label><input type="text" class="input" id="galTitle" value="${g.title || ''}" placeholder="Contoh: Pesantren Ramadhan"></div>
+      <div><label class="label">Kategori</label><select class="select" id="galCat">
+        <option value="akademik" ${g.cat === 'akademik' ? 'selected' : ''}>Akademik</option>
+        <option value="religi" ${g.cat === 'religi' ? 'selected' : ''}>Keagamaan</option>
+        <option value="ekskul" ${g.cat === 'ekskul' ? 'selected' : ''}>Ekstrakurikuler</option>
+      </select></div>
+      <div><label class="label">Deskripsi</label><textarea class="textarea" rows="2" id="galDesc" placeholder="Deskripsi singkat...">${g.desc || ''}</textarea></div>
+    </div>
+  `, async () => {
+    const title = document.getElementById('galTitle').value;
+    if (!title) { showToast('Judul wajib diisi.', 'error'); return; }
+    
+    let img = g.img || '';
+    const fileInput = document.getElementById('galImgFile');
+    if (fileInput.files && fileInput.files[0]) {
+      img = await readFileAsDataURL(fileInput.files[0]);
+    } else if (!img) {
+      showToast('Foto wajib diupload.', 'error'); return;
+    }
+    
+    const data = {
+      img, title,
+      cat: document.getElementById('galCat').value,
+      desc: document.getElementById('galDesc').value
+    };
+    if (id) { Object.assign(DB.galeri.find(x => x.id === id), data); showToast('Foto diperbarui.', 'success'); }
+    else { DB.galeri.unshift({ id: Date.now(), ...data }); showToast('Foto ditambahkan.', 'success'); }
+    saveDB(); renderGaleri(); closeModal('modalDynamic');
+  });
+}
+
+function deleteGaleri(id) {
+  if (!confirm('Hapus foto ini?')) return;
+  DB.galeri = DB.galeri.filter(g => g.id !== id);
+  saveDB(); renderGaleri();
+  showToast('Foto dihapus.', 'success');
+}
+
+document.querySelectorAll('.filter-gallery').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-gallery').forEach(b => { b.classList.remove('btn-primary'); b.classList.add('btn-ghost'); });
+    btn.classList.remove('btn-ghost'); btn.classList.add('btn-primary');
+    renderGaleri(btn.dataset.cat);
+  });
+});
+
+// PESAN CRUD
+function renderPesan() {
+  document.getElementById('pesanList').innerHTML = DB.pesan.map(p => `
+    <div class="p-4 border-b border-[var(--bg-2)] cursor-pointer hover:bg-[var(--bg-2)] transition ${!p.read ? 'bg-[var(--accent)]/5' : ''}" onclick="readPesan(${p.id})">
+      <div class="flex items-start gap-3">
+        <div class="avatar avatar-sm">${p.name.charAt(0)}</div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center justify-between gap-2">
+            <div class="font-bold text-sm ${!p.read ? 'text-[var(--fg)]' : 'text-[var(--fg-2)]'} truncate">${p.name}</div>
+            ${!p.read ? '<div class="w-2 h-2 rounded-full bg-[var(--accent)] flex-shrink-0"></div>' : ''}
+          </div>
+          <div class="text-xs font-semibold text-[var(--accent-2)] truncate mt-0.5">${p.subject}</div>
+          <div class="text-[10px] text-[var(--muted)] truncate mt-1">${p.msg.substring(0, 60)}...</div>
+          <div class="text-[10px] text-[var(--muted)] mt-1">${p.date}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function readPesan(id) {
+  const p = DB.pesan.find(x => x.id === id);
+  if (!p) return;
+  p.read = true;
+  saveDB();
+  
+  document.getElementById('pesanAvatar').textContent = p.name.charAt(0);
+  document.getElementById('pesanSender').textContent = p.name;
+  document.getElementById('pesanEmail').textContent = p.email + ' • ' + p.phone;
+  
+  document.getElementById('pesanDetail').innerHTML = `
+    <div class="mb-4 pb-4 border-b border-[var(--border)]">
+      <div class="text-[10px] uppercase tracking-wider text-[var(--accent-2)] font-bold mb-1">Subjek</div>
+      <h4 class="font-display text-xl font-bold uppercase">${p.subject}</h4>
+      <div class="text-xs text-[var(--muted)] mt-2"><i class="fa-solid fa-clock mr-1"></i> ${p.date}</div>
+    </div>
+    <div class="mb-6"><div class="text-sm text-[var(--fg-2)] leading-relaxed font-medium">${p.msg}</div></div>
+    <div class="bg-[var(--bg-2)] rounded-lg p-4 mb-4">
+      <div class="text-[10px] uppercase tracking-wider text-[var(--muted)] font-bold mb-2">Kontak Pengirim</div>
+      <div class="grid grid-cols-2 gap-3 text-xs">
+        <div><i class="fa-solid fa-envelope text-[var(--accent-2)] mr-2"></i> ${p.email}</div>
+        <div><i class="fa-solid fa-phone text-[var(--accent-2)] mr-2"></i> ${p.phone}</div>
+      </div>
+    </div>
+    <div class="flex gap-2">
+      <button class="btn btn-primary" onclick="showToast('Email client dibuka untuk membalas pesan.', 'success')"><i class="fa-solid fa-reply"></i> Balas</button>
+      <button class="btn btn-ghost" onclick="deletePesan(${p.id})"><i class="fa-solid fa-trash"></i> Hapus</button>
+    </div>
+  `;
+  updateBadges(); renderPesan();
+}
+
+function deletePesan(id) {
+  if (!confirm('Hapus pesan ini?')) return;
+  DB.pesan = DB.pesan.filter(p => p.id !== id);
+  saveDB();
+  document.getElementById('pesanDetail').innerHTML = `<div class="text-center py-16 text-[var(--muted)]"><i class="fa-solid fa-envelope-open text-5xl mb-4 opacity-30"></i><p class="font-medium">Pilih pesan dari daftar untuk membaca</p></div>`;
+  document.getElementById('pesanAvatar').textContent = '?';
+  document.getElementById('pesanSender').textContent = 'Pilih Pesan';
+  document.getElementById('pesanEmail').textContent = '—';
+  renderPesan(); updateBadges();
+  showToast('Pesan dihapus.', 'success');
+}
+
+// SETTINGS LOGIC
+function loadSettingsForm() {
+  const s = DB.settings;
+  if (!s) return;
+  document.getElementById('setSchoolName').value = s.schoolName || '';
+  document.getElementById('setNpsn').value = s.npsn || '';
+  document.getElementById('setAddress').value = s.address || '';
+  document.getElementById('setPhone').value = s.phone || '';
+  document.getElementById('setEmail').value = s.email || '';
+  document.getElementById('setYear').value = s.year || '';
+  document.getElementById('setAkreditasi').value = s.akreditasi || 'A';
+  document.getElementById('setTA').value = s.ta || '';
+  document.getElementById('setKuota').value = s.kuota || '';
+  document.getElementById('setBuka').value = s.buka || '';
+  document.getElementById('setTutup').value = s.tutup || '';
+  document.getElementById('setPPDBStatus').checked = s.statusPPDB !== undefined ? s.statusPPDB : true;
+  document.getElementById('setIg').value = s.ig || '';
+  document.getElementById('setYt').value = s.yt || '';
+  document.getElementById('setFb').value = s.fb || '';
+  document.getElementById('setWa').value = s.wa || '';
+}
+
+function saveSettings() {
+  DB.settings = {
+    schoolName: document.getElementById('setSchoolName').value,
+    npsn: document.getElementById('setNpsn').value,
+    address: document.getElementById('setAddress').value,
+    phone: document.getElementById('setPhone').value,
+    email: document.getElementById('setEmail').value,
+    year: document.getElementById('setYear').value,
+    akreditasi: document.getElementById('setAkreditasi').value,
+    ta: document.getElementById('setTA').value,
+    kuota: document.getElementById('setKuota').value,
+    buka: document.getElementById('setBuka').value,
+    tutup: document.getElementById('setTutup').value,
+    statusPPDB: document.getElementById('setPPDBStatus').checked,
+    ig: document.getElementById('setIg').value,
+    yt: document.getElementById('setYt').value,
+    fb: document.getElementById('setFb').value,
+    wa: document.getElementById('setWa').value
+  };
+  saveDB();
+  showToast('Pengaturan berhasil disimpan.', 'success');
+}
+
+// CHARTS
+function initCharts() {
+  Chart.defaults.font.family = 'Inter, sans-serif';
+  Chart.defaults.font.size = 11;
+  Chart.defaults.color = '#8b929b';
+  
+  const ctx1 = document.getElementById('chartPPDB');
+  if (ctx1) new Chart(ctx1, {
+    type: 'line',
+    data: { labels: ['Aug', 'Sep', 'Okt', 'Nov', 'Des', 'Jan'], datasets: [{ label: 'Pendaftar', data: [8, 15, 22, 18, 28, DB.ppdb.length], borderColor: '#d4af37', backgroundColor: 'rgba(212,175,55,0.1)', fill: true, tension: 0.4, borderWidth: 3, pointBackgroundColor: '#d4af37', pointBorderColor: '#fff', pointBorderWidth: 2, pointRadius: 5, pointHoverRadius: 7 }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#e9ecef' } }, x: { grid: { display: false } } } }
+  });
+  
+  const ctx2 = document.getElementById('chartKelas');
+  if (ctx2) new Chart(ctx2, {
+    type: 'doughnut',
+    data: { labels: ['Kelas VII', 'Kelas VIII', 'Kelas IX'], datasets: [{ data: [DB.siswa.filter(s=>s.kelas.startsWith('VII')).length, DB.siswa.filter(s=>s.kelas.startsWith('VIII')).length, DB.siswa.filter(s=>s.kelas.startsWith('IX')).length], backgroundColor: ['#d4af37', '#006a3e', '#1a1d21'], borderWidth: 0, hoverOffset: 8 }] },
+    options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'bottom', labels: { padding: 15, font: { size: 11, weight: 600 } } } } }
+  });
+  
+  const ctx3 = document.getElementById('chartProgram');
+  if (ctx3) new Chart(ctx3, {
+    type: 'bar',
+    data: { labels: ['Tahfidz', 'IT'], datasets: [{ data: [180, 95], backgroundColor: ['#d4af37', '#006a3e'], borderRadius: 6 }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#e9ecef' } }, x: { grid: { display: false } } } }
+  });
+  
+  const ctx4 = document.getElementById('chartHadir');
+  if (ctx4) new Chart(ctx4, {
+    type: 'line',
+    data: { labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'], datasets: [
+      { label: 'Hadir', data: [445, 442, 448, 440, 438, 430], borderColor: '#16a34a', backgroundColor: 'rgba(22,163,74,0.1)', fill: true, tension: 0.4, borderWidth: 2 },
+      { label: 'Absen', data: [5, 8, 2, 10, 12, 20], borderColor: '#dc2626', backgroundColor: 'rgba(220,38,38,0.1)', fill: true, tension: 0.4, borderWidth: 2 }
+    ]},
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { size: 11 } } } }, scales: { y: { beginAtZero: true, grid: { color: '#e9ecef' } }, x: { grid: { display: false } } } }
+  });
+}
+
+function exportCSV(type) {
+  if (type === 'ppdb') {
+    let csv = 'Nama,Asal Sekolah,Orang Tua,Telepon,Tanggal,Status\n';
+    DB.ppdb.forEach(p => { csv += `${p.name},${p.school},${p.parent || '-'},${p.phone || '-'},${p.date},${p.status}\n`; });
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'ppdb-data.csv'; a.click();
+    showToast('Data PPDB berhasil diexport ke CSV.', 'success');
+  }
+}
+</script>
+</body>
+</html>
