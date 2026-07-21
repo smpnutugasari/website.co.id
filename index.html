@@ -1976,7 +1976,7 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 /* ============== SUPABASE CONFIGURATION ============== */
 // GANTI dengan URL & Anon Key project Supabase Anda!
-const SUPABASE_URL = 'https://https://fiqlnpjhegmwjrvhobza.supabase.co';
+const SUPABASE_URL = 'https://fiqlnpjhegmwjrvhobza.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpcWxucGpoZWdtd2pydmhvYnphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2NDExMTksImV4cCI6MjEwMDIxNzExOX0.rQeSenh-wfFGXyeIk54JzZ7wjYgaQteTyALGc2LPnoI';
 
 let supabaseClient = null;
@@ -2911,6 +2911,252 @@ function exportCSV(type) {
     showToast('Data PPDB berhasil diexport ke CSV.', 'success');
   }
 }
+/* ============== LANDING PAGE RENDER FUNCTIONS ============== */
+let landingGalleryFilter = 'all';
+
+function renderLandingPrograms() {
+  const grid = document.getElementById('landingProgramGrid');
+  if (!grid) return;
+  grid.innerHTML = DB.program.map(p => `
+    <div class="card p-8 reveal visible">
+      <div class="flex items-start gap-5">
+        <div class="w-14 h-14 rounded-xl ${p.color==='gold'?'bg-[var(--accent)]/10 text-[var(--accent-2)]':'bg-[var(--nu-green)]/10 text-[var(--nu-green)]'} flex items-center justify-center text-2xl flex-shrink-0">
+          <i class="fa-solid ${p.icon}"></i>
+        </div>
+        <div class="flex-1">
+          <h4 class="font-display text-2xl font-bold uppercase mb-2">${p.title}</h4>
+          <p class="text-sm text-[var(--fg-2)] leading-relaxed font-medium mb-4">${p.desc}</p>
+          <span class="pill pill-accent">Program Unggulan</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderLandingTeachers() {
+  const grid = document.getElementById('landingTeacherGrid');
+  if (!grid) return;
+  grid.innerHTML = DB.guru.slice(0, 8).map(g => `
+    <div class="card overflow-hidden reveal visible">
+      <div class="photo-frame">
+        <img src="${g.img}" alt="${g.name}">
+      </div>
+      <div class="p-5">
+        <div class="text-[10px] uppercase tracking-wider text-[var(--accent-2)] font-bold mb-1">${g.role}</div>
+        <h4 class="font-display text-lg font-bold uppercase leading-tight mb-1">${g.name}</h4>
+        ${g.subject && g.subject !== '-' ? `<div class="text-xs text-[var(--muted)] font-medium"><i class="fa-solid fa-book mr-1"></i> ${g.subject}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderLandingGallery(filter) {
+  if (filter) landingGalleryFilter = filter;
+  const grid = document.getElementById('landingGalleryGrid');
+  if (!grid) return;
+  let data = DB.galeri;
+  if (landingGalleryFilter !== 'all') data = data.filter(g => g.cat === landingGalleryFilter);
+  grid.innerHTML = data.length ? data.map(g => `
+    <div class="gallery-card reveal visible">
+      <div class="relative">
+        <img src="${g.img}" alt="${g.title}">
+        <div class="absolute top-2 left-2"><span class="badge-status badge-approved">${g.cat}</span></div>
+      </div>
+      <div class="p-4">
+        <h4 class="font-display text-sm font-bold uppercase leading-tight mb-1">${g.title}</h4>
+        <p class="text-xs text-[var(--muted)] font-medium">${g.desc}</p>
+      </div>
+    </div>
+  `).join('') : '<div class="col-span-full text-center py-12 text-[var(--muted)]">Belum ada foto</div>';
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      b.classList.remove('border-[var(--accent)]', 'bg-[var(--accent)]', 'text-[var(--fg)]');
+      b.classList.add('border-[var(--border-2)]', 'text-[var(--fg-2)]');
+    });
+    btn.classList.add('border-[var(--accent)]', 'bg-[var(--accent)]', 'text-[var(--fg)]');
+    btn.classList.remove('border-[var(--border-2)]', 'text-[var(--fg-2)]');
+    renderLandingGallery(btn.dataset.filter);
+  });
+});
+
+/* ============== PPDB PUBLIC FORM ============== */
+function showPPDBForm() {
+  document.getElementById('ppdbFormOverlay').classList.remove('is-hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function hidePPDBForm() {
+  document.getElementById('ppdbFormOverlay').classList.add('is-hidden');
+  document.body.style.overflow = '';
+}
+
+function showPPDBCard(data) {
+  document.getElementById('ppdbCardOverlay').classList.remove('is-hidden');
+  
+  // Isi kartu
+  const regNum = 'PPDB-' + new Date().getFullYear() + '-' + String(data.id).slice(-4);
+  document.getElementById('cardRegNum').textContent = regNum;
+  document.getElementById('cardName').textContent = data.name;
+  document.getElementById('cardSchool').textContent = data.school;
+  document.getElementById('cardDate').textContent = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+  
+  // Generate Barcode
+  try {
+    JsBarcode('#barcodeSvg', regNum, {
+      format: 'CODE128',
+      width: 2,
+      height: 50,
+      displayValue: false,
+      margin: 0
+    });
+  } catch (e) {
+    console.warn('Barcode error:', e);
+  }
+  
+  document.body.style.overflow = 'hidden';
+}
+
+function hidePPDBCard() {
+  document.getElementById('ppdbCardOverlay').classList.add('is-hidden');
+  document.body.style.overflow = '';
+  // Reset form
+  document.getElementById('ppdbPublicForm').reset();
+}
+
+function downloadPPDBCard() {
+  const card = document.getElementById('ppdbCard');
+  if (!card) return;
+  showToast('Membuat PDF, mohon tunggu...', 'success');
+  
+  html2canvas(card, { scale: 2, backgroundColor: '#ffffff', useCORS: true }).then(canvas => {
+    const imgData = canvas.toDataURL('image/png');
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const imgWidth = 90;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    const x = (210 - imgWidth) / 2;
+    const y = 40;
+    pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
+    pdf.save('Kartu-PPDB-SMP-NU-Tugasari.pdf');
+    showToast('Kartu PPDB berhasil didownload!', 'success');
+  }).catch(err => {
+    console.error('PDF error:', err);
+    showToast('Gagal membuat PDF.', 'error');
+  });
+}
+
+// Handler Submit Form PPDB Publik
+document.getElementById('ppdbPublicForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const data = {
+    id: Date.now(),
+    regNum: 'PPDB-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-4),
+    name: document.getElementById('regName').value.trim(),
+    gender: document.getElementById('regGender').value,
+    school: document.getElementById('regSchool').value.trim(),
+    dob: document.getElementById('regDob').value,
+    father: document.getElementById('regFather').value.trim(),
+    mother: document.getElementById('regMother').value.trim(),
+    parent: document.getElementById('regFather').value.trim(),
+    phone: document.getElementById('regPhone').value.trim(),
+    address: document.getElementById('regAddress').value.trim(),
+    date: new Date().toISOString().split('T')[0],
+    status: 'pending'
+  };
+  
+  if (!data.name || !data.school) {
+    showToast('Nama dan asal sekolah wajib diisi.', 'error');
+    return;
+  }
+  
+  // Simpan ke DB
+  DB.ppdb.unshift(data);
+  saveDB();
+  
+  // Sync ke Supabase
+  if (isSupabaseReady) syncRecord('ppdb', data, 'upsert');
+  
+  // Sembunyikan form, tampilkan kartu
+  hidePPDBForm();
+  showPPDBCard(data);
+  
+  showToast('Pendaftaran berhasil! Simpan kartu pendaftaran Anda.', 'success');
+});
+
+/* ============== ADMIN LOGIN ============== */
+function showAdminLogin(view = 'dashboard') {
+  document.getElementById('loginScreen').classList.remove('is-hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function hideAdminLogin() {
+  document.getElementById('loginScreen').classList.add('is-hidden');
+  document.body.style.overflow = '';
+}
+
+// Handler Login Form
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const user = document.getElementById('loginUser').value.trim();
+  const pass = document.getElementById('loginPass').value.trim();
+  
+  if (user === 'admin' && pass === 'admin123') {
+    // Sembunyikan halaman utama & login, tampilkan admin
+    document.getElementById('loginScreen').classList.add('is-hidden');
+    document.getElementById('landingPage').style.display = 'none'; // ← PENTING: Sembunyikan landing page
+    document.getElementById('adminLayout').classList.remove('is-hidden');
+    document.body.style.overflow = '';
+    
+    initDashboard();
+    showToast('Selamat datang, Admin!', 'success');
+    window.scrollTo({ top: 0 });
+  } else {
+    showToast('Username atau password salah!', 'error');
+  }
+});
+
+// Toggle Password
+document.getElementById('togglePass').addEventListener('click', function() {
+  const input = document.getElementById('loginPass');
+  const icon = this.querySelector('i');
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.classList.remove('fa-eye');
+    icon.classList.add('fa-eye-slash');
+  } else {
+    input.type = 'password';
+    icon.classList.remove('fa-eye-slash');
+    icon.classList.add('fa-eye');
+  }
+});
+
+/* ============== ADMIN: LOGOUT & BACK TO SITE ============== */
+/* ============== ADMIN: LOGOUT & BACK TO SITE ============== */
+function backToSite() {
+  document.getElementById('adminLayout').classList.add('is-hidden');
+  document.getElementById('landingPage').style.display = 'block'; // ← Tampilkan landing page kembali
+  document.body.style.overflow = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function logout() {
+  if (!confirm('Apakah Anda yakin ingin keluar?')) return;
+  document.getElementById('adminLayout').classList.add('is-hidden');
+  document.getElementById('landingPage').style.display = 'block'; // ← Tampilkan landing page kembali
+  document.body.style.overflow = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  showToast('Anda telah keluar dari sistem.', 'success');
+}
+/* ============== INISIALISASI LANDING PAGE ============== */
+window.addEventListener('DOMContentLoaded', () => {
+  renderLandingPrograms();
+  renderLandingTeachers();
+  renderLandingGallery('all');
+});
 </script>
 </body>
 </html>
