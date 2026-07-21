@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SMP NU TUGASARI — Membentuk Generasi Qur'ani & Cerdas</title>
+<title>SMP NU TUGASARI — Membentuk Generasi Qur'ani Terampil & Cerdas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
@@ -14,7 +14,8 @@
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+<!-- Supabase Client -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
 <style>
   :root {
     --bg: #f4f5f7;
@@ -692,11 +693,11 @@
         
         <h1 class="hero-title font-display font-bold text-[60px] lg:text-[80px] leading-[0.9] tracking-tight mb-8 uppercase">
           Membentuk <span style="color:var(--nu-green);">Generasi</span><br>
-          <span style="color:var(--accent);">Qur'ani</span> & Cerdas
+          <span style="color:var(--accent);">Qur'ani</span> Terampil & Cerdas
         </h1>
         
         <p class="text-lg text-[var(--fg-2)] max-w-xl mb-10 leading-relaxed font-medium">
-          Selamat datang di SMP NU TUGASARI. Sekolah Menengah Pertama di bawah naungan Yayasan Pendidikan Ma'arif Nahdlatul Ulama yang berkomitmen mencetak siswa berakhlak mulia, mandiri, dan menguasai IPTEK.
+          Selamat datang di SMP NU TUGASARI. Sekolah Menengah Pertama di Bawah Naungan Yayasan Pendidikan Ma'arif Nahdlatul Ulama yang Berkomitmen Mencetak Siswa-Siswi Berakhlak Mulia, Mandiri, dan Menguasai IPTEK.
         </p>
         
         <div class="flex flex-wrap gap-4 mb-12">
@@ -708,7 +709,7 @@
         
         <div class="grid grid-cols-3 gap-6 max-w-xl pt-8 border-t border-[var(--border)]">
           <div>
-            <div class="stat-num text-5xl">A</div>
+            <div class="stat-num text-5xl">B</div>
             <div class="text-[10px] text-[var(--muted)] uppercase tracking-widest mt-1 font-bold">Terakreditasi</div>
           </div>
           <div>
@@ -716,7 +717,7 @@
             <div class="text-[10px] text-[var(--muted)] uppercase tracking-widest mt-1 font-bold">Lulusan Diterima</div>
           </div>
           <div>
-            <div class="stat-num text-5xl">10+</div>
+            <div class="stat-num text-5xl">5+</div>
             <div class="text-[10px] text-[var(--muted)] uppercase tracking-widest mt-1 font-bold">Ekstrakurikuler</div>
           </div>
         </div>
@@ -822,7 +823,7 @@
               </div>
               <span class="text-[10px] text-[var(--muted)] uppercase font-bold">Akreditasi</span>
             </div>
-            <div class="font-display text-4xl font-bold mb-1 uppercase">Grade A</div>
+            <div class="font-display text-4xl font-bold mb-1 uppercase">Grade B</div>
             <div class="text-sm text-[var(--muted)] font-medium">Terakreditasi Unggul</div>
           </div>
           
@@ -833,7 +834,7 @@
               </div>
               <span class="text-[10px] text-[var(--muted)] uppercase font-bold">Siswa</span>
             </div>
-            <div class="font-display text-4xl font-bold mb-1 uppercase">450+</div>
+            <div class="font-display text-4xl font-bold mb-1 uppercase">100+</div>
             <div class="text-sm text-[var(--muted)] font-medium">Siswa Aktif</div>
           </div>
           
@@ -844,7 +845,7 @@
               </div>
               <span class="text-[10px] text-[var(--muted)] uppercase font-bold">Pengajar</span>
             </div>
-            <div class="font-display text-4xl font-bold mb-1 uppercase">35+</div>
+            <div class="font-display text-4xl font-bold mb-1 uppercase">15+</div>
             <div class="text-sm text-[var(--muted)] font-medium">Guru & Staf Profesional</div>
           </div>
           
@@ -855,8 +856,8 @@
               </div>
               <span class="text-[10px] text-[var(--muted)] uppercase font-bold">Prestasi</span>
             </div>
-            <div class="font-display text-4xl font-bold mb-1 uppercase">50+</div>
-            <div class="text-sm text-[var(--muted)] font-medium">Penghargaan Tingkat Daerah & Nasional</div>
+            <div class="font-display text-4xl font-bold mb-1 uppercase">10+</div>
+            <div class="text-sm text-[var(--muted)] font-medium">Penghargaan Tingkat Kecamatan & Kabupaten</div>
           </div>
         </div>
       </div>
@@ -1973,8 +1974,39 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+/* ============== SUPABASE CONFIGURATION ============== */
+// GANTI dengan URL & Anon Key project Supabase Anda!
+const SUPABASE_URL = 'https://https://fiqlnpjhegmwjrvhobza.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpcWxucGpoZWdtd2pydmhvYnphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2NDExMTksImV4cCI6MjEwMDIxNzExOX0.rQeSenh-wfFGXyeIk54JzZ7wjYgaQteTyALGc2LPnoI';
 
-/* ============== LOCAL STORAGE DATABASE ============== */
+let supabaseClient = null;
+let isSupabaseReady = false;
+
+// Inisialisasi Supabase
+function initSupabase() {
+  try {
+    if (window.supabase && 
+        SUPABASE_URL && 
+        SUPABASE_ANON_KEY && 
+        !SUPABASE_URL.includes('XXXXXXXXXXXXXXXX') &&
+        SUPABASE_URL.startsWith('https://')) {
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+        auth: { persistSession: false },
+        realtime: { params: { eventsPerSecond: 2 } }
+      });
+      isSupabaseReady = true;
+      console.log('✅ Supabase connected');
+    } else {
+      console.warn('⚠️ Supabase not configured, using localStorage only');
+    }
+  } catch (e) {
+    console.warn('⚠️ Supabase init failed:', e);
+  }
+}
+
+initSupabase();
+
+/* ============== DEFAULT DATA ============== */
 const DEFAULT_DB = {
   settings: {
     schoolName: 'SMP NU Tugasari', npsn: '20365478', address: 'Jl. Raya Tugasari No. 01, Tugasari',
@@ -2004,7 +2036,7 @@ const DEFAULT_DB = {
   guru: [
     {id:1, name:'Drs. H. Ahmad Fauzi, M.Pd', role:'Kepala Sekolah', subject:'-', img:'https://picsum.photos/seed/teacher1/400/400.jpg'},
     {id:2, name:'Siti Aminah, S.Pd', role:'Waka Kurikulum', subject:'Bahasa Indonesia', img:'https://picsum.photos/seed/teacher2/400/400.jpg'},
-    {id:3, name:'Ust. Muhammad Ridwan, Lc', role:'Pembina Tahfidz', subject:'Al-Qur\'an', img:'https://picsum.photos/seed/teacher3/400/400.jpg'},
+    {id:3, name:'Ust. Muhammad Ridwan, Lc', role:'Pembina Tahfidz', subject:"Al-Qur'an", img:'https://picsum.photos/seed/teacher3/400/400.jpg'},
     {id:4, name:'Budi Santoso, S.Kom', role:'Guru IT', subject:'Informatika', img:'https://picsum.photos/seed/teacher4/400/400.jpg'},
     {id:5, name:'Hj. Fatimah Zahra, M.Pd', role:'Waka Kesiswaan', subject:'Bimbingan Konseling', img:'https://picsum.photos/seed/teacher5/400/400.jpg'},
     {id:6, name:'Abdullah Hakim, S.Pd', role:'Guru Matematika', subject:'Matematika', img:'https://picsum.photos/seed/teacher6/400/400.jpg'},
@@ -2012,17 +2044,17 @@ const DEFAULT_DB = {
     {id:8, name:'Ustz. Khadijah, Lc', role:'Guru Akidah Akhlak', subject:'Akidah Akhlak', img:'https://picsum.photos/seed/teacher8/400/400.jpg'},
   ],
   program: [
-    {id:1, icon:'fa-quran', title:'Tahfidz Al-Qur\'an', desc:'Program pembiasaan hafalan Al-Qur\'an harian dengan metode talaqqi.', color:'gold'},
+    {id:1, icon:'fa-quran', title:"Tahfidz Al-Qur'an", desc:"Program pembiasaan hafalan Al-Qur'an harian dengan metode talaqqi.", color:'gold'},
     {id:2, icon:'fa-laptop-code', title:'IT & Multimedia', desc:'Pembekalan keterampilan digital, desain grafis, dan literasi komputer.', color:'green'},
   ],
   galeri: [
     {id:1, img:'https://picsum.photos/seed/school1/600/450.jpg', title:'Pesantren Ramadhan', cat:'religi', desc:'Kegiatan tahunan untuk meningkatkan spiritualitas siswa.'},
     {id:2, img:'https://picsum.photos/seed/school2/600/450.jpg', title:'Juara Olimpiade Sains', cat:'akademik', desc:'Siswa kelas IX meraih juara 1 Olimpiade Matematika.'},
     {id:3, img:'https://picsum.photos/seed/school3/600/450.jpg', title:'Latihan Marching Band', cat:'ekskul', desc:'Persiapan parade kemerdekaan 17 Agustus.'},
-    {id:4, img:'https://picsum.photos/seed/school4/600/450.jpg', title:'Wisuda Tahfidz', cat:'religi', desc:'Syukuran kelulusan hafalan 2 Juz Al-Qur\'an.'},
+    {id:4, img:'https://picsum.photos/seed/school4/600/450.jpg', title:'Wisuda Tahfidz', cat:'religi', desc:"Syukuran kelulusan hafalan 2 Juz Al-Qur'an."},
     {id:5, img:'https://picsum.photos/seed/school5/600/450.jpg', title:'Class Meeting', cat:'akademik', desc:'Aksi kebersamaan dan kompetisi antar kelas.'},
     {id:6, img:'https://picsum.photos/seed/school6/600/450.jpg', title:'Olahraga Basket', cat:'ekskul', desc:'Latihan rutin tim basket SMP NU Tugasari.'},
-    {id:7, img:'https://picsum.photos/seed/school7/600/450.jpg', title:'Lomba Tahfidz', cat:'religi', desc:'Kompetisi hafalan Al-Qur\'an antar kelas.'},
+    {id:7, img:'https://picsum.photos/seed/school7/600/450.jpg', title:'Lomba Tahfidz', cat:'religi', desc:"Kompetisi hafalan Al-Qur'an antar kelas."},
     {id:8, img:'https://picsum.photos/seed/school8/600/450.jpg', title:'Praktikum Lab', cat:'akademik', desc:'Kegiatan praktikum di laboratorium IPA.'},
   ],
   pesan: [
@@ -2037,249 +2069,249 @@ const DEFAULT_DB = {
 };
 
 let DB = {};
+let isSyncing = false;
 
-function loadDB() {
+/* ============== LOCAL STORAGE + SUPABASE HYBRID ============== */
+function loadDBLocal() {
   try {
     const stored = localStorage.getItem('smpnu_db');
     if (stored) {
-      try {
-        const parsedDB = JSON.parse(stored);
-        DB = {
-          ...DEFAULT_DB,
-          ...parsedDB,
-          settings: { ...DEFAULT_DB.settings, ...(parsedDB.settings || {}) }
-        };
-        DB.ppdb = parsedDB.ppdb || [];
-        DB.siswa = parsedDB.siswa || [];
-        DB.guru = parsedDB.guru || [];
-        DB.program = parsedDB.program || [];
-        DB.galeri = parsedDB.galeri || [];
-        DB.pesan = parsedDB.pesan || [];
-      } catch (e) {
-        DB = JSON.parse(JSON.stringify(DEFAULT_DB));
-        saveDB();
-      }
+      const parsedDB = JSON.parse(stored);
+      DB = {
+        ...DEFAULT_DB,
+        ...parsedDB,
+        settings: { ...DEFAULT_DB.settings, ...(parsedDB.settings || {}) }
+      };
+      DB.ppdb = parsedDB.ppdb || [];
+      DB.siswa = parsedDB.siswa || [];
+      DB.guru = parsedDB.guru || [];
+      DB.program = parsedDB.program || [];
+      DB.galeri = parsedDB.galeri || [];
+      DB.pesan = parsedDB.pesan || [];
     } else {
       DB = JSON.parse(JSON.stringify(DEFAULT_DB));
-      saveDB();
+      saveDBLocal();
     }
   } catch (e) {
-    console.error("LocalStorage tidak tersedia, memori sementara digunakan.", e);
+    console.error('LocalStorage error:', e);
     DB = JSON.parse(JSON.stringify(DEFAULT_DB));
   }
 }
 
-function saveDB() {
+function saveDBLocal() {
   try {
     localStorage.setItem('smpnu_db', JSON.stringify(DB));
   } catch (e) {
-    console.error("Gagal menyimpan ke LocalStorage.", e);
+    console.error('Save LocalStorage failed:', e);
   }
 }
 
-loadDB(); // Load DB on startup
-
-/* ============== DYNAMIC LANDING PAGE RENDERING ============== */
-function renderLandingPrograms() {
-  const grid = document.getElementById('landingProgramGrid');
-  if (!grid) return;
-  grid.innerHTML = DB.program.map((p, idx) => `
-    <div class="card p-8 reveal ${idx % 2 === 1 ? 'md:mt-6' : ''}">
-      <div class="w-14 h-14 rounded-xl ${p.color==='gold'?'bg-[var(--accent)]/10 text-[var(--accent-2)]':'bg-[var(--nu-green)]/10 text-[var(--nu-green)]'} flex items-center justify-center text-2xl mb-6">
-        <i class="fa-solid ${p.icon}"></i>
-      </div>
-      <h3 class="font-display text-2xl font-bold uppercase mb-3">${p.title}</h3>
-      <p class="text-sm text-[var(--muted)] leading-relaxed mb-4 font-medium">${p.desc}</p>
-    </div>
-  `).join('');
+// Wrapper untuk kompatibilitas dengan kode lama
+function loadDB() { loadDBLocal(); }
+function saveDB() { 
+  saveDBLocal(); 
+  // Auto-sync ke Supabase (non-blocking)
+  if (isSupabaseReady) syncToSupabase().catch(e => console.warn('Sync failed:', e));
 }
 
-function renderLandingTeachers() {
-  const grid = document.getElementById('landingTeacherGrid');
-  if (!grid) return;
-  grid.innerHTML = DB.guru.map((g, idx) => `
-    <div class="card overflow-hidden reveal ${idx % 2 === 1 ? 'md:mt-8' : ''}">
-      <div class="photo-frame" style="aspect-ratio: 1/1;">
-        <img src="${g.img}" alt="${g.name}">
-        <div class="absolute bottom-3 left-3 right-3 z-10">
-          <div class="text-[10px] uppercase tracking-widest text-[var(--accent)] mb-1 font-bold">${g.role}</div>
-          <div class="font-display text-xl font-bold leading-tight uppercase text-white">${g.name}</div>
-        </div>
-      </div>
-    </div>
-  `).join('');
-  // Re-observe new elements
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+/* ============== SUPABASE SYNC FUNCTIONS ============== */
+
+// Load semua data dari Supabase
+async function syncFromSupabase() {
+  if (!isSupabaseReady) return;
+  
+  try {
+    isSyncing = true;
+    
+    const tables = ['ppdb', 'siswa', 'guru', 'program', 'galeri', 'pesan'];
+    const results = await Promise.all(
+      tables.map(t => supabaseClient.from(t).select('*'))
+    );
+    
+    // Mapping data (konversi nama kolom)
+    if (results[0].data) DB.ppdb = results[0].data.map(r => ({
+      id: r.id, regNum: r.reg_num, name: r.name, gender: r.gender,
+      school: r.school, dob: r.dob, parent: r.parent, mother: r.mother,
+      phone: r.phone, address: r.address, date: r.date, status: r.status
+    }));
+    
+    if (results[1].data) DB.siswa = results[1].data;
+    if (results[2].data) DB.guru = results[2].data;
+    
+    if (results[3].data) DB.program = results[3].data.map(r => ({
+      id: r.id, icon: r.icon, title: r.title, desc: r.description, color: r.color
+    }));
+    
+    if (results[4].data) DB.galeri = results[4].data.map(r => ({
+      id: r.id, img: r.img, title: r.title, cat: r.cat, desc: r.description
+    }));
+    
+    if (results[5].data) DB.pesan = results[5].data.map(r => ({
+      id: r.id, name: r.name, email: r.email, phone: r.phone,
+      subject: r.subject, msg: r.msg, date: r.date, read: r.is_read
+    }));
+    
+    // Load settings
+    const { data: settingsData, error: settingsErr } = await supabaseClient
+      .from('settings').select('*').eq('id', 1).maybeSingle();
+    
+    if (!settingsErr && settingsData?.data) {
+      DB.settings = { ...DEFAULT_DB.settings, ...settingsData.data };
+    }
+    
+    // Simpan ke localStorage sebagai cache
+    saveDBLocal();
+    
+    // Re-render UI jika admin sedang aktif
+    if (!document.getElementById('adminLayout').classList.contains('is-hidden')) {
+      renderRecentPPDB(); renderPPDBTable(); renderSiswaTable();
+      renderGuru(); renderProgram(); renderPesan();
+      updateBadges(); loadSettingsForm();
+    }
+    renderLandingPrograms(); renderLandingTeachers(); renderLandingGallery(landingGalleryFilter);
+    
+    console.log('✅ Synced from Supabase');
+  } catch (e) {
+    console.error('❌ Sync from Supabase failed:', e);
+  } finally {
+    isSyncing = false;
+  }
 }
 
-let landingGalleryFilter = 'all';
-function renderLandingGallery(cat) {
-  if (cat) landingGalleryFilter = cat;
-  const grid = document.getElementById('landingGalleryGrid');
-  if (!grid) return;
+// Sync semua data ke Supabase (upsert)
+async function syncToSupabase() {
+  if (!isSupabaseReady || isSyncing) return;
   
-  let data = DB.galeri;
-  if (landingGalleryFilter !== 'all') data = data.filter(g => g.cat === landingGalleryFilter);
-  
-  grid.innerHTML = data.length ? data.map((g, idx) => `
-    <div class="card overflow-hidden reveal ${idx % 2 === 1 ? 'md:mt-6' : ''}">
-      <div class="aspect-[4/3] overflow-hidden">
-        <img src="${g.img}" class="w-full h-full object-cover transition duration-500 hover:scale-105">
-      </div>
-      <div class="p-4">
-        <span class="pill pill-accent text-[10px] mb-2">${g.cat}</span>
-        <h4 class="font-display text-lg font-bold uppercase">${g.title}</h4>
-        <p class="text-xs text-[var(--muted)] mt-1">${g.desc}</p>
-      </div>
-    </div>
-  `).join('') : `<div class="col-span-full text-center py-16 text-[var(--muted)]"><i class="fa-solid fa-images text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada foto.</p></div>`;
-  
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-}
-
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => { 
-      b.classList.remove('border-[var(--accent)]', 'bg-[var(--accent)]', 'text-[var(--fg)]');
-      b.classList.add('border-[var(--border-2)]', 'text-[var(--fg-2)]');
+  try {
+    // Settings
+    await supabaseClient.from('settings').upsert({
+      id: 1, data: DB.settings, updated_at: new Date().toISOString()
     });
-    btn.classList.add('border-[var(--accent)]', 'bg-[var(--accent)]', 'text-[var(--fg)]');
-    btn.classList.remove('border-[var(--border-2)]', 'text-[var(--fg-2)]');
-    renderLandingGallery(btn.dataset.filter);
-  });
-});
-
-// Initial render for landing page
-renderLandingPrograms();
-renderLandingTeachers();
-renderLandingGallery('all');
-
-/* ============== PPDB PUBLIC FORM LOGIC ============== */
-function showPPDBForm() {
-  document.getElementById('ppdbFormOverlay').classList.remove('is-hidden');
-}
-function hidePPDBForm() {
-  document.getElementById('ppdbFormOverlay').classList.add('is-hidden');
-}
-function hidePPDBCard() {
-  document.getElementById('ppdbCardOverlay').classList.add('is-hidden');
-}
-
-document.getElementById('ppdbPublicForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  
-  loadDB();
-  
-  const regNum = 'PPDB-2025-' + Math.floor(1000 + Math.random() * 9000);
-  
-  const newApplicant = {
-    id: Date.now(),
-    regNum: regNum,
-    name: document.getElementById('regName').value,
-    gender: document.getElementById('regGender').value,
-    school: document.getElementById('regSchool').value,
-    dob: document.getElementById('regDob').value,
-    parent: document.getElementById('regFather').value,
-    mother: document.getElementById('regMother').value,
-    phone: document.getElementById('regPhone').value,
-    address: document.getElementById('regAddress').value,
-    date: new Date().toISOString().split('T')[0],
-    status: 'pending'
-  };
-  
-  if (!DB.ppdb) DB.ppdb = [];
-  DB.ppdb.unshift(newApplicant);
-  saveDB();
-  
-  document.getElementById('cardRegNum').textContent = regNum;
-  document.getElementById('cardName').textContent = newApplicant.name;
-  document.getElementById('cardSchool').textContent = newApplicant.school;
-  document.getElementById('cardDate').textContent = newApplicant.date;
-  
-  JsBarcode("#barcodeSvg", regNum, {
-    format: "CODE128",
-    lineColor: "#1a1d21",
-    width: 1.5,
-    height: 40,
-    displayValue: true,
-    fontSize: 11,
-    fontOptions: "bold",
-    textMargin: 4,
-    margin: 0,
-    padding: 0
-  });
-  
-  document.getElementById('ppdbFormOverlay').classList.add('is-hidden');
-  document.getElementById('ppdbCardOverlay').classList.remove('is-hidden');
-});
-
-function downloadPPDBCard() {
-  const cardElement = document.getElementById('ppdbCard');
-  showToast('Sedang membuat PDF...', 'success');
-  
-  html2canvas(cardElement, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
-    const imgData = canvas.toDataURL('image/png');
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF('p', 'mm', 'a4');
     
-    const imgWidth = 100; 
-    const imgHeight = canvas.height * imgWidth / canvas.width;
-    const x = (210 - imgWidth) / 2; 
-    const y = 50; 
+    // PPDB
+    if (DB.ppdb.length) {
+      const ppdbData = DB.ppdb.map(p => ({
+        id: p.id, reg_num: p.regNum || null, name: p.name, gender: p.gender,
+        school: p.school, dob: p.dob, parent: p.parent, mother: p.mother,
+        phone: p.phone, address: p.address, date: p.date, status: p.status
+      }));
+      await supabaseClient.from('ppdb').upsert(ppdbData);
+    }
     
-    pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
-    pdf.save("Kartu_PPDB_SMP_NU_Tugasari.pdf");
-    showToast('PDF berhasil diunduh!', 'success');
-  });
-}
-
-/* ============== ADMIN TRIGGER & AUTH ============== */
-function showAdminLogin(view = 'dashboard') {
-  document.getElementById('loginScreen').classList.remove('is-hidden');
-}
-function hideAdminLogin() {
-  document.getElementById('loginScreen').classList.add('is-hidden');
-}
-
-document.getElementById('loginForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const user = document.getElementById('loginUser').value;
-  const pass = document.getElementById('loginPass').value;
-  
-  if (user === 'admin' && pass === 'admin123') {
-    showToast('Selamat datang, Admin!', 'success');
-    document.getElementById('loginScreen').classList.add('is-hidden');
-    document.getElementById('landingPage').classList.add('is-hidden');
-    document.getElementById('adminLayout').classList.remove('is-hidden');
-    document.body.style.overflow = 'auto';
-    initDashboard();
-  } else {
-    showToast('Username atau password salah.', 'error');
+    // Siswa
+    if (DB.siswa.length) {
+      await supabaseClient.from('siswa').upsert(DB.siswa);
+    }
+    
+    // Guru
+    if (DB.guru.length) {
+      await supabaseClient.from('guru').upsert(DB.guru);
+    }
+    
+    // Program
+    if (DB.program.length) {
+      const progData = DB.program.map(p => ({
+        id: p.id, icon: p.icon, title: p.title, description: p.desc, color: p.color
+      }));
+      await supabaseClient.from('program').upsert(progData);
+    }
+    
+    // Galeri
+    if (DB.galeri.length) {
+      const galData = DB.galeri.map(g => ({
+        id: g.id, img: g.img, title: g.title, cat: g.cat, description: g.desc
+      }));
+      await supabaseClient.from('galeri').upsert(galData);
+    }
+    
+    // Pesan
+    if (DB.pesan.length) {
+      const pesanData = DB.pesan.map(p => ({
+        id: p.id, name: p.name, email: p.email, phone: p.phone,
+        subject: p.subject, msg: p.msg, date: p.date, is_read: !!p.read
+      }));
+      await supabaseClient.from('pesan').upsert(pesanData);
+    }
+    
+    console.log('✅ Synced to Supabase');
+  } catch (e) {
+    console.error('❌ Sync to Supabase failed:', e);
   }
-});
-
-document.getElementById('togglePass').addEventListener('click', () => {
-  const inp = document.getElementById('loginPass');
-  const icon = document.querySelector('#togglePass i');
-  if (inp.type === 'password') { inp.type = 'text'; icon.className = 'fa-solid fa-eye-slash'; }
-  else { inp.type = 'password'; icon.className = 'fa-solid fa-eye'; }
-});
-
-function logout() {
-  document.getElementById('adminLayout').classList.add('is-hidden');
-  document.getElementById('landingPage').classList.remove('is-hidden');
-  showToast('Anda telah keluar dari sistem.', 'success');
 }
 
-function backToSite() {
-  document.getElementById('adminLayout').classList.add('is-hidden');
-  document.getElementById('landingPage').classList.remove('is-hidden');
-  // Render ulang data landing page agar terupdate
-  renderLandingPrograms();
-  renderLandingTeachers();
-  renderLandingGallery(landingGalleryFilter);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+// Sinkronisasi single record (lebih efisien untuk operasi CRUD tunggal)
+async function syncRecord(table, record, mode = 'upsert') {
+  if (!isSupabaseReady) return;
+  
+  try {
+    // Mapping kolom
+    let payload = { ...record };
+    let tableName = table;
+    
+    if (table === 'ppdb') {
+      payload = {
+        id: record.id, reg_num: record.regNum, name: record.name,
+        gender: record.gender, school: record.school, dob: record.dob,
+        parent: record.parent, mother: record.mother, phone: record.phone,
+        address: record.address, date: record.date, status: record.status
+      };
+    } else if (table === 'program') {
+      payload = {
+        id: record.id, icon: record.icon, title: record.title,
+        description: record.desc, color: record.color
+      };
+    } else if (table === 'galeri') {
+      payload = {
+        id: record.id, img: record.img, title: record.title,
+        cat: record.cat, description: record.desc
+      };
+    } else if (table === 'pesan') {
+      payload = {
+        id: record.id, name: record.name, email: record.email,
+        phone: record.phone, subject: record.subject, msg: record.msg,
+        date: record.date, is_read: !!record.read
+      };
+    }
+    
+    if (mode === 'upsert') {
+      await supabaseClient.from(tableName).upsert(payload);
+    } else if (mode === 'delete') {
+      await supabaseClient.from(tableName).delete().eq('id', record.id);
+    }
+  } catch (e) {
+    console.error(`Sync ${mode} ${table} failed:`, e);
+  }
 }
+
+/* ============== INITIAL LOAD ============== */
+loadDBLocal();
+
+// Jika Supabase terkonfigurasi, sync dari cloud di background
+if (isSupabaseReady) {
+  syncFromSupabase().then(() => {
+    // Re-render setelah sync awal
+    renderLandingPrograms();
+    renderLandingTeachers();
+    renderLandingGallery(landingGalleryFilter);
+  });
+  
+  // Setup Realtime subscription (opsional - live update)
+  supabaseClient
+    .channel('smpnu-changes')
+    .on('postgres_changes', { event: '*', schema: 'public' }, (payload) => {
+      console.log('📡 Realtime update:', payload.tableName, payload.eventType);
+      // Refresh data ketika ada perubahan dari sumber lain
+      syncFromSupabase();
+    })
+    .subscribe();
+}
+
+// Auto-sync setiap 30 detik (fallback jika realtime gagal)
+setInterval(() => {
+  if (isSupabaseReady && !isSyncing) {
+    syncFromSupabase();
+  }
+}, 30000);
 
 /* ============== ADMIN NAVIGATION ============== */
 document.querySelectorAll('.nav-link[data-view]').forEach(link => {
@@ -2443,20 +2475,11 @@ function updatePPDBStatus(id, status) {
 function deletePPDB(id) {
   if (!confirm('Hapus data pendaftar ini?')) return;
   DB.ppdb = DB.ppdb.filter(p => p.id !== id);
-  saveDB(); renderPPDBTable(); renderRecentPPDB(); updateBadges();
+  saveDB(); 
+  syncRecord('ppdb', { id }, 'delete');  // ← tambahkan baris ini
+  renderPPDBTable(); renderRecentPPDB(); updateBadges();
   showToast('Data pendaftar dihapus.', 'success');
 }
-
-document.querySelectorAll('.filter-ppdb').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-ppdb').forEach(b => { b.classList.remove('btn-primary'); b.classList.add('btn-ghost'); });
-    btn.classList.remove('btn-ghost'); btn.classList.add('btn-primary');
-    ppdbFilter = btn.dataset.status;
-    renderPPDBTable();
-  });
-});
-document.addEventListener('input', (e) => { if (e.target.id === 'searchPPDB') renderPPDBTable(); });
-
 // SISWA CRUD
 function renderSiswaTable() {
   let data = DB.siswa;
@@ -2520,11 +2543,11 @@ function openSiswaModal(id = null) {
 function deleteSiswa(id) {
   if (!confirm('Hapus data siswa ini?')) return;
   DB.siswa = DB.siswa.filter(s => s.id !== id);
-  saveDB(); renderSiswaTable(); updateBadges();
+  saveDB(); 
+  syncRecord('siswa', { id }, 'delete');  // ← tambahkan
+  renderSiswaTable(); updateBadges();
   showToast('Data siswa dihapus.', 'success');
 }
-document.addEventListener('input', (e) => { if (e.target.id === 'searchSiswa' || e.target.id === 'filterKelasSiswa') renderSiswaTable(); });
-
 // GURU CRUD
 function renderGuru() {
   document.getElementById('guruGrid').innerHTML = DB.guru.map(g => `
@@ -2584,7 +2607,9 @@ function openGuruModal(id = null) {
 function deleteGuru(id) {
   if (!confirm('Hapus data guru ini?')) return;
   DB.guru = DB.guru.filter(g => g.id !== id);
-  saveDB(); renderGuru(); updateBadges(); renderLandingTeachers();
+  saveDB(); 
+  syncRecord('guru', { id }, 'delete');  // ← tambahkan
+  renderGuru(); updateBadges(); renderLandingTeachers();
   showToast('Data guru dihapus.', 'success');
 }
 
@@ -2643,7 +2668,9 @@ function openProgramModal(id = null) {
 function deleteProgram(id) {
   if (!confirm('Hapus program ini?')) return;
   DB.program = DB.program.filter(p => p.id !== id);
-  saveDB(); renderProgram(); renderLandingPrograms();
+  saveDB(); 
+  syncRecord('program', { id }, 'delete');  // ← tambahkan
+  renderProgram(); renderLandingPrograms();
   showToast('Program dihapus.', 'success');
 }
 
@@ -2713,10 +2740,11 @@ function openGaleriModal(id = null) {
 function deleteGaleri(id) {
   if (!confirm('Hapus foto ini?')) return;
   DB.galeri = DB.galeri.filter(g => g.id !== id);
-  saveDB(); renderGaleri(); renderLandingGallery(landingGalleryFilter);
+  saveDB(); 
+  syncRecord('galeri', { id }, 'delete');  // ← tambahkan
+  renderGaleri(); renderLandingGallery(landingGalleryFilter);
   showToast('Foto dihapus.', 'success');
 }
-
 document.querySelectorAll('.filter-gallery').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-gallery').forEach(b => { b.classList.remove('btn-primary'); b.classList.add('btn-ghost'); });
@@ -2781,6 +2809,7 @@ function deletePesan(id) {
   if (!confirm('Hapus pesan ini?')) return;
   DB.pesan = DB.pesan.filter(p => p.id !== id);
   saveDB();
+  syncRecord('pesan', { id }, 'delete');  // ← tambahkan
   document.getElementById('pesanDetail').innerHTML = `<div class="text-center py-16 text-[var(--muted)]"><i class="fa-solid fa-envelope-open text-5xl mb-4 opacity-30"></i><p class="font-medium">Pilih pesan dari daftar untuk membaca</p></div>`;
   document.getElementById('pesanAvatar').textContent = '?';
   document.getElementById('pesanSender').textContent = 'Pilih Pesan';
