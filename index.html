@@ -10,7 +10,6 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<!-- Mengganti JsBarcode dengan QRCode.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -120,10 +119,7 @@
   .modal-header { padding: 18px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
   .modal-body { padding: 24px; }
   .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; background: var(--card-2); }
-  
-  /* Perbaikan Scroll Overlay */
   .login-overlay { position: fixed; inset: 0; z-index: 9999; background: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(212,175,55,0.15), transparent 60%), radial-gradient(ellipse 60% 50% at 90% 80%, rgba(0,106,62,0.1), transparent 60%), var(--fg); display: flex; align-items: flex-start; justify-content: center; padding: 24px 16px; overflow-y: auto; }
-  
   .view { display: none; animation: fadeIn 0.4s; }
   .view.active { display: block; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -158,7 +154,7 @@
   input[type="file"].input::file-selector-button { background: var(--accent); color: var(--fg); border: none; padding: 8px 14px; border-radius: 4px; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; cursor: pointer; transition: all 0.2s; margin-right: 12px; }
   input[type="file"].input::file-selector-button:hover { background: var(--accent-2); color: #fff; }
   
-  /* PPDB Card Fix (Tanpa Blur agar html2canvas tidak error) + Border Pinggir */
+  /* Kartu PPDB */
   .ppdb-card-container { background: #ffffff; border-radius: 18px; width: 100%; max-width: 380px; box-shadow: 0 25px 70px rgba(0,0,0,0.18); position: relative; overflow: hidden; font-family: 'Inter', sans-serif; border: 3px solid var(--accent); }
   .ppdb-card-container::after { content: ''; position: absolute; inset: 5px; border: 1px solid rgba(212,175,55,0.5); border-radius: 14px; pointer-events: none; z-index: 3; }
   .ppdb-card-bg { position: absolute; top: 0; left: 0; right: 0; height: 150px; background: linear-gradient(135deg, #1a1d21 0%, #2a2e35 50%, #1a1d21 100%); overflow: hidden; }
@@ -184,12 +180,12 @@
   .ppdb-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px dashed #ddd; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
   .ppdb-card-footer .accent-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; display: inline-block; margin-right: 6px; }
 
-  /* Styling untuk QR Code di dalam kartu - Fix Mobile & Dobel Issue */
+  /* QR Code Fix Tunggal & Mobile */
   #qrcode { display: flex; justify-content: center; align-items: center; padding: 5px; background: #fff; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); width: 100px; height: 100px; margin: 0 auto; }
   #qrcode canvas { display: block !important; width: 90px !important; height: 90px !important; }
-  #qrcode img { display: none !important; } /* Sembunyikan img fallback karena kita pakai canvas */
+  #qrcode img { display: none !important; }
 
-  /* Notification Dropdown */
+  /* Notifikasi & Lainnya */
   .notif-dropdown { position: absolute; top: calc(100% + 8px); right: 0; width: 360px; max-height: 480px; background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); opacity: 0; visibility: hidden; transform: translateY(-8px); transition: all 0.25s; z-index: 100; overflow: hidden; }
   .notif-dropdown.open { opacity: 1; visibility: visible; transform: translateY(0); }
   .notif-item { padding: 14px 18px; border-bottom: 1px solid var(--bg-2); cursor: pointer; transition: all 0.2s; display: flex; gap: 12px; }
@@ -208,8 +204,6 @@
   .visitor-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); padding: 4px 10px; border-radius: 12px; font-size: 11px; color: rgba(255,255,255,0.8); font-weight: 600; }
   .ad-card { background: linear-gradient(135deg, #fff 0%, #fafafa 100%); border: 1px dashed var(--accent); border-radius: 12px; padding: 20px; position: relative; overflow: hidden; }
   .ad-card::before { content: 'IKLAN'; position: absolute; top: 8px; right: 8px; font-size: 9px; font-weight: 700; color: var(--muted); letter-spacing: 0.1em; }
-
-  /* Top Announcement Banner */
   .announcement-bar { background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%); color: var(--fg); padding: 10px 0; text-align: center; font-size: 14px; font-weight: 600; display: none; }
   .announcement-bar a { text-decoration: underline; margin-left: 8px; font-weight: 700; cursor: pointer; }
   .announcement-bar.show { display: block; }
@@ -218,284 +212,266 @@
 <body>
 <div class="noise-overlay"></div>
 
-<!-- ============================================== -->
-<!-- ============== LANDING PAGE ================== -->
-<!-- ============================================== -->
 <div id="landingPage">
-
-<!-- TOP INFO BAR -->
-<div class="bg-[var(--fg)] text-white text-xs py-2 hidden md:block">
-  <div class="max-w-7xl mx-auto px-6 lg:px-10 flex justify-between items-center">
-    <div class="flex items-center gap-6">
-      <span class="flex items-center gap-2 opacity-80"><i class="fa-solid fa-location-dot text-[var(--accent)]"></i> Jl. Raya Tugasari, Kec. Tugasari, Kab. [Nama Kabupaten]</span>
-      <span class="flex items-center gap-2 opacity-80"><i class="fa-solid fa-phone text-[var(--accent)]"></i> (0281) 123456</span>
-    </div>
-    <div class="flex items-center gap-4">
-      <span class="visitor-badge"><i class="fa-solid fa-eye"></i> Pengunjung: <strong id="visitorCountTop">0</strong></span>
-      <a href="#" class="hover:text-[var(--accent)] transition"><i class="fa-brands fa-instagram"></i></a>
-      <a href="#" class="hover:text-[var(--accent)] transition"><i class="fa-brands fa-youtube"></i></a>
-      <a href="#" class="hover:text-[var(--accent)] transition"><i class="fa-brands fa-whatsapp"></i></a>
-    </div>
-  </div>
-</div>
-
-<!-- ANNOUNCEMENT BANNER (ACTIVE FROM ADMIN) -->
-<div id="announcementBar" class="announcement-bar">
-  <i class="fa-solid fa-bullhorn mr-2"></i>
-  <span id="announcementText">PPDB 2025/2026 Telah Dibuka! Daftar sekarang sebelum kuota penuh!</span>
-  <a id="announcementLink" onclick="showPPDBForm()">Klik di sini</a>
-</div>
-
-<!-- NAVIGATION -->
-<nav id="nav" class="sticky top-0 z-50 transition-all duration-500 bg-white/95 backdrop-blur border-b border-[var(--border)]">
-  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-3 flex items-center justify-between">
-    <a href="#hero" class="flex items-center gap-3 group">
-      <img src="https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png?auth_key=1884695660-de0f9328e4e64f548587c2bb93eb5fff-0-5c6e793dce6f3db7ea648add1ded676b" alt="Logo SMP NU Tugasari" class="w-12 h-12 object-contain">
-      <div class="leading-none">
-        <div class="font-heading text-lg font-bold tracking-wider text-[var(--fg)]">SMP NU TUGASARI</div>
-        <div class="text-[10px] tracking-[0.2em] text-[var(--accent-2)] uppercase mt-1 font-bold">Yayasan Pendidikan Ma'arif</div>
+  <div class="bg-[var(--fg)] text-white text-xs py-2 hidden md:block">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 flex justify-between items-center">
+      <div class="flex items-center gap-6">
+        <span class="flex items-center gap-2 opacity-80"><i class="fa-solid fa-location-dot text-[var(--accent)]"></i> Jl. Raya Tugasari, Kec. Tugasari, Kab. [Nama Kabupaten]</span>
+        <span class="flex items-center gap-2 opacity-80"><i class="fa-solid fa-phone text-[var(--accent)]"></i> (0281) 123456</span>
       </div>
-    </a>
-    <div class="hidden lg:flex items-center gap-8 text-sm font-semibold text-[var(--fg-2)]">
-      <div class="nav-item"><a href="#hero" class="flex items-center gap-1 hover:text-[var(--accent)] transition uppercase tracking-wide text-xs">Beranda <i class="fa-solid fa-chevron-down text-[8px]"></i></a><div class="dropdown-menu"><a href="#about">Profil Sekolah</a><a href="#visi-misi">Visi & Misi</a></div></div>
-      <div class="nav-item"><a href="#programs" class="flex items-center gap-1 hover:text-[var(--accent)] transition uppercase tracking-wide text-xs">Program <i class="fa-solid fa-chevron-down text-[8px]"></i></a><div class="dropdown-menu"><a href="#programs">Tahfidz Al-Qur'an</a><a href="#programs">IT & Multimedia</a></div></div>
-      <div class="nav-item"><a href="#activities" class="flex items-center gap-1 hover:text-[var(--accent)] transition uppercase tracking-wide text-xs">Kegiatan <i class="fa-solid fa-chevron-down text-[8px]"></i></a><div class="dropdown-menu"><a href="#activities">Ekstrakurikuler</a><a href="#activities">Prestasi</a><a href="#activities">Galeri</a></div></div>
-      <a href="#teachers" class="hover:text-[var(--accent)] transition uppercase tracking-wide text-xs">Guru</a>
-      <a href="#contact" class="hover:text-[var(--accent)] transition uppercase tracking-wide text-xs">Kontak</a>
-    </div>
-    <div class="flex items-center gap-2 md:gap-3">
-      <button onclick="showPPDBForm()" class="hidden md:inline-flex items-center gap-2 px-4 py-2.5 rounded-md text-xs font-bold uppercase tracking-wider bg-[var(--accent)] text-[var(--fg)] hover:bg-[var(--fg)] hover:text-[var(--accent)] transition cursor-pointer"><i class="fa-solid fa-file-pen"></i> PPDB Online</button>
-      <button onclick="showAdminLogin('dashboard')" class="hidden md:inline-flex items-center gap-2 px-4 py-2.5 rounded-md text-xs font-bold uppercase tracking-wider border-2 border-[var(--border-2)] text-[var(--fg-2)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition cursor-pointer"><i class="fa-solid fa-lock"></i> Admin</button>
-      <button id="menuBtn" class="lg:hidden text-xl text-[var(--fg)]"><i class="fa-solid fa-bars"></i></button>
-    </div>
-  </div>
-  <div id="mobileMenu" class="hidden lg:hidden border-t border-[var(--border)] bg-white">
-    <div class="px-6 py-4 flex flex-col gap-3 text-sm font-semibold">
-      <a href="#about" class="py-2">Profil Sekolah</a>
-      <a href="#visi-misi" class="py-2">Visi & Misi</a>
-      <a href="#programs" class="py-2">Program Unggulan</a>
-      <a href="#activities" class="py-2">Kegiatan & Galeri</a>
-      <a href="#teachers" class="py-2">Guru</a>
-      <a href="#contact" class="py-2">Kontak</a>
-      <div class="grid grid-cols-2 gap-2 mt-2">
-        <button onclick="showPPDBForm()" class="btn-primary text-xs">PPDB Online</button>
-        <button onclick="showAdminLogin('dashboard')" class="btn-ghost text-xs">Login Admin</button>
+      <div class="flex items-center gap-4">
+        <span class="visitor-badge"><i class="fa-solid fa-eye"></i> Pengunjung: <strong id="visitorCountTop">0</strong></span>
+        <a href="#" class="hover:text-[var(--accent)] transition"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" class="hover:text-[var(--accent)] transition"><i class="fa-brands fa-youtube"></i></a>
+        <a href="#" class="hover:text-[var(--accent)] transition"><i class="fa-brands fa-whatsapp"></i></a>
       </div>
     </div>
   </div>
-</nav>
 
-<!-- HERO -->
-<section id="hero" class="hero-bg relative min-h-screen flex items-center pt-16 pb-20 overflow-hidden">
-  <div class="orb" style="width:500px;height:500px;background:var(--accent);top:-100px;left:-100px;"></div>
-  <div class="orb" style="width:400px;height:400px;background:var(--nu-green);bottom:-50px;right:-50px;opacity:0.1;animation-delay:-6s;"></div>
-  <div class="thread-line" style="top:30%;left:0;right:0;"></div>
-  <div class="thread-line" style="top:70%;left:0;right:0;opacity:0.4;"></div>
-  <div class="max-w-7xl mx-auto px-6 lg:px-10 w-full relative z-10">
-    <div class="grid lg:grid-cols-12 gap-12 items-center">
-      <div class="lg:col-span-7">
-        <div class="flex items-center gap-3 mb-8">
-          <span class="pill pill-accent"><span class="w-2 h-2 rounded-full bg-[var(--fg)] animate-pulse"></span> Penerimaan Peserta Didik Baru (PPDB) 2025/2026 Telah Dibuka!</span>
+  <div id="announcementBar" class="announcement-bar">
+    <i class="fa-solid fa-bullhorn mr-2"></i>
+    <span id="announcementText">PPDB 2025/2026 Telah Dibuka! Daftar sekarang sebelum kuota penuh!</span>
+    <a id="announcementLink" onclick="showPPDBForm()">Klik di sini</a>
+  </div>
+
+  <nav id="nav" class="sticky top-0 z-50 transition-all duration-500 bg-white/95 backdrop-blur border-b border-[var(--border)]">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-3 flex items-center justify-between">
+      <a href="#hero" class="flex items-center gap-3 group">
+        <img src="https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png?auth_key=1884695660-de0f9328e4e64f548587c2bb93eb5fff-0-5c6e793dce6f3db7ea648add1ded676b" alt="Logo SMP NU Tugasari" class="w-12 h-12 object-contain">
+        <div class="leading-none">
+          <div class="font-heading text-lg font-bold tracking-wider text-[var(--fg)]">SMP NU TUGASARI</div>
+          <div class="text-[10px] tracking-[0.2em] text-[var(--accent-2)] uppercase mt-1 font-bold">Yayasan Pendidikan Ma'arif</div>
         </div>
-        <h1 class="hero-title font-display font-bold text-[60px] lg:text-[80px] leading-[0.9] tracking-tight mb-8 uppercase">
-          Membentuk <span style="color:var(--nu-green);">Generasi</span><br><span style="color:var(--accent);">Qur'ani</span> Terampil & Cerdas
-        </h1>
-        <p class="text-lg text-[var(--fg-2)] max-w-xl mb-10 leading-relaxed font-medium">Selamat datang di SMP NU TUGASARI. Sekolah Menengah Pertama di Bawah Naungan Yayasan Pendidikan Ma'arif Nahdlatul Ulama yang Berkomitmen Mencetak Siswa-Siswi Berakhlak Mulia, Mandiri, dan Menguasai IPTEK.</p>
-        <div class="flex flex-wrap gap-4 mb-12">
-          <button onclick="showPPDBForm()" class="btn-primary"><i class="fa-solid fa-user-plus mr-2"></i> Pendaftaran Online</button>
-          <a href="#about" class="btn-ghost"><i class="fa-solid fa-circle-info mr-2"></i> Tentang Kami</a>
-        </div>
-        <div class="grid grid-cols-3 gap-6 max-w-xl pt-8 border-t border-[var(--border)]">
-          <div><div class="stat-num text-5xl">B</div><div class="text-[10px] text-[var(--muted)] uppercase tracking-widest mt-1 font-bold">Terakreditasi</div></div>
-          <div><div class="stat-num text-5xl">100%</div><div class="text-[10px] text-[var(--muted)] uppercase tracking-widest mt-1 font-bold">Lulusan Diterima</div></div>
-          <div><div class="stat-num text-5xl">5+</div><div class="text-[10px] text-[var(--muted)] uppercase tracking-widest mt-1 font-bold">Ekstrakurikuler</div></div>
+      </a>
+      <div class="hidden lg:flex items-center gap-8 text-sm font-semibold text-[var(--fg-2)]">
+        <div class="nav-item"><a href="#hero" class="flex items-center gap-1 hover:text-[var(--accent)] transition uppercase tracking-wide text-xs">Beranda <i class="fa-solid fa-chevron-down text-[8px]"></i></a><div class="dropdown-menu"><a href="#about">Profil Sekolah</a><a href="#visi-misi">Visi & Misi</a></div></div>
+        <div class="nav-item"><a href="#programs" class="flex items-center gap-1 hover:text-[var(--accent)] transition uppercase tracking-wide text-xs">Program <i class="fa-solid fa-chevron-down text-[8px]"></i></a><div class="dropdown-menu"><a href="#programs">Tahfidz Al-Qur'an</a><a href="#programs">IT & Multimedia</a></div></div>
+        <div class="nav-item"><a href="#activities" class="flex items-center gap-1 hover:text-[var(--accent)] transition uppercase tracking-wide text-xs">Kegiatan <i class="fa-solid fa-chevron-down text-[8px]"></i></a><div class="dropdown-menu"><a href="#activities">Ekstrakurikuler</a><a href="#activities">Prestasi</a><a href="#activities">Galeri</a></div></div>
+        <a href="#teachers" class="hover:text-[var(--accent)] transition uppercase tracking-wide text-xs">Guru</a>
+        <a href="#contact" class="hover:text-[var(--accent)] transition uppercase tracking-wide text-xs">Kontak</a>
+      </div>
+      <div class="flex items-center gap-2 md:gap-3">
+        <button onclick="showPPDBForm()" class="hidden md:inline-flex items-center gap-2 px-4 py-2.5 rounded-md text-xs font-bold uppercase tracking-wider bg-[var(--accent)] text-[var(--fg)] hover:bg-[var(--fg)] hover:text-[var(--accent)] transition cursor-pointer"><i class="fa-solid fa-file-pen"></i> PPDB Online</button>
+        <button onclick="showAdminLogin('dashboard')" class="hidden md:inline-flex items-center gap-2 px-4 py-2.5 rounded-md text-xs font-bold uppercase tracking-wider border-2 border-[var(--border-2)] text-[var(--fg-2)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition cursor-pointer"><i class="fa-solid fa-lock"></i> Admin</button>
+        <button id="menuBtn" class="lg:hidden text-xl text-[var(--fg)]"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+    <div id="mobileMenu" class="hidden lg:hidden border-t border-[var(--border)] bg-white">
+      <div class="px-6 py-4 flex flex-col gap-3 text-sm font-semibold">
+        <a href="#about" class="py-2">Profil Sekolah</a>
+        <a href="#visi-misi" class="py-2">Visi & Misi</a>
+        <a href="#programs" class="py-2">Program Unggulan</a>
+        <a href="#activities" class="py-2">Kegiatan & Galeri</a>
+        <a href="#teachers" class="py-2">Guru</a>
+        <a href="#contact" class="py-2">Kontak</a>
+        <div class="grid grid-cols-2 gap-2 mt-2">
+          <button onclick="showPPDBForm()" class="btn-primary text-xs">PPDB Online</button>
+          <button onclick="showAdminLogin('dashboard')" class="btn-ghost text-xs">Login Admin</button>
         </div>
       </div>
-      <div class="lg:col-span-5 relative">
-        <div class="relative">
-          <div class="absolute inset-0 pattern-grid rounded-3xl opacity-50"></div>
-          <div class="relative logo-float flex justify-center items-center bg-white border border-[var(--border)] rounded-3xl shadow-2xl p-12">
-            <img src="https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png?auth_key=1884695660-de0f9328e4e64f548587c2bb93eb5fff-0-5c6e793dce6f3db7ea648add1ded676b" alt="Logo SMP NU Tugasari" class="w-full max-w-sm object-contain">
+    </div>
+  </nav>
+
+  <section id="hero" class="hero-bg relative min-h-screen flex items-center pt-16 pb-20 overflow-hidden">
+    <div class="orb" style="width:500px;height:500px;background:var(--accent);top:-100px;left:-100px;"></div>
+    <div class="orb" style="width:400px;height:400px;background:var(--nu-green);bottom:-50px;right:-50px;opacity:0.1;animation-delay:-6s;"></div>
+    <div class="thread-line" style="top:30%;left:0;right:0;"></div>
+    <div class="thread-line" style="top:70%;left:0;right:0;opacity:0.4;"></div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 w-full relative z-10">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7">
+          <div class="flex items-center gap-3 mb-8">
+            <span class="pill pill-accent"><span class="w-2 h-2 rounded-full bg-[var(--fg)] animate-pulse"></span> Penerimaan Peserta Didik Baru (PPDB) 2025/2026 Telah Dibuka!</span>
           </div>
-          <div class="mt-6 grid grid-cols-2 gap-4">
-            <div class="bg-white border border-[var(--border)] rounded-lg p-4 shadow-xl"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-md bg-[var(--accent)]/15 flex items-center justify-center text-[var(--accent-2)]"><i class="fa-solid fa-quran"></i></div><div><div class="text-[10px] text-[var(--muted)] uppercase font-bold">Program</div><div class="text-sm font-bold font-display uppercase">Tahfidz</div></div></div></div>
-            <div class="bg-white border border-[var(--border)] rounded-lg p-4 shadow-xl"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-md bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)]"><i class="fa-solid fa-laptop-code"></i></div><div><div class="text-[10px] text-[var(--muted)] uppercase font-bold">Unggulan</div><div class="text-sm font-bold font-display uppercase">IT</div></div></div></div>
+          <h1 class="hero-title font-display font-bold text-[60px] lg:text-[80px] leading-[0.9] tracking-tight mb-8 uppercase">
+            Membentuk <span style="color:var(--nu-green);">Generasi</span><br><span style="color:var(--accent);">Qur'ani</span> Terampil & Cerdas
+          </h1>
+          <p class="text-lg text-[var(--fg-2)] max-w-xl mb-10 leading-relaxed font-medium">Selamat datang di SMP NU TUGASARI. Sekolah Menengah Pertama di Bawah Naungan Yayasan Pendidikan Ma'arif Nahdlatul Ulama yang Berkomitmen Mencetak Siswa-Siswi Berakhlak Mulia, Mandiri, dan Menguasai IPTEK.</p>
+          <div class="flex flex-wrap gap-4 mb-12">
+            <button onclick="showPPDBForm()" class="btn-primary"><i class="fa-solid fa-user-plus mr-2"></i> Pendaftaran Online</button>
+            <a href="#about" class="btn-ghost"><i class="fa-solid fa-circle-info mr-2"></i> Tentang Kami</a>
+          </div>
+          <div class="grid grid-cols-3 gap-6 max-w-xl pt-8 border-t border-[var(--border)]">
+            <div><div class="stat-num text-5xl">B</div><div class="text-[10px] text-[var(--muted)] uppercase tracking-widest mt-1 font-bold">Terakreditasi</div></div>
+            <div><div class="stat-num text-5xl">100%</div><div class="text-[10px] text-[var(--muted)] uppercase tracking-widest mt-1 font-bold">Lulusan Diterima</div></div>
+            <div><div class="stat-num text-5xl">5+</div><div class="text-[10px] text-[var(--muted)] uppercase tracking-widest mt-1 font-bold">Ekstrakurikuler</div></div>
+          </div>
+        </div>
+        <div class="lg:col-span-5 relative">
+          <div class="relative">
+            <div class="absolute inset-0 pattern-grid rounded-3xl opacity-50"></div>
+            <div class="relative logo-float flex justify-center items-center bg-white border border-[var(--border)] rounded-3xl shadow-2xl p-12">
+              <img src="https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png?auth_key=1884695660-de0f9328e4e64f548587c2bb93eb5fff-0-5c6e793dce6f3db7ea648add1ded676b" alt="Logo SMP NU Tugasari" class="w-full max-w-sm object-contain">
+            </div>
+            <div class="mt-6 grid grid-cols-2 gap-4">
+              <div class="bg-white border border-[var(--border)] rounded-lg p-4 shadow-xl"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-md bg-[var(--accent)]/15 flex items-center justify-center text-[var(--accent-2)]"><i class="fa-solid fa-quran"></i></div><div><div class="text-[10px] text-[var(--muted)] uppercase font-bold">Program</div><div class="text-sm font-bold font-display uppercase">Tahfidz</div></div></div></div>
+              <div class="bg-white border border-[var(--border)] rounded-lg p-4 shadow-xl"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-md bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)]"><i class="fa-solid fa-laptop-code"></i></div><div><div class="text-[10px] text-[var(--muted)] uppercase font-bold">Unggulan</div><div class="text-sm font-bold font-display uppercase">IT</div></div></div></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="absolute bottom-0 left:0 right:0 border-t border-[var(--border)] py-4 overflow-hidden bg-white/50 backdrop-blur">
-    <div class="marquee text-sm font-bold font-display uppercase tracking-widest text-[var(--fg-2)]">
-      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> BERAKHLAK MULIA</span>
-      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> MANDIRI</span>
-      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> BERPIKIR KRITIS</span>
-      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> CINTA AL-QUR'AN</span>
-      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> MELESTARIKAN BUDAYA BANGSA</span>
-      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> BERAKHLAK MULIA</span>
-      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> MANDIRI</span>
-      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> BERPIKIR KRITIS</span>
-      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> CINTA AL-QUR'AN</span>
-      <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> MELESTARIKAN BUDAYA BANGSA</span>
+    <div class="absolute bottom-0 left:0 right:0 border-t border-[var(--border)] py-4 overflow-hidden bg-white/50 backdrop-blur">
+      <div class="marquee text-sm font-bold font-display uppercase tracking-widest text-[var(--fg-2)]">
+        <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> BERAKHLAK MULIA</span>
+        <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> MANDIRI</span>
+        <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> BERPIKIR KRITIS</span>
+        <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> CINTA AL-QUR'AN</span>
+        <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> MELESTARIKAN BUDAYA BANGSA</span>
+        <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> BERAKHLAK MULIA</span>
+        <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> MANDIRI</span>
+        <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> BERPIKIR KRITIS</span>
+        <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> CINTA AL-QUR'AN</span>
+        <span class="flex items-center gap-3"><i class="fa-solid fa-circle text-[6px] text-[var(--accent)]"></i> MELESTARIKAN BUDAYA BANGSA</span>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ABOUT / PROFIL SEKOLAH -->
-<section id="about" class="py-28 relative">
-  <div class="max-w-7xl mx-auto px-6 lg:px-10">
-    <div class="grid lg:grid-cols-12 gap-16 items-center">
-      <div class="lg:col-span-5 reveal">
-        <div class="section-num mb-4">— 01 / Tentang Kami</div>
-        <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none mb-8 uppercase">Pendidikan Berbasis <span style="color:var(--accent);">Nilai Islami</span></h2>
-        <p class="text-[var(--fg-2)] leading-relaxed mb-6 font-medium">SMP NU TUGASARI adalah lembaga pendidikan formal di bawah Yayasan Pendidikan Ma'arif yang berdedikasi menggabungkan kurikulum nasional dengan pendidikan karakter keislaman Ahlussunnah wal Jama'ah.</p>
-        <p class="text-[var(--fg-2)] leading-relaxed mb-8 font-medium">Dengan lingkungan asri dan fasilitas yang mendukung, kami menyiapkan generasi muda yang tidak hanya cerdas secara akademik, tetapi juga teguh dalam memegang nilai-nilai agama.</p>
-        <div class="space-y-4">
-          <div class="flex items-start gap-4"><div class="w-10 h-10 rounded-md bg-[var(--accent)]/10 flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-bullseye text-[var(--accent-2)]"></i></div><div><div class="font-bold font-display uppercase mb-1 text-lg">Visi</div><div class="text-sm text-[var(--muted)] font-medium">Terwujudnya generasi yang Qur'ani, berakhlak mulia, cerdas, dan mandiri.</div></div></div>
-          <div class="flex items-start gap-4"><div class="w-10 h-10 rounded-md bg-[var(--nu-green)] flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-handshake text-[var(--accent)]"></i></div><div><div class="font-bold font-display uppercase mb-1 text-lg">Misi</div><div class="text-sm text-[var(--muted)] font-medium">Menyelenggarakan pendidikan holistik yang memadukan IPTEK dan IMTAK.</div></div></div>
-        </div>
-      </div>
-      <div class="lg:col-span-7 reveal">
-        <div class="grid grid-cols-2 gap-5">
-          <div class="card p-6"><div class="flex items-center justify-between mb-4"><div class="w-12 h-12 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)] text-xl"><i class="fa-solid fa-school"></i></div><span class="text-[10px] text-[var(--muted)] uppercase font-bold">Akreditasi</span></div><div class="font-display text-4xl font-bold mb-1 uppercase">Grade B</div><div class="text-sm text-[var(--muted)] font-medium">Terakreditasi Unggul</div></div>
-          <div class="card p-6" style="margin-top: 32px;"><div class="flex items-center justify-between mb-4"><div class="w-12 h-12 rounded-lg bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)] text-xl"><i class="fa-solid fa-users"></i></div><span class="text-[10px] text-[var(--muted)] uppercase font-bold">Siswa</span></div><div class="font-display text-4xl font-bold mb-1 uppercase">100+</div><div class="text-sm text-[var(--muted)] font-medium">Siswa Aktif</div></div>
-          <div class="card p-6"><div class="flex items-center justify-between mb-4"><div class="w-12 h-12 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)] text-xl"><i class="fa-solid fa-chalkboard-user"></i></div><span class="text-[10px] text-[var(--muted)] uppercase font-bold">Pengajar</span></div><div class="font-display text-4xl font-bold mb-1 uppercase">15+</div><div class="text-sm text-[var(--muted)] font-medium">Guru & Staf Profesional</div></div>
-          <div class="card p-6" style="margin-top: 32px;"><div class="flex items-center justify-between mb-4"><div class="w-12 h-12 rounded-lg bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)] text-xl"><i class="fa-solid fa-award"></i></div><span class="text-[10px] text-[var(--muted)] uppercase font-bold">Prestasi</span></div><div class="font-display text-4xl font-bold mb-1 uppercase">10+</div><div class="text-sm text-[var(--muted)] font-medium">Penghargaan Tingkat Kecamatan & Kabupaten</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROGRAM UNGGULAN -->
-<section id="programs" class="py-28 relative" style="background: var(--bg-2);">
-  <div class="max-w-7xl mx-auto px-6 lg:px-10">
-    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16 reveal">
-      <div>
-        <div class="section-num mb-4">— 02 / Program Unggulan</div>
-        <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase">Keunggulan <span style="color:var(--accent);">Akademik</span><br>& Ekstrakurikuler</h2>
-      </div>
-      <p class="text-[var(--muted)] max-w-md text-sm leading-relaxed font-medium">Program dirancang untuk mengembangkan potensi akademik, spiritual, dan sosial siswa secara menyeluruh.</p>
-    </div>
-    <div class="grid sm:grid-cols-2 gap-6" id="landingProgramGrid"></div>
-  </div>
-</section>
-
-<!-- TEACHERS / GURU -->
-<section id="teachers" class="py-28 relative">
-  <div class="max-w-7xl mx-auto px-6 lg:px-10">
-    <div class="text-center mb-16 reveal">
-      <div class="section-num mb-4">— 03 / Tenaga Pendidik</div>
-      <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase">Tim <span style="color:var(--accent);">Pendidik</span> Profesional</h2>
-      <p class="text-[var(--muted)] max-w-xl mx-auto mt-4 font-medium">Didukung oleh guru-guru berpengalaman dan berkompeten di bidangnya masing-masing.</p>
-    </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" id="landingTeacherGrid"></div>
-  </div>
-</section>
-
-<!-- ACTIVITIES / GALERI -->
-<section id="activities" class="py-28 relative" style="background: var(--bg-2);">
-  <div class="max-w-7xl mx-auto px-6 lg:px-10">
-    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12 reveal">
-      <div>
-        <div class="section-num mb-4">— 04 / Galeri & Kegiatan</div>
-        <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase mb-3">Momen <span style="color:var(--accent);">Membanggakan</span></h2>
-        <p class="text-[var(--fg-2)] max-w-xl font-medium">Dokumentasi berbagai kegiatan dan prestasi siswa-siswi SMP NU Tugasari.</p>
-      </div>
-      <div class="flex gap-2 flex-wrap" id="filterBtns">
-        <button data-filter="all" class="filter-btn px-4 py-2 rounded-md text-xs font-bold uppercase border-2 border-[var(--accent)] bg-[var(--accent)] text-[var(--fg)]">Semua</button>
-        <button data-filter="akademik" class="filter-btn px-4 py-2 rounded-md text-xs font-bold uppercase border-2 border-[var(--border-2)] text-[var(--fg-2)] hover:border-[var(--fg)]">Akademik</button>
-        <button data-filter="religi" class="filter-btn px-4 py-2 rounded-md text-xs font-bold uppercase border-2 border-[var(--border-2)] text-[var(--fg-2)] hover:border-[var(--fg)]">Keagamaan</button>
-        <button data-filter="ekskul" class="filter-btn px-4 py-2 rounded-md text-xs font-bold uppercase border-2 border-[var(--border-2)] text-[var(--fg-2)] hover:border-[var(--fg)]">Ekstrakurikuler</button>
-      </div>
-    </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="landingGalleryGrid"></div>
-  </div>
-</section>
-
-<!-- TIMELINE / PPDB -->
-<section class="py-28 relative">
-  <div class="max-w-6xl mx-auto px-6 lg:px-10">
-    <div class="text-center mb-16 reveal">
-      <div class="section-num mb-4">— 05 / Penerimaan Siswa Baru</div>
-      <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase">Alur <span style="color:var(--accent);">PPDB 2025</span></h2>
-    </div>
-    <div class="grid md:grid-cols-2 gap-x:12 gap-y-2">
-      <div class="reveal">
-        <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 1</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Pendaftaran Online</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Pengisian formulir pendaftaran secara online melalui website resmi atau datang langsung ke sekretariat sekolah.</p></div>
-        <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 2</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Tes Seleksi & Wawancara</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Tes potensi akademik, wawancara calon siswa, dan tes potensi Tahfidz untuk kelas khusus.</p></div>
-      </div>
-      <div class="reveal">
-        <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 3</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Pengumuman</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Pengumuman hasil seleksi dapat dilihat di website atau papan pengumuman sekolah.</p></div>
-        <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 4</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Daftar Ulang</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Pembayaran Daftar Ulang dan pengukuran seragam untuk persiapan Masuk Sekolah (Mos).</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact" class="py-28 relative" style="background: var(--bg-2);">
-  <div class="max-w-6xl mx-auto px-6 lg:px-10">
-    <div class="card p-10 lg:p-16 relative overflow-hidden reveal">
-      <div class="orb" style="width:300px;height:300px;background:var(--accent);top:-100px;right:-50px;opacity:0.15;"></div>
-      <div class="grid lg:grid-cols-2 gap-12 relative z-10">
-        <div>
-          <div class="section-num mb-4">— 06 / Hubungi Kami</div>
-          <h2 class="font-display font-bold text-4xl lg:text-5xl leading-none mb-6 uppercase">Daftar atau <span style="color:var(--accent);">Tanya Jawab</span></h2>
-          <p class="text-[var(--fg-2)] mb-8 leading-relaxed font-medium">Hubungi kami untuk informasi lebih lanjut mengenai pendaftaran, kurikulum, atau kerja sama pendidikan.</p>
+  <section id="about" class="py-28 relative">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="grid lg:grid-cols-12 gap-16 items-center">
+        <div class="lg:col-span-5 reveal">
+          <div class="section-num mb-4">— 01 / Tentang Kami</div>
+          <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none mb-8 uppercase">Pendidikan Berbasis <span style="color:var(--accent);">Nilai Islami</span></h2>
+          <p class="text-[var(--fg-2)] leading-relaxed mb-6 font-medium">SMP NU TUGASARI adalah lembaga pendidikan formal di bawah Yayasan Pendidikan Ma'arif yang berdedikasi menggabungkan kurikulum nasional dengan pendidikan karakter keislaman Ahlussunnah wal Jama'ah.</p>
+          <p class="text-[var(--fg-2)] leading-relaxed mb-8 font-medium">Dengan lingkungan asri dan fasilitas yang mendukung, kami menyiapkan generasi muda yang tidak hanya cerdas secara akademik, tetapi juga teguh dalam memegang nilai-nilai agama.</p>
           <div class="space-y-4">
-            <div class="flex items-center gap-4"><div class="w-11 h-11 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)]"><i class="fa-solid fa-location-dot"></i></div><div><div class="text-[10px] text-[var(--muted)] uppercase font-bold">Alamat Sekolah</div><div class="text-sm font-bold font-display uppercase">Jl. Raya Tugasari No. 01, Tugasari, [Kabupaten]</div></div></div>
-            <div class="flex items-center gap-4"><div class="w-11 h-11 rounded-lg bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)]"><i class="fa-solid fa-phone"></i></div><div><div class="text-[10px] text-[var(--muted)] uppercase font-bold">Telepon / WhatsApp</div><div class="text-sm font-bold font-display uppercase">(0281) 123456 / 0812-3456-7890</div></div></div>
-            <div class="flex items-center gap-4"><div class="w-11 h-11 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)]"><i class="fa-solid fa-envelope"></i></div><div><div class="text-[10px] text-[var(--muted)] uppercase font-bold">Email Resmi</div><div class="text-sm font-bold font-display lowercase">info@smpnutugasari.sch.id</div></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 rounded-md bg-[var(--accent)]/10 flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-bullseye text-[var(--accent-2)]"></i></div><div><div class="font-bold font-display uppercase mb-1 text-lg">Visi</div><div class="text-sm text-[var(--muted)] font-medium">Terwujudnya generasi yang Qur'ani, berakhlak mulia, cerdas, dan mandiri.</div></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 rounded-md bg-[var(--nu-green)] flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-handshake text-[var(--accent)]"></i></div><div><div class="font-bold font-display uppercase mb-1 text-lg">Misi</div><div class="text-sm text-[var(--muted)] font-medium">Menyelenggarakan pendidikan holistik yang memadukan IPTEK dan IMTAK.</div></div></div>
           </div>
         </div>
-        <form class="space-y-4" onsubmit="event.preventDefault(); showToast('Pesan terkirim. Tim kami akan merespons dalam 1x24 jam.', 'success'); this.reset();">
-          <input type="text" class="input" placeholder="Nama Lengkap" required>
-          <input type="email" class="input" placeholder="Email Aktif" required>
-          <input type="text" class="input" placeholder="Nomor Telepon" required>
-          <textarea class="input" rows="4" placeholder="Pertanyaan atau Pesan Anda..." required></textarea>
-          <button type="submit" class="btn-primary w-full justify-center"><i class="fa-solid fa-paper-plane mr-2"></i> Kirim Pesan</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="border-t border-[var(--border)] py-12 bg-white">
-  <div class="max-w-7xl mx-auto px-6 lg:px-10">
-    <div class="flex flex-col md:flex-row justify-between gap-8 mb-8">
-      <div class="max-w-sm">
-        <div class="flex items-center gap-3 mb-4">
-          <img src="https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png?auth_key=1884695660-de0f9328e4e64f548587c2bb93eb5fff-0-5c6e793dce6f3db7ea648add1ded676b" alt="Logo" class="w-12 h-12 object-contain">
-          <div><div class="font-heading text-base font-bold tracking-wider">SMP NU TUGASARI</div><div class="text-[10px] tracking-[0.2em] text-[var(--accent-2)] uppercase mt-1 font-bold">Yayasan Pendidikan Ma'arif</div></div>
-        </div>
-        <p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Mencetak generasi muda yang berakhlak Qur'ani, cerdas, mandiri, dan siap menghadapi tantangan masa depan.</p>
-      </div>
-      <div class="grid grid-cols-2 gap-8 text-sm">
-        <div><div class="text-[10px] uppercase tracking-widest text-[var(--accent-2)] mb-3 font-bold">Menu</div><ul class="space-y-2 text-[var(--muted)] font-medium"><li><a href="#about" class="hover:text-[var(--fg)]">Profil Sekolah</a></li><li><a href="#programs" class="hover:text-[var(--fg)]">Program</a></li><li><a href="#teachers" class="hover:text-[var(--fg)]">Tenaga Pendidik</a></li><li><a href="#contact" class="hover:text-[var(--fg)]">Kontak</a></li></ul></div>
-        <div><div class="text-[10px] uppercase tracking-widest text-[var(--accent-2)] mb-3 font-bold">Program</div><ul class="space-y-2 text-[var(--muted)] font-medium"><li>Tahfidz Al-Qur'an</li><li>IT & Multimedia</li><li>Karya Ilmiah Remaja</li></ul></div>
-      </div>
-    </div>
-    <div class="border-t border-[var(--border)] pt-6">
-      <div class="flex flex-col md:flex-row justify-between gap-4 text-xs text-[var(--muted)] font-medium">
-        <div class="flex items-center gap-3"><span>© 2024 SMP NU TUGASARI. Hak Cipta Dilindungi.</span><button onclick="showAdminLogin('dashboard')" class="opacity-50 hover:opacity-100 hover:text-[var(--accent-2)] transition" title="Admin Panel"><i class="fa-solid fa-lock"></i></button></div>
-        <div class="flex items-center gap-4">
-          <span class="visitor-badge" style="background:#f4f5f7;border-color:#d1d5db;color:#8b929b;"><i class="fa-solid fa-eye"></i> Total Pengunjung: <strong id="visitorCountFooter">0</strong></span>
-          <a href="#" class="hover:text-[var(--accent-2)]"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" class="hover:text-[var(--accent-2)]"><i class="fa-brands fa-youtube"></i></a>
-          <a href="#" class="hover:text-[var(--accent-2)]"><i class="fa-brands fa-whatsapp"></i></a>
-          <a href="#" class="hover:text-[var(--accent-2)]"><i class="fa-brands fa-facebook"></i></a>
+        <div class="lg:col-span-7 reveal">
+          <div class="grid grid-cols-2 gap-5">
+            <div class="card p-6"><div class="flex items-center justify-between mb-4"><div class="w-12 h-12 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)] text-xl"><i class="fa-solid fa-school"></i></div><span class="text-[10px] text-[var(--muted)] uppercase font-bold">Akreditasi</span></div><div class="font-display text-4xl font-bold mb-1 uppercase">Grade B</div><div class="text-sm text-[var(--muted)] font-medium">Terakreditasi Unggul</div></div>
+            <div class="card p-6" style="margin-top: 32px;"><div class="flex items-center justify-between mb-4"><div class="w-12 h-12 rounded-lg bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)] text-xl"><i class="fa-solid fa-users"></i></div><span class="text-[10px] text-[var(--muted)] uppercase font-bold">Siswa</span></div><div class="font-display text-4xl font-bold mb-1 uppercase">100+</div><div class="text-sm text-[var(--muted)] font-medium">Siswa Aktif</div></div>
+            <div class="card p-6"><div class="flex items-center justify-between mb-4"><div class="w-12 h-12 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)] text-xl"><i class="fa-solid fa-chalkboard-user"></i></div><span class="text-[10px] text-[var(--muted)] uppercase font-bold">Pengajar</span></div><div class="font-display text-4xl font-bold mb-1 uppercase">15+</div><div class="text-sm text-[var(--muted)] font-medium">Guru & Staf Profesional</div></div>
+            <div class="card p-6" style="margin-top: 32px;"><div class="flex items-center justify-between mb-4"><div class="w-12 h-12 rounded-lg bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)] text-xl"><i class="fa-solid fa-award"></i></div><span class="text-[10px] text-[var(--muted)] uppercase font-bold">Prestasi</span></div><div class="font-display text-4xl font-bold mb-1 uppercase">10+</div><div class="text-sm text-[var(--muted)] font-medium">Penghargaan Tingkat Kecamatan & Kabupaten</div></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</footer>
-</div><!-- End of Landing Page -->
+  </section>
 
-<!-- ============================================== -->
-<!-- ============== PPDB FORM OVERLAY ============= -->
-<!-- ============================================== -->
+  <section id="programs" class="py-28 relative" style="background: var(--bg-2);">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16 reveal">
+        <div>
+          <div class="section-num mb-4">— 02 / Program Unggulan</div>
+          <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase">Keunggulan <span style="color:var(--accent);">Akademik</span><br>& Ekstrakurikuler</h2>
+        </div>
+        <p class="text-[var(--muted)] max-w-md text-sm leading-relaxed font-medium">Program dirancang untuk mengembangkan potensi akademik, spiritual, dan sosial siswa secara menyeluruh.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-6" id="landingProgramGrid"></div>
+    </div>
+  </section>
+
+  <section id="teachers" class="py-28 relative">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-16 reveal">
+        <div class="section-num mb-4">— 03 / Tenaga Pendidik</div>
+        <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase">Tim <span style="color:var(--accent);">Pendidik</span> Profesional</h2>
+        <p class="text-[var(--muted)] max-w-xl mx-auto mt-4 font-medium">Didukung oleh guru-guru berpengalaman dan berkompeten di bidangnya masing-masing.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" id="landingTeacherGrid"></div>
+    </div>
+  </section>
+
+  <section id="activities" class="py-28 relative" style="background: var(--bg-2);">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12 reveal">
+        <div>
+          <div class="section-num mb-4">— 04 / Galeri & Kegiatan</div>
+          <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase mb-3">Momen <span style="color:var(--accent);">Membanggakan</span></h2>
+          <p class="text-[var(--fg-2)] max-w-xl font-medium">Dokumentasi berbagai kegiatan dan prestasi siswa-siswi SMP NU Tugasari.</p>
+        </div>
+        <div class="flex gap-2 flex-wrap" id="filterBtns">
+          <button data-filter="all" class="filter-btn px-4 py-2 rounded-md text-xs font-bold uppercase border-2 border-[var(--accent)] bg-[var(--accent)] text-[var(--fg)]">Semua</button>
+          <button data-filter="akademik" class="filter-btn px-4 py-2 rounded-md text-xs font-bold uppercase border-2 border-[var(--border-2)] text-[var(--fg-2)] hover:border-[var(--fg)]">Akademik</button>
+          <button data-filter="religi" class="filter-btn px-4 py-2 rounded-md text-xs font-bold uppercase border-2 border-[var(--border-2)] text-[var(--fg-2)] hover:border-[var(--fg)]">Keagamaan</button>
+          <button data-filter="ekskul" class="filter-btn px-4 py-2 rounded-md text-xs font-bold uppercase border-2 border-[var(--border-2)] text-[var(--fg-2)] hover:border-[var(--fg)]">Ekstrakurikuler</button>
+        </div>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="landingGalleryGrid"></div>
+    </div>
+  </section>
+
+  <section class="py-28 relative">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-16 reveal">
+        <div class="section-num mb-4">— 05 / Penerimaan Siswa Baru</div>
+        <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase">Alur <span style="color:var(--accent);">PPDB 2025</span></h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-x-12 gap-y-2">
+        <div class="reveal">
+          <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 1</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Pendaftaran Online</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Pengisian formulir pendaftaran secara online melalui website resmi atau datang langsung ke sekretariat sekolah.</p></div>
+          <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 2</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Tes Seleksi & Wawancara</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Tes potensi akademik, wawancara calon siswa, dan tes potensi Tahfidz untuk kelas khusus.</p></div>
+        </div>
+        <div class="reveal">
+          <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 3</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Pengumuman</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Pengumuman hasil seleksi dapat dilihat di website atau papan pengumuman sekolah.</p></div>
+          <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 4</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Daftar Ulang</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Pembayaran Daftar Ulang dan pengukuran seragam untuk persiapan Masuk Sekolah (Mos).</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="py-28 relative" style="background: var(--bg-2);">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+      <div class="card p-10 lg:p-16 relative overflow-hidden reveal">
+        <div class="orb" style="width:300px;height:300px;background:var(--accent);top:-100px;right:-50px;opacity:0.15;"></div>
+        <div class="grid lg:grid-cols-2 gap-12 relative z-10">
+          <div>
+            <div class="section-num mb-4">— 06 / Hubungi Kami</div>
+            <h2 class="font-display font-bold text-4xl lg:text-5xl leading-none mb-6 uppercase">Daftar atau <span style="color:var(--accent);">Tanya Jawab</span></h2>
+            <p class="text-[var(--fg-2)] mb-8 leading-relaxed font-medium">Hubungi kami untuk informasi lebih lanjut mengenai pendaftaran, kurikulum, atau kerja sama pendidikan.</p>
+            <div class="space-y-4">
+              <div class="flex items-center gap-4"><div class="w-11 h-11 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)]"><i class="fa-solid fa-location-dot"></i></div><div><div class="text-[10px] text-[var(--muted)] uppercase font-bold">Alamat Sekolah</div><div class="text-sm font-bold font-display uppercase">Jl. Raya Tugasari No. 01, Tugasari, [Kabupaten]</div></div></div>
+              <div class="flex items-center gap-4"><div class="w-11 h-11 rounded-lg bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)]"><i class="fa-solid fa-phone"></i></div><div><div class="text-[10px] text-[var(--muted)] uppercase font-bold">Telepon / WhatsApp</div><div class="text-sm font-bold font-display uppercase">(0281) 123456 / 0812-3456-7890</div></div></div>
+              <div class="flex items-center gap-4"><div class="w-11 h-11 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)]"><i class="fa-solid fa-envelope"></i></div><div><div class="text-[10px] text-[var(--muted)] uppercase font-bold">Email Resmi</div><div class="text-sm font-bold font-display lowercase">info@smpnutugasari.sch.id</div></div></div>
+            </div>
+          </div>
+          <form class="space-y-4" onsubmit="event.preventDefault(); showToast('Pesan terkirim. Tim kami akan merespons dalam 1x24 jam.', 'success'); this.reset();">
+            <input type="text" class="input" placeholder="Nama Lengkap" required>
+            <input type="email" class="input" placeholder="Email Aktif" required>
+            <input type="text" class="input" placeholder="Nomor Telepon" required>
+            <textarea class="input" rows="4" placeholder="Pertanyaan atau Pesan Anda..." required></textarea>
+            <button type="submit" class="btn-primary w-full justify-center"><i class="fa-solid fa-paper-plane mr-2"></i> Kirim Pesan</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t border-[var(--border)] py-12 bg-white">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="flex flex-col md:flex-row justify-between gap-8 mb-8">
+        <div class="max-w-sm">
+          <div class="flex items-center gap-3 mb-4">
+            <img src="https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png?auth_key=1884695660-de0f9328e4e64f548587c2bb93eb5fff-0-5c6e793dce6f3db7ea648add1ded676b" alt="Logo" class="w-12 h-12 object-contain">
+            <div><div class="font-heading text-base font-bold tracking-wider">SMP NU TUGASARI</div><div class="text-[10px] tracking-[0.2em] text-[var(--accent-2)] uppercase mt-1 font-bold">Yayasan Pendidikan Ma'arif</div></div>
+          </div>
+          <p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Mencetak generasi muda yang berakhlak Qur'ani, cerdas, mandiri, dan siap menghadapi tantangan masa depan.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-8 text-sm">
+          <div><div class="text-[10px] uppercase tracking-widest text-[var(--accent-2)] mb-3 font-bold">Menu</div><ul class="space-y-2 text-[var(--muted)] font-medium"><li><a href="#about" class="hover:text-[var(--fg)]">Profil Sekolah</a></li><li><a href="#programs" class="hover:text-[var(--fg)]">Program</a></li><li><a href="#teachers" class="hover:text-[var(--fg)]">Tenaga Pendidik</a></li><li><a href="#contact" class="hover:text-[var(--fg)]">Kontak</a></li></ul></div>
+          <div><div class="text-[10px] uppercase tracking-widest text-[var(--accent-2)] mb-3 font-bold">Program</div><ul class="space-y-2 text-[var(--muted)] font-medium"><li>Tahfidz Al-Qur'an</li><li>IT & Multimedia</li><li>Karya Ilmiah Remaja</li></ul></div>
+        </div>
+      </div>
+      <div class="border-t border-[var(--border)] pt-6">
+        <div class="flex flex-col md:flex-row justify-between gap-4 text-xs text-[var(--muted)] font-medium">
+          <div class="flex items-center gap-3"><span>© 2024 SMP NU TUGASARI. Hak Cipta Dilindungi.</span><button onclick="showAdminLogin('dashboard')" class="opacity-50 hover:opacity-100 hover:text-[var(--accent-2)] transition" title="Admin Panel"><i class="fa-solid fa-lock"></i></button></div>
+          <div class="flex items-center gap-4">
+            <span class="visitor-badge" style="background:#f4f5f7;border-color:#d1d5db;color:#8b929b;"><i class="fa-solid fa-eye"></i> Total Pengunjung: <strong id="visitorCountFooter">0</strong></span>
+            <a href="#" class="hover:text-[var(--accent-2)]"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="hover:text-[var(--accent-2)]"><i class="fa-brands fa-youtube"></i></a>
+            <a href="#" class="hover:text-[var(--accent-2)]"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="#" class="hover:text-[var(--accent-2)]"><i class="fa-brands fa-facebook"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
 <div id="ppdbFormOverlay" class="login-overlay is-hidden">
   <div class="w-full max-w-2xl my-auto">
     <div class="bg-white rounded-2xl p-8 shadow-2xl relative">
@@ -522,9 +498,6 @@
   </div>
 </div>
 
-<!-- ============================================== -->
-<!-- ============== PPDB CARD OVERLAY ============= -->
-<!-- ============================================== -->
 <div id="ppdbCardOverlay" class="login-overlay is-hidden" style="background: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(212,175,55,0.15), transparent 60%), var(--bg);">
   <div class="w-full max-w-md text-center my-auto">
     <div class="bg-white rounded-2xl p-8 shadow-2xl mb-6 relative">
@@ -571,9 +544,6 @@
   </div>
 </div>
 
-<!-- ============================================== -->
-<!-- ============== VERIFY OVERLAY (SCAN) ========= -->
-<!-- ============================================== -->
 <div id="verifyOverlay" class="login-overlay is-hidden" style="background: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(212,175,55,0.15), transparent 60%), var(--bg);">
   <div class="w-full max-w-md text-center my-auto">
     <div class="bg-white rounded-2xl p-8 shadow-2xl mb-6 relative">
@@ -585,11 +555,6 @@
   </div>
 </div>
 
-<!-- ============================================== -->
-<!-- ============== ADMIN PANEL =================== -->
-<!-- ============================================== -->
-
-<!-- LOGIN SCREEN -->
 <div id="loginScreen" class="login-overlay is-hidden">
   <div class="w-full max-w-md my-auto">
     <div class="text-center mb-8">
@@ -618,7 +583,6 @@
   </div>
 </div>
 
-<!-- ADMIN LAYOUT -->
 <div id="adminLayout" class="is-hidden">
   <aside class="sidebar" id="sidebar">
     <div class="p-5 border-b border-white/10">
@@ -683,7 +647,6 @@
     </header>
     
     <main class="p-6 lg:p-8">
-      <!-- DASHBOARD VIEW -->
       <section class="view active" id="view-dashboard">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
@@ -750,7 +713,6 @@
         </div>
       </section>
       
-      <!-- PPDB VIEW -->
       <section class="view" id="view-ppdb">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Manajemen PPDB</div><h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Penerimaan Peserta Didik Baru</h1></div>
@@ -771,7 +733,6 @@
         </div>
       </section>
       
-      <!-- SISWA VIEW -->
       <section class="view" id="view-siswa">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Manajemen Siswa</div><h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Database Siswa Aktif</h1></div>
@@ -792,7 +753,6 @@
         </div>
       </section>
       
-      <!-- GURU VIEW -->
       <section class="view" id="view-guru">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Manajemen Pendidik</div><h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Guru & Staf Sekolah</h1></div>
@@ -801,7 +761,6 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5" id="guruGrid"></div>
       </section>
       
-      <!-- PROGRAM VIEW -->
       <section class="view" id="view-program">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Manajemen Konten</div><h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Program Unggulan</h1></div>
@@ -810,7 +769,6 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="programGrid"></div>
       </section>
       
-      <!-- GALERI VIEW -->
       <section class="view" id="view-galeri">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Manajemen Konten</div><h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Galeri Kegiatan</h1></div>
@@ -825,7 +783,6 @@
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="galeriGrid"></div>
       </section>
       
-      <!-- PESAN VIEW -->
       <section class="view" id="view-pesan">
         <div class="mb-8"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Kotak Masuk</div><h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Pesan & Kontak</h1></div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -845,7 +802,6 @@
         </div>
       </section>
       
-      <!-- PENGATURAN VIEW -->
       <section class="view" id="view-pengaturan">
         <div class="mb-8"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Konfigurasi Sistem</div><h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Pengaturan Sekolah</h1></div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -899,7 +855,6 @@
         </div>
       </section>
       
-      <!-- LAPORAN VIEW -->
       <section class="view" id="view-laporan">
         <div class="mb-8"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Analisis Data</div><h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Laporan & Statistik</h1></div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
@@ -927,7 +882,6 @@
   </div>
 </div>
 
-<!-- MODALS DYNAMIC -->
 <div class="modal-overlay" id="modalDynamic">
   <div class="modal">
     <div class="modal-header"><h3 class="font-display text-xl font-bold uppercase" id="modalTitle">Tambah Data</h3><button class="btn-icon" onclick="closeModal('modalDynamic')"><i class="fa-solid fa-times"></i></button></div>
@@ -936,7 +890,6 @@
   </div>
 </div>
 
-<!-- HELP MODAL -->
 <div class="modal-overlay" id="modalHelp">
   <div class="help-modal">
     <div class="modal-header"><h3 class="font-display text-xl font-bold uppercase"><i class="fa-solid fa-circle-question text-[var(--accent-2)] mr-2"></i> Pusat Bantuan</h3><button class="btn-icon" onclick="closeModal('modalHelp')"><i class="fa-solid fa-times"></i></button></div>
@@ -977,7 +930,6 @@
   </div>
 </div>
 
-<!-- AD MODAL -->
 <div class="modal-overlay" id="modalAd">
   <div class="modal">
     <div class="modal-header"><h3 class="font-display text-xl font-bold uppercase"><i class="fa-solid fa-bullhorn text-[var(--accent-2)] mr-2"></i> Kelola Pengumuman Atas</h3><button class="btn-icon" onclick="closeModal('modalAd')"><i class="fa-solid fa-times"></i></button></div>
@@ -1001,7 +953,6 @@
   </div>
 </div>
 
-<!-- TOAST -->
 <div id="toast" class="toast">
   <div class="flex items-start gap-3">
     <i id="toastIcon" class="fa-solid fa-circle-check text-[var(--success)] text-lg mt-0.5"></i>
@@ -1010,7 +961,6 @@
 </div>
 
 <script>
-/* ============== SHARED SCRIPTS ============== */
 document.getElementById('menuBtn').addEventListener('click', () => { document.getElementById('mobileMenu').classList.toggle('hidden'); });
 document.getElementById('mobileMenu').addEventListener('click', (e) => { if (e.target.tagName === 'A' || e.target.closest('button')) document.getElementById('mobileMenu').classList.add('hidden'); });
 
@@ -1138,7 +1088,6 @@ async function syncRecord(table, record, mode = 'upsert') {
 
 loadDBLocal();
 
-/* ============== VISITOR COUNTER ============== */
 function getVisitorStats() {
   const today = new Date().toDateString();
   let stats = JSON.parse(localStorage.getItem('smpnu_visitors') || '{"total":0,"today":0,"date":""}');
@@ -1155,13 +1104,11 @@ function updateVisitorDisplay() {
   if (adminToday) adminToday.textContent = stats.today.toLocaleString('id-ID');
 }
 
-/* ============== AD BANNER RENDER ============== */
 function renderAdBanner() {
   const ad = DB.ad || {};
   const bar = document.getElementById('announcementBar');
   const textEl = document.getElementById('announcementText');
   const linkEl = document.getElementById('announcementLink');
-  
   if (ad.active && ad.title) {
     textEl.innerHTML = `<strong>${ad.title}</strong> - ${ad.desc}`;
     linkEl.textContent = ad.linkText || 'Klik di sini';
@@ -1172,7 +1119,6 @@ function renderAdBanner() {
   }
 }
 
-/* ============== ADMIN NAVIGATION ============== */
 document.querySelectorAll('.nav-link[data-view]').forEach(link => { link.addEventListener('click', () => switchView(link.dataset.view)); });
 function switchView(view) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -1189,7 +1135,6 @@ document.addEventListener('click', (e) => {
   const nd = document.getElementById('notifDropdown'); if (nd && !nd.contains(e.target)) nd.classList.remove('open');
 });
 
-/* ============== MODALS & CRUD LOGIC ============== */
 function openModal(id) { document.getElementById(id).classList.add('show'); }
 function closeModal(id) { document.getElementById(id).classList.remove('show'); }
 document.querySelectorAll('.modal-overlay').forEach(m => { m.addEventListener('click', (e) => { if (e.target === m) m.classList.remove('show'); }); });
@@ -1267,7 +1212,6 @@ function openChangePasswordModal() {
   });
 }
 
-/* ============== ADMIN INIT & RENDER ============== */
 function initDashboard() {
   loadDB();
   renderRecentPPDB(); renderPPDBTable(); renderSiswaTable(); renderGuru(); renderProgram(); renderGaleri('all'); renderPesan(); renderNotifications(); renderActivities(); loadSettingsForm(); updateBadges(); initCharts(); updateVisitorDisplay();
@@ -1315,7 +1259,7 @@ function renderPPDBTable() {
 }
 function openPPDBModal(id = null) {
   const p = id ? DB.ppdb.find(x => x.id === id) : {};
-  setupModal(id ? 'Edit Pendaftar PPDB' : 'Tambah Pendaftar PPDB', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="ppdbName" value="${p.name || ''}" placeholder="Nama calon siswa"></div><div><label class="label">Asal Sekolah</label><input type="text" class="input" id="ppdbSchool" value="${p.school || ''}" placeholder="SD Asal"></div><div><label class="label">Nama Orang Tua</label><input type="text" class="input" id="ppdbParent" value="${p.parent || ''}" placeholder="Nama wali"></div><div><label class="label">No. Telepon</label><input type="text" class="input" id="ppdbPhone" value="${p.phone || ''}" placeholder="08xx"></div><div><label class="label">Tanggal Daftar</label><input type="date" class="input" id="ppdbDate" value="${p.date || new Date().toISOString().split('T')[0]}"></div><div><label class="label">Status</label><select class="select" id="ppdbStatus"><option value="pending" ${p.status === 'pending' ? 'selected' : ''}>Pending</option><option value="approved" ${p.status === 'approved' ? 'selected' : ''}>Disetujui</option><option value="rejected" ${p.status === 'rejected' ? 'selected' : ''}>Ditolak</option></select></div></div>`, () => {
+  setupModal(id ? 'Edit Pendaftar PPDB' : 'Tambah Pendaftar PPDB', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="ppdbName" value="${p.name || ''}" placeholder="Nama calon siswa"></div><div><label class="label">Asal Sekolah</label><input type="text" class="input" id="ppdbSchool" value="${p.school || ''}" placeholder="SD Asal"></div><div><label class="label">Nama Orang Tua</label><input type="text" class="input" id="ppdbParent" value="${p.parent || ''}" placeholder="Nama wali"></div><div><label class="label">No. Telepon</label><input type="text" class="input" id="ppdbPhone" value="${p.phone || ''}" placeholder="08xx"></div><div><label class="label">Tanggal Daftar</label><input type="date" class="input" id="ppdbDate" value="${p.date || new Date().toISOString().split('T')[0]}"></div><div><label class="label">Status</label><select class="select" id="ppdbStatus"><option value="pending" ${p.status === 'pending' ? 'selected' : ''}>Pending</option><option value="approved" ${p.status === 'approved' ? 'selected' : ''}>Disetujui</option><option value="rejected" ${p.status === 'rejected' ? 'selected' : ''}>Ditolak</option></select></div></div>`, () => {
     const name = document.getElementById('ppdbName').value; const school = document.getElementById('ppdbSchool').value; if (!name || !school) { showToast('Nama dan Asal Sekolah wajib diisi.', 'error'); return; }
     const data = { name, school, parent: document.getElementById('ppdbParent').value, phone: document.getElementById('ppdbPhone').value, date: document.getElementById('ppdbDate').value, status: document.getElementById('ppdbStatus').value };
     if (id) { Object.assign(DB.ppdb.find(x => x.id === id), data); showToast('Data PPDB diperbarui.', 'success'); } else { DB.ppdb.unshift({ id: Date.now(), ...data }); showToast('Pendaftar baru ditambahkan.', 'success'); }
@@ -1346,7 +1290,7 @@ function renderSiswaTable() {
 }
 function openSiswaModal(id = null) {
   const s = id ? DB.siswa.find(x => x.id === id) : {};
-  setupModal(id ? 'Edit Siswa' : 'Tambah Siswa Baru', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4><div><label class="label">NIS</label><input type="text" class="input" id="siswaNis" value="${s.nis || ''}" placeholder="2024001"></div><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="siswaName" value="${s.name || ''}" placeholder="Nama siswa"></div><div><label class="label">Kelas</label><select class="select" id="siswaKelas">${['VII A','VII B','VIII A','VIII B','IX A','IX B'].map(k => `<option value="${k}" ${s.kelas === k ? 'selected' : ''}>${k}</option>`).join('')}</select></div><div><label class="label">Jenis Kelamin</label><select class="select" id="siswaJk"><option value="L" ${s.jk === 'L' ? 'selected' : ''}>Laki-laki</option><option value="P" ${s.jk === 'P' ? 'selected' : ''}>Perempuan</option></select></div><div><label class="label">Nama Wali</label><input type="text" class="input" id="siswaWali" value="${s.wali || ''}" placeholder="Nama orang tua"></div><div><label class="label">Status</label><select class="select" id="siswaStatus"><option value="Aktif" ${s.status === 'Aktif' ? 'selected' : ''}>Aktif</option><option value="Non-Aktif" ${s.status === 'Non-Aktif' ? 'selected' : ''}>Non-Aktif</option></select></div><div class="md:col-span-2"><label class="label">Foto Siswa</label><input type="file" class="input" id="siswaPhotoFile" accept="image/*">${s.photo ? `<div class="mt-2 flex items-center gap-3"><img src="${s.photo}" class="w-16 h-16 rounded-lg object-cover border-2 border-[var(--accent)]"><span class="text-xs text-[var(--muted)]">Foto saat ini</span></div>` : '<div class="mt-2 text-xs text-[var(--muted)]">Belum ada foto. Upload foto dari perangkat Anda.</div>'}</div></div>`, async () => {
+  setupModal(id ? 'Edit Siswa' : 'Tambah Siswa Baru', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="label">NIS</label><input type="text" class="input" id="siswaNis" value="${s.nis || ''}" placeholder="2024001"></div><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="siswaName" value="${s.name || ''}" placeholder="Nama siswa"></div><div><label class="label">Kelas</label><select class="select" id="siswaKelas">${['VII A','VII B','VIII A','VIII B','IX A','IX B'].map(k => `<option value="${k}" ${s.kelas === k ? 'selected' : ''}>${k}</option>`).join('')}</select></div><div><label class="label">Jenis Kelamin</label><select class="select" id="siswaJk"><option value="L" ${s.jk === 'L' ? 'selected' : ''}>Laki-laki</option><option value="P" ${s.jk === 'P' ? 'selected' : ''}>Perempuan</option></select></div><div><label class="label">Nama Wali</label><input type="text" class="input" id="siswaWali" value="${s.wali || ''}" placeholder="Nama orang tua"></div><div><label class="label">Status</label><select class="select" id="siswaStatus"><option value="Aktif" ${s.status === 'Aktif' ? 'selected' : ''}>Aktif</option><option value="Non-Aktif" ${s.status === 'Non-Aktif' ? 'selected' : ''}>Non-Aktif</option></select></div><div class="md:col-span-2"><label class="label">Foto Siswa</label><input type="file" class="input" id="siswaPhotoFile" accept="image/*">${s.photo ? `<div class="mt-2 flex items-center gap-3"><img src="${s.photo}" class="w-16 h-16 rounded-lg object-cover border-2 border-[var(--accent)]"><span class="text-xs text-[var(--muted)]">Foto saat ini</span></div>` : '<div class="mt-2 text-xs text-[var(--muted)]">Belum ada foto. Upload foto dari perangkat Anda.</div>'}</div></div>`, async () => {
     const name = document.getElementById('siswaName').value; const nis = document.getElementById('siswaNis').value; if (!name || !nis) { showToast('Nama dan NIS wajib diisi.', 'error'); return; }
     let photo = s.photo || ''; const fileInput = document.getElementById('siswaPhotoFile'); if (fileInput.files && fileInput.files[0]) { photo = await readFileAsDataURL(fileInput.files[0]); }
     const data = { nis, name, kelas: document.getElementById('siswaKelas').value, jk: document.getElementById('siswaJk').value, wali: document.getElementById('siswaWali').value, status: document.getElementById('siswaStatus').value, photo };
@@ -1367,7 +1311,7 @@ document.getElementById('filterKelasSiswa')?.addEventListener('change', renderSi
 function renderGuru() { document.getElementById('guruGrid').innerHTML = DB.guru.map(g => `<div class="panel overflow-hidden"><div class="relative"><img src="${g.img}" alt="${g.name}" class="w-full aspect-square object-cover"><div class="absolute top-3 right-3"><span class="badge-status badge-approved">${g.role.split(' ')[0]}</span></div></div><div class="p-5"><div class="text-[10px] uppercase tracking-wider text-[var(--accent-2)] font-bold mb-1">${g.role}</div><h4 class="font-display text-lg font-bold uppercase leading-tight mb-2">${g.name}</h4>${g.subject !== '-' ? `<div class="text-xs text-[var(--muted)] font-medium mb-3"><i class="fa-solid fa-book mr-1"></i> ${g.subject}</div>` : '<div class="mb-3"></div>'}<div class="flex gap-1"><button class="btn-icon btn-sm flex-1" title="Edit" onclick="openGuruModal(${g.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger flex-1" title="Hapus" onclick="deleteGuru(${g.id})"><i class="fa-solid fa-trash"></i></button></div></div></div>`).join(''); }
 function openGuruModal(id = null) {
   const g = id ? DB.guru.find(x => x.id === id) : {};
-  setupModal(id ? 'Edit Guru / Staf' : 'Tambah Guru / Staf', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="guruName" value="${g.name || ''}" placeholder="Dr. ..."></div><div><label class="label">Jabatan</label><input type="text" class="input" id="guruRole" value="${g.role || ''}" placeholder="Guru Matematika"></div><div><label class="label">Mata Pelajaran</label><input type="text" class="input" id="guruSubject" value="${g.subject || ''}" placeholder="Matematika"></div><div><label class="label">Upload Foto</label><input type="file" class="input" id="guruImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-16 h-16 rounded-lg object-cover"></div>` : ''}</div></div>`, async () => {
+  setupModal(id ? 'Edit Guru / Staf' : 'Tambah Guru / Staf', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="guruName" value="${g.name || ''}" placeholder="Dr. ..."></div><div><label class="label">Jabatan</label><input type="text" class="input" id="guruRole" value="${g.role || ''}" placeholder="Guru Matematika"></div><div><label class="label">Mata Pelajaran</label><input type="text" class="input" id="guruSubject" value="${g.subject || ''}" placeholder="Matematika"></div><div><label class="label">Upload Foto</label><input type="file" class="input" id="guruImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-16 h-16 rounded-lg object-cover"></div>` : ''}</div></div>`, async () => {
     const name = document.getElementById('guruName').value; const role = document.getElementById('guruRole').value; if (!name || !role) { showToast('Nama dan Jabatan wajib diisi.', 'error'); return; }
     let img = g.img || 'https://picsum.photos/seed/defaultguru/400/400.jpg'; const fileInput = document.getElementById('guruImgFile'); if (fileInput.files && fileInput.files[0]) img = await readFileAsDataURL(fileInput.files[0]);
     const data = { name, role, subject: document.getElementById('guruSubject').value || '-', img };
@@ -1386,7 +1330,7 @@ function deleteGuru(id) {
 function renderProgram() { document.getElementById('programGrid').innerHTML = DB.program.map(p => `<div class="panel p-6"><div class="flex items-start justify-between mb-4"><div class="w-12 h-12 rounded-xl ${p.color==='gold'?'bg-[var(--accent)]/10 text-[var(--accent-2)]':'bg-[var(--nu-green)]/10 text-[var(--nu-green)]'} flex items-center justify-center text-xl"><i class="fa-solid ${p.icon}"></i></div><div class="flex gap-1"><button class="btn-icon btn-sm" title="Edit" onclick="openProgramModal(${p.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger" title="Hapus" onclick="deleteProgram(${p.id})"><i class="fa-solid fa-trash"></i></button></div></div><h4 class="font-display text-xl font-bold uppercase mb-2">${p.title}</h4><p class="text-xs text-[var(--muted)] leading-relaxed font-medium mb-4">${p.desc}</p><div class="flex items-center justify-between text-xs"><span class="text-[var(--muted)] font-medium"><i class="fa-solid fa-users mr-1"></i> ${Math.floor(Math.random()*50)+30} siswa</span><span class="badge-status badge-approved">Aktif</span></div></div>`).join(''); }
 function openProgramModal(id = null) {
   const p = id ? DB.program.find(x => x.id === id) : {};
-  setupModal(id ? 'Edit Program' : 'Tambah Program', `<div class="space-y-4><div><label class="label">Nama Program</label><input type="text" class="input" id="progTitle" value="${p.title || ''}" placeholder="Contoh: Tahfidz Al-Qur'an"></div><div><label class="label">Deskripsi Singkat</label><textarea class="textarea" rows="3" id="progDesc" placeholder="Deskripsi program...">${p.desc || ''}</textarea></div><div class="grid grid-cols-2 gap-4><div><label class="label">Ikon (FontAwesome)</label><input type="text" class="input" id="progIcon" value="${p.icon || 'fa-book'}" placeholder="fa-quran"></div><div><label class="label">Warna</label><select class="select" id="progColor"><option value="gold" ${p.color === 'gold' ? 'selected' : ''}>Emas</option><option value="green" ${p.color === 'green' ? 'selected' : ''}>Hijau NU</option></select></div></div></div>`, () => {
+  setupModal(id ? 'Edit Program' : 'Tambah Program', `<div class="space-y-4"><div><label class="label">Nama Program</label><input type="text" class="input" id="progTitle" value="${p.title || ''}" placeholder="Contoh: Tahfidz Al-Qur'an"></div><div><label class="label">Deskripsi Singkat</label><textarea class="textarea" rows="3" id="progDesc" placeholder="Deskripsi program...">${p.desc || ''}</textarea></div><div class="grid grid-cols-2 gap-4"><div><label class="label">Ikon (FontAwesome)</label><input type="text" class="input" id="progIcon" value="${p.icon || 'fa-book'}" placeholder="fa-quran"></div><div><label class="label">Warna</label><select class="select" id="progColor"><option value="gold" ${p.color === 'gold' ? 'selected' : ''}>Emas</option><option value="green" ${p.color === 'green' ? 'selected' : ''}>Hijau NU</option></select></div></div></div>`, () => {
     const title = document.getElementById('progTitle').value; if (!title) { showToast('Nama program wajib diisi.', 'error'); return; }
     const data = { title, desc: document.getElementById('progDesc').value, icon: document.getElementById('progIcon').value, color: document.getElementById('progColor').value };
     if (id) { Object.assign(DB.program.find(x => x.id === id), data); showToast('Program diperbarui.', 'success'); } else { DB.program.push({ id: Date.now(), ...data }); showToast('Program baru ditambahkan.', 'success'); }
@@ -1408,7 +1352,7 @@ function renderGaleri(cat) {
 }
 function openGaleriModal(id = null) {
   const g = id ? DB.galeri.find(x => x.id === id) : {};
-  setupModal(id ? 'Edit Foto Galeri' : 'Upload Foto Galeri', `<div class="space-y-4><div><label class="label">Upload Gambar</label><input type="file" class="input" id="galImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-32 h-20 rounded-lg object-cover"></div>` : ''}</div><div><label class="label">Judul Foto</label><input type="text" class="input" id="galTitle" value="${g.title || ''}" placeholder="Contoh: Pesantren Ramadhan"></div><div><label class="label">Kategori</label><select class="select" id="galCat"><option value="akademik" ${g.cat === 'akademik' ? 'selected' : ''}>Akademik</option><option value="religi" ${g.cat === 'religi' ? 'selected' : ''}>Keagamaan</option><option value="ekskul" ${g.cat === 'ekskul' ? 'selected' : ''}>Ekstrakurikuler</option></select></div><div><label class="label">Deskripsi</label><textarea class="textarea" rows="2" id="galDesc" placeholder="Deskripsi singkat...">${g.desc || ''}</textarea></div></div>`, async () => {
+  setupModal(id ? 'Edit Foto Galeri' : 'Upload Foto Galeri', `<div class="space-y-4"><div><label class="label">Upload Gambar</label><input type="file" class="input" id="galImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-32 h-20 rounded-lg object-cover"></div>` : ''}</div><div><label class="label">Judul Foto</label><input type="text" class="input" id="galTitle" value="${g.title || ''}" placeholder="Contoh: Pesantren Ramadhan"></div><div><label class="label">Kategori</label><select class="select" id="galCat"><option value="akademik" ${g.cat === 'akademik' ? 'selected' : ''}>Akademik</option><option value="religi" ${g.cat === 'religi' ? 'selected' : ''}>Keagamaan</option><option value="ekskul" ${g.cat === 'ekskul' ? 'selected' : ''}>Ekstrakurikuler</option></select></div><div><label class="label">Deskripsi</label><textarea class="textarea" rows="2" id="galDesc" placeholder="Deskripsi singkat...">${g.desc || ''}</textarea></div></div>`, async () => {
     const title = document.getElementById('galTitle').value; if (!title) { showToast('Judul wajib diisi.', 'error'); return; }
     let img = g.img || ''; const fileInput = document.getElementById('galImgFile'); if (fileInput.files && fileInput.files[0]) img = await readFileAsDataURL(fileInput.files[0]); else if (!img) { showToast('Foto wajib diupload.', 'error'); return; }
     const data = { img, title, cat: document.getElementById('galCat').value, desc: document.getElementById('galDesc').value };
@@ -1480,10 +1424,9 @@ function showPPDBCard(data) {
   const regNum = data.regNum || ('PPDB-' + new Date().getFullYear() + '-' + String(data.id).slice(-4));
   document.getElementById('cardRegNum').textContent = regNum; document.getElementById('cardName').textContent = data.name; document.getElementById('cardSchool').textContent = data.school; document.getElementById('cardDate').textContent = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
   
-  // Generate QR Code untuk verifikasi
   const verifyUrl = window.location.href.split('?')[0] + '?verify=' + regNum;
   const qrContainer = document.getElementById('qrcode');
-  qrContainer.innerHTML = ''; // clear previous
+  qrContainer.innerHTML = ''; 
   try {
     new QRCode(qrContainer, {
       text: verifyUrl,
@@ -1492,7 +1435,7 @@ function showPPDBCard(data) {
       colorDark: "#1a1d21",
       colorLight: "#ffffff",
       correctLevel: QRCode.CorrectLevel.H,
-      render: "canvas" // Paksa menggunakan canvas agar tidak dobel dan muncul di HP
+      render: "canvas"
     });
   } catch (e) { console.warn('QR Code error:', e); }
 
@@ -1500,7 +1443,6 @@ function showPPDBCard(data) {
 }
 function hidePPDBCard() { document.getElementById('ppdbCardOverlay').classList.add('is-hidden'); document.body.style.overflow = ''; document.getElementById('ppdbPublicForm').reset(); }
 
-// Download PDF dengan Logo (preload base64 agar muncul di PDF)
 async function downloadPPDBCard() {
   const card = document.getElementById('ppdbCard'); 
   if (!card) return; 
@@ -1509,9 +1451,6 @@ async function downloadPPDBCard() {
   const logoImg = card.querySelector('.ppdb-card-logo');
   const originalSrc = logoImg ? logoImg.src : null;
   
-  // === PRELOAD LOGO SEBAGAI BASE64 ===
-  // html2canvas tidak bisa capture gambar cross-origin tanpa CORS header.
-  // Solusi: fetch logo → convert ke base64 → set sebagai src sebelum capture.
   if (logoImg && originalSrc) {
     try {
       const response = await fetch(originalSrc);
@@ -1525,7 +1464,6 @@ async function downloadPPDBCard() {
       logoImg.src = base64;
     } catch (e) {
       console.warn('Fetch logo gagal, mencoba metode Image crossOrigin...', e);
-      // Fallback: gunakan Image object dengan crossOrigin
       try {
         const base64 = await new Promise((resolve, reject) => {
           const img = new Image();
@@ -1548,10 +1486,8 @@ async function downloadPPDBCard() {
     }
   }
   
-  // Tunggu logo base64 selesai render di DOM
   await new Promise(resolve => setTimeout(resolve, 500));
   
-  // === CAPTURE CARD DENGAN html2canvas ===
   try {
     const canvas = await html2canvas(card, { 
       scale: 2, 
@@ -1561,7 +1497,6 @@ async function downloadPPDBCard() {
       logging: false
     });
     
-    // Kembalikan src logo ke aslinya
     if (logoImg && originalSrc) logoImg.src = originalSrc;
     
     const imgData = canvas.toDataURL('image/png'); 
@@ -1604,9 +1539,8 @@ document.getElementById('ppdbPublicForm').addEventListener('submit', function(e)
   const data = { id: Date.now(), regNum: 'PPDB-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-4), name: document.getElementById('regName').value.trim(), gender: document.getElementById('regGender').value, school: document.getElementById('regSchool').value.trim(), dob: document.getElementById('regDob').value, father: document.getElementById('regFather').value.trim(), mother: document.getElementById('regMother').value.trim(), parent: document.getElementById('regFather').value.trim(), phone: document.getElementById('regPhone').value.trim(), address: document.getElementById('regAddress').value.trim(), date: new Date().toISOString().split('T')[0], status: 'pending' };
   if (!data.name || !data.school) { showToast('Nama dan asal sekolah wajib diisi.', 'error'); return; }
   DB.ppdb.unshift(data); 
-  saveDBLocal(); // Simpan ke LocalStorage
+  saveDBLocal(); 
   
-  // Jika admin sedang login, refresh dashboard secara real-time
   if (!document.getElementById('adminLayout').classList.contains('is-hidden')) {
     renderRecentPPDB(); 
     renderPPDBTable(); 
@@ -1615,7 +1549,6 @@ document.getElementById('ppdbPublicForm').addEventListener('submit', function(e)
     renderActivities();
   }
   
-  // Kirim ke Supabase (jika tersedia)
   if (isSupabaseReady) {
     syncRecord('ppdb', data, 'upsert').catch(e => console.warn('Sync ke Supabase gagal:', e));
   }
@@ -1624,12 +1557,10 @@ document.getElementById('ppdbPublicForm').addEventListener('submit', function(e)
   showToast('Pendaftaran berhasil! Simpan kartu pendaftaran Anda.', 'success');
 });
 
-/* ============== VERIFY OVERLAY (Hasil Scan QR Code) ============== */
 function showVerifyOverlay() { document.getElementById('verifyOverlay').classList.remove('is-hidden'); document.body.style.overflow = 'hidden'; }
 function hideVerifyOverlay() { 
   document.getElementById('verifyOverlay').classList.add('is-hidden'); 
   document.body.style.overflow = ''; 
-  // Bersihkan parameter URL tanpa reload
   window.history.replaceState({}, document.title, window.location.pathname);
 }
 
@@ -1645,10 +1576,8 @@ async function checkVerification() {
         <p class="text-sm text-[var(--muted)] font-medium">Memverifikasi data pendaftar...</p>
       </div>`;
 
-    // Cari data di Local DB
     let record = DB.ppdb.find(p => p.regNum === verifyCode);
     
-    // Jika tidak ada di lokal, coba cari di Supabase (jika terhubung)
     if (!record && isSupabaseReady) {
         try {
             const { data, error } = await supabaseClient.from('ppdb').select('*').eq('reg_num', verifyCode).single();
@@ -1677,7 +1606,7 @@ async function checkVerification() {
           <div class="ppdb-card-container" style="max-width: 100%; border: 3px solid var(--accent);">
             <div class="ppdb-card-content">
               <div class="ppdb-card-header" style="border-bottom-color: var(--accent);">
-                <img src="https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png" alt="Logo" class="ppdb-card-logo">
+                <img src="https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png?auth_key=1884695660-de0f9328e4e64f548587c2bb93eb5fff-0-5c6e793dce6f3db7ea648add1ded676b" alt="Logo" class="ppdb-card-logo">
                 <div><div class="ppdb-card-title" style="color: var(--fg);">SMP NU TUGASARI</div><div class="ppdb-card-subtitle">Data Pendaftar PPDB</div></div>
               </div>
               <div class="ppdb-card-body">
@@ -1741,7 +1670,7 @@ window.addEventListener('DOMContentLoaded', () => {
   renderLandingGallery('all'); 
   updateVisitorDisplay(); 
   renderAdBanner();
-  checkVerification(); // Cek apakah ada parameter verifikasi QR Code di URL
+  checkVerification(); 
 });
 </script>
 </body>
