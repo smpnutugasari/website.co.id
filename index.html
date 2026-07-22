@@ -978,6 +978,22 @@ let supabaseClient = null; let isSupabaseReady = false;
 function initSupabase() { try { if (window.supabase && SUPABASE_URL && SUPABASE_ANON_KEY && SUPABASE_URL.startsWith('https://')) { supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false }, realtime: { params: { eventsPerSecond: 2 } } }); isSupabaseReady = true; } } catch (e) { console.warn('Supabase init failed:', e); } }
 initSupabase();
 
+// Fungsi khusus untuk upload file gambar ke Supabase Storage agar tidak membebani database
+async function uploadImageToSupabase(file, bucketName, folderName) {
+  if (!isSupabaseReady) return null;
+  const fileName = `${folderName}/${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+  const { data, error } = await supabaseClient.storage.from(bucketName).upload(fileName, file, {
+    cacheControl: '3600',
+    upsert: false
+  });
+  if (error) {
+    console.warn('Upload error:', error);
+    return null;
+  }
+  const { data: publicUrlData } = supabaseClient.storage.from(bucketName).getPublicUrl(data.path);
+  return publicUrlData.publicUrl;
+}
+
 const DEFAULT_DB = {
   settings: { schoolName: 'SMP NU Tugasari', npsn: '20365478', address: 'Jl. Raya Tugasari No. 01, Tugasari', phone: '(0281) 123456', email: 'info@smpnutugasari.sch.id', year: '1998', akreditasi: 'A', ta: '2025/2026', kuota: 160, buka: '2025-01-15', tutup: '2025-06-30', statusPPDB: true, ig: '@smpnutugasari', yt: 'SMP NU Tugasari Official', fb: 'SMP NU Tugasari', wa: '0812-3456-7890' },
   ppdb: [
@@ -1058,8 +1074,6 @@ async function syncRecord(table, record, mode = 'upsert') {
   if (!isSupabaseReady) return;
   try {
     let payload = { ...record };
-    
-    // Hapus field photo & img (Base64) agar tidak melebihi batas payload Supabase
     if (payload.photo) delete payload.photo;
     if (payload.img) delete payload.img;
 
@@ -1077,7 +1091,6 @@ async function syncRecord(table, record, mode = 'upsert') {
 async function syncFromSupabase() {
   if (!isSupabaseReady) return;
   
-  // Ambil data Pengaturan & Iklan
   try {
     const { data: configData } = await supabaseClient.from('app_config').select('*').eq('id', 'main_config').single();
     if (configData) {
@@ -1228,7 +1241,6 @@ function saveAd() {
   };
   saveDBLocal(); renderAdBanner(); closeModal('modalAd');
   
-  // Simpan juga ke Supabase
   if (isSupabaseReady) {
     supabaseClient.from('app_config').upsert({ 
       id: 'main_config', 
@@ -1354,7 +1366,16 @@ function openSiswaModal(id = null) {
   const s = id ? DB.siswa.find(x => x.id === id) : {};
   setupModal(id ? 'Edit Siswa' : 'Tambah Siswa Baru', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="label">NIS</label><input type="text" class="input" id="siswaNis" value="${s.nis || ''}" placeholder="2024001"></div><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="siswaName" value="${s.name || ''}" placeholder="Nama siswa"></div><div><label class="label">Kelas</label><select class="select" id="siswaKelas">${['VII A','VII B','VIII A','VIII B','IX A','IX B'].map(k => `<option value="${k}" ${s.kelas === k ? 'selected' : ''}>${k}</option>`).join('')}</select></div><div><label class="label">Jenis Kelamin</label><select class="select" id="siswaJk"><option value="L" ${s.jk === 'L' ? 'selected' : ''}>Laki-laki</option><option value="P" ${s.jk === 'P' ? 'selected' : ''}>Perempuan</option></select></div><div><label class="label">Nama Wali</label><input type="text" class="input" id="siswaWali" value="${s.wali || ''}" placeholder="Nama orang tua"></div><div><label class="label">Status</label><select class="select" id="siswaStatus"><option value="Aktif" ${s.status === 'Aktif' ? 'selected' : ''}>Aktif</option><option value="Non-Aktif" ${s.status === 'Non-Aktif' ? 'selected' : ''}>Non-Aktif</option></select></div><div class="md:col-span-2"><label class="label">Foto Siswa</label><input type="file" class="input" id="siswaPhotoFile" accept="image/*">${s.photo ? `<div class="mt-2 flex items-center gap-3"><img src="${s.photo}" class="w-16 h-16 rounded-lg object-cover border-2 border-[var(--accent)]"><span class="text-xs text-[var(--muted)]">Foto saat ini</span></div>` : '<div class="mt-2 text-xs text-[var(--muted)]">Belum ada foto. Upload foto dari perangkat Anda.</div>'}</div></div>`, async () => {
     const name = document.getElementById('siswaName').value; const nis = document.getElementById('siswaNis').value; if (!name || !nis) { showToast('Nama dan NIS wajib diisi.', 'error'); return; }
-    let photo = s.photo || ''; const fileInput = document.getElementById('siswaPhotoFile'); if (fileInput.files && fileInput.files[0]) { photo = await readFileAsDataURL(fileInput.files[0]); }
+    let photo = s.photo || ''; const fileInput = document.getElementById('siswaPhotoFile'); 
+    
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      showToast('Mengupload foto...', 'success');
+      const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'students');
+      if (uploadedUrl) photo = uploadedUrl;
+      else photo = await readFileAsDataURL(file);
+    }
+
     const data = { nis, name, kelas: document.getElementById('siswaKelas').value, jk: document.getElementById('siswaJk').value, wali: document.getElementById('siswaWali').value, status: document.getElementById('siswaStatus').value, photo };
     let savedId;
     if (id) { 
@@ -1388,7 +1409,16 @@ function openGuruModal(id = null) {
   const g = id ? DB.guru.find(x => x.id === id) : {};
   setupModal(id ? 'Edit Guru / Staf' : 'Tambah Guru / Staf', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="guruName" value="${g.name || ''}" placeholder="Dr. ..."></div><div><label class="label">Jabatan</label><input type="text" class="input" id="guruRole" value="${g.role || ''}" placeholder="Guru Matematika"></div><div><label class="label">Mata Pelajaran</label><input type="text" class="input" id="guruSubject" value="${g.subject || ''}" placeholder="Matematika"></div><div><label class="label">Upload Foto</label><input type="file" class="input" id="guruImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-16 h-16 rounded-lg object-cover"></div>` : ''}</div></div>`, async () => {
     const name = document.getElementById('guruName').value; const role = document.getElementById('guruRole').value; if (!name || !role) { showToast('Nama dan Jabatan wajib diisi.', 'error'); return; }
-    let img = g.img || 'https://picsum.photos/seed/defaultguru/400/400.jpg'; const fileInput = document.getElementById('guruImgFile'); if (fileInput.files && fileInput.files[0]) img = await readFileAsDataURL(fileInput.files[0]);
+    let img = g.img || 'https://picsum.photos/seed/defaultguru/400/400.jpg'; const fileInput = document.getElementById('guruImgFile'); 
+    
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      showToast('Mengupload foto...', 'success');
+      const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'teachers');
+      if (uploadedUrl) img = uploadedUrl;
+      else img = await readFileAsDataURL(file);
+    }
+
     const data = { name, role, subject: document.getElementById('guruSubject').value || '-', img };
     let savedId;
     if (id) { 
@@ -1455,7 +1485,18 @@ function openGaleriModal(id = null) {
   const g = id ? DB.galeri.find(x => x.id === id) : {};
   setupModal(id ? 'Edit Foto Galeri' : 'Upload Foto Galeri', `<div class="space-y-4"><div><label class="label">Upload Gambar</label><input type="file" class="input" id="galImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-32 h-20 rounded-lg object-cover"></div>` : ''}</div><div><label class="label">Judul Foto</label><input type="text" class="input" id="galTitle" value="${g.title || ''}" placeholder="Contoh: Pesantren Ramadhan"></div><div><label class="label">Kategori</label><select class="select" id="galCat"><option value="akademik" ${g.cat === 'akademik' ? 'selected' : ''}>Akademik</option><option value="religi" ${g.cat === 'religi' ? 'selected' : ''}>Keagamaan</option><option value="ekskul" ${g.cat === 'ekskul' ? 'selected' : ''}>Ekstrakurikuler</option></select></div><div><label class="label">Deskripsi</label><textarea class="textarea" rows="2" id="galDesc" placeholder="Deskripsi singkat...">${g.desc || ''}</textarea></div></div>`, async () => {
     const title = document.getElementById('galTitle').value; if (!title) { showToast('Judul wajib diisi.', 'error'); return; }
-    let img = g.img || ''; const fileInput = document.getElementById('galImgFile'); if (fileInput.files && fileInput.files[0]) img = await readFileAsDataURL(fileInput.files[0]); else if (!img) { showToast('Foto wajib diupload.', 'error'); return; }
+    let img = g.img || ''; const fileInput = document.getElementById('galImgFile'); 
+    
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      showToast('Mengupload foto...', 'success');
+      const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'gallery');
+      if (uploadedUrl) img = uploadedUrl;
+      else { showToast('Gagal upload ke cloud, gagal menyimpan.', 'error'); return; }
+    } else if (!img) { 
+      showToast('Foto wajib diupload.', 'error'); return; 
+    }
+
     const data = { img, title, cat: document.getElementById('galCat').value, desc: document.getElementById('galDesc').value };
     let savedId;
     if (id) { 
@@ -1530,7 +1571,6 @@ function saveSettings() {
   
   saveDBLocal(); 
   
-  // Simpan juga ke Supabase
   if (isSupabaseReady) {
     supabaseClient.from('app_config').upsert({ 
       id: 'main_config', 
