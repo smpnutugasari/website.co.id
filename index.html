@@ -184,10 +184,10 @@
   .ppdb-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px dashed #ddd; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
   .ppdb-card-footer .accent-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; display: inline-block; margin-right: 6px; }
 
-  /* Styling untuk QR Code di dalam kartu - Hanya tampilkan 1 (img) */
-  #qrcode { display: flex; justify-content: center; align-items: center; padding: 5px; background: #fff; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
-  #qrcode canvas { display: none !important; }
-  #qrcode img { display: block !important; width: 90px !important; height: 90px !important; }
+  /* Styling untuk QR Code di dalam kartu - Fix Mobile & Dobel Issue */
+  #qrcode { display: flex; justify-content: center; align-items: center; padding: 5px; background: #fff; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); width: 100px; height: 100px; margin: 0 auto; }
+  #qrcode canvas { display: block !important; width: 90px !important; height: 90px !important; }
+  #qrcode img { display: none !important; } /* Sembunyikan img fallback karena kita pakai canvas */
 
   /* Notification Dropdown */
   .notif-dropdown { position: absolute; top: calc(100% + 8px); right: 0; width: 360px; max-height: 480px; background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); opacity: 0; visibility: hidden; transform: translateY(-8px); transition: all 0.25s; z-index: 100; overflow: hidden; }
@@ -420,7 +420,7 @@
       <div class="section-num mb-4">— 05 / Penerimaan Siswa Baru</div>
       <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase">Alur <span style="color:var(--accent);">PPDB 2025</span></h2>
     </div>
-    <div class="grid md:grid-cols-2 gap-x:12 gap-y:2">
+    <div class="grid md:grid-cols-2 gap-x:12 gap-y-2">
       <div class="reveal">
         <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 1</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Pendaftaran Online</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Pengisian formulir pendaftaran secara online melalui website resmi atau datang langsung ke sekretariat sekolah.</p></div>
         <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 2</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Tes Seleksi & Wawancara</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Tes potensi akademik, wawancara calon siswa, dan tes potensi Tahfidz untuk kelas khusus.</p></div>
@@ -1386,7 +1386,7 @@ function deleteGuru(id) {
 function renderProgram() { document.getElementById('programGrid').innerHTML = DB.program.map(p => `<div class="panel p-6"><div class="flex items-start justify-between mb-4"><div class="w-12 h-12 rounded-xl ${p.color==='gold'?'bg-[var(--accent)]/10 text-[var(--accent-2)]':'bg-[var(--nu-green)]/10 text-[var(--nu-green)]'} flex items-center justify-center text-xl"><i class="fa-solid ${p.icon}"></i></div><div class="flex gap-1"><button class="btn-icon btn-sm" title="Edit" onclick="openProgramModal(${p.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger" title="Hapus" onclick="deleteProgram(${p.id})"><i class="fa-solid fa-trash"></i></button></div></div><h4 class="font-display text-xl font-bold uppercase mb-2">${p.title}</h4><p class="text-xs text-[var(--muted)] leading-relaxed font-medium mb-4">${p.desc}</p><div class="flex items-center justify-between text-xs"><span class="text-[var(--muted)] font-medium"><i class="fa-solid fa-users mr-1"></i> ${Math.floor(Math.random()*50)+30} siswa</span><span class="badge-status badge-approved">Aktif</span></div></div>`).join(''); }
 function openProgramModal(id = null) {
   const p = id ? DB.program.find(x => x.id === id) : {};
-  setupModal(id ? 'Edit Program' : 'Tambah Program', `<div class="space-y-4><div><label class="label">Nama Program</label><input type="text" class="input" id="progTitle" value="${p.title || ''}" placeholder="Contoh: Tahfidz Al-Qur'an"></div><div><label class="label">Deskripsi Singkat</label><textarea class="textarea" rows="3" id="progDesc" placeholder="Deskripsi program...">${p.desc || ''}</textarea></div><div class="grid grid-cols-2 gap-4"><div><label class="label">Ikon (FontAwesome)</label><input type="text" class="input" id="progIcon" value="${p.icon || 'fa-book'}" placeholder="fa-quran"></div><div><label class="label">Warna</label><select class="select" id="progColor"><option value="gold" ${p.color === 'gold' ? 'selected' : ''}>Emas</option><option value="green" ${p.color === 'green' ? 'selected' : ''}>Hijau NU</option></select></div></div></div>`, () => {
+  setupModal(id ? 'Edit Program' : 'Tambah Program', `<div class="space-y-4><div><label class="label">Nama Program</label><input type="text" class="input" id="progTitle" value="${p.title || ''}" placeholder="Contoh: Tahfidz Al-Qur'an"></div><div><label class="label">Deskripsi Singkat</label><textarea class="textarea" rows="3" id="progDesc" placeholder="Deskripsi program...">${p.desc || ''}</textarea></div><div class="grid grid-cols-2 gap-4><div><label class="label">Ikon (FontAwesome)</label><input type="text" class="input" id="progIcon" value="${p.icon || 'fa-book'}" placeholder="fa-quran"></div><div><label class="label">Warna</label><select class="select" id="progColor"><option value="gold" ${p.color === 'gold' ? 'selected' : ''}>Emas</option><option value="green" ${p.color === 'green' ? 'selected' : ''}>Hijau NU</option></select></div></div></div>`, () => {
     const title = document.getElementById('progTitle').value; if (!title) { showToast('Nama program wajib diisi.', 'error'); return; }
     const data = { title, desc: document.getElementById('progDesc').value, icon: document.getElementById('progIcon').value, color: document.getElementById('progColor').value };
     if (id) { Object.assign(DB.program.find(x => x.id === id), data); showToast('Program diperbarui.', 'success'); } else { DB.program.push({ id: Date.now(), ...data }); showToast('Program baru ditambahkan.', 'success'); }
@@ -1491,7 +1491,8 @@ function showPPDBCard(data) {
       height: 90,
       colorDark: "#1a1d21",
       colorLight: "#ffffff",
-      correctLevel: QRCode.CorrectLevel.H
+      correctLevel: QRCode.CorrectLevel.H,
+      render: "canvas" // Paksa menggunakan canvas agar tidak dobel dan muncul di HP
     });
   } catch (e) { console.warn('QR Code error:', e); }
 
