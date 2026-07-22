@@ -1232,7 +1232,9 @@ function openAdModal() {
   document.getElementById('adPreviewDesc').textContent = ad.desc || '';
   openModal('modalAd'); 
 }
-function saveAd() {
+
+// PERBAIKAN: Hapus deklarasi ganda agar fungsi saveAd tidak tertimpa
+async function saveAd() {
   DB.ad = {
     title: document.getElementById('adTitle').value,
     desc: document.getElementById('adDesc').value,
@@ -1242,16 +1244,21 @@ function saveAd() {
   saveDBLocal(); renderAdBanner(); closeModal('modalAd');
   
   if (isSupabaseReady) {
-    supabaseClient.from('app_config').upsert({ 
-      id: 'main_config', 
-      settings: DB.settings, 
-      ad: DB.ad 
-    }).then(({ error }) => {
-      if (error) console.warn('Gagal simpan ad ke Supabase:', error);
-    });
+    try {
+      const { error } = await supabaseClient.from('app_config').upsert({ 
+        id: 'main_config', 
+        settings: DB.settings, 
+        ad: DB.ad 
+      });
+      if (error) throw error;
+      showToast('Pengumuman berhasil diperbarui.', 'success');
+    } catch (err) {
+      console.warn('Gagal simpan ad ke Supabase:', err);
+      showToast('Pengumuman disimpan lokal (gagal cloud).', 'warning');
+    }
+  } else {
+    showToast('Pengumuman berhasil diperbarui.', 'success');
   }
-  
-  showToast('Pengumuman berhasil diperbarui.', 'success');
 }
 function openChangePasswordModal() {
   setupModal('Ubah Password', `
@@ -1373,7 +1380,7 @@ function openSiswaModal(id = null) {
       showToast('Mengupload foto...', 'success');
       const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'students');
       if (uploadedUrl) photo = uploadedUrl;
-      else photo = await readFileAsDataURL(file);
+      else photo = await readFileAsDataURL(file); // PERBAIKAN: Fallback ke Base64 jika cloud error
     }
 
     const data = { nis, name, kelas: document.getElementById('siswaKelas').value, jk: document.getElementById('siswaJk').value, wali: document.getElementById('siswaWali').value, status: document.getElementById('siswaStatus').value, photo };
@@ -1416,7 +1423,7 @@ function openGuruModal(id = null) {
       showToast('Mengupload foto...', 'success');
       const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'teachers');
       if (uploadedUrl) img = uploadedUrl;
-      else img = await readFileAsDataURL(file);
+      else img = await readFileAsDataURL(file); // PERBAIKAN: Fallback ke Base64
     }
 
     const data = { name, role, subject: document.getElementById('guruSubject').value || '-', img };
@@ -1491,8 +1498,13 @@ function openGaleriModal(id = null) {
       const file = fileInput.files[0];
       showToast('Mengupload foto...', 'success');
       const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'gallery');
-      if (uploadedUrl) img = uploadedUrl;
-      else { showToast('Gagal upload ke cloud, gagal menyimpan.', 'error'); return; }
+      if (uploadedUrl) {
+        img = uploadedUrl;
+      } else {
+        // PERBAIKAN: Jika upload cloud gagal, tetap simpan ke lokal agar galeri terbit
+        img = await readFileAsDataURL(file); 
+        showToast('Upload cloud gagal, foto disimpan secara lokal.', 'warning');
+      }
     } else if (!img) { 
       showToast('Foto wajib diupload.', 'error'); return; 
     }
@@ -1549,7 +1561,7 @@ function loadSettingsForm() {
   document.getElementById('setKuota').value = s.kuota || ''; document.getElementById('setBuka').value = s.buka || ''; document.getElementById('setTutup').value = s.tutup || ''; document.getElementById('setPPDBStatus').checked = s.statusPPDB !== undefined ? s.statusPPDB : true;
   document.getElementById('setIg').value = s.ig || ''; document.getElementById('setYt').value = s.yt || ''; document.getElementById('setFb').value = s.fb || ''; document.getElementById('setWa').value = s.wa || '';
 }
-function saveSettings() {
+async function saveSettings() {
   DB.settings = { 
     schoolName: document.getElementById('setSchoolName').value, 
     npsn: document.getElementById('setNpsn').value, 
@@ -1572,16 +1584,21 @@ function saveSettings() {
   saveDBLocal(); 
   
   if (isSupabaseReady) {
-    supabaseClient.from('app_config').upsert({ 
-      id: 'main_config', 
-      settings: DB.settings, 
-      ad: DB.ad 
-    }).then(({ error }) => {
-      if (error) console.warn('Gagal simpan settings ke Supabase:', error);
-    });
+    try {
+      const { error } = await supabaseClient.from('app_config').upsert({ 
+        id: 'main_config', 
+        settings: DB.settings, 
+        ad: DB.ad 
+      });
+      if (error) throw error;
+      showToast('Pengaturan berhasil disimpan.', 'success');
+    } catch (err) {
+      console.warn('Gagal simpan settings ke Supabase:', err);
+      showToast('Pengaturan disimpan lokal (gagal cloud).', 'warning');
+    }
+  } else {
+    showToast('Pengaturan berhasil disimpan.', 'success');
   }
-  
-  showToast('Pengaturan berhasil disimpan.', 'success');
 }
 
 function initCharts() {
@@ -1847,6 +1864,22 @@ function logout() {
     showToast('Anda telah keluar dari sistem.', 'success'); 
   });
 }
+
+document.getElementById('adTitle')?.addEventListener('input', e => { const p = document.getElementById('adPreviewTitle'); if (p) p.textContent = e.target.value; });
+document.getElementById('adDesc')?.addEventListener('input', e => { const p = document.getElementById('adPreviewDesc'); if (p) p.textContent = e.target.value; });
+
+window.addEventListener('DOMContentLoaded', async () => {
+  loadDBLocal();
+  if (isSupabaseReady) {
+    await syncFromSupabase();
+  }
+  renderLandingPrograms(); 
+  renderLandingTeachers(); 
+  renderLandingGallery('all'); 
+  updateVisitorDisplay(); 
+  renderAdBanner();
+  checkVerification(); 
+});
 
 document.getElementById('adTitle')?.addEventListener('input', e => { const p = document.getElementById('adPreviewTitle'); if (p) p.textContent = e.target.value; });
 document.getElementById('adDesc')?.addEventListener('input', e => { const p = document.getElementById('adPreviewDesc'); if (p) p.textContent = e.target.value; });
