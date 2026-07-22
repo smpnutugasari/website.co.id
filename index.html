@@ -1039,7 +1039,6 @@ const DEFAULT_DB = {
 };
 
 let DB = {};
-let isSyncing = false;
 
 function loadDBLocal() {
   try {
@@ -1053,7 +1052,6 @@ function loadDBLocal() {
   } catch (e) { console.error('LocalStorage error:', e); DB = JSON.parse(JSON.stringify(DEFAULT_DB)); }
 }
 function saveDBLocal() { try { localStorage.setItem('smpnu_db', JSON.stringify(DB)); } catch (e) { console.error('Save LocalStorage failed:', e); } }
-function loadDB() { loadDBLocal(); }
 
 function saveDB() { 
   saveDBLocal(); 
@@ -1062,7 +1060,7 @@ function saveDB() {
   }
 }
 
-// Perbaikan Sync Supabase agar tidak mengganggu UI jika tabel belum dibuat
+// Perbaikan Sync Supabase agar mengirim semua data (ppdb, siswa, guru, program, galeri, pesan)
 async function syncToSupabase() {
   if (!isSupabaseReady) return;
   try {
@@ -1077,6 +1075,15 @@ async function syncToSupabase() {
   try {
     if (DB.guru.length) await supabaseClient.from('guru').upsert(DB.guru);
   } catch (e) { console.warn('Sync guru gagal:', e); }
+  try {
+    if (DB.program.length) await supabaseClient.from('program').upsert(DB.program);
+  } catch (e) { console.warn('Sync program gagal:', e); }
+  try {
+    if (DB.galeri.length) await supabaseClient.from('galeri').upsert(DB.galeri);
+  } catch (e) { console.warn('Sync galeri gagal:', e); }
+  try {
+    if (DB.pesan.length) await supabaseClient.from('pesan').upsert(DB.pesan);
+  } catch (e) { console.warn('Sync pesan gagal:', e); }
 }
 
 async function syncRecord(table, record, mode = 'upsert') {
@@ -1091,7 +1098,7 @@ async function syncRecord(table, record, mode = 'upsert') {
   } catch (e) { console.warn(`Sync ${mode} ${table} gagal:`, e); }
 }
 
-// Fungsi menarik data dari Supabase secara independen (Aman dari error tabel belum dibuat)
+// Fungsi menarik data dari Supabase secara independen
 async function syncFromSupabase() {
   if (!isSupabaseReady) return;
   
