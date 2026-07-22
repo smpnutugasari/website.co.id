@@ -154,7 +154,6 @@
   input[type="file"].input::file-selector-button { background: var(--accent); color: var(--fg); border: none; padding: 8px 14px; border-radius: 4px; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; cursor: pointer; transition: all 0.2s; margin-right: 12px; }
   input[type="file"].input::file-selector-button:hover { background: var(--accent-2); color: #fff; }
   
-  /* Kartu PPDB */
   .ppdb-card-container { background: #ffffff; border-radius: 18px; width: 100%; max-width: 380px; box-shadow: 0 25px 70px rgba(0,0,0,0.18); position: relative; overflow: hidden; font-family: 'Inter', sans-serif; border: 3px solid var(--accent); }
   .ppdb-card-container::after { content: ''; position: absolute; inset: 5px; border: 1px solid rgba(212,175,55,0.5); border-radius: 14px; pointer-events: none; z-index: 3; }
   .ppdb-card-bg { position: absolute; top: 0; left: 0; right: 0; height: 150px; background: linear-gradient(135deg, #1a1d21 0%, #2a2e35 50%, #1a1d21 100%); overflow: hidden; }
@@ -180,12 +179,10 @@
   .ppdb-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px dashed #ddd; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
   .ppdb-card-footer .accent-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; display: inline-block; margin-right: 6px; }
 
-  /* QR Code Fix Tunggal & Mobile */
   #qrcode { display: flex; justify-content: center; align-items: center; padding: 5px; background: #fff; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); width: 100px; height: 100px; margin: 0 auto; }
   #qrcode canvas { display: block !important; width: 90px !important; height: 90px !important; }
   #qrcode img { display: none !important; }
 
-  /* Notifikasi & Lainnya */
   .notif-dropdown { position: absolute; top: calc(100% + 8px); right: 0; width: 360px; max-height: 480px; background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); opacity: 0; visibility: hidden; transform: translateY(-8px); transition: all 0.25s; z-index: 100; overflow: hidden; }
   .notif-dropdown.open { opacity: 1; visibility: visible; transform: translateY(0); }
   .notif-item { padding: 14px 18px; border-bottom: 1px solid var(--bg-2); cursor: pointer; transition: all 0.2s; display: flex; gap: 12px; }
@@ -1061,17 +1058,34 @@ async function syncRecord(table, record, mode = 'upsert') {
   if (!isSupabaseReady) return;
   try {
     let payload = { ...record };
+    
+    // Hapus field photo & img (Base64) agar tidak melebihi batas payload Supabase
+    if (payload.photo) delete payload.photo;
+    if (payload.img) delete payload.img;
+
     if (table === 'ppdb') {
       payload = { id: record.id, reg_num: record.regNum, name: record.name, gender: record.gender, school: record.school, dob: record.dob, parent: record.parent, mother: record.mother, phone: record.phone, address: record.address, date: record.date, status: record.status };
     }
+    
     if (mode === 'upsert') await supabaseClient.from(table).upsert(payload);
     else if (mode === 'delete') await supabaseClient.from(table).delete().eq('id', record.id);
-  } catch (e) { console.warn(`Sync ${mode} ${table} gagal:`, e); }
+  } catch (e) { 
+    console.warn(`Sync ${mode} ${table} gagal:`, e); 
+  }
 }
 
 async function syncFromSupabase() {
   if (!isSupabaseReady) return;
   
+  // Ambil data Pengaturan & Iklan
+  try {
+    const { data: configData } = await supabaseClient.from('app_config').select('*').eq('id', 'main_config').single();
+    if (configData) {
+      if (configData.settings) DB.settings = { ...DEFAULT_DB.settings, ...configData.settings };
+      if (configData.ad) DB.ad = { ...DEFAULT_DB.ad, ...configData.ad };
+    }
+  } catch (e) { console.warn('Gagal fetch config:', e); }
+
   try {
     const { data: ppdbData } = await supabaseClient.from('ppdb').select('*');
     if (ppdbData && ppdbData.length > 0) DB.ppdb = ppdbData.map(p => ({ id: p.id, regNum: p.reg_num, name: p.name, gender: p.gender, school: p.school, dob: p.dob, parent: p.parent, mother: p.mother, phone: p.phone, address: p.address, date: p.date, status: p.status }));
@@ -1213,6 +1227,18 @@ function saveAd() {
     active: document.getElementById('adActive').checked
   };
   saveDBLocal(); renderAdBanner(); closeModal('modalAd');
+  
+  // Simpan juga ke Supabase
+  if (isSupabaseReady) {
+    supabaseClient.from('app_config').upsert({ 
+      id: 'main_config', 
+      settings: DB.settings, 
+      ad: DB.ad 
+    }).then(({ error }) => {
+      if (error) console.warn('Gagal simpan ad ke Supabase:', error);
+    });
+  }
+  
   showToast('Pengumuman berhasil diperbarui.', 'success');
 }
 function openChangePasswordModal() {
@@ -1483,8 +1509,39 @@ function loadSettingsForm() {
   document.getElementById('setIg').value = s.ig || ''; document.getElementById('setYt').value = s.yt || ''; document.getElementById('setFb').value = s.fb || ''; document.getElementById('setWa').value = s.wa || '';
 }
 function saveSettings() {
-  DB.settings = { schoolName: document.getElementById('setSchoolName').value, npsn: document.getElementById('setNpsn').value, address: document.getElementById('setAddress').value, phone: document.getElementById('setPhone').value, email: document.getElementById('setEmail').value, year: document.getElementById('setYear').value, akreditasi: document.getElementById('setAkreditasi').value, ta: document.getElementById('setTA').value, kuota: document.getElementById('setKuota').value, buka: document.getElementById('setBuka').value, tutup: document.getElementById('setTutup').value, statusPPDB: document.getElementById('setPPDBStatus').checked, ig: document.getElementById('setIg').value, yt: document.getElementById('setYt').value, fb: document.getElementById('setFb').value, wa: document.getElementById('setWa').value };
-  saveDB(); showToast('Pengaturan berhasil disimpan.', 'success');
+  DB.settings = { 
+    schoolName: document.getElementById('setSchoolName').value, 
+    npsn: document.getElementById('setNpsn').value, 
+    address: document.getElementById('setAddress').value, 
+    phone: document.getElementById('setPhone').value, 
+    email: document.getElementById('setEmail').value, 
+    year: document.getElementById('setYear').value, 
+    akreditasi: document.getElementById('setAkreditasi').value, 
+    ta: document.getElementById('setTA').value, 
+    kuota: document.getElementById('setKuota').value, 
+    buka: document.getElementById('setBuka').value, 
+    tutup: document.getElementById('setTutup').value, 
+    statusPPDB: document.getElementById('setPPDBStatus').checked, 
+    ig: document.getElementById('setIg').value, 
+    yt: document.getElementById('setYt').value, 
+    fb: document.getElementById('setFb').value, 
+    wa: document.getElementById('setWa').value 
+  };
+  
+  saveDBLocal(); 
+  
+  // Simpan juga ke Supabase
+  if (isSupabaseReady) {
+    supabaseClient.from('app_config').upsert({ 
+      id: 'main_config', 
+      settings: DB.settings, 
+      ad: DB.ad 
+    }).then(({ error }) => {
+      if (error) console.warn('Gagal simpan settings ke Supabase:', error);
+    });
+  }
+  
+  showToast('Pengaturan berhasil disimpan.', 'success');
 }
 
 function initCharts() {
