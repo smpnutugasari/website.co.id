@@ -1062,6 +1062,7 @@ function saveDB() {
   }
 }
 
+// Perbaikan Sync Supabase agar tidak mengganggu UI jika tabel belum dibuat
 async function syncToSupabase() {
   if (!isSupabaseReady) return;
   try {
@@ -1069,9 +1070,13 @@ async function syncToSupabase() {
       const ppdbData = DB.ppdb.map(p => ({ id: p.id, reg_num: p.regNum || null, name: p.name, gender: p.gender, school: p.school, dob: p.dob, parent: p.parent, mother: p.mother, phone: p.phone, address: p.address, date: p.date, status: p.status }));
       await supabaseClient.from('ppdb').upsert(ppdbData);
     }
+  } catch (e) { console.warn('Sync ppdb gagal:', e); }
+  try {
     if (DB.siswa.length) await supabaseClient.from('siswa').upsert(DB.siswa);
+  } catch (e) { console.warn('Sync siswa gagal:', e); }
+  try {
     if (DB.guru.length) await supabaseClient.from('guru').upsert(DB.guru);
-  } catch (e) { console.warn('Sync Supabase gagal (abaikan jika belum setup tabel):', e); }
+  } catch (e) { console.warn('Sync guru gagal:', e); }
 }
 
 async function syncRecord(table, record, mode = 'upsert') {
@@ -1083,35 +1088,44 @@ async function syncRecord(table, record, mode = 'upsert') {
     }
     if (mode === 'upsert') await supabaseClient.from(table).upsert(payload);
     else if (mode === 'delete') await supabaseClient.from(table).delete().eq('id', record.id);
-  } catch (e) { console.warn(`Sync ${mode} ${table} gagal (abaikan jika belum setup tabel):`, e); }
+  } catch (e) { console.warn(`Sync ${mode} ${table} gagal:`, e); }
 }
 
+// Fungsi menarik data dari Supabase secara independen (Aman dari error tabel belum dibuat)
 async function syncFromSupabase() {
   if (!isSupabaseReady) return;
+  
   try {
     const { data: ppdbData } = await supabaseClient.from('ppdb').select('*');
     if (ppdbData && ppdbData.length > 0) DB.ppdb = ppdbData.map(p => ({ id: p.id, regNum: p.reg_num, name: p.name, gender: p.gender, school: p.school, dob: p.dob, parent: p.parent, mother: p.mother, phone: p.phone, address: p.address, date: p.date, status: p.status }));
+  } catch (e) { console.warn('Gagal fetch ppdb:', e); }
 
+  try {
     const { data: siswaData } = await supabaseClient.from('siswa').select('*');
     if (siswaData && siswaData.length > 0) DB.siswa = siswaData.map(s => ({ id: s.id, nis: s.nis, name: s.name, kelas: s.kelas, jk: s.jk, wali: s.wali, status: s.status, photo: s.photo }));
+  } catch (e) { console.warn('Gagal fetch siswa:', e); }
 
+  try {
     const { data: guruData } = await supabaseClient.from('guru').select('*');
     if (guruData && guruData.length > 0) DB.guru = guruData.map(g => ({ id: g.id, name: g.name, role: g.role, subject: g.subject, img: g.img }));
+  } catch (e) { console.warn('Gagal fetch guru:', e); }
 
+  try {
     const { data: programData } = await supabaseClient.from('program').select('*');
     if (programData && programData.length > 0) DB.program = programData.map(p => ({ id: p.id, icon: p.icon, title: p.title, desc: p.desc, color: p.color }));
+  } catch (e) { console.warn('Gagal fetch program:', e); }
 
+  try {
     const { data: galeriData } = await supabaseClient.from('galeri').select('*');
     if (galeriData && galeriData.length > 0) DB.galeri = galeriData.map(g => ({ id: g.id, img: g.img, title: g.title, cat: g.cat, desc: g.desc }));
+  } catch (e) { console.warn('Gagal fetch galeri:', e); }
 
+  try {
     const { data: pesanData } = await supabaseClient.from('pesan').select('*');
     if (pesanData && pesanData.length > 0) DB.pesan = pesanData.map(p => ({ id: p.id, name: p.name, email: p.email, phone: p.phone, subject: p.subject, msg: p.msg, date: p.date, read: p.read }));
-    
-    saveDBLocal();
-    console.log("Data dari Supabase berhasil dimuat!");
-  } catch (e) {
-    console.warn('Gagal menarik data dari Supabase:', e);
-  }
+  } catch (e) { console.warn('Gagal fetch pesan:', e); }
+  
+  saveDBLocal();
 }
 
 loadDBLocal();
@@ -1290,7 +1304,7 @@ function renderPPDBTable() {
 }
 function openPPDBModal(id = null) {
   const p = id ? DB.ppdb.find(x => x.id === id) : {};
-  setupModal(id ? 'Edit Pendaftar PPDB' : 'Tambah Pendaftar PPDB', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="ppdbName" value="${p.name || ''}" placeholder="Nama calon siswa"></div><div><label class="label">Asal Sekolah</label><input type="text" class="input" id="ppdbSchool" value="${p.school || ''}" placeholder="SD Asal"></div><div><label class="label">Nama Orang Tua</label><input type="text" class="input" id="ppdbParent" value="${p.parent || ''}" placeholder="Nama wali"></div><div><label class="label">No. Telepon</label><input type="text" class="input" id="ppdbPhone" value="${p.phone || ''}" placeholder="08xx"></div><div><label class="label">Tanggal Daftar</label><input type="date" class="input" id="ppdbDate" value="${p.date || new Date().toISOString().split('T')[0]}"></div><div><label class="label">Status</label><select class="select" id="ppdbStatus"><option value="pending" ${p.status === 'pending' ? 'selected' : ''}>Pending</option><option value="approved" ${p.status === 'approved' ? 'selected' : ''}>Disetujui</option><option value="rejected" ${p.status === 'rejected' ? 'selected' : ''}>Ditolak</option></select></div></div>`, () => {
+  setupModal(id ? 'Edit Pendaftar PPDB' : 'Tambah Pendaftar PPDB', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="ppdbName" value="${p.name || ''}" placeholder="Nama calon siswa"></div><div><label class="label">Asal Sekolah</label><input type="text" class="input" id="ppdbSchool" value="${p.school || ''}" placeholder="SD Asal"></div><div><label class="label">Nama Orang Tua</label><input type="text" class="input" id="ppdbParent" value="${p.parent || ''}" placeholder="Nama wali"></div><div><label class="label">No. Telepon</label><input type="text" class="input" id="ppdbPhone" value="${p.phone || ''}" placeholder="08xx"></div><div><label class="label">Tanggal Daftar</label><input type="date" class="input" id="ppdbDate" value="${p.date || new Date().toISOString().split('T')[0]}"></div><div><label class="label">Status</label><select class="select" id="ppdbStatus"><option value="pending" ${p.status === 'pending' ? 'selected' : ''}>Pending</option><option value="approved" ${p.status === 'approved' ? 'selected' : ''}>Disetujui</option><option value="rejected" ${p.status === 'rejected' ? 'selected' : ''}>Ditolak</option></select></div></div>`, () => {
     const name = document.getElementById('ppdbName').value; const school = document.getElementById('ppdbSchool').value; if (!name || !school) { showToast('Nama dan Asal Sekolah wajib diisi.', 'error'); return; }
     const data = { name, school, parent: document.getElementById('ppdbParent').value, phone: document.getElementById('ppdbPhone').value, date: document.getElementById('ppdbDate').value, status: document.getElementById('ppdbStatus').value };
     if (id) { Object.assign(DB.ppdb.find(x => x.id === id), data); showToast('Data PPDB diperbarui.', 'success'); } else { DB.ppdb.unshift({ id: Date.now(), ...data }); showToast('Pendaftar baru ditambahkan.', 'success'); }
@@ -1321,7 +1335,7 @@ function renderSiswaTable() {
 }
 function openSiswaModal(id = null) {
   const s = id ? DB.siswa.find(x => x.id === id) : {};
-  setupModal(id ? 'Edit Siswa' : 'Tambah Siswa Baru', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="label">NIS</label><input type="text" class="input" id="siswaNis" value="${s.nis || ''}" placeholder="2024001"></div><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="siswaName" value="${s.name || ''}" placeholder="Nama siswa"></div><div><label class="label">Kelas</label><select class="select" id="siswaKelas">${['VII A','VII B','VIII A','VIII B','IX A','IX B'].map(k => `<option value="${k}" ${s.kelas === k ? 'selected' : ''}>${k}</option>`).join('')}</select></div><div><label class="label">Jenis Kelamin</label><select class="select" id="siswaJk"><option value="L" ${s.jk === 'L' ? 'selected' : ''}>Laki-laki</option><option value="P" ${s.jk === 'P' ? 'selected' : ''}>Perempuan</option></select></div><div><label class="label">Nama Wali</label><input type="text" class="input" id="siswaWali" value="${s.wali || ''}" placeholder="Nama orang tua"></div><div><label class="label">Status</label><select class="select" id="siswaStatus"><option value="Aktif" ${s.status === 'Aktif' ? 'selected' : ''}>Aktif</option><option value="Non-Aktif" ${s.status === 'Non-Aktif' ? 'selected' : ''}>Non-Aktif</option></select></div><div class="md:col-span-2"><label class="label">Foto Siswa</label><input type="file" class="input" id="siswaPhotoFile" accept="image/*">${s.photo ? `<div class="mt-2 flex items-center gap-3"><img src="${s.photo}" class="w-16 h-16 rounded-lg object-cover border-2 border-[var(--accent)]"><span class="text-xs text-[var(--muted)]">Foto saat ini</span></div>` : '<div class="mt-2 text-xs text-[var(--muted)]">Belum ada foto. Upload foto dari perangkat Anda.</div>'}</div></div>`, async () => {
+  setupModal(id ? 'Edit Siswa' : 'Tambah Siswa Baru', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4><div><label class="label">NIS</label><input type="text" class="input" id="siswaNis" value="${s.nis || ''}" placeholder="2024001"></div><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="siswaName" value="${s.name || ''}" placeholder="Nama siswa"></div><div><label class="label">Kelas</label><select class="select" id="siswaKelas">${['VII A','VII B','VIII A','VIII B','IX A','IX B'].map(k => `<option value="${k}" ${s.kelas === k ? 'selected' : ''}>${k}</option>`).join('')}</select></div><div><label class="label">Jenis Kelamin</label><select class="select" id="siswaJk"><option value="L" ${s.jk === 'L' ? 'selected' : ''}>Laki-laki</option><option value="P" ${s.jk === 'P' ? 'selected' : ''}>Perempuan</option></select></div><div><label class="label">Nama Wali</label><input type="text" class="input" id="siswaWali" value="${s.wali || ''}" placeholder="Nama orang tua"></div><div><label class="label">Status</label><select class="select" id="siswaStatus"><option value="Aktif" ${s.status === 'Aktif' ? 'selected' : ''}>Aktif</option><option value="Non-Aktif" ${s.status === 'Non-Aktif' ? 'selected' : ''}>Non-Aktif</option></select></div><div class="md:col-span-2"><label class="label">Foto Siswa</label><input type="file" class="input" id="siswaPhotoFile" accept="image/*">${s.photo ? `<div class="mt-2 flex items-center gap-3"><img src="${s.photo}" class="w-16 h-16 rounded-lg object-cover border-2 border-[var(--accent)]"><span class="text-xs text-[var(--muted)]">Foto saat ini</span></div>` : '<div class="mt-2 text-xs text-[var(--muted)]">Belum ada foto. Upload foto dari perangkat Anda.</div>'}</div></div>`, async () => {
     const name = document.getElementById('siswaName').value; const nis = document.getElementById('siswaNis').value; if (!name || !nis) { showToast('Nama dan NIS wajib diisi.', 'error'); return; }
     let photo = s.photo || ''; const fileInput = document.getElementById('siswaPhotoFile'); if (fileInput.files && fileInput.files[0]) { photo = await readFileAsDataURL(fileInput.files[0]); }
     const data = { nis, name, kelas: document.getElementById('siswaKelas').value, jk: document.getElementById('siswaJk').value, wali: document.getElementById('siswaWali').value, status: document.getElementById('siswaStatus').value, photo };
