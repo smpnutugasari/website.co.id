@@ -401,7 +401,7 @@
         <div class="section-num mb-4">— 05 / Penerimaan Siswa Baru</div>
         <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase">Alur <span style="color:var(--accent);">PPDB 2025</span></h2>
       </div>
-      <div class="grid md:grid-cols-2 gap-x-12 gap-y-2">
+      <div class="grid md:grid-cols-2 gap-x:12 gap-y:2">
         <div class="reveal">
           <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 1</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Pendaftaran Online</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Pengisian formulir pendaftaran secara online melalui website resmi atau datang langsung ke sekretariat sekolah.</p></div>
           <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 2</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Tes Seleksi & Wawancara</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Tes potensi akademik, wawancara calon siswa, dan tes potensi Tahfidz untuk kelas khusus.</p></div>
@@ -1086,6 +1086,34 @@ async function syncRecord(table, record, mode = 'upsert') {
   } catch (e) { console.warn(`Sync ${mode} ${table} gagal (abaikan jika belum setup tabel):`, e); }
 }
 
+async function syncFromSupabase() {
+  if (!isSupabaseReady) return;
+  try {
+    const { data: ppdbData } = await supabaseClient.from('ppdb').select('*');
+    if (ppdbData && ppdbData.length > 0) DB.ppdb = ppdbData.map(p => ({ id: p.id, regNum: p.reg_num, name: p.name, gender: p.gender, school: p.school, dob: p.dob, parent: p.parent, mother: p.mother, phone: p.phone, address: p.address, date: p.date, status: p.status }));
+
+    const { data: siswaData } = await supabaseClient.from('siswa').select('*');
+    if (siswaData && siswaData.length > 0) DB.siswa = siswaData.map(s => ({ id: s.id, nis: s.nis, name: s.name, kelas: s.kelas, jk: s.jk, wali: s.wali, status: s.status, photo: s.photo }));
+
+    const { data: guruData } = await supabaseClient.from('guru').select('*');
+    if (guruData && guruData.length > 0) DB.guru = guruData.map(g => ({ id: g.id, name: g.name, role: g.role, subject: g.subject, img: g.img }));
+
+    const { data: programData } = await supabaseClient.from('program').select('*');
+    if (programData && programData.length > 0) DB.program = programData.map(p => ({ id: p.id, icon: p.icon, title: p.title, desc: p.desc, color: p.color }));
+
+    const { data: galeriData } = await supabaseClient.from('galeri').select('*');
+    if (galeriData && galeriData.length > 0) DB.galeri = galeriData.map(g => ({ id: g.id, img: g.img, title: g.title, cat: g.cat, desc: g.desc }));
+
+    const { data: pesanData } = await supabaseClient.from('pesan').select('*');
+    if (pesanData && pesanData.length > 0) DB.pesan = pesanData.map(p => ({ id: p.id, name: p.name, email: p.email, phone: p.phone, subject: p.subject, msg: p.msg, date: p.date, read: p.read }));
+    
+    saveDBLocal();
+    console.log("Data dari Supabase berhasil dimuat!");
+  } catch (e) {
+    console.warn('Gagal menarik data dari Supabase:', e);
+  }
+}
+
 loadDBLocal();
 
 function getVisitorStats() {
@@ -1212,8 +1240,11 @@ function openChangePasswordModal() {
   });
 }
 
-function initDashboard() {
-  loadDB();
+async function initDashboard() {
+  loadDBLocal();
+  if (isSupabaseReady) {
+    await syncFromSupabase();
+  }
   renderRecentPPDB(); renderPPDBTable(); renderSiswaTable(); renderGuru(); renderProgram(); renderGaleri('all'); renderPesan(); renderNotifications(); renderActivities(); loadSettingsForm(); updateBadges(); initCharts(); updateVisitorDisplay();
 }
 function updateBadges() {
@@ -1311,7 +1342,7 @@ document.getElementById('filterKelasSiswa')?.addEventListener('change', renderSi
 function renderGuru() { document.getElementById('guruGrid').innerHTML = DB.guru.map(g => `<div class="panel overflow-hidden"><div class="relative"><img src="${g.img}" alt="${g.name}" class="w-full aspect-square object-cover"><div class="absolute top-3 right-3"><span class="badge-status badge-approved">${g.role.split(' ')[0]}</span></div></div><div class="p-5"><div class="text-[10px] uppercase tracking-wider text-[var(--accent-2)] font-bold mb-1">${g.role}</div><h4 class="font-display text-lg font-bold uppercase leading-tight mb-2">${g.name}</h4>${g.subject !== '-' ? `<div class="text-xs text-[var(--muted)] font-medium mb-3"><i class="fa-solid fa-book mr-1"></i> ${g.subject}</div>` : '<div class="mb-3"></div>'}<div class="flex gap-1"><button class="btn-icon btn-sm flex-1" title="Edit" onclick="openGuruModal(${g.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger flex-1" title="Hapus" onclick="deleteGuru(${g.id})"><i class="fa-solid fa-trash"></i></button></div></div></div>`).join(''); }
 function openGuruModal(id = null) {
   const g = id ? DB.guru.find(x => x.id === id) : {};
-  setupModal(id ? 'Edit Guru / Staf' : 'Tambah Guru / Staf', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="guruName" value="${g.name || ''}" placeholder="Dr. ..."></div><div><label class="label">Jabatan</label><input type="text" class="input" id="guruRole" value="${g.role || ''}" placeholder="Guru Matematika"></div><div><label class="label">Mata Pelajaran</label><input type="text" class="input" id="guruSubject" value="${g.subject || ''}" placeholder="Matematika"></div><div><label class="label">Upload Foto</label><input type="file" class="input" id="guruImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-16 h-16 rounded-lg object-cover"></div>` : ''}</div></div>`, async () => {
+  setupModal(id ? 'Edit Guru / Staf' : 'Tambah Guru / Staf', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="guruName" value="${g.name || ''}" placeholder="Dr. ..."></div><div><label class="label">Jabatan</label><input type="text" class="input" id="guruRole" value="${g.role || ''}" placeholder="Guru Matematika"></div><div><label class="label">Mata Pelajaran</label><input type="text" class="input" id="guruSubject" value="${g.subject || ''}" placeholder="Matematika"></div><div><label class="label">Upload Foto</label><input type="file" class="input" id="guruImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-16 h-16 rounded-lg object-cover"></div>` : ''}</div></div>`, async () => {
     const name = document.getElementById('guruName').value; const role = document.getElementById('guruRole').value; if (!name || !role) { showToast('Nama dan Jabatan wajib diisi.', 'error'); return; }
     let img = g.img || 'https://picsum.photos/seed/defaultguru/400/400.jpg'; const fileInput = document.getElementById('guruImgFile'); if (fileInput.files && fileInput.files[0]) img = await readFileAsDataURL(fileInput.files[0]);
     const data = { name, role, subject: document.getElementById('guruSubject').value || '-', img };
@@ -1330,7 +1361,7 @@ function deleteGuru(id) {
 function renderProgram() { document.getElementById('programGrid').innerHTML = DB.program.map(p => `<div class="panel p-6"><div class="flex items-start justify-between mb-4"><div class="w-12 h-12 rounded-xl ${p.color==='gold'?'bg-[var(--accent)]/10 text-[var(--accent-2)]':'bg-[var(--nu-green)]/10 text-[var(--nu-green)]'} flex items-center justify-center text-xl"><i class="fa-solid ${p.icon}"></i></div><div class="flex gap-1"><button class="btn-icon btn-sm" title="Edit" onclick="openProgramModal(${p.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger" title="Hapus" onclick="deleteProgram(${p.id})"><i class="fa-solid fa-trash"></i></button></div></div><h4 class="font-display text-xl font-bold uppercase mb-2">${p.title}</h4><p class="text-xs text-[var(--muted)] leading-relaxed font-medium mb-4">${p.desc}</p><div class="flex items-center justify-between text-xs"><span class="text-[var(--muted)] font-medium"><i class="fa-solid fa-users mr-1"></i> ${Math.floor(Math.random()*50)+30} siswa</span><span class="badge-status badge-approved">Aktif</span></div></div>`).join(''); }
 function openProgramModal(id = null) {
   const p = id ? DB.program.find(x => x.id === id) : {};
-  setupModal(id ? 'Edit Program' : 'Tambah Program', `<div class="space-y-4"><div><label class="label">Nama Program</label><input type="text" class="input" id="progTitle" value="${p.title || ''}" placeholder="Contoh: Tahfidz Al-Qur'an"></div><div><label class="label">Deskripsi Singkat</label><textarea class="textarea" rows="3" id="progDesc" placeholder="Deskripsi program...">${p.desc || ''}</textarea></div><div class="grid grid-cols-2 gap-4"><div><label class="label">Ikon (FontAwesome)</label><input type="text" class="input" id="progIcon" value="${p.icon || 'fa-book'}" placeholder="fa-quran"></div><div><label class="label">Warna</label><select class="select" id="progColor"><option value="gold" ${p.color === 'gold' ? 'selected' : ''}>Emas</option><option value="green" ${p.color === 'green' ? 'selected' : ''}>Hijau NU</option></select></div></div></div>`, () => {
+  setupModal(id ? 'Edit Program' : 'Tambah Program', `<div class="space-y-4><div><label class="label">Nama Program</label><input type="text" class="input" id="progTitle" value="${p.title || ''}" placeholder="Contoh: Tahfidz Al-Qur'an"></div><div><label class="label">Deskripsi Singkat</label><textarea class="textarea" rows="3" id="progDesc" placeholder="Deskripsi program...">${p.desc || ''}</textarea></div><div class="grid grid-cols-2 gap-4><div><label class="label">Ikon (FontAwesome)</label><input type="text" class="input" id="progIcon" value="${p.icon || 'fa-book'}" placeholder="fa-quran"></div><div><label class="label">Warna</label><select class="select" id="progColor"><option value="gold" ${p.color === 'gold' ? 'selected' : ''}>Emas</option><option value="green" ${p.color === 'green' ? 'selected' : ''}>Hijau NU</option></select></div></div></div>`, () => {
     const title = document.getElementById('progTitle').value; if (!title) { showToast('Nama program wajib diisi.', 'error'); return; }
     const data = { title, desc: document.getElementById('progDesc').value, icon: document.getElementById('progIcon').value, color: document.getElementById('progColor').value };
     if (id) { Object.assign(DB.program.find(x => x.id === id), data); showToast('Program diperbarui.', 'success'); } else { DB.program.push({ id: Date.now(), ...data }); showToast('Program baru ditambahkan.', 'success'); }
@@ -1352,7 +1383,7 @@ function renderGaleri(cat) {
 }
 function openGaleriModal(id = null) {
   const g = id ? DB.galeri.find(x => x.id === id) : {};
-  setupModal(id ? 'Edit Foto Galeri' : 'Upload Foto Galeri', `<div class="space-y-4"><div><label class="label">Upload Gambar</label><input type="file" class="input" id="galImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-32 h-20 rounded-lg object-cover"></div>` : ''}</div><div><label class="label">Judul Foto</label><input type="text" class="input" id="galTitle" value="${g.title || ''}" placeholder="Contoh: Pesantren Ramadhan"></div><div><label class="label">Kategori</label><select class="select" id="galCat"><option value="akademik" ${g.cat === 'akademik' ? 'selected' : ''}>Akademik</option><option value="religi" ${g.cat === 'religi' ? 'selected' : ''}>Keagamaan</option><option value="ekskul" ${g.cat === 'ekskul' ? 'selected' : ''}>Ekstrakurikuler</option></select></div><div><label class="label">Deskripsi</label><textarea class="textarea" rows="2" id="galDesc" placeholder="Deskripsi singkat...">${g.desc || ''}</textarea></div></div>`, async () => {
+  setupModal(id ? 'Edit Foto Galeri' : 'Upload Foto Galeri', `<div class="space-y-4><div><label class="label">Upload Gambar</label><input type="file" class="input" id="galImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-32 h-20 rounded-lg object-cover"></div>` : ''}</div><div><label class="label">Judul Foto</label><input type="text" class="input" id="galTitle" value="${g.title || ''}" placeholder="Contoh: Pesantren Ramadhan"></div><div><label class="label">Kategori</label><select class="select" id="galCat"><option value="akademik" ${g.cat === 'akademik' ? 'selected' : ''}>Akademik</option><option value="religi" ${g.cat === 'religi' ? 'selected' : ''}>Keagamaan</option><option value="ekskul" ${g.cat === 'ekskul' ? 'selected' : ''}>Ekstrakurikuler</option></select></div><div><label class="label">Deskripsi</label><textarea class="textarea" rows="2" id="galDesc" placeholder="Deskripsi singkat...">${g.desc || ''}</textarea></div></div>`, async () => {
     const title = document.getElementById('galTitle').value; if (!title) { showToast('Judul wajib diisi.', 'error'); return; }
     let img = g.img || ''; const fileInput = document.getElementById('galImgFile'); if (fileInput.files && fileInput.files[0]) img = await readFileAsDataURL(fileInput.files[0]); else if (!img) { showToast('Foto wajib diupload.', 'error'); return; }
     const data = { img, title, cat: document.getElementById('galCat').value, desc: document.getElementById('galDesc').value };
@@ -1664,7 +1695,11 @@ function logout() {
 document.getElementById('adTitle')?.addEventListener('input', e => { const p = document.getElementById('adPreviewTitle'); if (p) p.textContent = e.target.value; });
 document.getElementById('adDesc')?.addEventListener('input', e => { const p = document.getElementById('adPreviewDesc'); if (p) p.textContent = e.target.value; });
 
-window.addEventListener('DOMContentLoaded', () => { 
+window.addEventListener('DOMContentLoaded', async () => {
+  loadDBLocal();
+  if (isSupabaseReady) {
+    await syncFromSupabase();
+  }
   renderLandingPrograms(); 
   renderLandingTeachers(); 
   renderLandingGallery('all'); 
