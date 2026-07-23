@@ -1145,6 +1145,43 @@ async function syncRecord(table, record, mode = 'upsert') {
   }
 }
 
+// Ganti fungsi syncRecord dan syncFromSupabase di HTML Anda dengan ini:
+async function syncRecord(table, record, mode = 'upsert') {
+  if (!isSupabaseReady) return;
+  try {
+    let payload = {};
+    
+    if (table === 'ppdb') {
+      payload = { id: record.id, reg_num: record.regNum, name: record.name, gender: record.gender, school: record.school, dob: record.dob, parent: record.parent, mother: record.mother, phone: record.phone, address: record.address, date: record.date, status: record.status };
+    } else if (table === 'siswa') {
+      payload = { id: record.id, nis: record.nis, name: record.name, kelas: record.kelas, jk: record.jk, wali: record.wali, status: record.status, photo: record.photo };
+    } else if (table === 'guru') {
+      payload = { id: record.id, name: record.name, role: record.role, subject: record.subject, img: record.img };
+    } else if (table === 'program') {
+      // desc di JS dikirim ke kolom description di SQL
+      payload = { id: record.id, icon: record.icon, title: record.title, description: record.desc, color: record.color };
+    } else if (table === 'galeri') {
+      // desc di JS dikirim ke kolom description di SQL
+      payload = { id: record.id, img: record.img, title: record.title, cat: record.cat, description: record.desc };
+    } else if (table === 'pesan') {
+      // read di JS dikirim ke kolom is_read di SQL
+      payload = { id: record.id, name: record.name, email: record.email, phone: record.phone, subject: record.subject, msg: record.msg, date: record.date, is_read: record.read };
+    } else {
+      payload = { ...record };
+    }
+
+    if (mode === 'upsert') {
+      const { error } = await supabaseClient.from(table).upsert(payload, { onConflict: 'id' });
+      if (error) console.warn(`Upsert ${table} error:`, error.message);
+    } else if (mode === 'delete') {
+      const { error } = await supabaseClient.from(table).delete().eq('id', record.id);
+      if (error) console.warn(`Delete ${table} error:`, error.message);
+    }
+  } catch (e) { 
+    console.warn(`Sync ${mode} ${table} gagal:`, e); 
+  }
+}
+
 async function syncFromSupabase() {
   if (!isSupabaseReady) return;
   
@@ -1173,22 +1210,24 @@ async function syncFromSupabase() {
 
   try {
     const { data: programData } = await supabaseClient.from('program').select('*');
-    if (programData && programData.length > 0) DB.program = programData.map(p => ({ id: p.id, icon: p.icon, title: p.title, desc: p.desc, color: p.color }));
+    // Ambil kolom description dari SQL, simpan sebagai desc di JS
+    if (programData && programData.length > 0) DB.program = programData.map(p => ({ id: p.id, icon: p.icon, title: p.title, desc: p.description, color: p.color }));
   } catch (e) { console.warn('Gagal fetch program:', e); }
 
   try {
     const { data: galeriData } = await supabaseClient.from('galeri').select('*');
-    if (galeriData && galeriData.length > 0) DB.galeri = galeriData.map(g => ({ id: g.id, img: g.img, title: g.title, cat: g.cat, desc: g.desc }));
+    // Ambil kolom description dari SQL, simpan sebagai desc di JS
+    if (galeriData && galeriData.length > 0) DB.galeri = galeriData.map(g => ({ id: g.id, img: g.img, title: g.title, cat: g.cat, desc: g.description }));
   } catch (e) { console.warn('Gagal fetch galeri:', e); }
 
   try {
     const { data: pesanData } = await supabaseClient.from('pesan').select('*');
-    if (pesanData && pesanData.length > 0) DB.pesan = pesanData.map(p => ({ id: p.id, name: p.name, email: p.email, phone: p.phone, subject: p.subject, msg: p.msg, date: p.date, read: p.read }));
+    // Ambil kolom is_read dari SQL, simpan sebagai read di JS
+    if (pesanData && pesanData.length > 0) DB.pesan = pesanData.map(p => ({ id: p.id, name: p.name, email: p.email, phone: p.phone, subject: p.subject, msg: p.msg, date: p.date, read: p.is_read }));
   } catch (e) { console.warn('Gagal fetch pesan:', e); }
   
   saveDBLocal();
 }
-
 loadDBLocal();
 
 function getVisitorStats() {
