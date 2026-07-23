@@ -1696,7 +1696,7 @@ function showAdminLogin(view = 'dashboard') { document.getElementById('loginScre
 function hideAdminLogin() { document.getElementById('loginScreen').classList.add('is-hidden'); document.body.style.overflow = ''; }
 document.getElementById('loginForm').addEventListener('submit', function(e) {
   e.preventDefault(); const user = document.getElementById('loginUser').value.trim(); const pass = document.getElementById('loginPass').value.trim();
-  if (user === 'admin' && pass === 'admin123') {
+  if (user === 'esempe' && pass === 'esempe123') {
     document.getElementById('loginScreen').classList.add('is-hidden'); document.getElementById('landingPage').style.display = 'none'; document.getElementById('adminLayout').classList.remove('is-hidden'); document.body.style.overflow = '';
     initDashboard(); showToast('Selamat datang, Admin!', 'success'); window.scrollTo({ top: 0 });
   } else { showToast('Username atau password salah!', 'error'); }
