@@ -154,7 +154,6 @@
   input[type="file"].input::file-selector-button { background: var(--accent); color: var(--fg); border: none; padding: 8px 14px; border-radius: 4px; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; cursor: pointer; transition: all 0.2s; margin-right: 12px; }
   input[type="file"].input::file-selector-button:hover { background: var(--accent-2); color: #fff; }
   
-  /* Kartu PPDB */
   .ppdb-card-container { background: #ffffff; border-radius: 18px; width: 100%; max-width: 380px; box-shadow: 0 25px 70px rgba(0,0,0,0.18); position: relative; overflow: hidden; font-family: 'Inter', sans-serif; border: 3px solid var(--accent); }
   .ppdb-card-container::after { content: ''; position: absolute; inset: 5px; border: 1px solid rgba(212,175,55,0.5); border-radius: 14px; pointer-events: none; z-index: 3; }
   .ppdb-card-bg { position: absolute; top: 0; left: 0; right: 0; height: 150px; background: linear-gradient(135deg, #1a1d21 0%, #2a2e35 50%, #1a1d21 100%); overflow: hidden; }
@@ -180,12 +179,10 @@
   .ppdb-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px dashed #ddd; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
   .ppdb-card-footer .accent-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; display: inline-block; margin-right: 6px; }
 
-  /* QR Code Fix Tunggal & Mobile */
   #qrcode { display: flex; justify-content: center; align-items: center; padding: 5px; background: #fff; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); width: 100px; height: 100px; margin: 0 auto; }
   #qrcode canvas { display: block !important; width: 90px !important; height: 90px !important; }
   #qrcode img { display: none !important; }
 
-  /* Notifikasi & Lainnya */
   .notif-dropdown { position: absolute; top: calc(100% + 8px); right: 0; width: 360px; max-height: 480px; background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); opacity: 0; visibility: hidden; transform: translateY(-8px); transition: all 0.25s; z-index: 100; overflow: hidden; }
   .notif-dropdown.open { opacity: 1; visibility: visible; transform: translateY(0); }
   .notif-item { padding: 14px 18px; border-bottom: 1px solid var(--bg-2); cursor: pointer; transition: all 0.2s; display: flex; gap: 12px; }
@@ -975,11 +972,31 @@ function showToast(msg, type = 'success') {
 const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-const SUPABASE_URL = 'https://npainotgpppebpzdupvg.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5wYWlub3RncHBwZWJwemR1cHZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3NzA2NDMsImV4cCI6MjEwMDM0NjY0M30.hStiRpLaOmMUif9fLj1DGVgOZe845wMxlYQJwq_3bjA';
+const SUPABASE_URL = 'https://osrtatfhjhfwwbhvbtjs.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zcnRhdGZoamhmd3diaHZidGpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3MjQwODIsImV4cCI6MjEwMDMwMDA4Mn0._bKa__yaAZ91mG41HpFnol0ge5No_iB6kDU7Qk3A7v0';
 let supabaseClient = null; let isSupabaseReady = false;
 function initSupabase() { try { if (window.supabase && SUPABASE_URL && SUPABASE_ANON_KEY && SUPABASE_URL.startsWith('https://')) { supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false }, realtime: { params: { eventsPerSecond: 2 } } }); isSupabaseReady = true; } } catch (e) { console.warn('Supabase init failed:', e); } }
 initSupabase();
+
+async function uploadImageToSupabase(file, bucketName, folderName) {
+  if (!isSupabaseReady) return null;
+  try {
+    const fileName = `${folderName}/${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+    const { data, error } = await supabaseClient.storage.from(bucketName).upload(fileName, file, {
+      cacheControl: '3600',
+      upsert: false
+    });
+    if (error) {
+      console.warn('Upload error:', error);
+      return null;
+    }
+    const { data: publicUrlData } = supabaseClient.storage.from(bucketName).getPublicUrl(data.path);
+    return publicUrlData.publicUrl;
+  } catch (e) {
+    console.warn('Upload exception:', e);
+    return null;
+  }
+}
 
 const DEFAULT_DB = {
   settings: { schoolName: 'SMP NU Tugasari', npsn: '20365478', address: 'Jl. Raya Tugasari No. 01, Tugasari', phone: '(0281) 123456', email: 'info@smpnutugasari.sch.id', year: '1998', akreditasi: 'A', ta: '2025/2026', kuota: 160, buka: '2025-01-15', tutup: '2025-06-30', statusPPDB: true, ig: '@smpnutugasari', yt: 'SMP NU Tugasari Official', fb: 'SMP NU Tugasari', wa: '0812-3456-7890' },
@@ -1061,17 +1078,31 @@ async function syncRecord(table, record, mode = 'upsert') {
   if (!isSupabaseReady) return;
   try {
     let payload = { ...record };
+    if (payload.photo) delete payload.photo;
+    if (payload.img) delete payload.img;
+
     if (table === 'ppdb') {
       payload = { id: record.id, reg_num: record.regNum, name: record.name, gender: record.gender, school: record.school, dob: record.dob, parent: record.parent, mother: record.mother, phone: record.phone, address: record.address, date: record.date, status: record.status };
     }
+    
     if (mode === 'upsert') await supabaseClient.from(table).upsert(payload);
     else if (mode === 'delete') await supabaseClient.from(table).delete().eq('id', record.id);
-  } catch (e) { console.warn(`Sync ${mode} ${table} gagal:`, e); }
+  } catch (e) { 
+    console.warn(`Sync ${mode} ${table} gagal:`, e); 
+  }
 }
 
 async function syncFromSupabase() {
   if (!isSupabaseReady) return;
   
+  try {
+    const { data: configData } = await supabaseClient.from('app_config').select('*').eq('id', 'main_config').single();
+    if (configData) {
+      if (configData.settings) DB.settings = { ...DEFAULT_DB.settings, ...configData.settings };
+      if (configData.ad) DB.ad = { ...DEFAULT_DB.ad, ...configData.ad };
+    }
+  } catch (e) { console.warn('Gagal fetch config:', e); }
+
   try {
     const { data: ppdbData } = await supabaseClient.from('ppdb').select('*');
     if (ppdbData && ppdbData.length > 0) DB.ppdb = ppdbData.map(p => ({ id: p.id, regNum: p.reg_num, name: p.name, gender: p.gender, school: p.school, dob: p.dob, parent: p.parent, mother: p.mother, phone: p.phone, address: p.address, date: p.date, status: p.status }));
@@ -1205,16 +1236,42 @@ function openAdModal() {
   document.getElementById('adPreviewDesc').textContent = ad.desc || '';
   openModal('modalAd'); 
 }
-function saveAd() {
-  DB.ad = {
-    title: document.getElementById('adTitle').value,
-    desc: document.getElementById('adDesc').value,
-    linkText: document.getElementById('adLinkText').value,
-    active: document.getElementById('adActive').checked
-  };
-  saveDBLocal(); renderAdBanner(); closeModal('modalAd');
-  showToast('Pengumuman berhasil diperbarui.', 'success');
+
+async function saveAd() {
+  try {
+    DB.ad = {
+      title: document.getElementById('adTitle').value,
+      desc: document.getElementById('adDesc').value,
+      linkText: document.getElementById('adLinkText').value,
+      active: document.getElementById('adActive').checked
+    };
+    
+    saveDBLocal(); 
+    renderAdBanner(); 
+    closeModal('modalAd');
+    
+    if (isSupabaseReady) {
+      const { error } = await supabaseClient.from('app_config').upsert({ 
+        id: 'main_config', 
+        settings: DB.settings, 
+        ad: DB.ad 
+      });
+      
+      if (error) {
+        console.error('Supabase Error:', error);
+        showToast('Gagal simpan iklan: ' + error.message, 'error');
+      } else {
+        showToast('Pengumuman berhasil diperbarui.', 'success');
+      }
+    } else {
+      showToast('Pengumuman disimpan di lokal.', 'success');
+    }
+  } catch (err) {
+    console.error('System Error:', err);
+    showToast('Terjadi kesalahan sistem.', 'error');
+  }
 }
+
 function openChangePasswordModal() {
   setupModal('Ubah Password', `
     <div class="space-y-4">
@@ -1328,7 +1385,16 @@ function openSiswaModal(id = null) {
   const s = id ? DB.siswa.find(x => x.id === id) : {};
   setupModal(id ? 'Edit Siswa' : 'Tambah Siswa Baru', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="label">NIS</label><input type="text" class="input" id="siswaNis" value="${s.nis || ''}" placeholder="2024001"></div><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="siswaName" value="${s.name || ''}" placeholder="Nama siswa"></div><div><label class="label">Kelas</label><select class="select" id="siswaKelas">${['VII A','VII B','VIII A','VIII B','IX A','IX B'].map(k => `<option value="${k}" ${s.kelas === k ? 'selected' : ''}>${k}</option>`).join('')}</select></div><div><label class="label">Jenis Kelamin</label><select class="select" id="siswaJk"><option value="L" ${s.jk === 'L' ? 'selected' : ''}>Laki-laki</option><option value="P" ${s.jk === 'P' ? 'selected' : ''}>Perempuan</option></select></div><div><label class="label">Nama Wali</label><input type="text" class="input" id="siswaWali" value="${s.wali || ''}" placeholder="Nama orang tua"></div><div><label class="label">Status</label><select class="select" id="siswaStatus"><option value="Aktif" ${s.status === 'Aktif' ? 'selected' : ''}>Aktif</option><option value="Non-Aktif" ${s.status === 'Non-Aktif' ? 'selected' : ''}>Non-Aktif</option></select></div><div class="md:col-span-2"><label class="label">Foto Siswa</label><input type="file" class="input" id="siswaPhotoFile" accept="image/*">${s.photo ? `<div class="mt-2 flex items-center gap-3"><img src="${s.photo}" class="w-16 h-16 rounded-lg object-cover border-2 border-[var(--accent)]"><span class="text-xs text-[var(--muted)]">Foto saat ini</span></div>` : '<div class="mt-2 text-xs text-[var(--muted)]">Belum ada foto. Upload foto dari perangkat Anda.</div>'}</div></div>`, async () => {
     const name = document.getElementById('siswaName').value; const nis = document.getElementById('siswaNis').value; if (!name || !nis) { showToast('Nama dan NIS wajib diisi.', 'error'); return; }
-    let photo = s.photo || ''; const fileInput = document.getElementById('siswaPhotoFile'); if (fileInput.files && fileInput.files[0]) { photo = await readFileAsDataURL(fileInput.files[0]); }
+    let photo = s.photo || ''; const fileInput = document.getElementById('siswaPhotoFile'); 
+    
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      showToast('Mengupload foto...', 'success');
+      const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'students');
+      if (uploadedUrl) photo = uploadedUrl;
+      else photo = await readFileAsDataURL(file);
+    }
+
     const data = { nis, name, kelas: document.getElementById('siswaKelas').value, jk: document.getElementById('siswaJk').value, wali: document.getElementById('siswaWali').value, status: document.getElementById('siswaStatus').value, photo };
     let savedId;
     if (id) { 
@@ -1362,7 +1428,16 @@ function openGuruModal(id = null) {
   const g = id ? DB.guru.find(x => x.id === id) : {};
   setupModal(id ? 'Edit Guru / Staf' : 'Tambah Guru / Staf', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="guruName" value="${g.name || ''}" placeholder="Dr. ..."></div><div><label class="label">Jabatan</label><input type="text" class="input" id="guruRole" value="${g.role || ''}" placeholder="Guru Matematika"></div><div><label class="label">Mata Pelajaran</label><input type="text" class="input" id="guruSubject" value="${g.subject || ''}" placeholder="Matematika"></div><div><label class="label">Upload Foto</label><input type="file" class="input" id="guruImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-16 h-16 rounded-lg object-cover"></div>` : ''}</div></div>`, async () => {
     const name = document.getElementById('guruName').value; const role = document.getElementById('guruRole').value; if (!name || !role) { showToast('Nama dan Jabatan wajib diisi.', 'error'); return; }
-    let img = g.img || 'https://picsum.photos/seed/defaultguru/400/400.jpg'; const fileInput = document.getElementById('guruImgFile'); if (fileInput.files && fileInput.files[0]) img = await readFileAsDataURL(fileInput.files[0]);
+    let img = g.img || 'https://picsum.photos/seed/defaultguru/400/400.jpg'; const fileInput = document.getElementById('guruImgFile'); 
+    
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      showToast('Mengupload foto...', 'success');
+      const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'teachers');
+      if (uploadedUrl) img = uploadedUrl;
+      else img = await readFileAsDataURL(file);
+    }
+
     const data = { name, role, subject: document.getElementById('guruSubject').value || '-', img };
     let savedId;
     if (id) { 
@@ -1429,7 +1504,18 @@ function openGaleriModal(id = null) {
   const g = id ? DB.galeri.find(x => x.id === id) : {};
   setupModal(id ? 'Edit Foto Galeri' : 'Upload Foto Galeri', `<div class="space-y-4"><div><label class="label">Upload Gambar</label><input type="file" class="input" id="galImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-32 h-20 rounded-lg object-cover"></div>` : ''}</div><div><label class="label">Judul Foto</label><input type="text" class="input" id="galTitle" value="${g.title || ''}" placeholder="Contoh: Pesantren Ramadhan"></div><div><label class="label">Kategori</label><select class="select" id="galCat"><option value="akademik" ${g.cat === 'akademik' ? 'selected' : ''}>Akademik</option><option value="religi" ${g.cat === 'religi' ? 'selected' : ''}>Keagamaan</option><option value="ekskul" ${g.cat === 'ekskul' ? 'selected' : ''}>Ekstrakurikuler</option></select></div><div><label class="label">Deskripsi</label><textarea class="textarea" rows="2" id="galDesc" placeholder="Deskripsi singkat...">${g.desc || ''}</textarea></div></div>`, async () => {
     const title = document.getElementById('galTitle').value; if (!title) { showToast('Judul wajib diisi.', 'error'); return; }
-    let img = g.img || ''; const fileInput = document.getElementById('galImgFile'); if (fileInput.files && fileInput.files[0]) img = await readFileAsDataURL(fileInput.files[0]); else if (!img) { showToast('Foto wajib diupload.', 'error'); return; }
+    let img = g.img || ''; const fileInput = document.getElementById('galImgFile'); 
+    
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      showToast('Mengupload foto...', 'success');
+      const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'gallery');
+      if (uploadedUrl) img = uploadedUrl;
+      else { showToast('Gagal upload ke cloud, gagal menyimpan.', 'error'); return; }
+    } else if (!img) { 
+      showToast('Foto wajib diupload.', 'error'); return; 
+    }
+
     const data = { img, title, cat: document.getElementById('galCat').value, desc: document.getElementById('galDesc').value };
     let savedId;
     if (id) { 
@@ -1482,9 +1568,50 @@ function loadSettingsForm() {
   document.getElementById('setKuota').value = s.kuota || ''; document.getElementById('setBuka').value = s.buka || ''; document.getElementById('setTutup').value = s.tutup || ''; document.getElementById('setPPDBStatus').checked = s.statusPPDB !== undefined ? s.statusPPDB : true;
   document.getElementById('setIg').value = s.ig || ''; document.getElementById('setYt').value = s.yt || ''; document.getElementById('setFb').value = s.fb || ''; document.getElementById('setWa').value = s.wa || '';
 }
-function saveSettings() {
-  DB.settings = { schoolName: document.getElementById('setSchoolName').value, npsn: document.getElementById('setNpsn').value, address: document.getElementById('setAddress').value, phone: document.getElementById('setPhone').value, email: document.getElementById('setEmail').value, year: document.getElementById('setYear').value, akreditasi: document.getElementById('setAkreditasi').value, ta: document.getElementById('setTA').value, kuota: document.getElementById('setKuota').value, buka: document.getElementById('setBuka').value, tutup: document.getElementById('setTutup').value, statusPPDB: document.getElementById('setPPDBStatus').checked, ig: document.getElementById('setIg').value, yt: document.getElementById('setYt').value, fb: document.getElementById('setFb').value, wa: document.getElementById('setWa').value };
-  saveDB(); showToast('Pengaturan berhasil disimpan.', 'success');
+
+async function saveSettings() {
+  try {
+    DB.settings = { 
+      schoolName: document.getElementById('setSchoolName').value, 
+      npsn: document.getElementById('setNpsn').value, 
+      address: document.getElementById('setAddress').value, 
+      phone: document.getElementById('setPhone').value, 
+      email: document.getElementById('setEmail').value, 
+      year: document.getElementById('setYear').value, 
+      akreditasi: document.getElementById('setAkreditasi').value, 
+      ta: document.getElementById('setTA').value, 
+      kuota: document.getElementById('setKuota').value, 
+      buka: document.getElementById('setBuka').value, 
+      tutup: document.getElementById('setTutup').value, 
+      statusPPDB: document.getElementById('setPPDBStatus').checked, 
+      ig: document.getElementById('setIg').value, 
+      yt: document.getElementById('setYt').value, 
+      fb: document.getElementById('setFb').value, 
+      wa: document.getElementById('setWa').value 
+    };
+    
+    saveDBLocal(); 
+    
+    if (isSupabaseReady) {
+      const { error } = await supabaseClient.from('app_config').upsert({ 
+        id: 'main_config', 
+        settings: DB.settings, 
+        ad: DB.ad 
+      });
+      
+      if (error) {
+        console.error('Supabase Error:', error);
+        showToast('Gagal simpan ke cloud: ' + error.message, 'error');
+      } else {
+        showToast('Pengaturan berhasil disimpan.', 'success');
+      }
+    } else {
+      showToast('Pengaturan disimpan di lokal.', 'success');
+    }
+  } catch (err) {
+    console.error('System Error:', err);
+    showToast('Terjadi kesalahan sistem.', 'error');
+  }
 }
 
 function initCharts() {
