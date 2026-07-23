@@ -153,7 +153,6 @@
   input[type="file"].input { padding: 10px; cursor: pointer; background: #fff; }
   input[type="file"].input::file-selector-button { background: var(--accent); color: var(--fg); border: none; padding: 8px 14px; border-radius: 4px; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; cursor: pointer; transition: all 0.2s; margin-right: 12px; }
   input[type="file"].input::file-selector-button:hover { background: var(--accent-2); color: #fff; }
-  
   .ppdb-card-container { background: #ffffff; border-radius: 18px; width: 100%; max-width: 380px; box-shadow: 0 25px 70px rgba(0,0,0,0.18); position: relative; overflow: hidden; font-family: 'Inter', sans-serif; border: 3px solid var(--accent); }
   .ppdb-card-container::after { content: ''; position: absolute; inset: 5px; border: 1px solid rgba(212,175,55,0.5); border-radius: 14px; pointer-events: none; z-index: 3; }
   .ppdb-card-bg { position: absolute; top: 0; left: 0; right: 0; height: 150px; background: linear-gradient(135deg, #1a1d21 0%, #2a2e35 50%, #1a1d21 100%); overflow: hidden; }
@@ -178,11 +177,9 @@
   .ppdb-card-barcode p { font-size: 9px; color: var(--muted); margin-top: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; }
   .ppdb-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px dashed #ddd; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
   .ppdb-card-footer .accent-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; display: inline-block; margin-right: 6px; }
-
   #qrcode { display: flex; justify-content: center; align-items: center; padding: 5px; background: #fff; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); width: 100px; height: 100px; margin: 0 auto; }
   #qrcode canvas { display: block !important; width: 90px !important; height: 90px !important; }
   #qrcode img { display: none !important; }
-
   .notif-dropdown { position: absolute; top: calc(100% + 8px); right: 0; width: 360px; max-height: 480px; background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); opacity: 0; visibility: hidden; transform: translateY(-8px); transition: all 0.25s; z-index: 100; overflow: hidden; }
   .notif-dropdown.open { opacity: 1; visibility: visible; transform: translateY(0); }
   .notif-item { padding: 14px 18px; border-bottom: 1px solid var(--bg-2); cursor: pointer; transition: all 0.2s; display: flex; gap: 12px; }
@@ -398,7 +395,7 @@
         <div class="section-num mb-4">— 05 / Penerimaan Siswa Baru</div>
         <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase">Alur <span style="color:var(--accent);">PPDB 2025</span></h2>
       </div>
-      <div class="grid md:grid-cols-2 gap-x-12 gap-y-2">
+      <div class="grid md:grid-cols-2 gap-x:12 gap-y-2">
         <div class="reveal">
           <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 1</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Pendaftaran Online</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Pengisian formulir pendaftaran secara online melalui website resmi atau datang langsung ke sekretariat sekolah.</p></div>
           <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 2</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Tes Seleksi & Wawancara</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Tes potensi akademik, wawancara calon siswa, dan tes potensi Tahfidz untuk kelas khusus.</p></div>
@@ -915,7 +912,7 @@
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Apakah data tersimpan otomatis? <i class="fa-solid fa-chevron-down transition"></i></div>
-          <div class="faq-a">Ya, semua perubahan disimpan otomatis di penyimpanan lokal browser (localStorage) dan akan disinkronkan ke database Supabase jika terhubung. Pastikan untuk tidak menghapus cache browser agar data tidak hilang.</div>
+          <div class="faq-a">Ya, semua data disimpan langsung secara real-time ke dalam database Supabase. Pastikan koneksi internet Anda stabil agar tidak terjadi kegagalan penyimpanan.</div>
         </div>
       </div>
       <div class="mt-6 p-4 bg-[var(--bg-2)] rounded-lg">
@@ -972,29 +969,18 @@ function showToast(msg, type = 'success') {
 const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// --- SUPABASE INITIALIZATION FIXED ---
 const SUPABASE_URL = 'https://movwdvfqwsiuovkxupnr.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vdndkdmZxd3NpdW92a3h1cG5yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3NzQ4MTMsImV4cCI6MjEwMDM1MDgxM30.aB-Xf0AjpF324B2Fst2QAmoDvDaDr_gj0O0HlnBrLNQ';
 let supabaseClient = null; let isSupabaseReady = false;
 
 function initSupabase() { 
   try { 
-    // Check multiple possible global objects for Supabase
     const sbLib = window.supabase || (typeof supabase !== 'undefined' ? supabase : null);
-    
     if (sbLib && sbLib.createClient && SUPABASE_URL && SUPABASE_ANON_KEY && SUPABASE_URL.startsWith('https://')) { 
-      supabaseClient = sbLib.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { 
-        auth: { persistSession: false }, 
-        realtime: { params: { eventsPerSecond: 2 } } 
-      }); 
+      supabaseClient = sbLib.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); 
       isSupabaseReady = true;
-      console.log('✅ Supabase initialized successfully.');
-    } else {
-      console.warn('⚠️ Supabase library not loaded or URL/Key missing. Running in local mode.');
     }
-  } catch (e) { 
-    console.warn('❌ Supabase init failed:', e); 
-  } 
+  } catch (e) { console.warn('Supabase init failed:', e); } 
 }
 initSupabase();
 
@@ -1002,241 +988,131 @@ async function uploadImageToSupabase(file, bucketName, folderName) {
   if (!isSupabaseReady) return null;
   try {
     const fileName = `${folderName}/${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
-    const { data, error } = await supabaseClient.storage.from(bucketName).upload(fileName, file, {
-      cacheControl: '3600',
-      upsert: false
-    });
-    if (error) {
-      console.warn('Upload error:', error.message);
-      return null;
-    }
+    const { data, error } = await supabaseClient.storage.from(bucketName).upload(fileName, file, { cacheControl: '3600', upsert: false });
+    if (error) throw error;
     const { data: publicUrlData } = supabaseClient.storage.from(bucketName).getPublicUrl(data.path);
     return publicUrlData.publicUrl;
-  } catch (e) {
-    console.warn('Upload exception:', e);
-    return null;
-  }
+  } catch (e) { console.warn('Upload exception:', e.message); return null; }
 }
 
-const DEFAULT_DB = {
+// Maps JS keys to SQL column names
+function mapToSQL(table, record) {
+  if (table === 'ppdb') return { id: record.id, reg_num: record.regNum, name: record.name, gender: record.gender, school: record.school, dob: record.dob, parent: record.parent, mother: record.mother, phone: record.phone, address: record.address, date: record.date, status: record.status };
+  if (table === 'siswa') return { id: record.id, nis: record.nis, name: record.name, kelas: record.kelas, jk: record.jk, wali: record.wali, status: record.status, photo: record.photo };
+  if (table === 'guru') return { id: record.id, name: record.name, role: record.role, subject: record.subject, img: record.img };
+  if (table === 'program') return { id: record.id, icon: record.icon, title: record.title, description: record.desc, color: record.color };
+  if (table === 'galeri') return { id: record.id, img: record.img, title: record.title, cat: record.cat, description: record.desc };
+  if (table === 'pesan') return { id: record.id, name: record.name, email: record.email, phone: record.phone, subject: record.subject, msg: record.msg, date: record.date, is_read: record.read };
+  return record;
+}
+
+function mapFromSQL(table, record) {
+  if (table === 'ppdb') return { id: record.id, regNum: record.reg_num, name: record.name, gender: record.gender, school: record.school, dob: record.dob, parent: record.parent, mother: record.mother, phone: record.phone, address: record.address, date: record.date, status: record.status };
+  if (table === 'siswa') return { id: record.id, nis: record.nis, name: record.name, kelas: record.kelas, jk: record.jk, wali: record.wali, status: record.status, photo: record.photo };
+  if (table === 'guru') return { id: record.id, name: record.name, role: record.role, subject: record.subject, img: record.img };
+  if (table === 'program') return { id: record.id, icon: record.icon, title: record.title, desc: record.description, color: record.color };
+  if (table === 'galeri') return { id: record.id, img: record.img, title: record.title, cat: record.cat, desc: record.description };
+  if (table === 'pesan') return { id: record.id, name: record.name, email: record.email, phone: record.phone, subject: record.subject, msg: record.msg, date: record.date, read: record.is_read };
+  return record;
+}
+
+let DB = {
   settings: { schoolName: 'SMP NU Tugasari', npsn: '20365478', address: 'Jl. Raya Tugasari No. 01, Tugasari', phone: '(0281) 123456', email: 'info@smpnutugasari.sch.id', year: '1998', akreditasi: 'A', ta: '2025/2026', kuota: 160, buka: '2025-01-15', tutup: '2025-06-30', statusPPDB: true, ig: '@smpnutugasari', yt: 'SMP NU Tugasari Official', fb: 'SMP NU Tugasari', wa: '0812-3456-7890' },
   ppdb: [],
   siswa: [],
-  guru: [
-    {id:1, name:'Drs. H. Ahmad Fauzi, M.Pd', role:'Kepala Sekolah', subject:'-', img:'https://picsum.photos/seed/teacher1/400/400.jpg'},
-    {id:2, name:'Siti Aminah, S.Pd', role:'Waka Kurikulum', subject:'Bahasa Indonesia', img:'https://picsum.photos/seed/teacher2/400/400.jpg'},
-    {id:3, name:'Ust. Muhammad Ridwan, Lc', role:'Pembina Tahfidz', subject:"Al-Qur'an", img:'https://picsum.photos/seed/teacher3/400/400.jpg'},
-    {id:4, name:'Budi Santoso, S.Kom', role:'Guru IT', subject:'Informatika', img:'https://picsum.photos/seed/teacher4/400/400.jpg'},
-    {id:5, name:'Hj. Fatimah Zahra, M.Pd', role:'Waka Kesiswaan', subject:'Bimbingan Konseling', img:'https://picsum.photos/seed/teacher5/400/400.jpg'},
-    {id:6, name:'Abdullah Hakim, S.Pd', role:'Guru Matematika', subject:'Matematika', img:'https://picsum.photos/seed/teacher6/400/400.jpg'},
-    {id:7, name:'Nur Hidayah, S.Pd', role:'Guru IPA', subject:'Sains', img:'https://picsum.photos/seed/teacher7/400/400.jpg'},
-    {id:8, name:'Ustz. Khadijah, Lc', role:'Guru Akidah Akhlak', subject:'Akidah Akhlak', img:'https://picsum.photos/seed/teacher8/400/400.jpg'},
-  ],
-  program: [
-    {id:1, icon:'fa-quran', title:"Tahfidz Al-Qur'an", desc:"Program pembiasaan hafalan Al-Qur'an harian dengan metode talaqqi.", color:'gold'},
-    {id:2, icon:'fa-laptop-code', title:'IT & Multimedia', desc:'Pembekalan keterampilan digital, desain grafis, dan literasi komputer.', color:'green'},
-  ],
-  galeri: [
-    {id:1, img:'https://picsum.photos/seed/school1/600/450.jpg', title:'Pesantren Ramadhan', cat:'religi', desc:'Kegiatan tahunan untuk meningkatkan spiritualitas siswa.'},
-    {id:2, img:'https://picsum.photos/seed/school2/600/450.jpg', title:'Juara Olimpiade Sains', cat:'akademik', desc:'Siswa kelas IX meraih juara 1 Olimpiade Matematika.'},
-    {id:3, img:'https://picsum.photos/seed/school3/600/450.jpg', title:'Latihan Marching Band', cat:'ekskul', desc:'Persiapan parade kemerdekaan 17 Agustus.'},
-  ],
+  guru: [],
+  program: [],
+  galeri: [],
   pesan: [],
   ad: { title: 'PPDB 2025/2026 Telah Dibuka!', desc: 'Pendaftaran Peserta Didik Baru Tahun Ajaran 2025/2026 telah dibuka. Daftar sekarang sebelum kuota penuh!', linkText: 'Klik di sini', active: true }
 };
 
-let DB = {};
+const DEFAULT_DATA = {
+  guru: [
+    {id:1, name:'Drs. H. Ahmad Fauzi, M.Pd', role:'Kepala Sekolah', subject:'-', img:'https://picsum.photos/seed/teacher1/400/400.jpg'},
+    {id:2, name:'Siti Aminah, S.Pd', role:'Waka Kurikulum', subject:'Bahasa Indonesia', img:'https://picsum.photos/seed/teacher2/400/400.jpg'},
+    {id:3, name:'Ust. Muhammad Ridwan, Lc', role:'Pembina Tahfidz', subject:"Al-Qur'an", img:'https://picsum.photos/seed/teacher3/400/400.jpg'},
+    {id:4, name:'Budi Santoso, S.Kom', role:'Guru IT', subject:'Informatika', img:'https://picsum.photos/seed/teacher4/400/400.jpg'}
+  ],
+  program: [
+    {id:1, icon:'fa-quran', title:"Tahfidz Al-Qur'an", desc:"Program pembiasaan hafalan Al-Qur'an harian dengan metode talaqqi.", color:'gold'},
+    {id:2, icon:'fa-laptop-code', title:'IT & Multimedia', desc:'Pembekalan keterampilan digital, desain grafis, dan literasi komputer.', color:'green'}
+  ],
+  galeri: [
+    {id:1, img:'https://picsum.photos/seed/school1/600/450.jpg', title:'Pesantren Ramadhan', cat:'religi', desc:'Kegiatan tahunan untuk meningkatkan spiritualitas siswa.'},
+    {id:2, img:'https://picsum.photos/seed/school2/600/450.jpg', title:'Juara Olimpiade Sains', cat:'akademik', desc:'Siswa kelas IX meraih juara 1 Olimpiade Matematika.'},
+    {id:3, img:'https://picsum.photos/seed/school3/600/450.jpg', title:'Latihan Marching Band', cat:'ekskul', desc:'Persiapan parade kemerdekaan 17 Agustus.'}
+  ]
+};
 
-function loadDBLocal() {
-  try {
-    const stored = localStorage.getItem('smpnu_db');
-    if (stored) {
-      const parsedDB = JSON.parse(stored);
-      DB = { ...DEFAULT_DB, ...parsedDB, settings: { ...DEFAULT_DB.settings, ...(parsedDB.settings || {}) }, ad: { ...DEFAULT_DB.ad, ...(parsedDB.ad || {}) } };
-      DB.ppdb = parsedDB.ppdb || []; DB.siswa = parsedDB.siswa || []; DB.guru = parsedDB.guru || [];
-      DB.program = parsedDB.program || []; DB.galeri = parsedDB.galeri || []; DB.pesan = parsedDB.pesan || [];
-    } else { DB = JSON.parse(JSON.stringify(DEFAULT_DB)); saveDBLocal(); }
-  } catch (e) { console.error('LocalStorage error:', e); DB = JSON.parse(JSON.stringify(DEFAULT_DB)); }
-}
-function saveDBLocal() { try { localStorage.setItem('smpnu_db', JSON.stringify(DB)); } catch (e) { console.error('Save LocalStorage failed:', e); } }
-function saveDB() { saveDBLocal(); }
-
-// --- SYNC FUNCTION FIXED TO PREVENT ERRORS ---
-async function syncRecord(table, record, mode = 'upsert') {
-  if (!isSupabaseReady) return;
-  try {
-    let payload = {};
-    
-    // Explicitly map fields for each table to prevent schema errors
-    if (table === 'ppdb') {
-      payload = { 
-        id: record.id, 
-        reg_num: record.regNum, 
-        name: record.name, 
-        gender: record.gender, 
-        school: record.school, 
-        dob: record.dob, 
-        parent: record.parent, 
-        mother: record.mother, 
-        phone: record.phone, 
-        address: record.address, 
-        date: record.date, 
-        status: record.status 
-      };
-    } else if (table === 'siswa') {
-      payload = {
-        id: record.id,
-        nis: record.nis,
-        name: record.name,
-        kelas: record.kelas,
-        jk: record.jk,
-        wali: record.wali,
-        status: record.status,
-        photo: record.photo
-      };
-    } else if (table === 'guru') {
-      payload = {
-        id: record.id,
-        name: record.name,
-        role: record.role,
-        subject: record.subject,
-        img: record.img
-      };
-    } else if (table === 'program') {
-      payload = {
-        id: record.id,
-        icon: record.icon,
-        title: record.title,
-        desc: record.desc,
-        color: record.color
-      };
-    } else if (table === 'galeri') {
-      payload = {
-        id: record.id,
-        img: record.img,
-        title: record.title,
-        cat: record.cat,
-        desc: record.desc
-      };
-    } else if (table === 'pesan') {
-      payload = {
-        id: record.id,
-        name: record.name,
-        email: record.email,
-        phone: record.phone,
-        subject: record.subject,
-        msg: record.msg,
-        date: record.date,
-        read: record.read
-      };
-    } else {
-      payload = { ...record };
-    }
-
-    if (mode === 'upsert') {
-      const { error } = await supabaseClient.from(table).upsert(payload, { onConflict: 'id' });
-      if (error) console.warn(`Upsert ${table} error:`, error.message);
-    } else if (mode === 'delete') {
-      const { error } = await supabaseClient.from(table).delete().eq('id', record.id);
-      if (error) console.warn(`Delete ${table} error:`, error.message);
-    }
-  } catch (e) { 
-    console.warn(`Sync ${mode} ${table} gagal:`, e); 
-  }
-}
-
-// Ganti fungsi syncRecord dan syncFromSupabase di HTML Anda dengan ini:
-async function syncRecord(table, record, mode = 'upsert') {
-  if (!isSupabaseReady) return;
-  try {
-    let payload = {};
-    
-    if (table === 'ppdb') {
-      payload = { id: record.id, reg_num: record.regNum, name: record.name, gender: record.gender, school: record.school, dob: record.dob, parent: record.parent, mother: record.mother, phone: record.phone, address: record.address, date: record.date, status: record.status };
-    } else if (table === 'siswa') {
-      payload = { id: record.id, nis: record.nis, name: record.name, kelas: record.kelas, jk: record.jk, wali: record.wali, status: record.status, photo: record.photo };
-    } else if (table === 'guru') {
-      payload = { id: record.id, name: record.name, role: record.role, subject: record.subject, img: record.img };
-    } else if (table === 'program') {
-      // desc di JS dikirim ke kolom description di SQL
-      payload = { id: record.id, icon: record.icon, title: record.title, description: record.desc, color: record.color };
-    } else if (table === 'galeri') {
-      // desc di JS dikirim ke kolom description di SQL
-      payload = { id: record.id, img: record.img, title: record.title, cat: record.cat, description: record.desc };
-    } else if (table === 'pesan') {
-      // read di JS dikirim ke kolom is_read di SQL
-      payload = { id: record.id, name: record.name, email: record.email, phone: record.phone, subject: record.subject, msg: record.msg, date: record.date, is_read: record.read };
-    } else {
-      payload = { ...record };
-    }
-
-    if (mode === 'upsert') {
-      const { error } = await supabaseClient.from(table).upsert(payload, { onConflict: 'id' });
-      if (error) console.warn(`Upsert ${table} error:`, error.message);
-    } else if (mode === 'delete') {
-      const { error } = await supabaseClient.from(table).delete().eq('id', record.id);
-      if (error) console.warn(`Delete ${table} error:`, error.message);
-    }
-  } catch (e) { 
-    console.warn(`Sync ${mode} ${table} gagal:`, e); 
-  }
-}
-
-async function syncFromSupabase() {
+async function fetchAllData() {
   if (!isSupabaseReady) return;
   
   try {
     const { data: configData } = await supabaseClient.from('app_config').select('*').eq('id', 'main_config').maybeSingle();
     if (configData) {
-      if (configData.settings) DB.settings = { ...DEFAULT_DB.settings, ...configData.settings };
-      if (configData.ad) DB.ad = { ...DEFAULT_DB.ad, ...configData.ad };
+      if (configData.settings) DB.settings = { ...DB.settings, ...configData.settings };
+      if (configData.ad) DB.ad = { ...DB.ad, ...configData.ad };
+    } else {
+      // Insert default config if not exists
+      await supabaseClient.from('app_config').upsert({ id: 'main_config', settings: DB.settings, ad: DB.ad });
     }
-  } catch (e) { console.warn('Gagal fetch config:', e); }
+  } catch (e) { console.warn('Config error:', e); }
 
   try {
-    const { data: ppdbData } = await supabaseClient.from('ppdb').select('*');
-    if (ppdbData && ppdbData.length > 0) DB.ppdb = ppdbData.map(p => ({ id: p.id, regNum: p.reg_num, name: p.name, gender: p.gender, school: p.school, dob: p.dob, parent: p.parent, mother: p.mother, phone: p.phone, address: p.address, date: p.date, status: p.status }));
-  } catch (e) { console.warn('Gagal fetch ppdb:', e); }
+    const { data } = await supabaseClient.from('ppdb').select('*');
+    DB.ppdb = data ? data.map(p => mapFromSQL('ppdb', p)) : [];
+  } catch (e) { console.warn('PPDB error:', e); }
 
   try {
-    const { data: siswaData } = await supabaseClient.from('siswa').select('*');
-    if (siswaData && siswaData.length > 0) DB.siswa = siswaData.map(s => ({ id: s.id, nis: s.nis, name: s.name, kelas: s.kelas, jk: s.jk, wali: s.wali, status: s.status, photo: s.photo }));
-  } catch (e) { console.warn('Gagal fetch siswa:', e); }
+    const { data } = await supabaseClient.from('siswa').select('*');
+    DB.siswa = data ? data.map(s => mapFromSQL('siswa', s)) : [];
+  } catch (e) { console.warn('Siswa error:', e); }
 
   try {
-    const { data: guruData } = await supabaseClient.from('guru').select('*');
-    if (guruData && guruData.length > 0) DB.guru = guruData.map(g => ({ id: g.id, name: g.name, role: g.role, subject: g.subject, img: g.img }));
-  } catch (e) { console.warn('Gagal fetch guru:', e); }
+    const { data } = await supabaseClient.from('guru').select('*');
+    if (data && data.length > 0) {
+      DB.guru = data.map(g => mapFromSQL('guru', g));
+    } else {
+      // Seed defaults
+      await supabaseClient.from('guru').upsert(DEFAULT_DATA.guru.map(g => mapToSQL('guru', g)));
+      DB.guru = [...DEFAULT_DATA.guru];
+    }
+  } catch (e) { console.warn('Guru error:', e); }
 
   try {
-    const { data: programData } = await supabaseClient.from('program').select('*');
-    // Ambil kolom description dari SQL, simpan sebagai desc di JS
-    if (programData && programData.length > 0) DB.program = programData.map(p => ({ id: p.id, icon: p.icon, title: p.title, desc: p.description, color: p.color }));
-  } catch (e) { console.warn('Gagal fetch program:', e); }
+    const { data } = await supabaseClient.from('program').select('*');
+    if (data && data.length > 0) {
+      DB.program = data.map(p => mapFromSQL('program', p));
+    } else {
+      await supabaseClient.from('program').upsert(DEFAULT_DATA.program.map(p => mapToSQL('program', p)));
+      DB.program = [...DEFAULT_DATA.program];
+    }
+  } catch (e) { console.warn('Program error:', e); }
 
   try {
-    const { data: galeriData } = await supabaseClient.from('galeri').select('*');
-    // Ambil kolom description dari SQL, simpan sebagai desc di JS
-    if (galeriData && galeriData.length > 0) DB.galeri = galeriData.map(g => ({ id: g.id, img: g.img, title: g.title, cat: g.cat, desc: g.description }));
-  } catch (e) { console.warn('Gagal fetch galeri:', e); }
+    const { data } = await supabaseClient.from('galeri').select('*');
+    if (data && data.length > 0) {
+      DB.galeri = data.map(g => mapFromSQL('galeri', g));
+    } else {
+      await supabaseClient.from('galeri').upsert(DEFAULT_DATA.galeri.map(g => mapToSQL('galeri', g)));
+      DB.galeri = [...DEFAULT_DATA.galeri];
+    }
+  } catch (e) { console.warn('Galeri error:', e); }
 
   try {
-    const { data: pesanData } = await supabaseClient.from('pesan').select('*');
-    // Ambil kolom is_read dari SQL, simpan sebagai read di JS
-    if (pesanData && pesanData.length > 0) DB.pesan = pesanData.map(p => ({ id: p.id, name: p.name, email: p.email, phone: p.phone, subject: p.subject, msg: p.msg, date: p.date, read: p.is_read }));
-  } catch (e) { console.warn('Gagal fetch pesan:', e); }
-  
-  saveDBLocal();
+    const { data } = await supabaseClient.from('pesan').select('*');
+    DB.pesan = data ? data.map(p => mapFromSQL('pesan', p)) : [];
+  } catch (e) { console.warn('Pesan error:', e); }
 }
-loadDBLocal();
 
+// In-memory visitor stats (no localStorage)
+let visitorStats = { total: 0, today: 0, date: '' };
 function getVisitorStats() {
   const today = new Date().toDateString();
-  let stats = JSON.parse(localStorage.getItem('smpnu_visitors') || '{"total":0,"today":0,"date":""}');
-  if (stats.date !== today) { stats.today = 0; stats.date = today; }
-  stats.total = (stats.total || 0) + 1; stats.today = (stats.today || 0) + 1;
-  localStorage.setItem('smpnu_visitors', JSON.stringify(stats));
-  return stats;
+  if (visitorStats.date !== today) { visitorStats.today = 0; visitorStats.date = today; }
+  visitorStats.total++; visitorStats.today++;
+  return visitorStats;
 }
 function updateVisitorDisplay() {
   const stats = getVisitorStats();
@@ -1312,8 +1188,6 @@ function confirmAction(title, message, btnText, onConfirm) {
   openModal('modalDynamic');
 }
 
-function readFileAsDataURL(file) { return new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(file); }); }
-
 function openHelpModal() { openModal('modalHelp'); }
 function openAdModal() { 
   const ad = DB.ad || {};
@@ -1334,13 +1208,13 @@ async function saveAd() {
       linkText: document.getElementById('adLinkText').value,
       active: document.getElementById('adActive').checked
     };
-    saveDBLocal(); renderAdBanner(); closeModal('modalAd');
+    renderAdBanner(); closeModal('modalAd');
     if (isSupabaseReady) {
-      const { error } = await supabaseClient.from('app_config').upsert({ id: 'main_config', settings: DB.settings, ad: DB.ad }, { onConflict: 'id' });
-      if (error) { showToast('Gagal simpan iklan: ' + error.message, 'error'); }
-      else { showToast('Pengumuman berhasil diperbarui.', 'success'); }
-    } else { showToast('Pengumuman disimpan di lokal.', 'success'); }
-  } catch (err) { showToast('Terjadi kesalahan sistem.', 'error'); }
+      const { error } = await supabaseClient.from('app_config').upsert({ id: 'main_config', settings: DB.settings, ad: DB.ad });
+      if (error) throw error;
+      showToast('Pengumuman berhasil disimpan.', 'success');
+    }
+  } catch (err) { showToast('Gagal simpan iklan: ' + err.message, 'error'); }
 }
 
 function openChangePasswordModal() {
@@ -1360,8 +1234,7 @@ function openChangePasswordModal() {
 }
 
 async function initDashboard() {
-  loadDBLocal();
-  if (isSupabaseReady) await syncFromSupabase();
+  await fetchAllData();
   renderRecentPPDB(); renderPPDBTable(); renderSiswaTable(); renderGuru(); renderProgram(); renderGaleri('all'); renderPesan(); renderNotifications(); renderActivities(); loadSettingsForm(); updateBadges(); initCharts(); updateVisitorDisplay();
 }
 function updateBadges() {
@@ -1397,7 +1270,13 @@ function renderNotifications() {
   list.innerHTML = notifs.map(n => `<div class="notif-item unread" onclick="handleNotifClick('${n.type}', ${n.id})"><div class="notif-icon" style="background:${n.bg};color:${n.color};"><i class="fa-solid ${n.icon}"></i></div><div class="flex-1 min-w-0"><div class="font-bold text-sm truncate">${n.title}</div><div class="text-xs text-[var(--muted)] truncate">${n.desc}</div><div class="text-[10px] text-[var(--muted)] mt-1">${n.time}</div></div></div>`).join('');
 }
 function handleNotifClick(type, id) { document.getElementById('notifDropdown').classList.remove('open'); if (type === 'ppdb') switchView('ppdb'); else if (type === 'pesan') { switchView('pesan'); setTimeout(() => readPesan(id), 300); } }
-function markAllReadNotif() { DB.pesan.forEach(p => p.read = true); saveDBLocal(); renderNotifications(); updateBadges(); showToast('Semua notifikasi ditandai dibaca.', 'success'); }
+async function markAllReadNotif() { 
+  for (const p of DB.pesan.filter(p => !p.read)) {
+    p.read = true;
+    await supabaseClient.from('pesan').update({ is_read: true }).eq('id', p.id);
+  }
+  renderNotifications(); updateBadges(); showToast('Semua notifikasi ditandai dibaca.', 'success'); 
+}
 
 let ppdbFilter = 'all';
 function renderPPDBTable() {
@@ -1407,26 +1286,37 @@ function renderPPDBTable() {
 }
 function openPPDBModal(id = null) {
   const p = id ? DB.ppdb.find(x => x.id === id) : {};
-  setupModal(id ? 'Edit Pendaftar PPDB' : 'Tambah Pendaftar PPDB', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="ppdbName" value="${p.name || ''}" placeholder="Nama calon siswa"></div><div><label class="label">Asal Sekolah</label><input type="text" class="input" id="ppdbSchool" value="${p.school || ''}" placeholder="SD Asal"></div><div><label class="label">Nama Orang Tua</label><input type="text" class="input" id="ppdbParent" value="${p.parent || ''}" placeholder="Nama wali"></div><div><label class="label">No. Telepon</label><input type="text" class="input" id="ppdbPhone" value="${p.phone || ''}" placeholder="08xx"></div><div><label class="label">Tanggal Daftar</label><input type="date" class="input" id="ppdbDate" value="${p.date || new Date().toISOString().split('T')[0]}"></div><div><label class="label">Status</label><select class="select" id="ppdbStatus"><option value="pending" ${p.status === 'pending' ? 'selected' : ''}>Pending</option><option value="approved" ${p.status === 'approved' ? 'selected' : ''}>Disetujui</option><option value="rejected" ${p.status === 'rejected' ? 'selected' : ''}>Ditolak</option></select></div></div>`, () => {
+  setupModal(id ? 'Edit Pendaftar PPDB' : 'Tambah Pendaftar PPDB', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="ppdbName" value="${p.name || ''}" placeholder="Nama calon siswa"></div><div><label class="label">Asal Sekolah</label><input type="text" class="input" id="ppdbSchool" value="${p.school || ''}" placeholder="SD Asal"></div><div><label class="label">Nama Orang Tua</label><input type="text" class="input" id="ppdbParent" value="${p.parent || ''}" placeholder="Nama wali"></div><div><label class="label">No. Telepon</label><input type="text" class="input" id="ppdbPhone" value="${p.phone || ''}" placeholder="08xx"></div><div><label class="label">Tanggal Daftar</label><input type="date" class="input" id="ppdbDate" value="${p.date || new Date().toISOString().split('T')[0]}"></div><div><label class="label">Status</label><select class="select" id="ppdbStatus"><option value="pending" ${p.status === 'pending' ? 'selected' : ''}>Pending</option><option value="approved" ${p.status === 'approved' ? 'selected' : ''}>Disetujui</option><option value="rejected" ${p.status === 'rejected' ? 'selected' : ''}>Ditolak</option></select></div></div>`, async () => {
     const name = document.getElementById('ppdbName').value; const school = document.getElementById('ppdbSchool').value; if (!name || !school) { showToast('Nama dan Asal Sekolah wajib diisi.', 'error'); return; }
     const data = { name, school, parent: document.getElementById('ppdbParent').value, phone: document.getElementById('ppdbPhone').value, date: document.getElementById('ppdbDate').value, status: document.getElementById('ppdbStatus').value };
-    let savedId;
-    if (id) { Object.assign(DB.ppdb.find(x => x.id === id), data); savedId = id; showToast('Data PPDB diperbarui.', 'success'); } 
-    else { savedId = Date.now(); DB.ppdb.unshift({ id: savedId, ...data }); showToast('Pendaftar baru ditambahkan.', 'success'); }
-    saveDB(); syncRecord('ppdb', { id: savedId, ...data });
-    renderPPDBTable(); renderRecentPPDB(); updateBadges(); renderNotifications(); closeModal('modalDynamic');
+    const newId = id || Date.now();
+    const recordToSave = { id: newId, ...data };
+    try {
+      const { error } = await supabaseClient.from('ppdb').upsert(mapToSQL('ppdb', recordToSave));
+      if (error) throw error;
+      if (id) { Object.assign(DB.ppdb.find(x => x.id === id), data); showToast('Data PPDB diperbarui.', 'success'); } 
+      else { DB.ppdb.unshift(recordToSave); showToast('Pendaftar baru ditambahkan.', 'success'); }
+      renderPPDBTable(); renderRecentPPDB(); updateBadges(); renderNotifications(); closeModal('modalDynamic');
+    } catch (e) { showToast('Gagal menyimpan: ' + e.message, 'error'); }
   });
 }
-function updatePPDBStatus(id, status) { 
-  const p = DB.ppdb.find(x => x.id === id); if(p) p.status = status; 
-  saveDB(); syncRecord('ppdb', p);
-  renderPPDBTable(); renderRecentPPDB(); updateBadges(); renderNotifications(); 
-  showToast(`Status pendaftar diperbarui menjadi ${status}.`, 'success'); 
+async function updatePPDBStatus(id, status) { 
+  try {
+    const { error } = await supabaseClient.from('ppdb').update({ status }).eq('id', id);
+    if (error) throw error;
+    const p = DB.ppdb.find(x => x.id === id); if(p) p.status = status; 
+    renderPPDBTable(); renderRecentPPDB(); updateBadges(); renderNotifications(); 
+    showToast(`Status pendaftar diperbarui menjadi ${status}.`, 'success'); 
+  } catch (e) { showToast('Gagal update status: ' + e.message, 'error'); }
 }
 function deletePPDB(id) { 
-  confirmAction('Hapus Pendaftar', 'Apakah Anda yakin ingin menghapus data pendaftar ini? Data yang dihapus tidak bisa dikembalikan.', 'Hapus', () => {
-    DB.ppdb = DB.ppdb.filter(p => p.id !== id); saveDB(); syncRecord('ppdb', { id }, 'delete');
-    renderPPDBTable(); renderRecentPPDB(); updateBadges(); renderNotifications(); showToast('Data pendaftar dihapus.', 'success'); 
+  confirmAction('Hapus Pendaftar', 'Apakah Anda yakin ingin menghapus data pendaftar ini? Data yang dihapus tidak bisa dikembalikan.', 'Hapus', async () => {
+    try {
+      const { error } = await supabaseClient.from('ppdb').delete().eq('id', id);
+      if (error) throw error;
+      DB.ppdb = DB.ppdb.filter(p => p.id !== id);
+      renderPPDBTable(); renderRecentPPDB(); updateBadges(); renderNotifications(); showToast('Data pendaftar dihapus.', 'success'); 
+    } catch (e) { showToast('Gagal menghapus: ' + e.message, 'error'); }
   });
 }
 document.querySelectorAll('.filter-ppdb').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.filter-ppdb').forEach(b => { b.classList.remove('btn-primary'); b.classList.add('btn-ghost'); }); btn.classList.remove('btn-ghost'); btn.classList.add('btn-primary'); ppdbFilter = btn.dataset.status; renderPPDBTable(); }); });
@@ -1446,20 +1336,28 @@ function openSiswaModal(id = null) {
       const file = fileInput.files[0]; showToast('Mengupload foto...', 'success');
       const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'students');
       if (uploadedUrl) photo = uploadedUrl;
-      else photo = await readFileAsDataURL(file);
+      else { showToast('Gagal upload foto.', 'error'); return; }
     }
     const data = { nis, name, kelas: document.getElementById('siswaKelas').value, jk: document.getElementById('siswaJk').value, wali: document.getElementById('siswaWali').value, status: document.getElementById('siswaStatus').value, photo };
-    let savedId;
-    if (id) { Object.assign(DB.siswa.find(x => x.id === id), data); savedId = id; showToast('Data siswa diperbarui.', 'success'); } 
-    else { savedId = Date.now(); DB.siswa.push({ id: savedId, ...data }); showToast('Siswa baru ditambahkan.', 'success'); }
-    saveDB(); syncRecord('siswa', { id: savedId, ...data });
-    renderSiswaTable(); updateBadges(); closeModal('modalDynamic');
+    const newId = id || Date.now();
+    const recordToSave = { id: newId, ...data };
+    try {
+      const { error } = await supabaseClient.from('siswa').upsert(mapToSQL('siswa', recordToSave));
+      if (error) throw error;
+      if (id) { Object.assign(DB.siswa.find(x => x.id === id), data); showToast('Data siswa diperbarui.', 'success'); } 
+      else { DB.siswa.push(recordToSave); showToast('Siswa baru ditambahkan.', 'success'); }
+      renderSiswaTable(); updateBadges(); closeModal('modalDynamic');
+    } catch (e) { showToast('Gagal menyimpan: ' + e.message, 'error'); }
   });
 }
 function deleteSiswa(id) { 
-  confirmAction('Hapus Siswa', 'Apakah Anda yakin ingin menghapus data siswa ini?', 'Hapus', () => {
-    DB.siswa = DB.siswa.filter(s => s.id !== id); saveDB(); syncRecord('siswa', { id }, 'delete');
-    renderSiswaTable(); updateBadges(); showToast('Data siswa dihapus.', 'success'); 
+  confirmAction('Hapus Siswa', 'Apakah Anda yakin ingin menghapus data siswa ini?', 'Hapus', async () => {
+    try {
+      const { error } = await supabaseClient.from('siswa').delete().eq('id', id);
+      if (error) throw error;
+      DB.siswa = DB.siswa.filter(s => s.id !== id);
+      renderSiswaTable(); updateBadges(); showToast('Data siswa dihapus.', 'success'); 
+    } catch (e) { showToast('Gagal menghapus: ' + e.message, 'error'); }
   });
 }
 document.getElementById('searchSiswa')?.addEventListener('input', renderSiswaTable);
@@ -1475,40 +1373,55 @@ function openGuruModal(id = null) {
       const file = fileInput.files[0]; showToast('Mengupload foto...', 'success');
       const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'teachers');
       if (uploadedUrl) img = uploadedUrl;
-      else img = await readFileAsDataURL(file);
     }
     const data = { name, role, subject: document.getElementById('guruSubject').value || '-', img };
-    let savedId;
-    if (id) { Object.assign(DB.guru.find(x => x.id === id), data); savedId = id; showToast('Data guru diperbarui.', 'success'); } 
-    else { savedId = Date.now(); DB.guru.push({ id: savedId, ...data }); showToast('Guru baru ditambahkan.', 'success'); }
-    saveDB(); syncRecord('guru', { id: savedId, ...data });
-    renderGuru(); updateBadges(); renderLandingTeachers(); closeModal('modalDynamic');
+    const newId = id || Date.now();
+    const recordToSave = { id: newId, ...data };
+    try {
+      const { error } = await supabaseClient.from('guru').upsert(mapToSQL('guru', recordToSave));
+      if (error) throw error;
+      if (id) { Object.assign(DB.guru.find(x => x.id === id), data); showToast('Data guru diperbarui.', 'success'); } 
+      else { DB.guru.push(recordToSave); showToast('Guru baru ditambahkan.', 'success'); }
+      renderGuru(); updateBadges(); renderLandingTeachers(); closeModal('modalDynamic');
+    } catch (e) { showToast('Gagal menyimpan: ' + e.message, 'error'); }
   });
 }
 function deleteGuru(id) { 
-  confirmAction('Hapus Guru', 'Apakah Anda yakin ingin menghapus data guru ini?', 'Hapus', () => {
-    DB.guru = DB.guru.filter(g => g.id !== id); saveDB(); syncRecord('guru', { id }, 'delete');
-    renderGuru(); updateBadges(); renderLandingTeachers(); showToast('Data guru dihapus.', 'success'); 
+  confirmAction('Hapus Guru', 'Apakah Anda yakin ingin menghapus data guru ini?', 'Hapus', async () => {
+    try {
+      const { error } = await supabaseClient.from('guru').delete().eq('id', id);
+      if (error) throw error;
+      DB.guru = DB.guru.filter(g => g.id !== id);
+      renderGuru(); updateBadges(); renderLandingTeachers(); showToast('Data guru dihapus.', 'success'); 
+    } catch (e) { showToast('Gagal menghapus: ' + e.message, 'error'); }
   });
 }
 
 function renderProgram() { document.getElementById('programGrid').innerHTML = DB.program.map(p => `<div class="panel p-6"><div class="flex items-start justify-between mb-4"><div class="w-12 h-12 rounded-xl ${p.color==='gold'?'bg-[var(--accent)]/10 text-[var(--accent-2)]':'bg-[var(--nu-green)]/10 text-[var(--nu-green)]'} flex items-center justify-center text-xl"><i class="fa-solid ${p.icon}"></i></div><div class="flex gap-1"><button class="btn-icon btn-sm" title="Edit" onclick="openProgramModal(${p.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger" title="Hapus" onclick="deleteProgram(${p.id})"><i class="fa-solid fa-trash"></i></button></div></div><h4 class="font-display text-xl font-bold uppercase mb-2">${p.title}</h4><p class="text-xs text-[var(--muted)] leading-relaxed font-medium mb-4">${p.desc}</p><div class="flex items-center justify-between text-xs"><span class="text-[var(--muted)] font-medium"><i class="fa-solid fa-users mr-1"></i> ${Math.floor(Math.random()*50)+30} siswa</span><span class="badge-status badge-approved">Aktif</span></div></div>`).join(''); }
 function openProgramModal(id = null) {
   const p = id ? DB.program.find(x => x.id === id) : {};
-  setupModal(id ? 'Edit Program' : 'Tambah Program', `<div class="space-y-4"><div><label class="label">Nama Program</label><input type="text" class="input" id="progTitle" value="${p.title || ''}" placeholder="Contoh: Tahfidz Al-Qur'an"></div><div><label class="label">Deskripsi Singkat</label><textarea class="textarea" rows="3" id="progDesc" placeholder="Deskripsi program...">${p.desc || ''}</textarea></div><div class="grid grid-cols-2 gap-4"><div><label class="label">Ikon (FontAwesome)</label><input type="text" class="input" id="progIcon" value="${p.icon || 'fa-book'}" placeholder="fa-quran"></div><div><label class="label">Warna</label><select class="select" id="progColor"><option value="gold" ${p.color === 'gold' ? 'selected' : ''}>Emas</option><option value="green" ${p.color === 'green' ? 'selected' : ''}>Hijau NU</option></select></div></div></div>`, () => {
+  setupModal(id ? 'Edit Program' : 'Tambah Program', `<div class="space-y-4"><div><label class="label">Nama Program</label><input type="text" class="input" id="progTitle" value="${p.title || ''}" placeholder="Contoh: Tahfidz Al-Qur'an"></div><div><label class="label">Deskripsi Singkat</label><textarea class="textarea" rows="3" id="progDesc" placeholder="Deskripsi program...">${p.desc || ''}</textarea></div><div class="grid grid-cols-2 gap-4"><div><label class="label">Ikon (FontAwesome)</label><input type="text" class="input" id="progIcon" value="${p.icon || 'fa-book'}" placeholder="fa-quran"></div><div><label class="label">Warna</label><select class="select" id="progColor"><option value="gold" ${p.color === 'gold' ? 'selected' : ''}>Emas</option><option value="green" ${p.color === 'green' ? 'selected' : ''}>Hijau NU</option></select></div></div></div>`, async () => {
     const title = document.getElementById('progTitle').value; if (!title) { showToast('Nama program wajib diisi.', 'error'); return; }
     const data = { title, desc: document.getElementById('progDesc').value, icon: document.getElementById('progIcon').value, color: document.getElementById('progColor').value };
-    let savedId;
-    if (id) { Object.assign(DB.program.find(x => x.id === id), data); savedId = id; showToast('Program diperbarui.', 'success'); } 
-    else { savedId = Date.now(); DB.program.push({ id: savedId, ...data }); showToast('Program baru ditambahkan.', 'success'); }
-    saveDB(); syncRecord('program', { id: savedId, ...data });
-    renderProgram(); renderLandingPrograms(); closeModal('modalDynamic');
+    const newId = id || Date.now();
+    const recordToSave = { id: newId, ...data };
+    try {
+      const { error } = await supabaseClient.from('program').upsert(mapToSQL('program', recordToSave));
+      if (error) throw error;
+      if (id) { Object.assign(DB.program.find(x => x.id === id), data); showToast('Program diperbarui.', 'success'); } 
+      else { DB.program.push(recordToSave); showToast('Program baru ditambahkan.', 'success'); }
+      renderProgram(); renderLandingPrograms(); closeModal('modalDynamic');
+    } catch (e) { showToast('Gagal menyimpan: ' + e.message, 'error'); }
   });
 }
 function deleteProgram(id) { 
-  confirmAction('Hapus Program', 'Apakah Anda yakin ingin menghapus program ini?', 'Hapus', () => {
-    DB.program = DB.program.filter(p => p.id !== id); saveDB(); syncRecord('program', { id }, 'delete');
-    renderProgram(); renderLandingPrograms(); showToast('Program dihapus.', 'success'); 
+  confirmAction('Hapus Program', 'Apakah Anda yakin ingin menghapus program ini?', 'Hapus', async () => {
+    try {
+      const { error } = await supabaseClient.from('program').delete().eq('id', id);
+      if (error) throw error;
+      DB.program = DB.program.filter(p => p.id !== id);
+      renderProgram(); renderLandingPrograms(); showToast('Program dihapus.', 'success'); 
+    } catch (e) { showToast('Gagal menghapus: ' + e.message, 'error'); }
   });
 }
 
@@ -1529,35 +1442,52 @@ function openGaleriModal(id = null) {
       else { showToast('Gagal upload ke cloud, gambar tidak disimpan.', 'error'); return; }
     } else if (!img) { showToast('Foto wajib diupload.', 'error'); return; }
     const data = { img, title, cat: document.getElementById('galCat').value, desc: document.getElementById('galDesc').value };
-    let savedId;
-    if (id) { Object.assign(DB.galeri.find(x => x.id === id), data); savedId = id; showToast('Foto diperbarui.', 'success'); } 
-    else { savedId = Date.now(); DB.galeri.unshift({ id: savedId, ...data }); showToast('Foto ditambahkan.', 'success'); }
-    saveDB(); syncRecord('galeri', { id: savedId, ...data });
-    renderGaleri(); renderLandingGallery(landingGalleryFilter); closeModal('modalDynamic');
+    const newId = id || Date.now();
+    const recordToSave = { id: newId, ...data };
+    try {
+      const { error } = await supabaseClient.from('galeri').upsert(mapToSQL('galeri', recordToSave));
+      if (error) throw error;
+      if (id) { Object.assign(DB.galeri.find(x => x.id === id), data); showToast('Foto diperbarui.', 'success'); } 
+      else { DB.galeri.unshift(recordToSave); showToast('Foto ditambahkan.', 'success'); }
+      renderGaleri(); renderLandingGallery(landingGalleryFilter); closeModal('modalDynamic');
+    } catch (e) { showToast('Gagal menyimpan: ' + e.message, 'error'); }
   });
 }
 function deleteGaleri(id) { 
-  confirmAction('Hapus Foto', 'Apakah Anda yakin ingin menghapus foto ini?', 'Hapus', () => {
-    DB.galeri = DB.galeri.filter(g => g.id !== id); saveDB(); syncRecord('galeri', { id }, 'delete');
-    renderGaleri(); renderLandingGallery(landingGalleryFilter); showToast('Foto dihapus.', 'success'); 
+  confirmAction('Hapus Foto', 'Apakah Anda yakin ingin menghapus foto ini?', 'Hapus', async () => {
+    try {
+      const { error } = await supabaseClient.from('galeri').delete().eq('id', id);
+      if (error) throw error;
+      DB.galeri = DB.galeri.filter(g => g.id !== id);
+      renderGaleri(); renderLandingGallery(landingGalleryFilter); showToast('Foto dihapus.', 'success'); 
+    } catch (e) { showToast('Gagal menghapus: ' + e.message, 'error'); }
   });
 }
 document.querySelectorAll('.filter-gallery').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.filter-gallery').forEach(b => { b.classList.remove('btn-primary'); b.classList.add('btn-ghost'); }); btn.classList.remove('btn-ghost'); btn.classList.add('btn-primary'); renderGaleri(btn.dataset.cat); }); });
 
 function renderPesan() { document.getElementById('pesanList').innerHTML = DB.pesan.map(p => `<div class="p-4 border-b border-[var(--bg-2)] cursor-pointer hover:bg-[var(--bg-2)] transition ${!p.read ? 'bg-[var(--accent)]/5' : ''}" onclick="readPesan(${p.id})"><div class="flex items-start gap-3"><div class="avatar avatar-sm">${p.name.charAt(0)}</div><div class="flex-1 min-w-0"><div class="flex items-center justify-between gap-2"><div class="font-bold text-sm ${!p.read ? 'text-[var(--fg)]' : 'text-[var(--fg-2)]'} truncate">${p.name}</div>${!p.read ? '<div class="w-2 h-2 rounded-full bg-[var(--accent)] flex-shrink-0"></div>' : ''}</div><div class="text-xs font-semibold text-[var(--accent-2)] truncate mt-0.5">${p.subject}</div><div class="text-[10px] text-[var(--muted)] truncate mt-1">${p.msg.substring(0, 60)}...</div><div class="text-[10px] text-[var(--muted)] mt-1">${p.date}</div></div></div></div>`).join(''); }
-function readPesan(id) {
-  const p = DB.pesan.find(x => x.id === id); if (!p) return; p.read = true; saveDB();
-  syncRecord('pesan', p);
+async function readPesan(id) {
+  const p = DB.pesan.find(x => x.id === id); if (!p) return;
+  if (!p.read) {
+    try {
+      await supabaseClient.from('pesan').update({ is_read: true }).eq('id', id);
+      p.read = true;
+    } catch (e) { console.warn('Failed to mark as read', e) }
+  }
   document.getElementById('pesanAvatar').textContent = p.name.charAt(0); document.getElementById('pesanSender').textContent = p.name; document.getElementById('pesanEmail').textContent = p.email + ' • ' + p.phone;
   document.getElementById('pesanDetail').innerHTML = `<div class="mb-4 pb-4 border-b border-[var(--border)]"><div class="text-[10px] uppercase tracking-wider text-[var(--accent-2)] font-bold mb-1">Subjek</div><h4 class="font-display text-xl font-bold uppercase">${p.subject}</h4><div class="text-xs text-[var(--muted)] mt-2"><i class="fa-solid fa-clock mr-1"></i> ${p.date}</div></div><div class="mb-6"><div class="text-sm text-[var(--fg-2)] leading-relaxed font-medium">${p.msg}</div></div><div class="bg-[var(--bg-2)] rounded-lg p-4 mb-4"><div class="text-[10px] uppercase tracking-wider text-[var(--muted)] font-bold mb-2">Kontak Pengirim</div><div class="grid grid-cols-2 gap-3 text-xs"><div><i class="fa-solid fa-envelope text-[var(--accent-2)] mr-2"></i> ${p.email}</div><div><i class="fa-solid fa-phone text-[var(--accent-2)] mr-2"></i> ${p.phone}</div></div></div><div class="flex gap-2"><button class="btn btn-primary" onclick="showToast('Email client dibuka untuk membalas pesan.', 'success')"><i class="fa-solid fa-reply"></i> Balas</button><button class="btn btn-ghost" onclick="deletePesan(${p.id})"><i class="fa-solid fa-trash"></i> Hapus</button></div>`;
   updateBadges(); renderPesan(); renderNotifications();
 }
 function deletePesan(id) {
-  confirmAction('Hapus Pesan', 'Apakah Anda yakin ingin menghapus pesan ini?', 'Hapus', () => {
-    DB.pesan = DB.pesan.filter(p => p.id != id); saveDB(); syncRecord('pesan', { id }, 'delete');
-    document.getElementById('pesanDetail').innerHTML = `<div class="text-center py-16 text-[var(--muted)]"><i class="fa-solid fa-envelope-open text-5xl mb-4 opacity-30"></i><p class="font-medium">Pilih pesan dari daftar untuk membaca</p></div>`;
-    document.getElementById('pesanAvatar').textContent = '?'; document.getElementById('pesanSender').textContent = 'Pilih Pesan'; document.getElementById('pesanEmail').textContent = '—';
-    renderPesan(); updateBadges(); renderNotifications(); showToast('Pesan dihapus.', 'success');
+  confirmAction('Hapus Pesan', 'Apakah Anda yakin ingin menghapus pesan ini?', 'Hapus', async () => {
+    try {
+      const { error } = await supabaseClient.from('pesan').delete().eq('id', id);
+      if (error) throw error;
+      DB.pesan = DB.pesan.filter(p => p.id != id);
+      document.getElementById('pesanDetail').innerHTML = `<div class="text-center py-16 text-[var(--muted)]"><i class="fa-solid fa-envelope-open text-5xl mb-4 opacity-30"></i><p class="font-medium">Pilih pesan dari daftar untuk membaca</p></div>`;
+      document.getElementById('pesanAvatar').textContent = '?'; document.getElementById('pesanSender').textContent = 'Pilih Pesan'; document.getElementById('pesanEmail').textContent = '—';
+      renderPesan(); updateBadges(); renderNotifications(); showToast('Pesan dihapus.', 'success');
+    } catch (e) { showToast('Gagal menghapus: ' + e.message, 'error'); }
   });
 }
 
@@ -1577,13 +1507,10 @@ async function saveSettings() {
       kuota: document.getElementById('setKuota').value, buka: document.getElementById('setBuka').value, tutup: document.getElementById('setTutup').value, statusPPDB: document.getElementById('setPPDBStatus').checked, 
       ig: document.getElementById('setIg').value, yt: document.getElementById('setYt').value, fb: document.getElementById('setFb').value, wa: document.getElementById('setWa').value 
     };
-    saveDBLocal(); 
-    if (isSupabaseReady) {
-      const { error } = await supabaseClient.from('app_config').upsert({ id: 'main_config', settings: DB.settings, ad: DB.ad }, { onConflict: 'id' });
-      if (error) showToast('Gagal simpan ke cloud: ' + error.message, 'error');
-      else showToast('Pengaturan berhasil disimpan.', 'success');
-    } else { showToast('Pengaturan disimpan di lokal.', 'success'); }
-  } catch (err) { showToast('Terjadi kesalahan sistem.', 'error'); }
+    const { error } = await supabaseClient.from('app_config').upsert({ id: 'main_config', settings: DB.settings, ad: DB.ad });
+    if (error) throw error;
+    showToast('Pengaturan berhasil disimpan.', 'success');
+  } catch (err) { showToast('Gagal simpan ke cloud: ' + err.message, 'error'); }
 }
 
 function initCharts() {
@@ -1664,8 +1591,7 @@ async function downloadPPDBCard() {
   }
 }
 
-// Handle form submit PPDB from public
-document.getElementById('ppdbPublicForm').addEventListener('submit', function(e) {
+document.getElementById('ppdbPublicForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   const data = { 
     id: Date.now(), 
@@ -1683,17 +1609,22 @@ document.getElementById('ppdbPublicForm').addEventListener('submit', function(e)
     status: 'pending' 
   };
   if (!data.name || !data.school) { showToast('Nama dan asal sekolah wajib diisi.', 'error'); return; }
-  DB.ppdb.unshift(data); saveDBLocal(); 
-  if (!document.getElementById('adminLayout').classList.contains('is-hidden')) {
-    renderRecentPPDB(); renderPPDBTable(); updateBadges(); renderNotifications(); renderActivities();
+  
+  try {
+    const { error } = await supabaseClient.from('ppdb').insert(mapToSQL('ppdb', data));
+    if (error) throw error;
+    DB.ppdb.unshift(data); 
+    if (!document.getElementById('adminLayout').classList.contains('is-hidden')) {
+      renderRecentPPDB(); renderPPDBTable(); updateBadges(); renderNotifications(); renderActivities();
+    }
+    hidePPDBForm(); showPPDBCard(data); 
+    showToast('Pendaftaran berhasil! Simpan kartu pendaftaran Anda.', 'success');
+  } catch (err) {
+    showToast('Gagal mendaftar: ' + err.message, 'error');
   }
-  if (isSupabaseReady) { syncRecord('ppdb', data).catch(e => console.warn('Sync ke Supabase gagal:', e)); }
-  hidePPDBForm(); showPPDBCard(data); 
-  showToast('Pendaftaran berhasil! Simpan kartu pendaftaran Anda.', 'success');
 });
 
-// Handle form submit Pesan from public
-function submitContactMessage(e) {
+async function submitContactMessage(e) {
   e.preventDefault();
   const inputs = e.target.querySelectorAll('input, textarea');
   const data = { 
@@ -1706,10 +1637,15 @@ function submitContactMessage(e) {
     date: new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }), 
     read: false 
   };
-  DB.pesan.unshift(data); saveDBLocal();
-  if (isSupabaseReady) { syncRecord('pesan', data).catch(e => console.warn('Sync ke Supabase gagal:', e)); }
-  showToast('Pesan terkirim. Tim kami akan merespons dalam 1x24 jam.', 'success'); 
-  e.target.reset();
+  try {
+    const { error } = await supabaseClient.from('pesan').insert(mapToSQL('pesan', data));
+    if (error) throw error;
+    DB.pesan.unshift(data);
+    showToast('Pesan terkirim. Tim kami akan merespons dalam 1x24 jam.', 'success'); 
+    e.target.reset();
+  } catch (err) {
+    showToast('Gagal mengirim pesan: ' + err.message, 'error');
+  }
 }
 
 function showVerifyOverlay() { document.getElementById('verifyOverlay').classList.remove('is-hidden'); document.body.style.overflow = 'hidden'; }
@@ -1729,7 +1665,7 @@ async function checkVerification() {
     if (!record && isSupabaseReady) {
       try {
         const { data } = await supabaseClient.from('ppdb').select('*').eq('reg_num', verifyCode).maybeSingle();
-        if (data) { record = { regNum: data.reg_num, name: data.name, school: data.school, date: data.date, status: data.status }; }
+        if (data) { record = mapFromSQL('ppdb', data); }
       } catch (e) { console.warn('Supabase verify error:', e); }
     }
     if (record) {
@@ -1786,8 +1722,7 @@ document.getElementById('adTitle')?.addEventListener('input', e => { const p = d
 document.getElementById('adDesc')?.addEventListener('input', e => { const p = document.getElementById('adPreviewDesc'); if (p) p.textContent = e.target.value; });
 
 window.addEventListener('DOMContentLoaded', async () => {
-  loadDBLocal();
-  if (isSupabaseReady) await syncFromSupabase();
+  await fetchAllData();
   renderLandingPrograms(); 
   renderLandingTeachers(); 
   renderLandingGallery('all'); 
