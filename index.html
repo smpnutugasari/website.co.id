@@ -13,7 +13,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
   :root {
     --bg: #f4f5f7; --bg-2: #e9ecef; --card: #ffffff; --card-2: #f8f9fa;
@@ -398,7 +398,7 @@
         <div class="section-num mb-4">— 05 / Penerimaan Siswa Baru</div>
         <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase">Alur <span style="color:var(--accent);">PPDB 2025</span></h2>
       </div>
-      <div class="grid md:grid-cols-2 gap-x:12 gap-y-2">
+      <div class="grid md:grid-cols-2 gap-x-12 gap-y-2">
         <div class="reveal">
           <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 1</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Pendaftaran Online</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Pengisian formulir pendaftaran secara online melalui website resmi atau datang langsung ke sekretariat sekolah.</p></div>
           <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 2</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Tes Seleksi & Wawancara</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Tes potensi akademik, wawancara calon siswa, dan tes potensi Tahfidz untuk kelas khusus.</p></div>
@@ -972,18 +972,29 @@ function showToast(msg, type = 'success') {
 const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+// --- SUPABASE INITIALIZATION FIXED ---
 const SUPABASE_URL = 'https://movwdvfqwsiuovkxupnr.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vdndkdmZxd3NpdW92a3h1cG5yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3NzQ4MTMsImV4cCI6MjEwMDM1MDgxM30.aB-Xf0AjpF324B2Fst2QAmoDvDaDr_gj0O0HlnBrLNQ';
 let supabaseClient = null; let isSupabaseReady = false;
 
 function initSupabase() { 
   try { 
-    if (window.supabase && SUPABASE_URL && SUPABASE_ANON_KEY && SUPABASE_URL.startsWith('https://')) { 
-      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false }, realtime: { params: { eventsPerSecond: 2 } } }); 
+    // Check multiple possible global objects for Supabase
+    const sbLib = window.supabase || (typeof supabase !== 'undefined' ? supabase : null);
+    
+    if (sbLib && sbLib.createClient && SUPABASE_URL && SUPABASE_ANON_KEY && SUPABASE_URL.startsWith('https://')) { 
+      supabaseClient = sbLib.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { 
+        auth: { persistSession: false }, 
+        realtime: { params: { eventsPerSecond: 2 } } 
+      }); 
       isSupabaseReady = true;
-      console.log('Supabase initialized successfully.');
-    } 
-  } catch (e) { console.warn('Supabase init failed:', e); } 
+      console.log('✅ Supabase initialized successfully.');
+    } else {
+      console.warn('⚠️ Supabase library not loaded or URL/Key missing. Running in local mode.');
+    }
+  } catch (e) { 
+    console.warn('❌ Supabase init failed:', e); 
+  } 
 }
 initSupabase();
 
@@ -996,7 +1007,7 @@ async function uploadImageToSupabase(file, bucketName, folderName) {
       upsert: false
     });
     if (error) {
-      console.warn('Upload error:', error);
+      console.warn('Upload error:', error.message);
       return null;
     }
     const { data: publicUrlData } = supabaseClient.storage.from(bucketName).getPublicUrl(data.path);
@@ -1009,25 +1020,8 @@ async function uploadImageToSupabase(file, bucketName, folderName) {
 
 const DEFAULT_DB = {
   settings: { schoolName: 'SMP NU Tugasari', npsn: '20365478', address: 'Jl. Raya Tugasari No. 01, Tugasari', phone: '(0281) 123456', email: 'info@smpnutugasari.sch.id', year: '1998', akreditasi: 'A', ta: '2025/2026', kuota: 160, buka: '2025-01-15', tutup: '2025-06-30', statusPPDB: true, ig: '@smpnutugasari', yt: 'SMP NU Tugasari Official', fb: 'SMP NU Tugasari', wa: '0812-3456-7890' },
-  ppdb: [
-    {id:1, name:'Ahmad Zaki Mubarok', school:'SDN Tugasari 01', parent:'Budi Mubarok', phone:'0812-1111-2222', date:'2025-01-15', status:'pending'},
-    {id:2, name:'Siti Khadijah Nur', school:'MI Maarif Tugasari', parent:'H. Nur Hidayat', phone:'0813-2222-3333', date:'2025-01-15', status:'pending'},
-    {id:3, name:'Muhammad Faiz Rizqi', school:'SDN 02 Kec. Tugasari', parent:'Rizqi Abdullah', phone:'0857-3333-4444', date:'2025-01-14', status:'approved'},
-    {id:4, name:'Aisyah Putri Salsabila', school:'SDIT Al-Furqan', parent:'Putri Mahfudz', phone:'0812-5555-6666', date:'2025-01-14', status:'approved'},
-    {id:5, name:'Abdul Rahman Hakim', school:'SDN Tugasari 03', parent:'Hakim Yusuf', phone:'0858-7777-8888', date:'2025-01-13', status:'pending'},
-  ],
-  siswa: [
-    {id:1, nis:'2024001', name:'Ahmad Zaki Mubarok', kelas:'VII A', jk:'L', wali:'Budi Mubarok', status:'Aktif', photo:''},
-    {id:2, nis:'2024002', name:'Siti Khadijah Nur', kelas:'VII A', jk:'P', wali:'Nur Hidayat', status:'Aktif', photo:''},
-    {id:3, nis:'2024003', name:'Muhammad Faiz', kelas:'VII B', jk:'L', wali:'Rizqi Abdullah', status:'Aktif', photo:''},
-    {id:4, nis:'2023015', name:'Aisyah Putri', kelas:'VIII A', jk:'P', wali:'Mahfudz', status:'Aktif', photo:''},
-    {id:5, nis:'2023016', name:'Abdul Rahman', kelas:'VIII A', jk:'L', wali:'Hakim Yusuf', status:'Aktif', photo:''},
-    {id:6, nis:'2023017', name:'Nadia Zahra', kelas:'VIII B', jk:'P', wali:'Aulia Rahman', status:'Aktif', photo:''},
-    {id:7, nis:'2022030', name:'Umar Faruq', kelas:'IX A', jk:'L', wali:'Andika Pratama', status:'Aktif', photo:''},
-    {id:8, nis:'2022031', name:'Khansa Bilqis', kelas:'IX A', jk:'P', wali:'Bilqis Family', status:'Aktif', photo:''},
-    {id:9, nis:'2022032', name:'Yusuf Hamzah', kelas:'IX B', jk:'L', wali:'Hamzah Ali', status:'Aktif', photo:''},
-    {id:10, nis:'2022033', name:'Zahra Aminah', kelas:'IX B', jk:'P', wali:'Aminah Wati', status:'Non-Aktif', photo:''},
-  ],
+  ppdb: [],
+  siswa: [],
   guru: [
     {id:1, name:'Drs. H. Ahmad Fauzi, M.Pd', role:'Kepala Sekolah', subject:'-', img:'https://picsum.photos/seed/teacher1/400/400.jpg'},
     {id:2, name:'Siti Aminah, S.Pd', role:'Waka Kurikulum', subject:'Bahasa Indonesia', img:'https://picsum.photos/seed/teacher2/400/400.jpg'},
@@ -1046,21 +1040,8 @@ const DEFAULT_DB = {
     {id:1, img:'https://picsum.photos/seed/school1/600/450.jpg', title:'Pesantren Ramadhan', cat:'religi', desc:'Kegiatan tahunan untuk meningkatkan spiritualitas siswa.'},
     {id:2, img:'https://picsum.photos/seed/school2/600/450.jpg', title:'Juara Olimpiade Sains', cat:'akademik', desc:'Siswa kelas IX meraih juara 1 Olimpiade Matematika.'},
     {id:3, img:'https://picsum.photos/seed/school3/600/450.jpg', title:'Latihan Marching Band', cat:'ekskul', desc:'Persiapan parade kemerdekaan 17 Agustus.'},
-    {id:4, img:'https://picsum.photos/seed/school4/600/450.jpg', title:'Wisuda Tahfidz', cat:'religi', desc:"Syukuran kelulusan hafalan 2 Juz Al-Qur'an."},
-    {id:5, img:'https://picsum.photos/seed/school5/600/450.jpg', title:'Class Meeting', cat:'akademik', desc:'Aksi kebersamaan dan kompetisi antar kelas.'},
-    {id:6, img:'https://picsum.photos/seed/school6/600/450.jpg', title:'Olahraga Basket', cat:'ekskul', desc:'Latihan rutin tim basket SMP NU Tugasari.'},
-    {id:7, img:'https://picsum.photos/seed/school7/600/450.jpg', title:'Lomba Tahfidz', cat:'religi', desc:"Kompetisi hafalan Al-Qur'an antar kelas."},
-    {id:8, img:'https://picsum.photos/seed/school8/600/450.jpg', title:'Praktikum Lab', cat:'akademik', desc:'Kegiatan praktikum di laboratorium IPA.'},
   ],
-  pesan: [
-    {id:1, name:'Budi Santoso', email:'budi@email.com', phone:'0812-3456-7890', subject:'Tanya PPDB 2025', msg:'Assalamualaikum, saya ingin menanyakan mengenai jadwal pendaftaran PPDB tahun ajaran 2025/2026. Apakah sudah dibuka?', date:'15 Jan 2025, 09:30', read:false},
-    {id:2, name:'Siti Aminah', email:'siti.aminah@email.com', phone:'0813-1111-2222', subject:'Info Beasiswa', msg:'Selamat pagi, apakah SMP NU Tugasari menyediakan program beasiswa untuk siswa kurang mampu? Terima kasih.', date:'14 Jan 2025, 14:20', read:false},
-    {id:3, name:'H. Ahmad Rifai', email:'rifai@email.com', phone:'0857-9999-8888', subject:'Kerja sama pendidikan', msg:'Saya mewakili yayasan X, ingin menjajaki kerja sama dalam program pertukaran pelajar.', date:'13 Jan 2025, 10:15', read:false},
-    {id:4, name:'Dewi Lestari', email:'dewi.lestari@email.com', phone:'0821-7777-6666', subject:'Pendaftaran Anak', msg:'Halo, anak saya saat ini kelas 6 SD. Kapan pendaftaran dibuka dan apa saja syaratnya?', date:'12 Jan 2025, 16:45', read:false},
-    {id:5, name:'Muhammad Yunus', email:'yunus@email.com', phone:'0852-5555-4444', subject:'Donasi Buku', msg:'Saya ingin mendonasikan beberapa buku referensi untuk perpustakaan sekolah. Bagaimana prosedurnya?', date:'11 Jan 2025, 11:00', read:false},
-    {id:6, name:'Khadijah Nur', email:'khadijah@email.com', phone:'0812-2222-3333', subject:'Tahfidz Program', msg:'Apakah ada kelas tahfidz khusus untuk siswa yang sudah hafal 5 juz?', date:'10 Jan 2025, 08:30', read:true},
-    {id:7, name:'Rahmat Hidayat', email:'rahmat@email.com', phone:'0813-4444-5555', subject:'Kunjungan Sekolah', msg:'Kami dari SD X ingin mengadakan kunjungan ke SMP NU Tugasari.', date:'09 Jan 2025, 13:00', read:true},
-  ],
+  pesan: [],
   ad: { title: 'PPDB 2025/2026 Telah Dibuka!', desc: 'Pendaftaran Peserta Didik Baru Tahun Ajaran 2025/2026 telah dibuka. Daftar sekarang sebelum kuota penuh!', linkText: 'Klik di sini', active: true }
 };
 
@@ -1080,12 +1061,13 @@ function loadDBLocal() {
 function saveDBLocal() { try { localStorage.setItem('smpnu_db', JSON.stringify(DB)); } catch (e) { console.error('Save LocalStorage failed:', e); } }
 function saveDB() { saveDBLocal(); }
 
+// --- SYNC FUNCTION FIXED TO PREVENT ERRORS ---
 async function syncRecord(table, record, mode = 'upsert') {
   if (!isSupabaseReady) return;
   try {
-    let payload = { ...record };
-    // REMOVED the lines that deleted photo and img. They MUST be saved!
+    let payload = {};
     
+    // Explicitly map fields for each table to prevent schema errors
     if (table === 'ppdb') {
       payload = { 
         id: record.id, 
@@ -1101,12 +1083,62 @@ async function syncRecord(table, record, mode = 'upsert') {
         date: record.date, 
         status: record.status 
       };
+    } else if (table === 'siswa') {
+      payload = {
+        id: record.id,
+        nis: record.nis,
+        name: record.name,
+        kelas: record.kelas,
+        jk: record.jk,
+        wali: record.wali,
+        status: record.status,
+        photo: record.photo
+      };
+    } else if (table === 'guru') {
+      payload = {
+        id: record.id,
+        name: record.name,
+        role: record.role,
+        subject: record.subject,
+        img: record.img
+      };
+    } else if (table === 'program') {
+      payload = {
+        id: record.id,
+        icon: record.icon,
+        title: record.title,
+        desc: record.desc,
+        color: record.color
+      };
+    } else if (table === 'galeri') {
+      payload = {
+        id: record.id,
+        img: record.img,
+        title: record.title,
+        cat: record.cat,
+        desc: record.desc
+      };
+    } else if (table === 'pesan') {
+      payload = {
+        id: record.id,
+        name: record.name,
+        email: record.email,
+        phone: record.phone,
+        subject: record.subject,
+        msg: record.msg,
+        date: record.date,
+        read: record.read
+      };
+    } else {
+      payload = { ...record };
     }
-    
+
     if (mode === 'upsert') {
-      await supabaseClient.from(table).upsert(payload, { onConflict: 'id' });
+      const { error } = await supabaseClient.from(table).upsert(payload, { onConflict: 'id' });
+      if (error) console.warn(`Upsert ${table} error:`, error.message);
     } else if (mode === 'delete') {
-      await supabaseClient.from(table).delete().eq('id', record.id);
+      const { error } = await supabaseClient.from(table).delete().eq('id', record.id);
+      if (error) console.warn(`Delete ${table} error:`, error.message);
     }
   } catch (e) { 
     console.warn(`Sync ${mode} ${table} gagal:`, e); 
