@@ -403,7 +403,7 @@
         <div class="section-num mb-4">— 05 / Penerimaan Siswa Baru</div>
         <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase">Alur <span style="color:var(--accent);">PPDB 2026</span></h2>
       </div>
-      <div class="grid md:grid-cols-2 gap-x:12 gap-y-2">
+      <div class="grid md:grid-cols-2 gap-x:12 gap-y:2">
         <div class="reveal">
           <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 1</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Pendaftaran Online</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Pengisian formulir pendaftaran secara online melalui website resmi atau datang langsung ke sekretariat sekolah.</p></div>
           <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 2</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Tes Seleksi & Wawancara</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Tes potensi akademik, wawancara calon siswa, dan tes potensi Tahfidz untuk kelas khusus.</p></div>
@@ -836,6 +836,24 @@ Sumatera Selatan</div></div></div>
                 </div>
               </div>
             </div>
+            <div class="panel">
+              <div class="panel-header"><h3 class="font-display text-lg font-bold uppercase">Publikasi Pengumuman</h3></div>
+              <div class="p-6 space-y-4">
+                <div class="flex items-center justify-between p-4 bg-[var(--bg-2)] rounded-lg">
+                  <div>
+                    <div class="font-bold text-sm">Publish Pengumuman Banner</div>
+                    <div class="text-xs text-[var(--muted)]">Tampilkan banner pengumuman di halaman utama</div>
+                  </div>
+                  <label class="toggle"><input type="checkbox" id="setPublishAd"><span class="toggle-slider"></span></label>
+                </div>
+                <div><label class="label">Judul Pengumuman</label><input type="text" class="input" id="setAdTitle" placeholder="Contoh: PPDB 2026 Dibuka!"></div>
+                <div><label class="label">Deskripsi Pengumuman</label><textarea class="textarea" rows="2" id="setAdDesc" placeholder="Deskripsi pengumuman..."></textarea></div>
+                <div><label class="label">Teks Tombol</label><input type="text" class="input" id="setAdLinkText" placeholder="Klik di sini"></div>
+                <div class="p-3 bg-[var(--accent)]/10 border border-[var(--accent)]/30 rounded-lg text-xs text-[var(--accent-2)] font-medium">
+                  <i class="fa-solid fa-circle-info mr-1"></i> Klik "Simpan Perubahan" di bawah untuk menerapkan & mempublish pengumuman.
+                </div>
+              </div>
+            </div>
           </div>
           <div class="space-y-6">
             <div class="panel">
@@ -955,6 +973,22 @@ Sumatera Selatan</div></div></div>
       </div>
     </div>
     <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modalAd')">Batal</button><button class="btn btn-primary" onclick="saveAd()"><i class="fa-solid fa-save"></i> Simpan Pengumuman</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalImageViewer">
+  <div class="modal" style="max-width: 900px;">
+    <div class="modal-header">
+      <h3 class="font-display text-xl font-bold uppercase" id="imageViewerTitle">Lihat Gambar</h3>
+      <button class="btn-icon" onclick="closeModal('modalImageViewer')"><i class="fa-solid fa-times"></i></button>
+    </div>
+    <div class="modal-body" style="padding: 0; text-align: center; background: #1a1d21;">
+      <img id="imageViewerSrc" src="" alt="" style="max-width: 100%; max-height: 80vh; object-fit: contain; display: block; margin: 0 auto;">
+      <p id="imageViewerDesc" style="color: rgba(255,255,255,0.7); font-size: 12px; padding: 12px; font-weight: 500;"></p>
+    </div>
+    <div class="modal-footer" style="justify-content: center;">
+      <button class="btn btn-ghost" onclick="closeModal('modalImageViewer')">Tutup</button>
+    </div>
   </div>
 </div>
 
@@ -1129,6 +1163,13 @@ document.addEventListener('click', (e) => {
 function openModal(id) { document.getElementById(id).classList.add('show'); }
 function closeModal(id) { document.getElementById(id).classList.remove('show'); }
 document.querySelectorAll('.modal-overlay').forEach(m => { m.addEventListener('click', (e) => { if (e.target === m) m.classList.remove('show'); }); });
+
+function openImageViewer(src, title = 'Gambar', desc = '') {
+  document.getElementById('imageViewerSrc').src = src;
+  document.getElementById('imageViewerTitle').textContent = title;
+  document.getElementById('imageViewerDesc').textContent = desc;
+  openModal('modalImageViewer');
+}
 
 function setupModal(title, bodyHtml, onSave) {
   document.getElementById('modalTitle').textContent = title; 
@@ -1418,8 +1459,28 @@ function deleteProgram(id) {
 
 let galeriFilter = 'all';
 function renderGaleri(cat) {
-  if (cat) galeriFilter = cat; let data = DB.galeri; if (galeriFilter !== 'all') data = data.filter(g => g.cat === galeriFilter);
-  document.getElementById('galeriGrid').innerHTML = data.length ? data.map(g => `<div class="gallery-card"><div class="relative"><img src="${g.img}" alt="${g.title}"><div class="absolute top-2 right-2"><button class="btn-icon btn-sm danger" onclick="deleteGaleri(${g.id})" title="Hapus"><i class="fa-solid fa-trash"></i></button></div><div class="absolute top-2 left-2"><span class="badge-status badge-approved">${g.cat}</span></div></div><div class="p-3"><h4 class="font-display text-sm font-bold uppercase leading-tight mb-1">${g.title}</h4><p class="text-[10px] text-[var(--muted)] font-medium line-clamp-2">${g.desc}</p><button class="btn btn-ghost btn-sm w-full mt-2" onclick="openGaleriModal(${g.id})"><i class="fa-solid fa-pen mr-1"></i> Edit</button></div></div>`).join('') : `<div class="col-span-full text-center py-16 text-[var(--muted)]"><i class="fa-solid fa-images text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada foto.</p></div>`;
+  if (cat) galeriFilter = cat; 
+  let data = DB.galeri; 
+  if (galeriFilter !== 'all') data = data.filter(g => g.cat === galeriFilter);
+  document.getElementById('galeriGrid').innerHTML = data.length ? data.map(g => {
+    const safeTitle = (g.title || '').replace(/'/g, "\\'");
+    const safeDesc = (g.desc || '').replace(/'/g, "\\'");
+    return `<div class="gallery-card">
+      <div class="relative">
+        <img src="${g.img}" alt="${g.title}" style="cursor:pointer;" onclick="openImageViewer('${g.img}', '${safeTitle}', '${safeDesc}')">
+        <div class="absolute top-2 right-2 flex gap-1">
+          <button class="btn-icon btn-sm" title="Lihat" onclick="event.stopPropagation(); openImageViewer('${g.img}', '${safeTitle}', '${safeDesc}')"><i class="fa-solid fa-eye"></i></button>
+          <button class="btn-icon btn-sm danger" onclick="deleteGaleri(${g.id})" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+        </div>
+        <div class="absolute top-2 left-2"><span class="badge-status badge-approved">${g.cat}</span></div>
+      </div>
+      <div class="p-3">
+        <h4 class="font-display text-sm font-bold uppercase leading-tight mb-1">${g.title}</h4>
+        <p class="text-[10px] text-[var(--muted)] font-medium line-clamp-2">${g.desc}</p>
+        <button class="btn btn-ghost btn-sm w-full mt-2" onclick="openGaleriModal(${g.id})"><i class="fa-solid fa-pen mr-1"></i> Edit</button>
+      </div>
+    </div>`;
+  }).join('') : `<div class="col-span-full text-center py-16 text-[var(--muted)]"><i class="fa-solid fa-images text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada foto.</p></div>`;
 }
 function openGaleriModal(id = null) {
   const g = id ? DB.galeri.find(x => x.id === id) : {};
@@ -1484,24 +1545,77 @@ function deletePesan(id) {
 
 function loadSettingsForm() {
   const s = DB.settings; if (!s) return;
-  document.getElementById('setSchoolName').value = s.schoolName || ''; document.getElementById('setNpsn').value = s.npsn || ''; document.getElementById('setAddress').value = s.address || ''; document.getElementById('setPhone').value = s.phone || '';
-  document.getElementById('setEmail').value = s.email || ''; document.getElementById('setYear').value = s.year || ''; document.getElementById('setAkreditasi').value = s.akreditasi || 'A'; document.getElementById('setTA').value = s.ta || '';
-  document.getElementById('setKuota').value = s.kuota || ''; document.getElementById('setBuka').value = s.buka || ''; document.getElementById('setTutup').value = s.tutup || ''; document.getElementById('setPPDBStatus').checked = s.statusPPDB !== undefined ? s.statusPPDB : true;
-  document.getElementById('setIg').value = s.ig || ''; document.getElementById('setYt').value = s.yt || ''; document.getElementById('setFb').value = s.fb || ''; document.getElementById('setWa').value = s.wa || '';
+  document.getElementById('setSchoolName').value = s.schoolName || ''; 
+  document.getElementById('setNpsn').value = s.npsn || ''; 
+  document.getElementById('setAddress').value = s.address || ''; 
+  document.getElementById('setPhone').value = s.phone || '';
+  document.getElementById('setEmail').value = s.email || ''; 
+  document.getElementById('setYear').value = s.year || ''; 
+  document.getElementById('setAkreditasi').value = s.akreditasi || 'A'; 
+  document.getElementById('setTA').value = s.ta || '';
+  document.getElementById('setKuota').value = s.kuota || ''; 
+  document.getElementById('setBuka').value = s.buka || ''; 
+  document.getElementById('setTutup').value = s.tutup || ''; 
+  document.getElementById('setPPDBStatus').checked = s.statusPPDB !== undefined ? s.statusPPDB : true;
+  document.getElementById('setIg').value = s.ig || ''; 
+  document.getElementById('setYt').value = s.yt || ''; 
+  document.getElementById('setFb').value = s.fb || ''; 
+  document.getElementById('setWa').value = s.wa || '';
+  
+  // Muat data publikasi pengumuman
+  const ad = DB.ad || {};
+  const setPublishAd = document.getElementById('setPublishAd');
+  const setAdTitle = document.getElementById('setAdTitle');
+  const setAdDesc = document.getElementById('setAdDesc');
+  const setAdLinkText = document.getElementById('setAdLinkText');
+  if (setPublishAd) setPublishAd.checked = ad.active !== false;
+  if (setAdTitle) setAdTitle.value = ad.title || '';
+  if (setAdDesc) setAdDesc.value = ad.desc || '';
+  if (setAdLinkText) setAdLinkText.value = ad.linkText || 'Klik di sini';
 }
 
 async function saveSettings() {
   try {
     DB.settings = { 
-      schoolName: document.getElementById('setSchoolName').value, npsn: document.getElementById('setNpsn').value, address: document.getElementById('setAddress').value, phone: document.getElementById('setPhone').value, 
-      email: document.getElementById('setEmail').value, year: document.getElementById('setYear').value, akreditasi: document.getElementById('setAkreditasi').value, ta: document.getElementById('setTA').value, 
-      kuota: document.getElementById('setKuota').value, buka: document.getElementById('setBuka').value, tutup: document.getElementById('setTutup').value, statusPPDB: document.getElementById('setPPDBStatus').checked, 
-      ig: document.getElementById('setIg').value, yt: document.getElementById('setYt').value, fb: document.getElementById('setFb').value, wa: document.getElementById('setWa').value 
+      schoolName: document.getElementById('setSchoolName').value, 
+      npsn: document.getElementById('setNpsn').value, 
+      address: document.getElementById('setAddress').value, 
+      phone: document.getElementById('setPhone').value, 
+      email: document.getElementById('setEmail').value, 
+      year: document.getElementById('setYear').value, 
+      akreditasi: document.getElementById('setAkreditasi').value, 
+      ta: document.getElementById('setTA').value, 
+      kuota: document.getElementById('setKuota').value, 
+      buka: document.getElementById('setBuka').value, 
+      tutup: document.getElementById('setTutup').value, 
+      statusPPDB: document.getElementById('setPPDBStatus').checked, 
+      ig: document.getElementById('setIg').value, 
+      yt: document.getElementById('setYt').value, 
+      fb: document.getElementById('setFb').value, 
+      wa: document.getElementById('setWa').value 
     };
+    
+    // Simpan juga status publish pengumuman
+    const setPublishAd = document.getElementById('setPublishAd');
+    const setAdTitle = document.getElementById('setAdTitle');
+    const setAdDesc = document.getElementById('setAdDesc');
+    const setAdLinkText = document.getElementById('setAdLinkText');
+    if (setPublishAd) {
+      DB.ad = {
+        title: setAdTitle ? setAdTitle.value : (DB.ad?.title || ''),
+        desc: setAdDesc ? setAdDesc.value : (DB.ad?.desc || ''),
+        linkText: setAdLinkText ? setAdLinkText.value : (DB.ad?.linkText || 'Klik di sini'),
+        active: setPublishAd.checked
+      };
+      renderAdBanner();
+    }
+    
     const { error } = await supabaseClient.from('app_config').upsert({ id: 'main_config', settings: DB.settings, ad: DB.ad });
     if (error) throw error;
-    showToast('Pengaturan berhasil disimpan.', 'success');
-  } catch (err) { showToast('Gagal simpan ke cloud: ' + err.message, 'error'); }
+    showToast('Pengaturan & status publish berhasil disimpan.', 'success');
+  } catch (err) { 
+    showToast('Gagal simpan ke cloud: ' + err.message, 'error'); 
+  }
 }
 
 function initCharts() {
@@ -1535,8 +1649,30 @@ function renderLandingTeachers() {
   grid.innerHTML = DB.guru.slice(0, 8).map(g => `<div class="card overflow-hidden reveal visible"><div class="photo-frame"><img src="${g.img}" alt="${g.name}"></div><div class="p-5"><div class="text-[10px] uppercase tracking-wider text-[var(--accent-2)] font-bold mb-1">${g.role}</div><h4 class="font-display text-lg font-bold uppercase leading-tight mb-1">${g.name}</h4>${g.subject && g.subject !== '-' ? `<div class="text-xs text-[var(--muted)] font-medium"><i class="fa-solid fa-book mr-1"></i> ${g.subject}</div>` : ''}</div></div>`).join(''); 
 }
 function renderLandingGallery(filter) {
-  if (filter) landingGalleryFilter = filter; const grid = document.getElementById('landingGalleryGrid'); if (!grid) return; let data = DB.galeri; if (landingGalleryFilter !== 'all') data = data.filter(g => g.cat === landingGalleryFilter);
-  grid.innerHTML = data.length ? data.map(g => `<div class="gallery-card reveal visible"><div class="relative"><img src="${g.img}" alt="${g.title}"><div class="absolute top-2 left-2"><span class="badge-status badge-approved">${g.cat}</span></div></div><div class="p-4"><h4 class="font-display text-sm font-bold uppercase leading-tight mb-1">${g.title}</h4><p class="text-xs text-[var(--muted)] font-medium">${g.desc}</p></div></div>`).join('') : '<div class="col-span-full text-center py-12 text-[var(--muted)]"><i class="fa-solid fa-images text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada foto</p></div>';
+  if (filter) landingGalleryFilter = filter; 
+  const grid = document.getElementById('landingGalleryGrid'); 
+  if (!grid) return; 
+  let data = DB.galeri; 
+  if (landingGalleryFilter !== 'all') data = data.filter(g => g.cat === landingGalleryFilter);
+  grid.innerHTML = data.length ? data.map(g => {
+    const safeTitle = (g.title || '').replace(/'/g, "\\'");
+    const safeDesc = (g.desc || '').replace(/'/g, "\\'");
+    return `<div class="gallery-card reveal visible" style="cursor:pointer;" onclick="openImageViewer('${g.img}', '${safeTitle}', '${safeDesc}')">
+      <div class="relative">
+        <img src="${g.img}" alt="${g.title}">
+        <div class="absolute top-2 left-2"><span class="badge-status badge-approved">${g.cat}</span></div>
+        <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition" style="background:rgba(26,29,33,0.5);">
+          <div class="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center text-[var(--fg)]">
+            <i class="fa-solid fa-magnifying-glass-plus text-lg"></i>
+          </div>
+        </div>
+      </div>
+      <div class="p-4">
+        <h4 class="font-display text-sm font-bold uppercase leading-tight mb-1">${g.title}</h4>
+        <p class="text-xs text-[var(--muted)] font-medium">${g.desc}</p>
+      </div>
+    </div>`;
+  }).join('') : '<div class="col-span-full text-center py-12 text-[var(--muted)]"><i class="fa-solid fa-images text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada foto</p></div>';
 }
 document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.filter-btn').forEach(b => { b.classList.remove('border-[var(--accent)]', 'bg-[var(--accent)]', 'text-[var(--fg)]'); b.classList.add('border-[var(--border-2)]', 'text-[var(--fg-2)]'); }); btn.classList.add('border-[var(--accent)]', 'bg-[var(--accent)]', 'text-[var(--fg)]'); btn.classList.remove('border-[var(--border-2)]', 'text-[var(--fg-2)]'); renderLandingGallery(btn.dataset.filter); }); });
 
