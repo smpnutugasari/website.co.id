@@ -972,8 +972,8 @@ function showToast(msg, type = 'success') {
 const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-const SUPABASE_URL = 'https://osrtatfhjhfwwbhvbtjs.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zcnRhdGZoamhmd3diaHZidGpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3MjQwODIsImV4cCI6MjEwMDMwMDA4Mn0._bKa__yaAZ91mG41HpFnol0ge5No_iB6kDU7Qk3A7v0';
+const SUPABASE_URL = 'https://movwdvfqwsiuovkxupnr.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vdndkdmZxd3NpdW92a3h1cG5yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3NzQ4MTMsImV4cCI6MjEwMDM1MDgxM30.aB-Xf0AjpF324B2Fst2QAmoDvDaDr_gj0O0HlnBrLNQ';
 let supabaseClient = null; let isSupabaseReady = false;
 function initSupabase() { try { if (window.supabase && SUPABASE_URL && SUPABASE_ANON_KEY && SUPABASE_URL.startsWith('https://')) { supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false }, realtime: { params: { eventsPerSecond: 2 } } }); isSupabaseReady = true; } } catch (e) { console.warn('Supabase init failed:', e); } }
 initSupabase();
