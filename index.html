@@ -154,6 +154,7 @@
   input[type="file"].input::file-selector-button { background: var(--accent); color: var(--fg); border: none; padding: 8px 14px; border-radius: 4px; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; cursor: pointer; transition: all 0.2s; margin-right: 12px; }
   input[type="file"].input::file-selector-button:hover { background: var(--accent-2); color: #fff; }
   
+  /* Kartu PPDB */
   .ppdb-card-container { background: #ffffff; border-radius: 18px; width: 100%; max-width: 380px; box-shadow: 0 25px 70px rgba(0,0,0,0.18); position: relative; overflow: hidden; font-family: 'Inter', sans-serif; border: 3px solid var(--accent); }
   .ppdb-card-container::after { content: ''; position: absolute; inset: 5px; border: 1px solid rgba(212,175,55,0.5); border-radius: 14px; pointer-events: none; z-index: 3; }
   .ppdb-card-bg { position: absolute; top: 0; left: 0; right: 0; height: 150px; background: linear-gradient(135deg, #1a1d21 0%, #2a2e35 50%, #1a1d21 100%); overflow: hidden; }
@@ -179,10 +180,12 @@
   .ppdb-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px dashed #ddd; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
   .ppdb-card-footer .accent-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; display: inline-block; margin-right: 6px; }
 
+  /* QR Code Fix Tunggal & Mobile */
   #qrcode { display: flex; justify-content: center; align-items: center; padding: 5px; background: #fff; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); width: 100px; height: 100px; margin: 0 auto; }
   #qrcode canvas { display: block !important; width: 90px !important; height: 90px !important; }
   #qrcode img { display: none !important; }
 
+  /* Notifikasi & Lainnya */
   .notif-dropdown { position: absolute; top: calc(100% + 8px); right: 0; width: 360px; max-height: 480px; background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); opacity: 0; visibility: hidden; transform: translateY(-8px); transition: all 0.25s; z-index: 100; overflow: hidden; }
   .notif-dropdown.open { opacity: 1; visibility: visible; transform: translateY(0); }
   .notif-item { padding: 14px 18px; border-bottom: 1px solid var(--bg-2); cursor: pointer; transition: all 0.2s; display: flex; gap: 12px; }
@@ -958,12 +961,11 @@
 </div>
 
 <script>
-document.getElementById('menuBtn')?.addEventListener('click', () => { document.getElementById('mobileMenu')?.classList.toggle('hidden'); });
-document.getElementById('mobileMenu')?.addEventListener('click', (e) => { if (e.target.tagName === 'A' || e.target.closest('button')) document.getElementById('mobileMenu')?.classList.add('hidden'); });
+document.getElementById('menuBtn').addEventListener('click', () => { document.getElementById('mobileMenu').classList.toggle('hidden'); });
+document.getElementById('mobileMenu').addEventListener('click', (e) => { if (e.target.tagName === 'A' || e.target.closest('button')) document.getElementById('mobileMenu').classList.add('hidden'); });
 
 function showToast(msg, type = 'success') {
   const toast = document.getElementById('toast'); const icon = document.getElementById('toastIcon'); const title = document.getElementById('toastTitle'); const message = document.getElementById('toastMsg');
-  if (!toast) return;
   toast.className = 'toast';
   if (type === 'error') { toast.classList.add('error'); icon.className = 'fa-solid fa-circle-exclamation text-[var(--danger)] text-lg mt-0.5'; title.textContent = 'Kesalahan'; }
   else if (type === 'warning') { toast.classList.add('warning'); icon.className = 'fa-solid fa-triangle-exclamation text-[var(--warning)] text-lg mt-0.5'; title.textContent = 'Peringatan'; }
@@ -978,26 +980,6 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 let supabaseClient = null; let isSupabaseReady = false;
 function initSupabase() { try { if (window.supabase && SUPABASE_URL && SUPABASE_ANON_KEY && SUPABASE_URL.startsWith('https://')) { supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false }, realtime: { params: { eventsPerSecond: 2 } } }); isSupabaseReady = true; } } catch (e) { console.warn('Supabase init failed:', e); } }
 initSupabase();
-
-async function uploadImageToSupabase(file, bucketName, folderName) {
-  if (!isSupabaseReady) return null;
-  try {
-    const fileName = `${folderName}/${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
-    const { data, error } = await supabaseClient.storage.from(bucketName).upload(fileName, file, {
-      cacheControl: '3600',
-      upsert: false
-    });
-    if (error) {
-      console.warn('Upload error:', error);
-      return null;
-    }
-    const { data: publicUrlData } = supabaseClient.storage.from(bucketName).getPublicUrl(data.path);
-    return publicUrlData.publicUrl;
-  } catch (e) {
-    console.warn('Upload exception:', e);
-    return null;
-  }
-}
 
 const DEFAULT_DB = {
   settings: { schoolName: 'SMP NU Tugasari', npsn: '20365478', address: 'Jl. Raya Tugasari No. 01, Tugasari', phone: '(0281) 123456', email: 'info@smpnutugasari.sch.id', year: '1998', akreditasi: 'A', ta: '2025/2026', kuota: 160, buka: '2025-01-15', tutup: '2025-06-30', statusPPDB: true, ig: '@smpnutugasari', yt: 'SMP NU Tugasari Official', fb: 'SMP NU Tugasari', wa: '0812-3456-7890' },
@@ -1079,31 +1061,17 @@ async function syncRecord(table, record, mode = 'upsert') {
   if (!isSupabaseReady) return;
   try {
     let payload = { ...record };
-    if (payload.photo) delete payload.photo;
-    if (payload.img) delete payload.img;
-
     if (table === 'ppdb') {
       payload = { id: record.id, reg_num: record.regNum, name: record.name, gender: record.gender, school: record.school, dob: record.dob, parent: record.parent, mother: record.mother, phone: record.phone, address: record.address, date: record.date, status: record.status };
     }
-    
     if (mode === 'upsert') await supabaseClient.from(table).upsert(payload);
     else if (mode === 'delete') await supabaseClient.from(table).delete().eq('id', record.id);
-  } catch (e) { 
-    console.warn(`Sync ${mode} ${table} gagal:`, e); 
-  }
+  } catch (e) { console.warn(`Sync ${mode} ${table} gagal:`, e); }
 }
 
 async function syncFromSupabase() {
   if (!isSupabaseReady) return;
   
-  try {
-    const { data: configData } = await supabaseClient.from('app_config').select('*').eq('id', 'main_config').single();
-    if (configData) {
-      if (configData.settings) DB.settings = { ...DEFAULT_DB.settings, ...configData.settings };
-      if (configData.ad) DB.ad = { ...DEFAULT_DB.ad, ...configData.ad };
-    }
-  } catch (e) { console.warn('Gagal fetch config:', e); }
-
   try {
     const { data: ppdbData } = await supabaseClient.from('ppdb').select('*');
     if (ppdbData && ppdbData.length > 0) DB.ppdb = ppdbData.map(p => ({ id: p.id, regNum: p.reg_num, name: p.name, gender: p.gender, school: p.school, dob: p.dob, parent: p.parent, mother: p.mother, phone: p.phone, address: p.address, date: p.date, status: p.status }));
@@ -1160,7 +1128,6 @@ function renderAdBanner() {
   const bar = document.getElementById('announcementBar');
   const textEl = document.getElementById('announcementText');
   const linkEl = document.getElementById('announcementLink');
-  if (!bar || !textEl || !linkEl) return;
   if (ad.active && ad.title) {
     textEl.innerHTML = `<strong>${ad.title}</strong> - ${ad.desc}`;
     linkEl.textContent = ad.linkText || 'Klik di sini';
@@ -1174,35 +1141,27 @@ function renderAdBanner() {
 document.querySelectorAll('.nav-link[data-view]').forEach(link => { link.addEventListener('click', () => switchView(link.dataset.view)); });
 function switchView(view) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  const targetView = document.getElementById('view-' + view);
-  if (targetView) targetView.classList.add('active');
+  document.getElementById('view-' + view).classList.add('active');
   document.querySelectorAll('.nav-link[data-view]').forEach(l => l.classList.remove('active'));
   const activeLink = document.querySelector(`.nav-link[data-view="${view}"]`);
   if (activeLink) activeLink.classList.add('active');
-  const sidebar = document.getElementById('sidebar');
-  if (sidebar) sidebar.classList.remove('open');
+  document.getElementById('sidebar').classList.remove('open');
   window.scrollTo({top:0, behavior:'smooth'});
 }
-document.getElementById('sidebarToggle')?.addEventListener('click', () => { document.getElementById('sidebar')?.classList.toggle('open'); });
+document.getElementById('sidebarToggle').addEventListener('click', () => { document.getElementById('sidebar').classList.toggle('open'); });
 document.addEventListener('click', (e) => {
   const dd = document.getElementById('profileDropdown'); if (dd && !dd.contains(e.target)) dd.classList.remove('open');
   const nd = document.getElementById('notifDropdown'); if (nd && !nd.contains(e.target)) nd.classList.remove('open');
 });
 
-function openModal(id) { document.getElementById(id)?.classList.add('show'); }
-function closeModal(id) { document.getElementById(id)?.classList.remove('show'); }
+function openModal(id) { document.getElementById(id).classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
 document.querySelectorAll('.modal-overlay').forEach(m => { m.addEventListener('click', (e) => { if (e.target === m) m.classList.remove('show'); }); });
 
 function setupModal(title, bodyHtml, onSave) {
-  const modalTitle = document.getElementById('modalTitle');
-  const modalBody = document.getElementById('modalBody');
+  document.getElementById('modalTitle').textContent = title; 
+  document.getElementById('modalBody').innerHTML = bodyHtml;
   const saveBtn = document.getElementById('modalSaveBtn'); 
-  
-  if (!modalTitle || !modalBody || !saveBtn) return;
-  
-  modalTitle.textContent = title; 
-  modalBody.innerHTML = bodyHtml;
-  
   const newSaveBtn = saveBtn.cloneNode(true); 
   saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
   newSaveBtn.innerHTML = '<i class="fa-solid fa-save"></i> Simpan';
@@ -1212,13 +1171,8 @@ function setupModal(title, bodyHtml, onSave) {
 }
 
 function confirmAction(title, message, btnText, onConfirm) {
-  const modalTitle = document.getElementById('modalTitle');
-  const modalBody = document.getElementById('modalBody');
-  const saveBtn = document.getElementById('modalSaveBtn'); 
-  if (!modalTitle || !modalBody || !saveBtn) return;
-  
-  modalTitle.textContent = title;
-  modalBody.innerHTML = `
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalBody').innerHTML = `
     <div class="text-center py-4">
       <div class="w-16 h-16 mx-auto rounded-full bg-red-100 flex items-center justify-center text-[var(--danger)] text-2xl mb-4">
         <i class="fa-solid fa-triangle-exclamation"></i>
@@ -1226,6 +1180,7 @@ function confirmAction(title, message, btnText, onConfirm) {
       <p class="text-sm text-[var(--fg-2)] font-medium">${message}</p>
     </div>
   `;
+  const saveBtn = document.getElementById('modalSaveBtn'); 
   const newSaveBtn = saveBtn.cloneNode(true); 
   saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
   newSaveBtn.innerHTML = `<i class="fa-solid fa-check"></i> ${btnText}`;
@@ -1250,42 +1205,16 @@ function openAdModal() {
   document.getElementById('adPreviewDesc').textContent = ad.desc || '';
   openModal('modalAd'); 
 }
-
-async function saveAd() {
-  try {
-    DB.ad = {
-      title: document.getElementById('adTitle').value,
-      desc: document.getElementById('adDesc').value,
-      linkText: document.getElementById('adLinkText').value,
-      active: document.getElementById('adActive').checked
-    };
-    
-    saveDBLocal(); 
-    renderAdBanner(); 
-    closeModal('modalAd');
-    
-    if (isSupabaseReady) {
-      const { error } = await supabaseClient.from('app_config').upsert({ 
-        id: 'main_config', 
-        settings: DB.settings, 
-        ad: DB.ad 
-      });
-      
-      if (error) {
-        console.error('Supabase Error:', error);
-        showToast('Gagal simpan iklan: ' + error.message, 'error');
-      } else {
-        showToast('Pengumuman berhasil diperbarui.', 'success');
-      }
-    } else {
-      showToast('Pengumuman disimpan di lokal.', 'success');
-    }
-  } catch (err) {
-    console.error('System Error:', err);
-    showToast('Terjadi kesalahan sistem.', 'error');
-  }
+function saveAd() {
+  DB.ad = {
+    title: document.getElementById('adTitle').value,
+    desc: document.getElementById('adDesc').value,
+    linkText: document.getElementById('adLinkText').value,
+    active: document.getElementById('adActive').checked
+  };
+  saveDBLocal(); renderAdBanner(); closeModal('modalAd');
+  showToast('Pengumuman berhasil diperbarui.', 'success');
 }
-
 function openChangePasswordModal() {
   setupModal('Ubah Password', `
     <div class="space-y-4">
@@ -1304,44 +1233,26 @@ function openChangePasswordModal() {
 
 async function initDashboard() {
   loadDBLocal();
-  renderRecentPPDB(); renderPPDBTable(); renderSiswaTable(); renderGuru(); renderProgram(); renderGaleri('all'); renderPesan(); renderNotifications(); renderActivities(); loadSettingsForm(); updateBadges(); initCharts(); updateVisitorDisplay();
-  
   if (isSupabaseReady) {
     await syncFromSupabase();
-    renderRecentPPDB(); renderPPDBTable(); renderSiswaTable(); renderGuru(); renderProgram(); renderGaleri('all'); renderPesan(); renderNotifications(); renderActivities(); loadSettingsForm(); updateBadges(); initCharts(); updateVisitorDisplay();
   }
+  renderRecentPPDB(); renderPPDBTable(); renderSiswaTable(); renderGuru(); renderProgram(); renderGaleri('all'); renderPesan(); renderNotifications(); renderActivities(); loadSettingsForm(); updateBadges(); initCharts(); updateVisitorDisplay();
 }
 function updateBadges() {
   const pendingCount = DB.ppdb.filter(p => p.status === 'pending').length; const unreadCount = DB.pesan.filter(p => !p.read).length;
-  const ppdbBadge = document.getElementById('ppdbBadge'); const pesanBadge = document.getElementById('pesanBadge');
-  const statPPDB = document.getElementById('statPPDB'); const statPesan = document.getElementById('statPesan');
-  const unreadCountEl = document.getElementById('unreadCount'); const notifCount = document.getElementById('notifCount');
-  const cntAll = document.getElementById('cntAll'); const cntPending = document.getElementById('cntPending');
-  const cntApproved = document.getElementById('cntApproved'); const cntRejected = document.getElementById('cntRejected');
-  const statSiswa = document.getElementById('statSiswa'); const statGuru = document.getElementById('statGuru');
-  const cntKelasVII = document.getElementById('cntKelasVII'); const cntKelasVIII = document.getElementById('cntKelasVIII');
-  const cntKelasIX = document.getElementById('cntKelasIX'); const cntRatio = document.getElementById('cntRatio');
-
-  if (ppdbBadge) ppdbBadge.textContent = pendingCount; 
-  if (pesanBadge) pesanBadge.textContent = unreadCount;
-  if (statPPDB) statPPDB.textContent = pendingCount; 
-  if (statPesan) statPesan.textContent = unreadCount;
-  if (unreadCountEl) unreadCountEl.textContent = unreadCount + ' baru'; 
-  if (notifCount) notifCount.textContent = pendingCount + unreadCount;
-  if (cntAll) cntAll.textContent = DB.ppdb.length; 
-  if (cntPending) cntPending.textContent = pendingCount;
-  if (cntApproved) cntApproved.textContent = DB.ppdb.filter(p => p.status === 'approved').length; 
-  if (cntRejected) cntRejected.textContent = DB.ppdb.filter(p => p.status === 'rejected').length;
-  if (statSiswa) statSiswa.textContent = DB.siswa.length; 
-  if (statGuru) statGuru.textContent = DB.guru.length;
-  if (cntKelasVII) cntKelasVII.textContent = DB.siswa.filter(s => s.kelas.startsWith('VII')).length;
-  if (cntKelasVIII) cntKelasVIII.textContent = DB.siswa.filter(s => s.kelas.startsWith('VIII')).length;
-  if (cntKelasIX) cntKelasIX.textContent = DB.siswa.filter(s => s.kelas.startsWith('IX')).length;
-  if (cntRatio) cntRatio.textContent = `${DB.siswa.filter(s => s.jk === 'L').length} : ${DB.siswa.filter(s => s.jk === 'P').length}`;
+  document.getElementById('ppdbBadge').textContent = pendingCount; document.getElementById('pesanBadge').textContent = unreadCount;
+  document.getElementById('statPPDB').textContent = pendingCount; document.getElementById('statPesan').textContent = unreadCount;
+  document.getElementById('unreadCount').textContent = unreadCount + ' baru'; document.getElementById('notifCount').textContent = pendingCount + unreadCount;
+  document.getElementById('cntAll').textContent = DB.ppdb.length; document.getElementById('cntPending').textContent = pendingCount;
+  document.getElementById('cntApproved').textContent = DB.ppdb.filter(p => p.status === 'approved').length; document.getElementById('cntRejected').textContent = DB.ppdb.filter(p => p.status === 'rejected').length;
+  document.getElementById('statSiswa').textContent = DB.siswa.length; document.getElementById('statGuru').textContent = DB.guru.length;
+  document.getElementById('cntKelasVII').textContent = DB.siswa.filter(s => s.kelas.startsWith('VII')).length;
+  document.getElementById('cntKelasVIII').textContent = DB.siswa.filter(s => s.kelas.startsWith('VIII')).length;
+  document.getElementById('cntKelasIX').textContent = DB.siswa.filter(s => s.kelas.startsWith('IX')).length;
+  document.getElementById('cntRatio').textContent = `${DB.siswa.filter(s => s.jk === 'L').length} : ${DB.siswa.filter(s => s.jk === 'P').length}`;
 }
-function renderRecentPPDB() { const el = document.getElementById('recentPPDB'); if (!el) return; el.innerHTML = DB.ppdb.slice(0, 5).map(p => `<tr><td><div class="font-bold">${p.name}</div></td><td>${p.school}</td><td>${p.date}</td><td><span class="badge-status badge-${p.status}">${p.status}</span></td></tr>`).join(''); }
+function renderRecentPPDB() { document.getElementById('recentPPDB').innerHTML = DB.ppdb.slice(0, 5).map(p => `<tr><td><div class="font-bold">${p.name}</div></td><td>${p.school}</td><td>${p.date}</td><td><span class="badge-status badge-${p.status}">${p.status}</span></td></tr>`).join(''); }
 function renderActivities() {
-  const el = document.getElementById('activityList'); if (!el) return;
   const activities = [
     { color: 'var(--accent)', shadow: 'rgba(212,175,55,0.2)', text: `Pendaftar baru: <span class="text-[var(--accent-2)]">${DB.ppdb[0]?.name || '-'}</span>`, time: 'Baru saja' },
     { color: 'var(--nu-green)', shadow: 'rgba(0,106,62,0.2)', text: `Pesan baru dari <span class="text-[var(--accent-2)]">${DB.pesan.find(p=>!p.read)?.name || 'Tidak ada'}</span>`, time: '25 menit lalu' },
@@ -1349,25 +1260,24 @@ function renderActivities() {
     { color: 'var(--success)', shadow: 'rgba(22,163,74,0.2)', text: `PPDB disetujui: <span class="text-[var(--accent-2)]">${DB.ppdb.filter(p=>p.status==='approved').length} siswa</span>`, time: '3 jam lalu' },
     { color: 'var(--warning)', shadow: 'rgba(234,88,12,0.2)', text: `Galeri diperbarui: <span class="text-[var(--accent-2)]">${DB.galeri.length} foto</span>`, time: '5 jam lalu' }
   ];
-  el.innerHTML = activities.map(a => `<div class="activity-item"><div class="activity-dot" style="background:${a.color};box-shadow:0 0 0 3px ${a.shadow};"></div><div><div class="text-xs font-semibold">${a.text}</div><div class="text-[10px] text-[var(--muted)] mt-0.5">${a.time}</div></div></div>`).join('');
+  document.getElementById('activityList').innerHTML = activities.map(a => `<div class="activity-item"><div class="activity-dot" style="background:${a.color};box-shadow:0 0 0 3px ${a.shadow};"></div><div><div class="text-xs font-semibold">${a.text}</div><div class="text-[10px] text-[var(--muted)] mt-0.5">${a.time}</div></div></div>`).join('');
 }
 function renderNotifications() {
-  const list = document.getElementById('notifList'); if (!list) return;
   const notifs = [];
   DB.ppdb.filter(p => p.status === 'pending').slice(0, 3).forEach(p => notifs.push({ type: 'ppdb', icon: 'fa-user-plus', color: 'var(--warning)', bg: '#fff7ed', title: p.name, desc: `Pendaftar baru dari ${p.school}`, time: p.date, id: p.id }));
   DB.pesan.filter(p => !p.read).slice(0, 3).forEach(p => notifs.push({ type: 'pesan', icon: 'fa-envelope', color: 'var(--info)', bg: '#eff6ff', title: p.name, desc: p.subject, time: p.date, id: p.id }));
+  const list = document.getElementById('notifList');
   if (notifs.length === 0) { list.innerHTML = '<div class="p-8 text-center text-[var(--muted)]"><i class="fa-solid fa-bell-slash text-3xl mb-3 opacity-30"></i><p class="text-sm font-medium">Tidak ada notifikasi baru</p></div>'; return; }
   list.innerHTML = notifs.map(n => `<div class="notif-item unread" onclick="handleNotifClick('${n.type}', ${n.id})"><div class="notif-icon" style="background:${n.bg};color:${n.color};"><i class="fa-solid ${n.icon}"></i></div><div class="flex-1 min-w-0"><div class="font-bold text-sm truncate">${n.title}</div><div class="text-xs text-[var(--muted)] truncate">${n.desc}</div><div class="text-[10px] text-[var(--muted)] mt-1">${n.time}</div></div></div>`).join('');
 }
-function handleNotifClick(type, id) { document.getElementById('notifDropdown')?.classList.remove('open'); if (type === 'ppdb') switchView('ppdb'); else if (type === 'pesan') { switchView('pesan'); setTimeout(() => readPesan(id), 300); } }
+function handleNotifClick(type, id) { document.getElementById('notifDropdown').classList.remove('open'); if (type === 'ppdb') switchView('ppdb'); else if (type === 'pesan') { switchView('pesan'); setTimeout(() => readPesan(id), 300); } }
 function markAllReadNotif() { DB.pesan.forEach(p => p.read = true); saveDBLocal(); renderNotifications(); updateBadges(); showToast('Semua notifikasi ditandai dibaca.', 'success'); }
 
 let ppdbFilter = 'all';
 function renderPPDBTable() {
-  const el = document.getElementById('ppdbTable'); if (!el) return;
   let data = DB.ppdb; if (ppdbFilter !== 'all') data = data.filter(p => p.status === ppdbFilter);
   const search = document.getElementById('searchPPDB')?.value.toLowerCase() || ''; if (search) data = data.filter(p => p.name.toLowerCase().includes(search) || p.school.toLowerCase().includes(search));
-  el.innerHTML = data.length ? data.map(p => `<tr><td><input type="checkbox" class="accent-[var(--accent)]"></td><td><div class="flex items-center gap-3"><div class="avatar avatar-sm">${p.name.charAt(0)}</div><div><div class="font-bold">${p.name}</div><div class="text-[10px] text-[var(--muted)]">${p.phone || '-'}</div></div></div></td><td>${p.school}</td><td>${p.parent || '-'}</td><td>${p.date}</td><td><span class="badge-status badge-${p.status}">${p.status}</span></td><td><div class="flex gap-1">${p.status === 'pending' ? `<button class="btn-icon btn-sm" title="Setujui" onclick="updatePPDBStatus(${p.id}, 'approved')"><i class="fa-solid fa-check"></i></button><button class="btn-icon btn-sm" title="Tolak" onclick="updatePPDBStatus(${p.id}, 'rejected')"><i class="fa-solid fa-times"></i></button>` : ''}<button class="btn-icon btn-sm" title="Edit" onclick="openPPDBModal(${p.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger" title="Hapus" onclick="deletePPDB(${p.id})"><i class="fa-solid fa-trash"></i></button></div></td></tr>`).join('') : `<tr><td colspan="7" class="text-center py-8 text-[var(--muted)]">Tidak ada data ditemukan.</td></tr>`;
+  document.getElementById('ppdbTable').innerHTML = data.length ? data.map(p => `<tr><td><input type="checkbox" class="accent-[var(--accent)]"></td><td><div class="flex items-center gap-3"><div class="avatar avatar-sm">${p.name.charAt(0)}</div><div><div class="font-bold">${p.name}</div><div class="text-[10px] text-[var(--muted)]">${p.phone || '-'}</div></div></div></td><td>${p.school}</td><td>${p.parent || '-'}</td><td>${p.date}</td><td><span class="badge-status badge-${p.status}">${p.status}</span></td><td><div class="flex gap-1">${p.status === 'pending' ? `<button class="btn-icon btn-sm" title="Setujui" onclick="updatePPDBStatus(${p.id}, 'approved')"><i class="fa-solid fa-check"></i></button><button class="btn-icon btn-sm" title="Tolak" onclick="updatePPDBStatus(${p.id}, 'rejected')"><i class="fa-solid fa-times"></i></button>` : ''}<button class="btn-icon btn-sm" title="Edit" onclick="openPPDBModal(${p.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger" title="Hapus" onclick="deletePPDB(${p.id})"><i class="fa-solid fa-trash"></i></button></div></td></tr>`).join('') : `<tr><td colspan="7" class="text-center py-8 text-[var(--muted)]">Tidak ada data ditemukan.</td></tr>`;
 }
 function openPPDBModal(id = null) {
   const p = id ? DB.ppdb.find(x => x.id === id) : {};
@@ -1410,25 +1320,15 @@ document.querySelectorAll('.filter-ppdb').forEach(btn => { btn.addEventListener(
 document.getElementById('searchPPDB')?.addEventListener('input', renderPPDBTable);
 
 function renderSiswaTable() {
-  const el = document.getElementById('siswaTable'); if (!el) return;
   let data = DB.siswa; const search = document.getElementById('searchSiswa')?.value.toLowerCase() || ''; const kelas = document.getElementById('filterKelasSiswa')?.value || 'all';
   if (search) data = data.filter(s => s.name.toLowerCase().includes(search) || s.nis.includes(search)); if (kelas !== 'all') data = data.filter(s => s.kelas.startsWith(kelas));
-  el.innerHTML = data.length ? data.map(s => `<tr><td><strong>${s.nis}</strong></td><td>${s.photo ? `<img src="${s.photo}" class="w-10 h-10 rounded-full object-cover border-2 border-[var(--accent)]">` : `<div class="avatar avatar-sm" style="background:${s.jk==='L'?'linear-gradient(135deg,#2563eb,#1e40af)':'linear-gradient(135deg,#db2777,#9d174d)'}">${s.name.charAt(0)}</div>`}</td><td><span class="font-bold">${s.name}</span></td><td><span class="badge-status badge-verified">${s.kelas}</span></td><td>${s.jk === 'L' ? 'Laki-laki' : 'Perempuan'}</td><td>${s.wali}</td><td><span class="badge-status badge-${s.status==='Aktif'?'approved':'rejected'}">${s.status}</span></td><td><div class="flex gap-1"><button class="btn-icon btn-sm" title="Edit" onclick="openSiswaModal(${s.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger" title="Hapus" onclick="deleteSiswa(${s.id})"><i class="fa-solid fa-trash"></i></button></div></td></tr>`).join('') : `<tr><td colspan="8" class="text-center py-8 text-[var(--muted)]">Tidak ada data ditemukan.</td></tr>`;
+  document.getElementById('siswaTable').innerHTML = data.length ? data.map(s => `<tr><td><strong>${s.nis}</strong></td><td>${s.photo ? `<img src="${s.photo}" class="w-10 h-10 rounded-full object-cover border-2 border-[var(--accent)]">` : `<div class="avatar avatar-sm" style="background:${s.jk==='L'?'linear-gradient(135deg,#2563eb,#1e40af)':'linear-gradient(135deg,#db2777,#9d174d)'}">${s.name.charAt(0)}</div>`}</td><td><span class="font-bold">${s.name}</span></td><td><span class="badge-status badge-verified">${s.kelas}</span></td><td>${s.jk === 'L' ? 'Laki-laki' : 'Perempuan'}</td><td>${s.wali}</td><td><span class="badge-status badge-${s.status==='Aktif'?'approved':'rejected'}">${s.status}</span></td><td><div class="flex gap-1"><button class="btn-icon btn-sm" title="Edit" onclick="openSiswaModal(${s.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger" title="Hapus" onclick="deleteSiswa(${s.id})"><i class="fa-solid fa-trash"></i></button></div></td></tr>`).join('') : `<tr><td colspan="8" class="text-center py-8 text-[var(--muted)]">Tidak ada data ditemukan.</td></tr>`;
 }
 function openSiswaModal(id = null) {
   const s = id ? DB.siswa.find(x => x.id === id) : {};
   setupModal(id ? 'Edit Siswa' : 'Tambah Siswa Baru', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="label">NIS</label><input type="text" class="input" id="siswaNis" value="${s.nis || ''}" placeholder="2024001"></div><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="siswaName" value="${s.name || ''}" placeholder="Nama siswa"></div><div><label class="label">Kelas</label><select class="select" id="siswaKelas">${['VII A','VII B','VIII A','VIII B','IX A','IX B'].map(k => `<option value="${k}" ${s.kelas === k ? 'selected' : ''}>${k}</option>`).join('')}</select></div><div><label class="label">Jenis Kelamin</label><select class="select" id="siswaJk"><option value="L" ${s.jk === 'L' ? 'selected' : ''}>Laki-laki</option><option value="P" ${s.jk === 'P' ? 'selected' : ''}>Perempuan</option></select></div><div><label class="label">Nama Wali</label><input type="text" class="input" id="siswaWali" value="${s.wali || ''}" placeholder="Nama orang tua"></div><div><label class="label">Status</label><select class="select" id="siswaStatus"><option value="Aktif" ${s.status === 'Aktif' ? 'selected' : ''}>Aktif</option><option value="Non-Aktif" ${s.status === 'Non-Aktif' ? 'selected' : ''}>Non-Aktif</option></select></div><div class="md:col-span-2"><label class="label">Foto Siswa</label><input type="file" class="input" id="siswaPhotoFile" accept="image/*">${s.photo ? `<div class="mt-2 flex items-center gap-3"><img src="${s.photo}" class="w-16 h-16 rounded-lg object-cover border-2 border-[var(--accent)]"><span class="text-xs text-[var(--muted)]">Foto saat ini</span></div>` : '<div class="mt-2 text-xs text-[var(--muted)]">Belum ada foto. Upload foto dari perangkat Anda.</div>'}</div></div>`, async () => {
     const name = document.getElementById('siswaName').value; const nis = document.getElementById('siswaNis').value; if (!name || !nis) { showToast('Nama dan NIS wajib diisi.', 'error'); return; }
-    let photo = s.photo || ''; const fileInput = document.getElementById('siswaPhotoFile'); 
-    
-    if (fileInput.files && fileInput.files[0]) {
-      const file = fileInput.files[0];
-      showToast('Mengupload foto...', 'success');
-      const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'students');
-      if (uploadedUrl) photo = uploadedUrl;
-      else photo = await readFileAsDataURL(file);
-    }
-
+    let photo = s.photo || ''; const fileInput = document.getElementById('siswaPhotoFile'); if (fileInput.files && fileInput.files[0]) { photo = await readFileAsDataURL(fileInput.files[0]); }
     const data = { nis, name, kelas: document.getElementById('siswaKelas').value, jk: document.getElementById('siswaJk').value, wali: document.getElementById('siswaWali').value, status: document.getElementById('siswaStatus').value, photo };
     let savedId;
     if (id) { 
@@ -1457,21 +1357,12 @@ function deleteSiswa(id) {
 document.getElementById('searchSiswa')?.addEventListener('input', renderSiswaTable);
 document.getElementById('filterKelasSiswa')?.addEventListener('change', renderSiswaTable);
 
-function renderGuru() { const el = document.getElementById('guruGrid'); if (!el) return; el.innerHTML = DB.guru.map(g => `<div class="panel overflow-hidden"><div class="relative"><img src="${g.img}" alt="${g.name}" class="w-full aspect-square object-cover"><div class="absolute top-3 right-3"><span class="badge-status badge-approved">${g.role.split(' ')[0]}</span></div></div><div class="p-5"><div class="text-[10px] uppercase tracking-wider text-[var(--accent-2)] font-bold mb-1">${g.role}</div><h4 class="font-display text-lg font-bold uppercase leading-tight mb-2">${g.name}</h4>${g.subject !== '-' ? `<div class="text-xs text-[var(--muted)] font-medium mb-3"><i class="fa-solid fa-book mr-1"></i> ${g.subject}</div>` : '<div class="mb-3"></div>'}<div class="flex gap-1"><button class="btn-icon btn-sm flex-1" title="Edit" onclick="openGuruModal(${g.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger flex-1" title="Hapus" onclick="deleteGuru(${g.id})"><i class="fa-solid fa-trash"></i></button></div></div></div>`).join(''); }
+function renderGuru() { document.getElementById('guruGrid').innerHTML = DB.guru.map(g => `<div class="panel overflow-hidden"><div class="relative"><img src="${g.img}" alt="${g.name}" class="w-full aspect-square object-cover"><div class="absolute top-3 right-3"><span class="badge-status badge-approved">${g.role.split(' ')[0]}</span></div></div><div class="p-5"><div class="text-[10px] uppercase tracking-wider text-[var(--accent-2)] font-bold mb-1">${g.role}</div><h4 class="font-display text-lg font-bold uppercase leading-tight mb-2">${g.name}</h4>${g.subject !== '-' ? `<div class="text-xs text-[var(--muted)] font-medium mb-3"><i class="fa-solid fa-book mr-1"></i> ${g.subject}</div>` : '<div class="mb-3"></div>'}<div class="flex gap-1"><button class="btn-icon btn-sm flex-1" title="Edit" onclick="openGuruModal(${g.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger flex-1" title="Hapus" onclick="deleteGuru(${g.id})"><i class="fa-solid fa-trash"></i></button></div></div></div>`).join(''); }
 function openGuruModal(id = null) {
   const g = id ? DB.guru.find(x => x.id === id) : {};
   setupModal(id ? 'Edit Guru / Staf' : 'Tambah Guru / Staf', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="guruName" value="${g.name || ''}" placeholder="Dr. ..."></div><div><label class="label">Jabatan</label><input type="text" class="input" id="guruRole" value="${g.role || ''}" placeholder="Guru Matematika"></div><div><label class="label">Mata Pelajaran</label><input type="text" class="input" id="guruSubject" value="${g.subject || ''}" placeholder="Matematika"></div><div><label class="label">Upload Foto</label><input type="file" class="input" id="guruImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-16 h-16 rounded-lg object-cover"></div>` : ''}</div></div>`, async () => {
     const name = document.getElementById('guruName').value; const role = document.getElementById('guruRole').value; if (!name || !role) { showToast('Nama dan Jabatan wajib diisi.', 'error'); return; }
-    let img = g.img || 'https://picsum.photos/seed/defaultguru/400/400.jpg'; const fileInput = document.getElementById('guruImgFile'); 
-    
-    if (fileInput.files && fileInput.files[0]) {
-      const file = fileInput.files[0];
-      showToast('Mengupload foto...', 'success');
-      const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'teachers');
-      if (uploadedUrl) img = uploadedUrl;
-      else img = await readFileAsDataURL(file);
-    }
-
+    let img = g.img || 'https://picsum.photos/seed/defaultguru/400/400.jpg'; const fileInput = document.getElementById('guruImgFile'); if (fileInput.files && fileInput.files[0]) img = await readFileAsDataURL(fileInput.files[0]);
     const data = { name, role, subject: document.getElementById('guruSubject').value || '-', img };
     let savedId;
     if (id) { 
@@ -1498,7 +1389,7 @@ function deleteGuru(id) {
   });
 }
 
-function renderProgram() { const el = document.getElementById('programGrid'); if (!el) return; el.innerHTML = DB.program.map(p => `<div class="panel p-6"><div class="flex items-start justify-between mb-4"><div class="w-12 h-12 rounded-xl ${p.color==='gold'?'bg-[var(--accent)]/10 text-[var(--accent-2)]':'bg-[var(--nu-green)]/10 text-[var(--nu-green)]'} flex items-center justify-center text-xl"><i class="fa-solid ${p.icon}"></i></div><div class="flex gap-1"><button class="btn-icon btn-sm" title="Edit" onclick="openProgramModal(${p.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger" title="Hapus" onclick="deleteProgram(${p.id})"><i class="fa-solid fa-trash"></i></button></div></div><h4 class="font-display text-xl font-bold uppercase mb-2">${p.title}</h4><p class="text-xs text-[var(--muted)] leading-relaxed font-medium mb-4">${p.desc}</p><div class="flex items-center justify-between text-xs"><span class="text-[var(--muted)] font-medium"><i class="fa-solid fa-users mr-1"></i> ${Math.floor(Math.random()*50)+30} siswa</span><span class="badge-status badge-approved">Aktif</span></div></div>`).join(''); }
+function renderProgram() { document.getElementById('programGrid').innerHTML = DB.program.map(p => `<div class="panel p-6"><div class="flex items-start justify-between mb-4"><div class="w-12 h-12 rounded-xl ${p.color==='gold'?'bg-[var(--accent)]/10 text-[var(--accent-2)]':'bg-[var(--nu-green)]/10 text-[var(--nu-green)]'} flex items-center justify-center text-xl"><i class="fa-solid ${p.icon}"></i></div><div class="flex gap-1"><button class="btn-icon btn-sm" title="Edit" onclick="openProgramModal(${p.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger" title="Hapus" onclick="deleteProgram(${p.id})"><i class="fa-solid fa-trash"></i></button></div></div><h4 class="font-display text-xl font-bold uppercase mb-2">${p.title}</h4><p class="text-xs text-[var(--muted)] leading-relaxed font-medium mb-4">${p.desc}</p><div class="flex items-center justify-between text-xs"><span class="text-[var(--muted)] font-medium"><i class="fa-solid fa-users mr-1"></i> ${Math.floor(Math.random()*50)+30} siswa</span><span class="badge-status badge-approved">Aktif</span></div></div>`).join(''); }
 function openProgramModal(id = null) {
   const p = id ? DB.program.find(x => x.id === id) : {};
   setupModal(id ? 'Edit Program' : 'Tambah Program', `<div class="space-y-4"><div><label class="label">Nama Program</label><input type="text" class="input" id="progTitle" value="${p.title || ''}" placeholder="Contoh: Tahfidz Al-Qur'an"></div><div><label class="label">Deskripsi Singkat</label><textarea class="textarea" rows="3" id="progDesc" placeholder="Deskripsi program...">${p.desc || ''}</textarea></div><div class="grid grid-cols-2 gap-4"><div><label class="label">Ikon (FontAwesome)</label><input type="text" class="input" id="progIcon" value="${p.icon || 'fa-book'}" placeholder="fa-quran"></div><div><label class="label">Warna</label><select class="select" id="progColor"><option value="gold" ${p.color === 'gold' ? 'selected' : ''}>Emas</option><option value="green" ${p.color === 'green' ? 'selected' : ''}>Hijau NU</option></select></div></div></div>`, () => {
@@ -1532,25 +1423,13 @@ function deleteProgram(id) {
 let galeriFilter = 'all';
 function renderGaleri(cat) {
   if (cat) galeriFilter = cat; let data = DB.galeri; if (galeriFilter !== 'all') data = data.filter(g => g.cat === galeriFilter);
-  const el = document.getElementById('galeriGrid'); if (!el) return;
-  el.innerHTML = data.length ? data.map(g => `<div class="gallery-card"><div class="relative"><img src="${g.img}" alt="${g.title}"><div class="absolute top-2 right-2"><button class="btn-icon btn-sm danger" onclick="deleteGaleri(${g.id})" title="Hapus"><i class="fa-solid fa-trash"></i></button></div><div class="absolute top-2 left-2"><span class="badge-status badge-approved">${g.cat}</span></div></div><div class="p-3"><h4 class="font-display text-sm font-bold uppercase leading-tight mb-1">${g.title}</h4><p class="text-[10px] text-[var(--muted)] font-medium line-clamp-2">${g.desc}</p><button class="btn btn-ghost btn-sm w-full mt-2" onclick="openGaleriModal(${g.id})"><i class="fa-solid fa-pen mr-1"></i> Edit</button></div></div>`).join('') : `<div class="col-span-full text-center py-16 text-[var(--muted)]"><i class="fa-solid fa-images text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada foto.</p></div>`;
+  document.getElementById('galeriGrid').innerHTML = data.length ? data.map(g => `<div class="gallery-card"><div class="relative"><img src="${g.img}" alt="${g.title}"><div class="absolute top-2 right-2"><button class="btn-icon btn-sm danger" onclick="deleteGaleri(${g.id})" title="Hapus"><i class="fa-solid fa-trash"></i></button></div><div class="absolute top-2 left-2"><span class="badge-status badge-approved">${g.cat}</span></div></div><div class="p-3"><h4 class="font-display text-sm font-bold uppercase leading-tight mb-1">${g.title}</h4><p class="text-[10px] text-[var(--muted)] font-medium line-clamp-2">${g.desc}</p><button class="btn btn-ghost btn-sm w-full mt-2" onclick="openGaleriModal(${g.id})"><i class="fa-solid fa-pen mr-1"></i> Edit</button></div></div>`).join('') : `<div class="col-span-full text-center py-16 text-[var(--muted)]"><i class="fa-solid fa-images text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada foto.</p></div>`;
 }
 function openGaleriModal(id = null) {
   const g = id ? DB.galeri.find(x => x.id === id) : {};
   setupModal(id ? 'Edit Foto Galeri' : 'Upload Foto Galeri', `<div class="space-y-4"><div><label class="label">Upload Gambar</label><input type="file" class="input" id="galImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-32 h-20 rounded-lg object-cover"></div>` : ''}</div><div><label class="label">Judul Foto</label><input type="text" class="input" id="galTitle" value="${g.title || ''}" placeholder="Contoh: Pesantren Ramadhan"></div><div><label class="label">Kategori</label><select class="select" id="galCat"><option value="akademik" ${g.cat === 'akademik' ? 'selected' : ''}>Akademik</option><option value="religi" ${g.cat === 'religi' ? 'selected' : ''}>Keagamaan</option><option value="ekskul" ${g.cat === 'ekskul' ? 'selected' : ''}>Ekstrakurikuler</option></select></div><div><label class="label">Deskripsi</label><textarea class="textarea" rows="2" id="galDesc" placeholder="Deskripsi singkat...">${g.desc || ''}</textarea></div></div>`, async () => {
     const title = document.getElementById('galTitle').value; if (!title) { showToast('Judul wajib diisi.', 'error'); return; }
-    let img = g.img || ''; const fileInput = document.getElementById('galImgFile'); 
-    
-    if (fileInput.files && fileInput.files[0]) {
-      const file = fileInput.files[0];
-      showToast('Mengupload foto...', 'success');
-      const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'gallery');
-      if (uploadedUrl) img = uploadedUrl;
-      else { showToast('Gagal upload ke cloud, gagal menyimpan.', 'error'); return; }
-    } else if (!img) { 
-      showToast('Foto wajib diupload.', 'error'); return; 
-    }
-
+    let img = g.img || ''; const fileInput = document.getElementById('galImgFile'); if (fileInput.files && fileInput.files[0]) img = await readFileAsDataURL(fileInput.files[0]); else if (!img) { showToast('Foto wajib diupload.', 'error'); return; }
     const data = { img, title, cat: document.getElementById('galCat').value, desc: document.getElementById('galDesc').value };
     let savedId;
     if (id) { 
@@ -1564,12 +1443,7 @@ function openGaleriModal(id = null) {
     }
     saveDB(); 
     syncRecord('galeri', { id: savedId, ...data });
-    renderGaleri(); 
-    
-    if (!document.getElementById('landingPage').style.display.includes('none')) {
-      renderLandingGallery(landingGalleryFilter);
-    }
-    closeModal('modalDynamic');
+    renderGaleri(); renderLandingGallery(landingGalleryFilter); closeModal('modalDynamic');
   });
 }
 function deleteGaleri(id) { 
@@ -1577,17 +1451,13 @@ function deleteGaleri(id) {
     DB.galeri = DB.galeri.filter(g => g.id !== id); 
     saveDB(); 
     syncRecord('galeri', { id }, 'delete');
-    renderGaleri(); 
-    
-    if (!document.getElementById('landingPage').style.display.includes('none')) {
-      renderLandingGallery(landingGalleryFilter);
-    }
+    renderGaleri(); renderLandingGallery(landingGalleryFilter); 
     showToast('Foto dihapus.', 'success'); 
   });
 }
 document.querySelectorAll('.filter-gallery').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.filter-gallery').forEach(b => { b.classList.remove('btn-primary'); b.classList.add('btn-ghost'); }); btn.classList.remove('btn-ghost'); btn.classList.add('btn-primary'); renderGaleri(btn.dataset.cat); }); });
 
-function renderPesan() { const el = document.getElementById('pesanList'); if (!el) return; el.innerHTML = DB.pesan.map(p => `<div class="p-4 border-b border-[var(--bg-2)] cursor-pointer hover:bg-[var(--bg-2)] transition ${!p.read ? 'bg-[var(--accent)]/5' : ''}" onclick="readPesan(${p.id})"><div class="flex items-start gap-3"><div class="avatar avatar-sm">${p.name.charAt(0)}</div><div class="flex-1 min-w-0"><div class="flex items-center justify-between gap-2"><div class="font-bold text-sm ${!p.read ? 'text-[var(--fg)]' : 'text-[var(--fg-2)]'} truncate">${p.name}</div>${!p.read ? '<div class="w-2 h-2 rounded-full bg-[var(--accent)] flex-shrink-0"></div>' : ''}</div><div class="text-xs font-semibold text-[var(--accent-2)] truncate mt-0.5">${p.subject}</div><div class="text-[10px] text-[var(--muted)] truncate mt-1">${p.msg.substring(0, 60)}...</div><div class="text-[10px] text-[var(--muted)] mt-1">${p.date}</div></div></div></div>`).join(''); }
+function renderPesan() { document.getElementById('pesanList').innerHTML = DB.pesan.map(p => `<div class="p-4 border-b border-[var(--bg-2)] cursor-pointer hover:bg-[var(--bg-2)] transition ${!p.read ? 'bg-[var(--accent)]/5' : ''}" onclick="readPesan(${p.id})"><div class="flex items-start gap-3"><div class="avatar avatar-sm">${p.name.charAt(0)}</div><div class="flex-1 min-w-0"><div class="flex items-center justify-between gap-2"><div class="font-bold text-sm ${!p.read ? 'text-[var(--fg)]' : 'text-[var(--fg-2)]'} truncate">${p.name}</div>${!p.read ? '<div class="w-2 h-2 rounded-full bg-[var(--accent)] flex-shrink-0"></div>' : ''}</div><div class="text-xs font-semibold text-[var(--accent-2)] truncate mt-0.5">${p.subject}</div><div class="text-[10px] text-[var(--muted)] truncate mt-1">${p.msg.substring(0, 60)}...</div><div class="text-[10px] text-[var(--muted)] mt-1">${p.date}</div></div></div></div>`).join(''); }
 function readPesan(id) {
   const p = DB.pesan.find(x => x.id === id); if (!p) return; p.read = true; saveDB();
   syncRecord('pesan', p);
@@ -1607,71 +1477,17 @@ function deletePesan(id) {
 
 function loadSettingsForm() {
   const s = DB.settings; if (!s) return;
-  const setSchoolName = document.getElementById('setSchoolName'); if (setSchoolName) setSchoolName.value = s.schoolName || ''; 
-  const setNpsn = document.getElementById('setNpsn'); if (setNpsn) setNpsn.value = s.npsn || ''; 
-  const setAddress = document.getElementById('setAddress'); if (setAddress) setAddress.value = s.address || ''; 
-  const setPhone = document.getElementById('setPhone'); if (setPhone) setPhone.value = s.phone || '';
-  const setEmail = document.getElementById('setEmail'); if (setEmail) setEmail.value = s.email || ''; 
-  const setYear = document.getElementById('setYear'); if (setYear) setYear.value = s.year || ''; 
-  const setAkreditasi = document.getElementById('setAkreditasi'); if (setAkreditasi) setAkreditasi.value = s.akreditasi || 'A'; 
-  const setTA = document.getElementById('setTA'); if (setTA) setTA.value = s.ta || '';
-  const setKuota = document.getElementById('setKuota'); if (setKuota) setKuota.value = s.kuota || ''; 
-  const setBuka = document.getElementById('setBuka'); if (setBuka) setBuka.value = s.buka || ''; 
-  const setTutup = document.getElementById('setTutup'); if (setTutup) setTutup.value = s.tutup || ''; 
-  const setPPDBStatus = document.getElementById('setPPDBStatus'); if (setPPDBStatus) setPPDBStatus.checked = s.statusPPDB !== undefined ? s.statusPPDB : true;
-  const setIg = document.getElementById('setIg'); if (setIg) setIg.value = s.ig || ''; 
-  const setYt = document.getElementById('setYt'); if (setYt) setYt.value = s.yt || ''; 
-  const setFb = document.getElementById('setFb'); if (setFb) setFb.value = s.fb || ''; 
-  const setWa = document.getElementById('setWa'); if (setWa) setWa.value = s.wa || '';
+  document.getElementById('setSchoolName').value = s.schoolName || ''; document.getElementById('setNpsn').value = s.npsn || ''; document.getElementById('setAddress').value = s.address || ''; document.getElementById('setPhone').value = s.phone || '';
+  document.getElementById('setEmail').value = s.email || ''; document.getElementById('setYear').value = s.year || ''; document.getElementById('setAkreditasi').value = s.akreditasi || 'A'; document.getElementById('setTA').value = s.ta || '';
+  document.getElementById('setKuota').value = s.kuota || ''; document.getElementById('setBuka').value = s.buka || ''; document.getElementById('setTutup').value = s.tutup || ''; document.getElementById('setPPDBStatus').checked = s.statusPPDB !== undefined ? s.statusPPDB : true;
+  document.getElementById('setIg').value = s.ig || ''; document.getElementById('setYt').value = s.yt || ''; document.getElementById('setFb').value = s.fb || ''; document.getElementById('setWa').value = s.wa || '';
 }
-
-async function saveSettings() {
-  try {
-    DB.settings = { 
-      schoolName: document.getElementById('setSchoolName').value, 
-      npsn: document.getElementById('setNpsn').value, 
-      address: document.getElementById('setAddress').value, 
-      phone: document.getElementById('setPhone').value, 
-      email: document.getElementById('setEmail').value, 
-      year: document.getElementById('setYear').value, 
-      akreditasi: document.getElementById('setAkreditasi').value, 
-      ta: document.getElementById('setTA').value, 
-      kuota: document.getElementById('setKuota').value, 
-      buka: document.getElementById('setBuka').value, 
-      tutup: document.getElementById('setTutup').value, 
-      statusPPDB: document.getElementById('setPPDBStatus').checked, 
-      ig: document.getElementById('setIg').value, 
-      yt: document.getElementById('setYt').value, 
-      fb: document.getElementById('setFb').value, 
-      wa: document.getElementById('setWa').value 
-    };
-    
-    saveDBLocal(); 
-    
-    if (isSupabaseReady) {
-      const { error } = await supabaseClient.from('app_config').upsert({ 
-        id: 'main_config', 
-        settings: DB.settings, 
-        ad: DB.ad 
-      });
-      
-      if (error) {
-        console.error('Supabase Error:', error);
-        showToast('Gagal simpan ke cloud: ' + error.message, 'error');
-      } else {
-        showToast('Pengaturan berhasil disimpan.', 'success');
-      }
-    } else {
-      showToast('Pengaturan disimpan di lokal.', 'success');
-    }
-  } catch (err) {
-    console.error('System Error:', err);
-    showToast('Terjadi kesalahan sistem.', 'error');
-  }
+function saveSettings() {
+  DB.settings = { schoolName: document.getElementById('setSchoolName').value, npsn: document.getElementById('setNpsn').value, address: document.getElementById('setAddress').value, phone: document.getElementById('setPhone').value, email: document.getElementById('setEmail').value, year: document.getElementById('setYear').value, akreditasi: document.getElementById('setAkreditasi').value, ta: document.getElementById('setTA').value, kuota: document.getElementById('setKuota').value, buka: document.getElementById('setBuka').value, tutup: document.getElementById('setTutup').value, statusPPDB: document.getElementById('setPPDBStatus').checked, ig: document.getElementById('setIg').value, yt: document.getElementById('setYt').value, fb: document.getElementById('setFb').value, wa: document.getElementById('setWa').value };
+  saveDB(); showToast('Pengaturan berhasil disimpan.', 'success');
 }
 
 function initCharts() {
-  if (typeof Chart === 'undefined') return;
   Chart.defaults.font.family = 'Inter, sans-serif'; Chart.defaults.font.size = 11; Chart.defaults.color = '#8b929b';
   const ctx1 = document.getElementById('chartPPDB'); if (ctx1) new Chart(ctx1, { type: 'line', data: { labels: ['Aug', 'Sep', 'Okt', 'Nov', 'Des', 'Jan'], datasets: [{ label: 'Pendaftar', data: [8, 15, 22, 18, 28, DB.ppdb.length], borderColor: '#d4af37', backgroundColor: 'rgba(212,175,55,0.1)', fill: true, tension: 0.4, borderWidth: 3, pointBackgroundColor: '#d4af37', pointBorderColor: '#fff', pointBorderWidth: 2, pointRadius: 5, pointHoverRadius: 7 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#e9ecef' } }, x: { grid: { display: false } } } } });
   const ctx2 = document.getElementById('chartKelas'); if (ctx2) new Chart(ctx2, { type: 'doughnut', data: { labels: ['Kelas VII', 'Kelas VIII', 'Kelas IX'], datasets: [{ data: [DB.siswa.filter(s=>s.kelas.startsWith('VII')).length, DB.siswa.filter(s=>s.kelas.startsWith('VIII')).length, DB.siswa.filter(s=>s.kelas.startsWith('IX')).length], backgroundColor: ['#d4af37', '#006a3e', '#1a1d21'], borderWidth: 0, hoverOffset: 8 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'bottom', labels: { padding: 15, font: { size: 11, weight: 600 } } } } } });
@@ -1691,35 +1507,31 @@ function renderLandingGallery(filter) {
 }
 document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.filter-btn').forEach(b => { b.classList.remove('border-[var(--accent)]', 'bg-[var(--accent)]', 'text-[var(--fg)]'); b.classList.add('border-[var(--border-2)]', 'text-[var(--fg-2)]'); }); btn.classList.add('border-[var(--accent)]', 'bg-[var(--accent)]', 'text-[var(--fg)]'); btn.classList.remove('border-[var(--border-2)]', 'text-[var(--fg-2)]'); renderLandingGallery(btn.dataset.filter); }); });
 
-function showPPDBForm() { document.getElementById('ppdbFormOverlay')?.classList.remove('is-hidden'); document.body.style.overflow = 'hidden'; }
-function hidePPDBForm() { document.getElementById('ppdbFormOverlay')?.classList.add('is-hidden'); document.body.style.overflow = ''; }
+function showPPDBForm() { document.getElementById('ppdbFormOverlay').classList.remove('is-hidden'); document.body.style.overflow = 'hidden'; }
+function hidePPDBForm() { document.getElementById('ppdbFormOverlay').classList.add('is-hidden'); document.body.style.overflow = ''; }
 function showPPDBCard(data) {
-  document.getElementById('ppdbCardOverlay')?.classList.remove('is-hidden');
+  document.getElementById('ppdbCardOverlay').classList.remove('is-hidden');
   const regNum = data.regNum || ('PPDB-' + new Date().getFullYear() + '-' + String(data.id).slice(-4));
-  const cardRegNum = document.getElementById('cardRegNum'); if (cardRegNum) cardRegNum.textContent = regNum; 
-  const cardName = document.getElementById('cardName'); if (cardName) cardName.textContent = data.name; 
-  const cardSchool = document.getElementById('cardSchool'); if (cardSchool) cardSchool.textContent = data.school; 
-  const cardDate = document.getElementById('cardDate'); if (cardDate) cardDate.textContent = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+  document.getElementById('cardRegNum').textContent = regNum; document.getElementById('cardName').textContent = data.name; document.getElementById('cardSchool').textContent = data.school; document.getElementById('cardDate').textContent = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
   
   const verifyUrl = window.location.href.split('?')[0] + '?verify=' + regNum;
   const qrContainer = document.getElementById('qrcode');
-  if (qrContainer) {
-    qrContainer.innerHTML = ''; 
-    try {
-      new QRCode(qrContainer, {
-        text: verifyUrl,
-        width: 90,
-        height: 90,
-        colorDark: "#1a1d21",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H,
-        render: "canvas"
-      });
-    } catch (e) { console.warn('QR Code error:', e); }
-  }
+  qrContainer.innerHTML = ''; 
+  try {
+    new QRCode(qrContainer, {
+      text: verifyUrl,
+      width: 90,
+      height: 90,
+      colorDark: "#1a1d21",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H,
+      render: "canvas"
+    });
+  } catch (e) { console.warn('QR Code error:', e); }
+
   document.body.style.overflow = 'hidden';
 }
-function hidePPDBCard() { document.getElementById('ppdbCardOverlay')?.classList.add('is-hidden'); document.body.style.overflow = ''; document.getElementById('ppdbPublicForm')?.reset(); }
+function hidePPDBCard() { document.getElementById('ppdbCardOverlay').classList.add('is-hidden'); document.body.style.overflow = ''; document.getElementById('ppdbPublicForm').reset(); }
 
 async function downloadPPDBCard() {
   const card = document.getElementById('ppdbCard'); 
@@ -1812,7 +1624,7 @@ async function downloadPPDBCard() {
   }
 }
 
-document.getElementById('ppdbPublicForm')?.addEventListener('submit', function(e) {
+document.getElementById('ppdbPublicForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const data = { id: Date.now(), regNum: 'PPDB-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-4), name: document.getElementById('regName').value.trim(), gender: document.getElementById('regGender').value, school: document.getElementById('regSchool').value.trim(), dob: document.getElementById('regDob').value, father: document.getElementById('regFather').value.trim(), mother: document.getElementById('regMother').value.trim(), parent: document.getElementById('regFather').value.trim(), phone: document.getElementById('regPhone').value.trim(), address: document.getElementById('regAddress').value.trim(), date: new Date().toISOString().split('T')[0], status: 'pending' };
   if (!data.name || !data.school) { showToast('Nama dan asal sekolah wajib diisi.', 'error'); return; }
@@ -1835,9 +1647,9 @@ document.getElementById('ppdbPublicForm')?.addEventListener('submit', function(e
   showToast('Pendaftaran berhasil! Simpan kartu pendaftaran Anda.', 'success');
 });
 
-function showVerifyOverlay() { document.getElementById('verifyOverlay')?.classList.remove('is-hidden'); document.body.style.overflow = 'hidden'; }
+function showVerifyOverlay() { document.getElementById('verifyOverlay').classList.remove('is-hidden'); document.body.style.overflow = 'hidden'; }
 function hideVerifyOverlay() { 
-  document.getElementById('verifyOverlay')?.classList.add('is-hidden'); 
+  document.getElementById('verifyOverlay').classList.add('is-hidden'); 
   document.body.style.overflow = ''; 
   window.history.replaceState({}, document.title, window.location.pathname);
 }
@@ -1845,11 +1657,10 @@ function hideVerifyOverlay() {
 async function checkVerification() {
   const params = new URLSearchParams(window.location.search);
   const verifyCode = params.get('verify');
-  const verifyContent = document.getElementById('verifyContent');
   
-  if (verifyCode && verifyContent) {
+  if (verifyCode) {
     showVerifyOverlay();
-    verifyContent.innerHTML = `
+    document.getElementById('verifyContent').innerHTML = `
       <div class="text-center py-8">
         <i class="fa-solid fa-spinner fa-spin text-[var(--accent)] text-4xl mb-4"></i>
         <p class="text-sm text-[var(--muted)] font-medium">Memverifikasi data pendaftar...</p>
@@ -1878,7 +1689,7 @@ async function checkVerification() {
         const statusBadge = record.status === 'approved' ? 'badge-approved' : (record.status === 'rejected' ? 'badge-rejected' : 'badge-pending');
         const statusText = record.status === 'approved' ? 'Diverifikasi / Disetujui' : (record.status === 'rejected' ? 'Ditolak' : 'Menunggu Verifikasi');
         
-        verifyContent.innerHTML = `
+        document.getElementById('verifyContent').innerHTML = `
           <div class="flex items-center justify-center gap-2 text-[var(--success)] font-bold font-display text-xl uppercase mb-6">
             <i class="fa-solid fa-shield-halved"></i> Hasil Verifikasi Kartu
           </div>
@@ -1904,7 +1715,7 @@ async function checkVerification() {
           <button onclick="hideVerifyOverlay()" class="btn btn-ghost mt-6 w-full" style="padding: 12px;">Tutup</button>
         `;
     } else {
-        verifyContent.innerHTML = `
+        document.getElementById('verifyContent').innerHTML = `
           <div class="text-center py-8">
             <div class="w-16 h-16 mx-auto rounded-full bg-red-100 flex items-center justify-center text-[var(--danger)] text-2xl mb-4">
               <i class="fa-solid fa-circle-xmark"></i>
@@ -1918,38 +1729,22 @@ async function checkVerification() {
   }
 }
 
-function showAdminLogin(view = 'dashboard') { document.getElementById('loginScreen')?.classList.remove('is-hidden'); document.body.style.overflow = 'hidden'; }
-function hideAdminLogin() { document.getElementById('loginScreen')?.classList.add('is-hidden'); document.body.style.overflow = ''; }
-document.getElementById('loginForm')?.addEventListener('submit', function(e) {
+function showAdminLogin(view = 'dashboard') { document.getElementById('loginScreen').classList.remove('is-hidden'); document.body.style.overflow = 'hidden'; }
+function hideAdminLogin() { document.getElementById('loginScreen').classList.add('is-hidden'); document.body.style.overflow = ''; }
+document.getElementById('loginForm').addEventListener('submit', function(e) {
   e.preventDefault(); const user = document.getElementById('loginUser').value.trim(); const pass = document.getElementById('loginPass').value.trim();
   if (user === 'admin' && pass === 'admin123') {
-    document.getElementById('loginScreen')?.classList.add('is-hidden'); 
-    const landing = document.getElementById('landingPage'); if (landing) landing.style.display = 'none'; 
-    document.getElementById('adminLayout')?.classList.remove('is-hidden'); 
-    document.body.style.overflow = '';
+    document.getElementById('loginScreen').classList.add('is-hidden'); document.getElementById('landingPage').style.display = 'none'; document.getElementById('adminLayout').classList.remove('is-hidden'); document.body.style.overflow = '';
     initDashboard(); showToast('Selamat datang, Admin!', 'success'); window.scrollTo({ top: 0 });
   } else { showToast('Username atau password salah!', 'error'); }
 });
-document.getElementById('togglePass')?.addEventListener('click', function() { const input = document.getElementById('loginPass'); const icon = this.querySelector('i'); if (input.type === 'password') { input.type = 'text'; icon.classList.remove('fa-eye'); icon.classList.add('fa-eye-slash'); } else { input.type = 'password'; icon.classList.remove('fa-eye-slash'); icon.classList.add('fa-eye'); } });
-function backToSite() { 
-  document.getElementById('adminLayout')?.classList.add('is-hidden'); 
-  const landing = document.getElementById('landingPage'); if (landing) landing.style.display = 'block'; 
-  document.body.style.overflow = ''; 
-  
-  syncFromSupabase().then(() => {
-    renderLandingGallery(landingGalleryFilter); 
-    renderLandingPrograms(); 
-    renderLandingTeachers();
-    renderAdBanner();
-  }).catch(e => console.warn("Sync gagal:", e));
-  
-  window.scrollTo({ top: 0, behavior: 'smooth' }); 
-}
+document.getElementById('togglePass').addEventListener('click', function() { const input = document.getElementById('loginPass'); const icon = this.querySelector('i'); if (input.type === 'password') { input.type = 'text'; icon.classList.remove('fa-eye'); icon.classList.add('fa-eye-slash'); } else { input.type = 'password'; icon.classList.remove('fa-eye-slash'); icon.classList.add('fa-eye'); } });
+function backToSite() { document.getElementById('adminLayout').classList.add('is-hidden'); document.getElementById('landingPage').style.display = 'block'; document.body.style.overflow = ''; window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
 function logout() { 
   confirmAction('Konfirmasi Keluar', 'Apakah Anda yakin ingin keluar dari dashboard?', 'Keluar', () => {
-    document.getElementById('adminLayout')?.classList.add('is-hidden'); 
-    const landing = document.getElementById('landingPage'); if (landing) landing.style.display = 'block'; 
+    document.getElementById('adminLayout').classList.add('is-hidden'); 
+    document.getElementById('landingPage').style.display = 'block'; 
     document.body.style.overflow = ''; 
     window.scrollTo({ top: 0, behavior: 'smooth' }); 
     showToast('Anda telah keluar dari sistem.', 'success'); 
@@ -1961,24 +1756,15 @@ document.getElementById('adDesc')?.addEventListener('input', e => { const p = do
 
 window.addEventListener('DOMContentLoaded', async () => {
   loadDBLocal();
+  if (isSupabaseReady) {
+    await syncFromSupabase();
+  }
   renderLandingPrograms(); 
   renderLandingTeachers(); 
   renderLandingGallery('all'); 
   updateVisitorDisplay(); 
   renderAdBanner();
   checkVerification(); 
-
-  if (isSupabaseReady) {
-    try {
-      await syncFromSupabase();
-      renderLandingPrograms(); 
-      renderLandingTeachers(); 
-      renderLandingGallery('all'); 
-      renderAdBanner();
-    } catch (e) {
-      console.warn('Gagal sync awal:', e);
-    }
-  }
 });
 </script>
 </body>
