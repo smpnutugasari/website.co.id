@@ -992,10 +992,14 @@ async function uploadImageToSupabase(file, bucketName, folderName) {
     if (error) throw error;
     const { data: publicUrlData } = supabaseClient.storage.from(bucketName).getPublicUrl(data.path);
     return publicUrlData.publicUrl;
-  } catch (e) { console.warn('Upload exception:', e.message); return null; }
+  } catch (e) { 
+    console.warn('Upload exception:', e.message); 
+    return null; 
+  }
 }
 
-// Maps JS keys to SQL column names
+function readFileAsDataURL(file) { return new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(file); }); }
+
 function mapToSQL(table, record) {
   if (table === 'ppdb') return { id: record.id, reg_num: record.regNum, name: record.name, gender: record.gender, school: record.school, dob: record.dob, parent: record.parent, mother: record.mother, phone: record.phone, address: record.address, date: record.date, status: record.status };
   if (table === 'siswa') return { id: record.id, nis: record.nis, name: record.name, kelas: record.kelas, jk: record.jk, wali: record.wali, status: record.status, photo: record.photo };
@@ -1018,12 +1022,7 @@ function mapFromSQL(table, record) {
 
 let DB = {
   settings: { schoolName: 'SMP NU Tugasari', npsn: '20365478', address: 'Jl. Raya Tugasari No. 01, Tugasari', phone: '(0281) 123456', email: 'info@smpnutugasari.sch.id', year: '1998', akreditasi: 'A', ta: '2025/2026', kuota: 160, buka: '2025-01-15', tutup: '2025-06-30', statusPPDB: true, ig: '@smpnutugasari', yt: 'SMP NU Tugasari Official', fb: 'SMP NU Tugasari', wa: '0812-3456-7890' },
-  ppdb: [],
-  siswa: [],
-  guru: [],
-  program: [],
-  galeri: [],
-  pesan: [],
+  ppdb: [], siswa: [], guru: [], program: [], galeri: [], pesan: [],
   ad: { title: 'PPDB 2025/2026 Telah Dibuka!', desc: 'Pendaftaran Peserta Didik Baru Tahun Ajaran 2025/2026 telah dibuka. Daftar sekarang sebelum kuota penuh!', linkText: 'Klik di sini', active: true }
 };
 
@@ -1047,14 +1046,12 @@ const DEFAULT_DATA = {
 
 async function fetchAllData() {
   if (!isSupabaseReady) return;
-  
   try {
     const { data: configData } = await supabaseClient.from('app_config').select('*').eq('id', 'main_config').maybeSingle();
     if (configData) {
       if (configData.settings) DB.settings = { ...DB.settings, ...configData.settings };
       if (configData.ad) DB.ad = { ...DB.ad, ...configData.ad };
     } else {
-      // Insert default config if not exists
       await supabaseClient.from('app_config').upsert({ id: 'main_config', settings: DB.settings, ad: DB.ad });
     }
   } catch (e) { console.warn('Config error:', e); }
@@ -1074,7 +1071,6 @@ async function fetchAllData() {
     if (data && data.length > 0) {
       DB.guru = data.map(g => mapFromSQL('guru', g));
     } else {
-      // Seed defaults
       await supabaseClient.from('guru').upsert(DEFAULT_DATA.guru.map(g => mapToSQL('guru', g)));
       DB.guru = [...DEFAULT_DATA.guru];
     }
@@ -1106,7 +1102,6 @@ async function fetchAllData() {
   } catch (e) { console.warn('Pesan error:', e); }
 }
 
-// In-memory visitor stats (no localStorage)
 let visitorStats = { total: 0, today: 0, date: '' };
 function getVisitorStats() {
   const today = new Date().toDateString();
@@ -1209,11 +1204,9 @@ async function saveAd() {
       active: document.getElementById('adActive').checked
     };
     renderAdBanner(); closeModal('modalAd');
-    if (isSupabaseReady) {
-      const { error } = await supabaseClient.from('app_config').upsert({ id: 'main_config', settings: DB.settings, ad: DB.ad });
-      if (error) throw error;
-      showToast('Pengumuman berhasil disimpan.', 'success');
-    }
+    const { error } = await supabaseClient.from('app_config').upsert({ id: 'main_config', settings: DB.settings, ad: DB.ad });
+    if (error) throw error;
+    showToast('Pengumuman berhasil disimpan.', 'success');
   } catch (err) { showToast('Gagal simpan iklan: ' + err.message, 'error'); }
 }
 
@@ -1336,7 +1329,10 @@ function openSiswaModal(id = null) {
       const file = fileInput.files[0]; showToast('Mengupload foto...', 'success');
       const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'students');
       if (uploadedUrl) photo = uploadedUrl;
-      else { showToast('Gagal upload foto.', 'error'); return; }
+      else { 
+        photo = await readFileAsDataURL(file); 
+        showToast('Storage bermasalah, foto disimpan sebagai base64.', 'warning'); 
+      }
     }
     const data = { nis, name, kelas: document.getElementById('siswaKelas').value, jk: document.getElementById('siswaJk').value, wali: document.getElementById('siswaWali').value, status: document.getElementById('siswaStatus').value, photo };
     const newId = id || Date.now();
@@ -1363,7 +1359,7 @@ function deleteSiswa(id) {
 document.getElementById('searchSiswa')?.addEventListener('input', renderSiswaTable);
 document.getElementById('filterKelasSiswa')?.addEventListener('change', renderSiswaTable);
 
-function renderGuru() { document.getElementById('guruGrid').innerHTML = DB.guru.map(g => `<div class="panel overflow-hidden"><div class="relative"><img src="${g.img}" alt="${g.name}" class="w-full aspect-square object-cover"><div class="absolute top-3 right-3"><span class="badge-status badge-approved">${g.role.split(' ')[0]}</span></div></div><div class="p-5"><div class="text-[10px] uppercase tracking-wider text-[var(--accent-2)] font-bold mb-1">${g.role}</div><h4 class="font-display text-lg font-bold uppercase leading-tight mb-2">${g.name}</h4>${g.subject !== '-' ? `<div class="text-xs text-[var(--muted)] font-medium mb-3"><i class="fa-solid fa-book mr-1"></i> ${g.subject}</div>` : '<div class="mb-3"></div>'}<div class="flex gap-1"><button class="btn-icon btn-sm flex-1" title="Edit" onclick="openGuruModal(${g.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger flex-1" title="Hapus" onclick="deleteGuru(${g.id})"><i class="fa-solid fa-trash"></i></button></div></div></div>`).join(''); }
+function renderGuru() { document.getElementById('guruGrid').innerHTML = DB.guru.map(g => `<div class="panel overflow-hidden"><div class="relative"><img src="${g.img}" alt="${g.name}" class="w-full aspect-square object-cover"><div class="absolute top-3 right:3"><span class="badge-status badge-approved">${g.role.split(' ')[0]}</span></div></div><div class="p-5"><div class="text-[10px] uppercase tracking-wider text-[var(--accent-2)] font-bold mb-1">${g.role}</div><h4 class="font-display text-lg font-bold uppercase leading-tight mb-2">${g.name}</h4>${g.subject !== '-' ? `<div class="text-xs text-[var(--muted)] font-medium mb-3"><i class="fa-solid fa-book mr-1"></i> ${g.subject}</div>` : '<div class="mb-3"></div>'}<div class="flex gap-1"><button class="btn-icon btn-sm flex-1" title="Edit" onclick="openGuruModal(${g.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger flex-1" title="Hapus" onclick="deleteGuru(${g.id})"><i class="fa-solid fa-trash"></i></button></div></div></div>`).join(''); }
 function openGuruModal(id = null) {
   const g = id ? DB.guru.find(x => x.id === id) : {};
   setupModal(id ? 'Edit Guru / Staf' : 'Tambah Guru / Staf', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="guruName" value="${g.name || ''}" placeholder="Dr. ..."></div><div><label class="label">Jabatan</label><input type="text" class="input" id="guruRole" value="${g.role || ''}" placeholder="Guru Matematika"></div><div><label class="label">Mata Pelajaran</label><input type="text" class="input" id="guruSubject" value="${g.subject || ''}" placeholder="Matematika"></div><div><label class="label">Upload Foto</label><input type="file" class="input" id="guruImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-16 h-16 rounded-lg object-cover"></div>` : ''}</div></div>`, async () => {
@@ -1373,6 +1369,7 @@ function openGuruModal(id = null) {
       const file = fileInput.files[0]; showToast('Mengupload foto...', 'success');
       const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'teachers');
       if (uploadedUrl) img = uploadedUrl;
+      else { img = await readFileAsDataURL(file); showToast('Storage bermasalah, foto disimpan sebagai base64.', 'warning'); }
     }
     const data = { name, role, subject: document.getElementById('guruSubject').value || '-', img };
     const newId = id || Date.now();
@@ -1439,7 +1436,7 @@ function openGaleriModal(id = null) {
       const file = fileInput.files[0]; showToast('Mengupload foto...', 'success');
       const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'gallery');
       if (uploadedUrl) img = uploadedUrl;
-      else { showToast('Gagal upload ke cloud, gambar tidak disimpan.', 'error'); return; }
+      else { img = await readFileAsDataURL(file); showToast('Storage bermasalah, foto disimpan sebagai base64.', 'warning'); }
     } else if (!img) { showToast('Foto wajib diupload.', 'error'); return; }
     const data = { img, title, cat: document.getElementById('galCat').value, desc: document.getElementById('galDesc').value };
     const newId = id || Date.now();
