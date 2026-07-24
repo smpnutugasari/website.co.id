@@ -1304,21 +1304,29 @@ function showToast(msg, type = 'success') {
 const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+// === PERBAIKAN INISIALISASI SUPABASE ===
 const SUPABASE_URL = 'https://movwdvfqwsiuovkxupnr.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vd2RkdmZxd3NpdW92a3h1cG5yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3NzQ4MTMsImV4cCI6MjEwMDM1MDgxM30.aB-Xf0AjpF324B2Fst2QAmoDvDaDr_gj0O0HlnBrLNQ';
-let supabaseClient = null; let isSupabaseReady = false;
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vdndkdmZxd3NpdW92a3h1cG5yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3NzQ4MTMsImV4cCI6MjEwMDM1MDgxM30.aB-Xf0AjpF324B2Fst2QAmoDvDaDr_gj0O0HlnBrLNQ';
+let supabaseClient = null; 
+let isSupabaseReady = false;
 
 function initSupabase() { 
   try { 
-    const sbLib = window.supabase || (typeof supabase !== 'undefined' ? supabase : null);
-    if (sbLib && sbLib.createClient && SUPABASE_URL && SUPABASE_ANON_KEY && SUPABASE_URL.startsWith('https://')) { 
-      supabaseClient = sbLib.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); 
+    // Gunakan window.supabase untuk memastikan mengambil library globalnya
+    if (window.supabase && window.supabase.createClient && SUPABASE_URL && SUPABASE_ANON_KEY) { 
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); 
       isSupabaseReady = true;
+      console.log("Supabase connected successfully!");
+    } else {
+      console.error("Supabase library belum termuat.");
     }
-  } catch (e) { console.warn('Supabase init failed:', e); } 
+  } catch (e) { 
+    console.error('Supabase init failed:', e); 
+  } 
 }
 initSupabase();
 
+// Sisa kode (Tidak ada perubahan, biarkan seperti original Anda)
 async function uploadImageToSupabase(file, bucketName, folderName) {
   if (!isSupabaseReady) return null;
   try {
