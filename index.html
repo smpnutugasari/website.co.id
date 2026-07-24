@@ -201,6 +201,18 @@
   .announcement-bar { background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%); color: var(--fg); padding: 10px 0; text-align: center; font-size: 14px; font-weight: 600; display: none; }
   .announcement-bar a { text-decoration: underline; margin-left: 8px; font-weight: 700; cursor: pointer; }
   .announcement-bar.show { display: block; }
+  /* Video Section Styles */
+  .video-section-bg { background: linear-gradient(135deg, #1a1d21 0%, #2a2e35 50%, #1a1d21 100%); position: relative; overflow: hidden; }
+  .video-section-bg::before { content: ''; position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 65%); border-radius: 50%; pointer-events: none; }
+  .video-section-bg::after { content: ''; position: absolute; bottom: -100px; left: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(0,106,62,0.12) 0%, transparent 65%); border-radius: 50%; pointer-events: none; }
+  .video-pattern { position: absolute; inset: 0; background-image: repeating-linear-gradient(45deg, transparent, transparent 18px, rgba(212,175,55,0.03) 18px, rgba(212,175,55,0.03) 19px), repeating-linear-gradient(-45deg, transparent, transparent 18px, rgba(212,175,55,0.02) 18px, rgba(212,175,55,0.02) 19px); pointer-events: none; }
+  .video-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
+  .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+  .video-wrapper::before { content: ''; position: absolute; inset: -2px; background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--nu-green)); border-radius: 16px; z-index: -1; opacity: 0.5; }
+  .video-play-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; border-radius: 50%; background: rgba(212,175,55,0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; z-index: 5; pointer-events: none; animation: pulse-glow 2s ease-in-out infinite; }
+  @keyframes pulse-glow { 0%,100% { box-shadow: 0 0 0 0 rgba(212,175,55,0.5); } 50% { box-shadow: 0 0 0 20px rgba(212,175,55,0); } }
+  .video-feature-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.2); border-radius: 12px; padding: 20px; transition: all 0.3s; backdrop-filter: blur(10px); }
+  .video-feature-card:hover { background: rgba(255,255,255,0.08); border-color: var(--accent); transform: translateY(-3px); }
 </style>
 </head>
 <body>
@@ -217,6 +229,7 @@
         <span class="visitor-badge"><i class="fa-solid fa-eye"></i> Pengunjung: <strong id="visitorCountTop">0</strong></span>
         <a href="#" class="hover:text-[var(--accent)] transition"><i class="fa-brands fa-instagram"></i></a>
         <a href="#" class="hover:text-[var(--accent)] transition"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://www.facebook.com/smp.nu.tugasari/" target="_blank" class="hover:text-[var(--accent)] transition"><i class="fa-brands fa-facebook"></i></a>
         <a href="#" class="hover:text-[var(--accent)] transition"><i class="fa-brands fa-whatsapp"></i></a>
       </div>
     </div>
@@ -397,6 +410,85 @@
     </div>
   </section>
 
+  <!-- ===== VIDEO SECTION ===== -->
+  <section id="video" class="video-section-bg py-28 relative">
+    <div class="video-pattern"></div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-5 reveal">
+          <div class="section-num mb-4" style="color: var(--accent);">— Video Profil Sekolah</div>
+          <h2 class="font-display font-bold text-4xl lg:text-5xl leading-none mb-6 uppercase text-white">
+            Kenali <span style="color:var(--accent);">SMP NU Tugasari</span><br>Lebih Dekat
+          </h2>
+          <p class="text-white/60 mb-8 leading-relaxed font-medium">
+            Tonton video profil sekolah kami untuk mengetahui lebih dekat suasana belajar, fasilitas, dan berbagai kegiatan menarik di SMP NU Tugasari. Sebuah lingkungan pendidikan yang memadukan nilai-nilai keislaman dengan pembelajaran modern.
+          </p>
+          <div class="space-y-4 mb-8">
+            <div class="video-feature-card flex items-start gap-4">
+              <div class="w-10 h-10 rounded-lg bg-[var(--accent)]/20 flex items-center justify-center flex-shrink-0">
+                <i class="fa-solid fa-school text-[var(--accent)]"></i>
+              </div>
+              <div>
+                <div class="font-bold font-display uppercase text-sm text-white mb-1">Lingkungan Belajar</div>
+                <div class="text-xs text-white/50 font-medium">Suasana kelas yang kondusif dan islami</div>
+              </div>
+            </div>
+            <div class="video-feature-card flex items-start gap-4">
+              <div class="w-10 h-10 rounded-lg bg-[var(--accent)]/20 flex items-center justify-center flex-shrink-0">
+                <i class="fa-solid fa-quran text-[var(--accent)]"></i>
+              </div>
+              <div>
+                <div class="font-bold font-display uppercase text-sm text-white mb-1">Pendidikan Qur'ani</div>
+                <div class="text-xs text-white/50 font-medium">Pembiasaan tahfidz dan tahsin Al-Qur'an</div>
+              </div>
+            </div>
+            <div class="video-feature-card flex items-start gap-4">
+              <div class="w-10 h-10 rounded-lg bg-[var(--accent)]/20 flex items-center justify-center flex-shrink-0">
+                <i class="fa-solid fa-people-group text-[var(--accent)]"></i>
+              </div>
+              <div>
+                <div class="font-bold font-display uppercase text-sm text-white mb-1">Kegiatan Siswa</div>
+                <div class="text-xs text-white/50 font-medium">Beragam ekstrakurikuler untuk pengembangan diri</div>
+              </div>
+            </div>
+          </div>
+          <a href="https://youtu.be/OB5rULDPpPo?si=_JMgzz1KKpoc4Xky" target="_blank" class="btn-primary" style="background: var(--accent); border-color: var(--accent);">
+            <i class="fa-brands fa-youtube mr-2"></i> Tonton di YouTube
+          </a>
+        </div>
+        <div class="lg:col-span-7 reveal">
+          <div class="video-wrapper">
+            <iframe 
+              src="https://www.youtube.com/embed/OB5rULDPpPo?rel=0&modestbranding=1" 
+              title="Video Profil SMP NU Tugasari" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen
+              loading="lazy">
+            </iframe>
+          </div>
+          <div class="flex items-center justify-between mt-6 px-2">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-[var(--accent)]/20 flex items-center justify-center">
+                <i class="fa-solid fa-play text-[var(--accent)] text-xs"></i>
+              </div>
+              <div>
+                <div class="text-sm font-bold font-display uppercase text-white">Video Profil SMP NU Tugasari</div>
+                <div class="text-[10px] text-white/40 uppercase tracking-wider font-bold">Kanal Resmi Sekolah</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] text-white/40 uppercase tracking-wider font-bold flex items-center gap-1">
+                <i class="fa-solid fa-circle text-[6px] text-red-500 animate-pulse"></i> Video
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ===== END VIDEO SECTION ===== -->
+
   <section class="py-28 relative">
     <div class="max-w-6xl mx-auto px-6 lg:px-10">
       <div class="text-center mb-16 reveal">
@@ -468,8 +560,8 @@ Sumatera Selatan</div></div></div>
             <span class="visitor-badge" style="background:#f4f5f7;border-color:#d1d5db;color:#8b929b;"><i class="fa-solid fa-eye"></i> Total Pengunjung: <strong id="visitorCountFooter">0</strong></span>
             <a href="#" class="hover:text-[var(--accent-2)]"><i class="fa-brands fa-instagram"></i></a>
             <a href="#" class="hover:text-[var(--accent-2)]"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.facebook.com/smp.nu.tugasari/" target="_blank" class="hover:text-[var(--accent-2)]"><i class="fa-brands fa-facebook"></i></a>
             <a href="#" class="hover:text-[var(--accent-2)]"><i class="fa-brands fa-whatsapp"></i></a>
-            <a href="#" class="hover:text-[var(--accent-2)]"><i class="fa-brands fa-facebook"></i></a>
           </div>
         </div>
       </div>
