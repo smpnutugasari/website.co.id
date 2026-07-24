@@ -70,7 +70,6 @@
   .toast.show { transform: translateX(0); }
   .toast.error { border-left-color: var(--danger); }
   .toast.warning { border-left-color: var(--warning); }
-  @media (max-width: 768px) { .hero-title { font-size: 48px !important; line-height: 1 !important; } }
   .is-hidden { display: none !important; }
   .sidebar { background: var(--fg); color: #fff; width: 260px; position: fixed; top: 0; left: 0; bottom: 0; z-index: 50; transition: transform 0.3s; overflow-y: auto; display: flex; flex-direction: column; }
   .nav-link { display: flex; align-items: center; gap: 12px; padding: 11px 16px; border-radius: 8px; color: rgba(255,255,255,0.65); font-size: 13px; font-weight: 600; transition: all 0.2s; cursor: pointer; text-transform: uppercase; letter-spacing: 0.04em; }
@@ -104,7 +103,7 @@
   .btn-success { background: var(--success); color: #fff; }
   .btn-success:hover { background: #15803d; }
   .btn-sm { padding: 6px 10px; font-size: 11px; }
-  .btn-icon { width: 32px; height: 32px; padding: 0; border-radius: 6px; background: var(--bg-2); color: var(--fg-2); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+  .btn-icon { width: 32px; height: 32px; padding: 0; border-radius: 6px; background: var(--bg-2); color: var(--fg-2); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; flex-shrink: 0; }
   .btn-icon:hover { background: var(--accent); color: var(--fg); border-color: var(--accent); }
   .btn-icon.danger:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
   .select, .textarea { background: var(--card-2); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; color: var(--fg); width: 100%; transition: all 0.2s; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; }
@@ -112,7 +111,7 @@
   .label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--fg-2); margin-bottom: 6px; }
   .badge-status { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-family: 'Rajdhani', sans-serif; }
   .badge-pending { background: #fef3c7; color: #92400e; } .badge-approved { background: #d1fae5; color: #065f46; } .badge-rejected { background: #fee2e2; color: #991b1b; } .badge-verified { background: #dbeafe; color: #1e40af; }
-  .modal-overlay { position: fixed; inset: 0; background: rgba(26,29,33,0.6); backdrop-filter: blur(4px); z-index: 1500; display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s; }
+  .modal-overlay { position: fixed; inset: 0; background: rgba(26,29,33,0.6); backdrop-filter: blur(4px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s; }
   .modal-overlay.show { display: flex; opacity: 1; }
   .modal { background: #fff; border-radius: 12px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; transform: scale(0.95); transition: transform 0.3s; }
   .modal-overlay.show .modal { transform: scale(1); }
@@ -213,6 +212,21 @@
   @keyframes pulse-glow { 0%,100% { box-shadow: 0 0 0 0 rgba(212,175,55,0.5); } 50% { box-shadow: 0 0 0 20px rgba(212,175,55,0); } }
   .video-feature-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.2); border-radius: 12px; padding: 20px; transition: all 0.3s; backdrop-filter: blur(10px); }
   .video-feature-card:hover { background: rgba(255,255,255,0.08); border-color: var(--accent); transform: translateY(-3px); }
+  
+  /* Mobile Responsiveness Improvements */
+  @media (max-width: 768px) {
+    .hero-title { font-size: 40px !important; line-height: 1 !important; }
+    .announcement-bar { font-size: 12px; padding: 8px 10px; }
+    .stat-card { padding: 14px; }
+    .stat-card .font-display { font-size: 1.5rem !important; }
+    .panel-header { padding: 14px 16px; flex-wrap: wrap; gap: 10px; }
+    .topbar { padding: 12px 16px; }
+    .data-table tbody td, .data-table thead th { padding: 10px 12px; font-size: 12px; }
+    .modal { margin: 10px; }
+    .ppdb-card-container { max-width: 100%; }
+    .video-feature-card { padding: 14px; }
+    .login-overlay { padding: 16px 12px; }
+  }
 </style>
 </head>
 <body>
@@ -242,7 +256,7 @@
   </div>
 
   <nav id="nav" class="sticky top-0 z-50 transition-all duration-500 bg-white/95 backdrop-blur border-b border-[var(--border)]">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-3 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-10 py-3 flex items-center justify-between">
       <a href="#hero" class="flex items-center gap-3 group">
         <img src="https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png?auth_key=1884695660-de0f9328e4e64f548587c2bb93eb5fff-0-5c6e793dce6f3db7ea648add1ded676b" alt="Logo SMP NU Tugasari" class="w-12 h-12 object-contain">
         <div class="leading-none">
@@ -279,48 +293,48 @@
     </div>
   </nav>
 
-  <section id="hero" class="hero-bg relative min-h-screen flex items-center pt-16 pb-20 overflow-hidden">
+  <section id="hero" class="hero-bg relative min-h-screen flex items-center pt-10 pb-16 md:pt-16 md:pb-20 overflow-hidden">
     <div class="orb" style="width:500px;height:500px;background:var(--accent);top:-100px;left:-100px;"></div>
     <div class="orb" style="width:400px;height:400px;background:var(--nu-green);bottom:-50px;right:-50px;opacity:0.1;animation-delay:-6s;"></div>
     <div class="thread-line" style="top:30%;left:0;right:0;"></div>
     <div class="thread-line" style="top:70%;left:0;right:0;opacity:0.4;"></div>
-    <div class="max-w-7xl mx-auto px-6 lg:px-10 w-full relative z-10">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-10 w-full relative z-10">
       <div class="grid lg:grid-cols-12 gap-12 items-center">
         <div class="lg:col-span-7">
-          <div class="flex items-center gap-3 mb-8">
+          <div class="flex items-center gap-3 mb-6 md:mb-8">
             <span class="pill pill-accent"><span class="w-2 h-2 rounded-full bg-[var(--fg)] animate-pulse"></span> Penerimaan Peserta Didik Baru (PPDB) 2026/2027 Telah Dibuka!</span>
           </div>
-          <h1 class="hero-title font-display font-bold text-[60px] lg:text-[80px] leading-[0.9] tracking-tight mb-8 uppercase">
+          <h1 class="hero-title font-display font-bold text-[44px] md:text-[60px] lg:text-[80px] leading-[0.9] tracking-tight mb-6 md:mb-8 uppercase">
             Membentuk <span style="color:var(--nu-green);">Generasi</span><br><span style="color:var(--accent);">Qur'ani</span> Terampil & Cerdas
           </h1>
-          <p class="text-lg text-[var(--fg-2)] max-w-xl mb-10 leading-relaxed font-medium">Selamat datang di SMP NU TUGASARI. Sekolah Menengah Pertama di Bawah Naungan Yayasan Pendidikan Ma'arif Nahdlatul Ulama yang Berkomitmen Mencetak Siswa-Siswi Berakhlak Mulia, Mandiri, dan Menguasai IPTEK.</p>
-          <div class="flex flex-wrap gap-4 mb-12">
-            <button onclick="showPPDBForm()" class="btn-primary"><i class="fa-solid fa-user-plus mr-2"></i> Pendaftaran Online</button>
-            <a href="#about" class="btn-ghost"><i class="fa-solid fa-circle-info mr-2"></i> Tentang Kami</a>
+          <p class="text-base md:text-lg text-[var(--fg-2)] max-w-xl mb-8 md:mb-10 leading-relaxed font-medium">Selamat datang di SMP NU TUGASARI. Sekolah Menengah Pertama di Bawah Naungan Yayasan Pendidikan Ma'arif Nahdlatul Ulama yang Berkomitmen Mencetak Siswa-Siswi Berakhlak Mulia, Mandiri, dan Menguasai IPTEK.</p>
+          <div class="flex flex-wrap gap-4 mb-10 md:mb-12">
+            <button onclick="showPPDBForm()" class="btn-primary w-full md:w-auto"><i class="fa-solid fa-user-plus mr-2"></i> Pendaftaran Online</button>
+            <a href="#about" class="btn-ghost w-full md:w-auto"><i class="fa-solid fa-circle-info mr-2"></i> Tentang Kami</a>
           </div>
-          <div class="grid grid-cols-3 gap-6 max-w-xl pt-8 border-t border-[var(--border)]">
-            <div><div class="stat-num text-5xl">B</div><div class="text-[10px] text-[var(--muted)] uppercase tracking-widest mt-1 font-bold">Terakreditasi</div></div>
-            <div><div class="stat-num text-5xl">100%</div><div class="text-[10px] text-[var(--muted)] uppercase tracking-widest mt-1 font-bold">Lulusan Diterima</div></div>
-            <div><div class="stat-num text-5xl">5+</div><div class="text-[10px] text-[var(--muted)] uppercase tracking-widest mt-1 font-bold">Ekstrakurikuler</div></div>
+          <div class="grid grid-cols-3 gap-4 md:gap-6 max-w-xl pt-6 md:pt-8 border-t border-[var(--border)]">
+            <div><div class="stat-num text-3xl md:text-5xl">B</div><div class="text-[9px] md:text-[10px] text-[var(--muted)] uppercase tracking-widest mt-1 font-bold">Terakreditasi</div></div>
+            <div><div class="stat-num text-3xl md:text-5xl">100%</div><div class="text-[9px] md:text-[10px] text-[var(--muted)] uppercase tracking-widest mt-1 font-bold">Lulusan Diterima</div></div>
+            <div><div class="stat-num text-3xl md:text-5xl">5+</div><div class="text-[9px] md:text-[10px] text-[var(--muted)] uppercase tracking-widest mt-1 font-bold">Ekstrakurikuler</div></div>
           </div>
         </div>
         <div class="lg:col-span-5 relative">
           <div class="relative">
             <div class="absolute inset-0 pattern-grid rounded-3xl opacity-50"></div>
-            <div class="relative rounded-3xl shadow-2xl overflow-hidden border border-[var(--border)] h-[480px] group">
+            <div class="relative rounded-3xl shadow-2xl overflow-hidden border border-[var(--border)] h-[320px] md:h-[480px] group">
               <img src="https://z-cdn-media.chatglm.cn/files/b1ce25f5-864d-456a-8112-761ac7dcf50d.png?auth_key=1884821744-a8fb1b52bec0404a97218c0c0a17a165-0-6f0cfaf855637104398a5c11d2c56fd5" alt="Gedung SMP NU Tugasari" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
               <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
               <div class="absolute top-5 left-5 bg-white/95 backdrop-blur p-3 rounded-xl shadow-lg w-20 h-20 flex items-center justify-center logo-float">
                 <img src="https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png?auth_key=1884695660-de0f9328e4e64f548587c2bb93eb5fff-0-5c6e793dce6f3db7ea648add1ded676b" alt="Logo SMP NU Tugasari" class="w-full h-full object-contain">
               </div>
-              <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
-                <div class="font-heading text-xl font-bold tracking-wider">SMP NU TUGASARI</div>
+              <div class="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
+                <div class="font-heading text-lg md:text-xl font-bold tracking-wider">SMP NU TUGASARI</div>
                 <div class="text-[10px] tracking-[0.2em] text-[var(--accent)] uppercase mt-1 font-bold">Yayasan Pendidikan Ma'arif</div>
               </div>
             </div>
-            <div class="mt-6 grid grid-cols-2 gap-4">
-              <div class="bg-white border border-[var(--border)] rounded-lg p-4 shadow-xl"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-md bg-[var(--accent)]/15 flex items-center justify-center text-[var(--accent-2)]"><i class="fa-solid fa-flag"></i></div><div><div class="text-[10px] text-[var(--muted)] uppercase font-bold">Program</div><div class="text-sm font-bold font-display uppercase">KEPRAMUKAAN</div></div></div></div>
-              <div class="bg-white border border-[var(--border)] rounded-lg p-4 shadow-xl"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-md bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)]"><i class="fa-solid fa-user"></i></div><div><div class="text-[10px] text-[var(--muted)] uppercase font-bold">Unggulan</div><div class="text-sm font-bold font-display uppercase">PASKIBRAKA</div></div></div></div>
+            <div class="mt-4 md:mt-6 grid grid-cols-2 gap-3 md:gap-4">
+              <div class="bg-white border border-[var(--border)] rounded-lg p-3 md:p-4 shadow-xl"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-md bg-[var(--accent)]/15 flex items-center justify-center text-[var(--accent-2)]"><i class="fa-solid fa-flag"></i></div><div><div class="text-[10px] text-[var(--muted)] uppercase font-bold">Program</div><div class="text-sm font-bold font-display uppercase">KEPRAMUKAAN</div></div></div></div>
+              <div class="bg-white border border-[var(--border)] rounded-lg p-3 md:p-4 shadow-xl"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-md bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)]"><i class="fa-solid fa-user"></i></div><div><div class="text-[10px] text-[var(--muted)] uppercase font-bold">Unggulan</div><div class="text-sm font-bold font-display uppercase">PASKIBRAKA</div></div></div></div>
             </div>
           </div>
         </div>
@@ -342,12 +356,12 @@
     </div>
   </section>
 
-  <section id="about" class="py-28 relative">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10">
-      <div class="grid lg:grid-cols-12 gap-16 items-center">
+  <section id="about" class="py-16 md:py-28 relative">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-10">
+      <div class="grid lg:grid-cols-12 gap-10 md:gap-16 items-center">
         <div class="lg:col-span-5 reveal">
           <div class="section-num mb-4">— 01 / Tentang Kami</div>
-          <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none mb-8 uppercase">Pendidikan Berbasis <span style="color:var(--accent);">Nilai Islami</span></h2>
+          <h2 class="font-display font-bold text-4xl md:text-5xl lg:text-6xl leading-none mb-6 md:mb-8 uppercase">Pendidikan Berbasis <span style="color:var(--accent);">Nilai Islami</span></h2>
           <p class="text-[var(--fg-2)] leading-relaxed mb-6 font-medium">SMP NU TUGASARI adalah lembaga pendidikan formal di bawah Yayasan Pendidikan Ma'arif yang berdedikasi menggabungkan kurikulum nasional dengan pendidikan karakter keislaman Ahlussunnah wal Jama'ah.</p>
           <p class="text-[var(--fg-2)] leading-relaxed mb-8 font-medium">Dengan lingkungan asri dan fasilitas yang mendukung, kami menyiapkan generasi muda yang tidak hanya cerdas secara akademik, tetapi juga teguh dalam memegang nilai-nilai agama.</p>
           <div class="space-y-4">
@@ -356,23 +370,23 @@
           </div>
         </div>
         <div class="lg:col-span-7 reveal">
-          <div class="grid grid-cols-2 gap-5">
-            <div class="card p-6"><div class="flex items-center justify-between mb-4"><div class="w-12 h-12 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)] text-xl"><i class="fa-solid fa-school"></i></div><span class="text-[10px] text-[var(--muted)] uppercase font-bold">Akreditasi</span></div><div class="font-display text-4xl font-bold mb-1 uppercase">Grade B</div><div class="text-sm text-[var(--muted)] font-medium">Terakreditasi Unggul</div></div>
-            <div class="card p-6" style="margin-top: 32px;"><div class="flex items-center justify-between mb-4"><div class="w-12 h-12 rounded-lg bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)] text-xl"><i class="fa-solid fa-users"></i></div><span class="text-[10px] text-[var(--muted)] uppercase font-bold">Siswa</span></div><div class="font-display text-4xl font-bold mb-1 uppercase">100+</div><div class="text-sm text-[var(--muted)] font-medium">Siswa Aktif</div></div>
-            <div class="card p-6"><div class="flex items-center justify-between mb-4"><div class="w-12 h-12 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)] text-xl"><i class="fa-solid fa-chalkboard-user"></i></div><span class="text-[10px] text-[var(--muted)] uppercase font-bold">Pengajar</span></div><div class="font-display text-4xl font-bold mb-1 uppercase">15+</div><div class="text-sm text-[var(--muted)] font-medium">Guru & Staf Profesional</div></div>
-            <div class="card p-6" style="margin-top: 32px;"><div class="flex items-center justify-between mb-4"><div class="w-12 h-12 rounded-lg bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)] text-xl"><i class="fa-solid fa-award"></i></div><span class="text-[10px] text-[var(--muted)] uppercase font-bold">Prestasi</span></div><div class="font-display text-4xl font-bold mb-1 uppercase">10+</div><div class="text-sm text-[var(--muted)] font-medium">Penghargaan Tingkat Kecamatan & Kabupaten</div></div>
+          <div class="grid grid-cols-2 gap-4 md:gap-5">
+            <div class="card p-4 md:p-6"><div class="flex items-center justify-between mb-4"><div class="w-12 h-12 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)] text-xl"><i class="fa-solid fa-school"></i></div><span class="text-[10px] text-[var(--muted)] uppercase font-bold">Akreditasi</span></div><div class="font-display text-3xl md:text-4xl font-bold mb-1 uppercase">Grade B</div><div class="text-sm text-[var(--muted)] font-medium">Terakreditasi Unggul</div></div>
+            <div class="card p-4 md:p-6" style="margin-top: 0;"><div class="flex items-center justify-between mb-4"><div class="w-12 h-12 rounded-lg bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)] text-xl"><i class="fa-solid fa-users"></i></div><span class="text-[10px] text-[var(--muted)] uppercase font-bold">Siswa</span></div><div class="font-display text-3xl md:text-4xl font-bold mb-1 uppercase">100+</div><div class="text-sm text-[var(--muted)] font-medium">Siswa Aktif</div></div>
+            <div class="card p-4 md:p-6"><div class="flex items-center justify-between mb-4"><div class="w-12 h-12 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)] text-xl"><i class="fa-solid fa-chalkboard-user"></i></div><span class="text-[10px] text-[var(--muted)] uppercase font-bold">Pengajar</span></div><div class="font-display text-3xl md:text-4xl font-bold mb-1 uppercase">15+</div><div class="text-sm text-[var(--muted)] font-medium">Guru & Staf Profesional</div></div>
+            <div class="card p-4 md:p-6" style="margin-top: 0;"><div class="flex items-center justify-between mb-4"><div class="w-12 h-12 rounded-lg bg-[var(--nu-green)] flex items-center justify-center text-[var(--accent)] text-xl"><i class="fa-solid fa-award"></i></div><span class="text-[10px] text-[var(--muted)] uppercase font-bold">Prestasi</span></div><div class="font-display text-3xl md:text-4xl font-bold mb-1 uppercase">10+</div><div class="text-sm text-[var(--muted)] font-medium">Penghargaan Tingkat Kecamatan & Kabupaten</div></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="programs" class="py-28 relative" style="background: var(--bg-2);">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10">
-      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16 reveal">
+  <section id="programs" class="py-16 md:py-28 relative" style="background: var(--bg-2);">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-10">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-10 md:mb-16 reveal">
         <div>
           <div class="section-num mb-4">— 02 / Program Unggulan</div>
-          <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase">Keunggulan <span style="color:var(--accent);">Akademik</span><br>& Ekstrakurikuler</h2>
+          <h2 class="font-display font-bold text-4xl md:text-5xl lg:text-6xl leading-none uppercase">Keunggulan <span style="color:var(--accent);">Akademik</span><br>& Ekstrakurikuler</h2>
         </div>
         <p class="text-[var(--muted)] max-w-md text-sm leading-relaxed font-medium">Program dirancang untuk mengembangkan potensi akademik, spiritual, dan sosial siswa secara menyeluruh.</p>
       </div>
@@ -380,30 +394,30 @@
     </div>
   </section>
 
-  <section id="teachers" class="py-28 relative">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10">
-      <div class="text-center mb-16 reveal">
+  <section id="teachers" class="py-16 md:py-28 relative">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-10">
+      <div class="text-center mb-10 md:mb-16 reveal">
         <div class="section-num mb-4">— 03 / Tenaga Pendidik</div>
-        <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase">Tim <span style="color:var(--accent);">Pendidik</span> Profesional</h2>
+        <h2 class="font-display font-bold text-4xl md:text-5xl lg:text-6xl leading-none uppercase">Tim <span style="color:var(--accent);">Pendidik</span> Profesional</h2>
         <p class="text-[var(--muted)] max-w-xl mx-auto mt-4 font-medium">Didukung oleh guru-guru berpengalaman dan berkompeten di bidangnya masing-masing.</p>
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" id="landingTeacherGrid"></div>
     </div>
   </section>
 
-  <section id="activities" class="py-28 relative" style="background: var(--bg-2);">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10">
-      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12 reveal">
+  <section id="activities" class="py-16 md:py-28 relative" style="background: var(--bg-2);">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-10">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-10 md:mb-12 reveal">
         <div>
           <div class="section-num mb-4">— 04 / Galeri & Kegiatan</div>
-          <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase mb-3">Dokumentasi <span style="color:var(--accent);">galeri kegiatan</span></h2>
+          <h2 class="font-display font-bold text-4xl md:text-5xl lg:text-6xl leading-none uppercase mb-3">Dokumentasi <span style="color:var(--accent);">galeri kegiatan</span></h2>
           <p class="text-[var(--fg-2)] max-w-xl font-medium">Dokumentasi berbagai kegiatan siswa-siswi SMP NU Tugasari.</p>
         </div>
         <div class="flex gap-2 flex-wrap" id="filterBtns">
-          <button data-filter="all" class="filter-btn px-4 py-2 rounded-md text-xs font-bold uppercase border-2 border-[var(--accent)] bg-[var(--accent)] text-[var(--fg)]">Semua</button>
-          <button data-filter="akademik" class="filter-btn px-4 py-2 rounded-md text-xs font-bold uppercase border-2 border-[var(--border-2)] text-[var(--fg-2)] hover:border-[var(--fg)]">Akademik</button>
-          <button data-filter="religi" class="filter-btn px-4 py-2 rounded-md text-xs font-bold uppercase border-2 border-[var(--border-2)] text-[var(--fg-2)] hover:border-[var(--fg)]">Keagamaan</button>
-          <button data-filter="ekskul" class="filter-btn px-4 py-2 rounded-md text-xs font-bold uppercase border-2 border-[var(--border-2)] text-[var(--fg-2)] hover:border-[var(--fg)]">Ekstrakurikuler</button>
+          <button data-filter="all" class="filter-btn px-3 py-2 md:px-4 md:py-2 rounded-md text-[11px] md:text-xs font-bold uppercase border-2 border-[var(--accent)] bg-[var(--accent)] text-[var(--fg)]">Semua</button>
+          <button data-filter="akademik" class="filter-btn px-3 py-2 md:px-4 md:py-2 rounded-md text-[11px] md:text-xs font-bold uppercase border-2 border-[var(--border-2)] text-[var(--fg-2)] hover:border-[var(--fg)]">Akademik</button>
+          <button data-filter="religi" class="filter-btn px-3 py-2 md:px-4 md:py-2 rounded-md text-[11px] md:text-xs font-bold uppercase border-2 border-[var(--border-2)] text-[var(--fg-2)] hover:border-[var(--fg)]">Keagamaan</button>
+          <button data-filter="ekskul" class="filter-btn px-3 py-2 md:px-4 md:py-2 rounded-md text-[11px] md:text-xs font-bold uppercase border-2 border-[var(--border-2)] text-[var(--fg-2)] hover:border-[var(--fg)]">Ekstrakurikuler</button>
         </div>
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="landingGalleryGrid"></div>
@@ -411,13 +425,13 @@
   </section>
 
   <!-- ===== VIDEO SECTION ===== -->
-  <section id="video" class="video-section-bg py-28 relative">
+  <section id="video" class="video-section-bg py-16 md:py-28 relative">
     <div class="video-pattern"></div>
-    <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
-      <div class="grid lg:grid-cols-12 gap-12 items-center">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-10 relative z-10">
+      <div class="grid lg:grid-cols-12 gap-10 md:gap-12 items-center">
         <div class="lg:col-span-5 reveal">
           <div class="section-num mb-4" style="color: var(--accent);">— Video Profil Sekolah</div>
-          <h2 class="font-display font-bold text-4xl lg:text-5xl leading-none mb-6 uppercase text-white">
+          <h2 class="font-display font-bold text-3xl md:text-4xl lg:text-5xl leading-none mb-6 uppercase text-white">
             Kenali <span style="color:var(--accent);">SMP NU Tugasari</span><br>Lebih Dekat
           </h2>
           <p class="text-white/60 mb-8 leading-relaxed font-medium">
@@ -452,7 +466,7 @@
               </div>
             </div>
           </div>
-          <a href="https://youtu.be/OB5rULDPpPo?si=_JMgzz1KKpoc4Xky" target="_blank" class="btn-primary" style="background: var(--accent); border-color: var(--accent);">
+          <a href="https://youtu.be/OB5rULDPpPo?si=_JMgzz1KKpoc4Xky" target="_blank" class="btn-primary w-full md:w-auto" style="background: var(--accent); border-color: var(--accent);">
             <i class="fa-brands fa-youtube mr-2"></i> Tonton di YouTube
           </a>
         </div>
@@ -489,13 +503,13 @@
   </section>
   <!-- ===== END VIDEO SECTION ===== -->
 
-  <section class="py-28 relative">
-    <div class="max-w-6xl mx-auto px-6 lg:px-10">
-      <div class="text-center mb-16 reveal">
+  <section class="py-16 md:py-28 relative">
+    <div class="max-w-6xl mx-auto px-4 md:px-6 lg:px-10">
+      <div class="text-center mb-10 md:mb-16 reveal">
         <div class="section-num mb-4">— 05 / Penerimaan Siswa Baru</div>
-        <h2 class="font-display font-bold text-5xl lg:text-6xl leading-none uppercase">Alur <span style="color:var(--accent);">PPDB 2026</span></h2>
+        <h2 class="font-display font-bold text-4xl md:text-5xl lg:text-6xl leading-none uppercase">Alur <span style="color:var(--accent);">PPDB 2026</span></h2>
       </div>
-      <div class="grid md:grid-cols-2 gap-x:12 gap-y:2">
+      <div class="grid md:grid-cols-2 gap-x-12 gap-y-2">
         <div class="reveal">
           <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 1</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Pendaftaran Online</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Pengisian formulir pendaftaran secara online melalui website resmi atau datang langsung ke sekretariat sekolah.</p></div>
           <div class="timeline-item"><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider mb-1 uppercase">Tahap 2</div><h4 class="font-display text-xl font-bold mb-2 uppercase">Tes Seleksi & Wawancara</h4><p class="text-sm text-[var(--muted)] leading-relaxed font-medium">Tes potensi akademik, wawancara calon siswa, dan tes potensi Tahfidz untuk kelas khusus.</p></div>
@@ -508,14 +522,14 @@
     </div>
   </section>
 
-  <section id="contact" class="py-28 relative" style="background: var(--bg-2);">
-    <div class="max-w-6xl mx-auto px-6 lg:px-10">
-      <div class="card p-10 lg:p-16 relative overflow-hidden reveal">
+  <section id="contact" class="py-16 md:py-28 relative" style="background: var(--bg-2);">
+    <div class="max-w-6xl mx-auto px-4 md:px-6 lg:px-10">
+      <div class="card p-6 md:p-10 lg:p-16 relative overflow-hidden reveal">
         <div class="orb" style="width:300px;height:300px;background:var(--accent);top:-100px;right:-50px;opacity:0.15;"></div>
-        <div class="grid lg:grid-cols-2 gap-12 relative z-10">
+        <div class="grid lg:grid-cols-2 gap-8 md:gap-12 relative z-10">
           <div>
             <div class="section-num mb-4">— 06 / Hubungi Kami</div>
-            <h2 class="font-display font-bold text-4xl lg:text-5xl leading-none mb-6 uppercase">Daftar atau <span style="color:var(--accent);">Tanya Jawab</span></h2>
+            <h2 class="font-display font-bold text-3xl md:text-4xl lg:text-5xl leading-none mb-6 uppercase">Daftar atau <span style="color:var(--accent);">Tanya Jawab</span></h2>
             <p class="text-[var(--fg-2)] mb-8 leading-relaxed font-medium">Hubungi kami untuk informasi lebih lanjut mengenai pendaftaran, kurikulum, atau kerja sama pendidikan.</p>
             <div class="space-y-4">
               <div class="flex items-center gap-4"><div class="w-11 h-11 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent-2)]"><i class="fa-solid fa-location-dot"></i></div><div><div class="text-[10px] text-[var(--muted)] uppercase font-bold">Alamat Sekolah</div><div class="text-sm font-bold font-display uppercase">Jl. Tugasari, Desa Kurungan Nyawa I
@@ -539,7 +553,7 @@ Sumatera Selatan</div></div></div>
   </section>
 
   <footer class="border-t border-[var(--border)] py-12 bg-white">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-10">
       <div class="flex flex-col md:flex-row justify-between gap-8 mb-8">
         <div class="max-w-sm">
           <div class="flex items-center gap-3 mb-4">
@@ -571,14 +585,14 @@ Sumatera Selatan</div></div></div>
 
 <div id="ppdbFormOverlay" class="login-overlay is-hidden">
   <div class="w-full max-w-2xl my-auto">
-    <div class="bg-white rounded-2xl p-8 shadow-2xl relative">
-      <button onclick="hidePPDBForm()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-800 flex items-center justify-center transition z-10" title="Tutup">
+    <div class="bg-white rounded-2xl p-5 md:p-8 shadow-2xl relative">
+      <button onclick="confirmExitPPDB()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-800 flex items-center justify-center transition z-10" title="Tutup">
         <i class="fa-solid fa-xmark"></i>
       </button>
-      <button onclick="hidePPDBForm()" class="text-xs text-gray-400 hover:text-gray-700 mb-4 font-bold uppercase tracking-wider"><i class="fa-solid fa-arrow-left mr-1"></i> Kembali ke Beranda</button>
+      <button onclick="confirmExitPPDB()" class="text-xs text-gray-400 hover:text-gray-700 mb-4 font-bold uppercase tracking-wider"><i class="fa-solid fa-arrow-left mr-1"></i> Kembali ke Beranda</button>
       <div class="flex items-center gap-3 mb-6">
         <img src="https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png?auth_key=1884695660-de0f9328e4e64f548587c2bb93eb5fff-0-5c6e793dce6f3db7ea648add1ded676b" alt="Logo" class="w-12 h-12 object-contain">
-        <div><h2 class="font-display text-2xl font-bold uppercase">Formulir PPDB 2026/2027</h2><p class="text-xs text-[var(--accent-2)] font-bold uppercase tracking-wider">SMP NU Tugasari</p></div>
+        <div><h2 class="font-display text-xl md:text-2xl font-bold uppercase">Formulir PPDB 2026/2027</h2><p class="text-xs text-[var(--accent-2)] font-bold uppercase tracking-wider">SMP NU Tugasari</p></div>
       </div>
       <form id="ppdbPublicForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div><label class="label">Nama Lengkap Calon Siswa</label><input type="text" class="input" id="regName" placeholder="Nama sesuai AKTA/KK" required></div>
@@ -597,7 +611,7 @@ Sumatera Selatan</div></div></div>
 
 <div id="ppdbCardOverlay" class="login-overlay is-hidden" style="background: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(212,175,55,0.15), transparent 60%), var(--bg);">
   <div class="w-full max-w-md text-center my-auto">
-    <div class="bg-white rounded-2xl p-8 shadow-2xl mb-6 relative">
+    <div class="bg-white rounded-2xl p-5 md:p-8 shadow-2xl mb-6 relative">
       <button onclick="hidePPDBCard()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-800 flex items-center justify-center transition z-10" title="Tutup">
         <i class="fa-solid fa-xmark"></i>
       </button>
@@ -643,7 +657,7 @@ Sumatera Selatan</div></div></div>
 
 <div id="verifyOverlay" class="login-overlay is-hidden" style="background: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(212,175,55,0.15), transparent 60%), var(--bg);">
   <div class="w-full max-w-md text-center my-auto">
-    <div class="bg-white rounded-2xl p-8 shadow-2xl mb-6 relative">
+    <div class="bg-white rounded-2xl p-5 md:p-8 shadow-2xl mb-6 relative">
       <button onclick="hideVerifyOverlay()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-800 flex items-center justify-center transition z-10" title="Tutup">
         <i class="fa-solid fa-xmark"></i>
       </button>
@@ -659,12 +673,12 @@ Sumatera Selatan</div></div></div>
       <h1 class="font-heading text-2xl font-bold text-white tracking-wider">SMP NU TUGASARI</h1>
       <p class="text-xs tracking-[0.2em] text-[var(--accent)] uppercase mt-1 font-bold">Admin Control Panel</p>
     </div>
-    <div class="bg-white rounded-2xl p-8 shadow-2xl relative">
+    <div class="bg-white rounded-2xl p-5 md:p-8 shadow-2xl relative">
       <button onclick="hideAdminLogin()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-800 flex items-center justify-center transition z-10" title="Tutup">
         <i class="fa-solid fa-xmark"></i>
       </button>
       <button onclick="hideAdminLogin()" class="text-xs text-gray-400 hover:text-gray-700 mb-4 font-bold uppercase tracking-wider"><i class="fa-solid fa-arrow-left mr-1"></i> Kembali ke Situs</button>
-      <h2 class="font-display text-2xl font-bold uppercase mb-1">Masuk ke Dashboard</h2>
+      <h2 class="font-display text-xl md:text-2xl font-bold uppercase mb-1">Masuk ke Dashboard</h2>
       <p class="text-sm text-[var(--muted)] mb-6 font-medium">Silakan masuk dengan akun administrator Anda.</p>
       <form id="loginForm" class="space-y-4">
         <div><label class="label">Username</label><div class="relative"><i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)] text-sm"></i><input type="text" id="loginUser" class="input" style="padding-left: 42px;" placeholder="Masukkan username" required></div></div>
@@ -703,7 +717,7 @@ Sumatera Selatan</div></div></div>
       <div class="nav-link" data-view="laporan"><i class="fa-solid fa-chart-pie"></i> Laporan</div>
     </nav>
     <div class="p-3 border-t border-white/10">
-      <div class="nav-link" onclick="backToSite()"><i class="fa-solid fa-globe"></i> Lihat Situs</div>
+      <div class="nav-link" onclick="confirmBackToSite()"><i class="fa-solid fa-globe"></i> Lihat Situs</div>
       <div class="nav-link" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Keluar</div>
     </div>
   </aside>
@@ -711,9 +725,10 @@ Sumatera Selatan</div></div></div>
   <div class="main-content">
     <header class="topbar">
       <button id="sidebarToggle" class="btn-icon"><i class="fa-solid fa-bars"></i></button>
+      <button class="btn-icon" title="Kembali ke Situs" onclick="confirmBackToSite()"><i class="fa-solid fa-arrow-left"></i></button>
       <div class="search-box"><i class="fa-solid fa-search"></i><input type="text" class="input" placeholder="Cari siswa, guru, pesan..."></div>
       <div class="flex-1"></div>
-      <button class="btn-icon" title="Iklan & Pengumuman" onclick="openAdModal()"><i class="fa-solid fa-bullhorn"></i></button>
+      <button class="btn-icon hidden md:inline-flex" title="Iklan & Pengumuman" onclick="openAdModal()"><i class="fa-solid fa-bullhorn"></i></button>
       <div class="dropdown" id="notifDropdown">
         <button class="btn-icon relative" title="Notifikasi" onclick="document.getElementById('notifDropdown').classList.toggle('open')">
           <i class="fa-solid fa-bell"></i>
@@ -725,7 +740,7 @@ Sumatera Selatan</div></div></div>
           <div class="p-3 border-t border-[var(--border)] text-center"><button class="text-xs font-bold text-[var(--accent-2)] uppercase" onclick="switchView('pesan')">Lihat Semua Pesan</button></div>
         </div>
       </div>
-      <button class="btn-icon" title="Bantuan" onclick="openHelpModal()"><i class="fa-solid fa-circle-question"></i></button>
+      <button class="btn-icon hidden md:inline-flex" title="Bantuan" onclick="openHelpModal()"><i class="fa-solid fa-circle-question"></i></button>
       <div class="dropdown" id="profileDropdown">
         <button class="flex items-center gap-3 p-1 pr-3 rounded-lg hover:bg-[var(--bg-2)] transition" onclick="document.getElementById('profileDropdown').classList.toggle('open')">
           <div class="avatar">AD</div>
@@ -743,12 +758,12 @@ Sumatera Selatan</div></div></div>
       </div>
     </header>
     
-    <main class="p-6 lg:p-8">
+    <main class="p-4 md:p-6 lg:p-8">
       <section class="view active" id="view-dashboard">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 md:mb-8">
           <div>
             <div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Selamat Datang Kembali</div>
-            <h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Dashboard Overview</h1>
+            <h1 class="font-display text-2xl md:text-3xl lg:text-4xl font-bold uppercase">Dashboard Overview</h1>
           </div>
           <div class="flex gap-2">
             <button class="btn btn-ghost"><i class="fa-solid fa-calendar"></i> Tahun Ajaran 2026/2027</button>
@@ -756,7 +771,7 @@ Sumatera Selatan</div></div></div>
           </div>
         </div>
         
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 mb-8">
+        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-5 mb-6 md:mb-8">
           <div class="stat-card">
             <div class="flex items-center justify-between mb-3"><div class="w-11 h-11 rounded-lg bg-[var(--accent)]/15 flex items-center justify-center text-[var(--accent-2)] text-lg"><i class="fa-solid fa-users"></i></div><span class="text-[10px] font-bold text-[var(--success)] uppercase"><i class="fa-solid fa-arrow-up"></i> 12%</span></div>
             <div class="font-display text-3xl font-bold" id="statSiswa">0</div>
@@ -777,14 +792,14 @@ Sumatera Selatan</div></div></div>
             <div class="font-display text-3xl font-bold" id="statPesan">0</div>
             <div class="text-xs text-[var(--muted)] uppercase font-bold tracking-wider mt-1">Pesan Belum Dibaca</div>
           </div>
-          <div class="stat-card">
+          <div class="stat-card col-span-2 sm:col-span-1">
             <div class="flex items-center justify-between mb-3"><div class="w-11 h-11 rounded-lg bg-purple-100 flex items-center justify-center text-purple-600 text-lg"><i class="fa-solid fa-eye"></i></div><span class="text-[10px] font-bold text-[var(--info)] uppercase">Hari ini</span></div>
             <div class="font-display text-3xl font-bold" id="statVisitorToday">0</div>
             <div class="text-xs text-[var(--muted)] uppercase font-bold tracking-wider mt-1">Pengunjung Hari Ini</div>
           </div>
         </div>
         
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 md:mb-8">
           <div class="panel lg:col-span-2">
             <div class="panel-header">
               <div><h3 class="font-display text-lg font-bold uppercase">Tren Pendaftaran PPDB</h3><p class="text-xs text-[var(--muted)] font-medium">6 bulan terakhir</p></div>
@@ -811,8 +826,8 @@ Sumatera Selatan</div></div></div>
       </section>
       
       <section class="view" id="view-ppdb">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-          <div><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Manajemen PPDB</div><h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Penerimaan Peserta Didik Baru</h1></div>
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 md:mb-8">
+          <div><div class="text-xs text-[var(--accent-2)] font-bold tracking-wider uppercase mb-1">— Manajemen PPDB</div><h1 class="font-display text-2xl md:text-3xl lg:text-4xl font-bold uppercase">Penerimaan Peserta Didik Baru</h1></div>
           <div class="flex gap-2"><button class="btn btn-ghost" onclick="exportCSV('ppdb')"><i class="fa-solid fa-file-csv"></i> Export CSV</button><button class="btn btn-accent" onclick="openPPDBModal()"><i class="fa-solid fa-plus"></i> Tambah Pendaftar</button></div>
         </div>
         <div class="flex gap-2 mb-6 flex-wrap">
@@ -831,15 +846,15 @@ Sumatera Selatan</div></div></div>
       </section>
       
       <section class="view" id="view-siswa">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-          <div><div class="text-xs text-[var(--accent-2)] font-bold tracking-writer uppercase mb-1">— Manajemen Siswa</div><h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Database Siswa Aktif</h1></div>
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 md:mb-8">
+          <div><div class="text-xs text-[var(--accent-2)] font-bold tracking-writer uppercase mb-1">— Manajemen Siswa</div><h1 class="font-display text-2xl md:text-3xl lg:text-4xl font-bold uppercase">Database Siswa Aktif</h1></div>
           <button class="btn btn-accent" onclick="openSiswaModal()"><i class="fa-solid fa-plus"></i> Tambah Siswa</button>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6">
           <div class="stat-card"><div class="text-xs text-[var(--muted)] uppercase font-bold mb-1">Kelas VII</div><div class="font-display text-2xl font-bold" id="cntKelasVII">0</div><div class="progress mt-2"><div class="progress-bar" style="width:34%"></div></div></div>
           <div class="stat-card"><div class="text-xs text-[var(--muted)] uppercase font-bold mb-1">Kelas VIII</div><div class="font-display text-2xl font-bold" id="cntKelasVIII">0</div><div class="progress mt-2"><div class="progress-bar" style="width:33%"></div></div></div>
           <div class="stat-card"><div class="text-xs text-[var(--muted)] uppercase font-bold mb-1">Kelas IX</div><div class="font-display text-2xl font-bold" id="cntKelasIX">0</div><div class="progress mt-2"><div class="progress-bar" style="width:33%"></div></div></div>
-          <div class="stat-card"><div class="text-xs text-[var(--muted)] uppercase font-bold mb-1">L : P</div><div class="font-display text-2xl font-bold" id="cntRatio">0 : 0</div><div class="text-[10px] text-[var(--muted)] mt-2">Rasio seimbang</div></div>
+          <div class="stat-card col-span-2 lg:col-span-1"><div class="text-xs text-[var(--muted)] uppercase font-bold mb-1">L : P</div><div class="font-display text-2xl font-bold" id="cntRatio">0 : 0</div><div class="text-[10px] text-[var(--muted)] mt-2">Rasio seimbang</div></div>
         </div>
         <div class="panel">
           <div class="panel-header">
@@ -851,24 +866,24 @@ Sumatera Selatan</div></div></div>
       </section>
       
       <section class="view" id="view-guru">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-          <div><div class="text-xs text-[var(--accent-2)] font-bold tracking-writer uppercase mb-1">— Manajemen Pendidik</div><h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Guru & Staf Sekolah</h1></div>
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 md:mb-8">
+          <div><div class="text-xs text-[var(--accent-2)] font-bold tracking-writer uppercase mb-1">— Manajemen Pendidik</div><h1 class="font-display text-2xl md:text-3xl lg:text-4xl font-bold uppercase">Guru & Staf Sekolah</h1></div>
           <button class="btn btn-accent" onclick="openGuruModal()"><i class="fa-solid fa-plus"></i> Tambah Guru</button>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5" id="guruGrid"></div>
       </section>
       
       <section class="view" id="view-program">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-          <div><div class="text-xs text-[var(--accent-2)] font-bold tracking-writer uppercase mb-1">— Manajemen Konten</div><h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Program Unggulan</h1></div>
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 md:mb-8">
+          <div><div class="text-xs text-[var(--accent-2)] font-bold tracking-writer uppercase mb-1">— Manajemen Konten</div><h1 class="font-display text-2xl md:text-3xl lg:text-4xl font-bold uppercase">Program Unggulan</h1></div>
           <button class="btn btn-accent" onclick="openProgramModal()"><i class="fa-solid fa-plus"></i> Tambah Program</button>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="programGrid"></div>
       </section>
       
       <section class="view" id="view-galeri">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-          <div><div class="text-xs text-[var(--accent-2)] font-bold tracking-writer uppercase mb-1">— Manajemen Konten</div><h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Galeri Kegiatan</h1></div>
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 md:mb-8">
+          <div><div class="text-xs text-[var(--accent-2)] font-bold tracking-writer uppercase mb-1">— Manajemen Konten</div><h1 class="font-display text-2xl md:text-3xl lg:text-4xl font-bold uppercase">Galeri Kegiatan</h1></div>
           <button class="btn btn-accent" onclick="openGaleriModal()"><i class="fa-solid fa-plus"></i> Upload Foto</button>
         </div>
         <div class="flex gap-2 mb-6 flex-wrap">
@@ -881,7 +896,7 @@ Sumatera Selatan</div></div></div>
       </section>
       
       <section class="view" id="view-pesan">
-        <div class="mb-8"><div class="text-xs text-[var(--accent-2)] font-bold tracking-writer uppercase mb-1">— Kotak Masuk</div><h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Pesan & Kontak</h1></div>
+        <div class="mb-6 md:mb-8"><div class="text-xs text-[var(--accent-2)] font-bold tracking-writer uppercase mb-1">— Kotak Masuk</div><h1 class="font-display text-2xl md:text-3xl lg:text-4xl font-bold uppercase">Pesan & Kontak</h1></div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div class="panel lg:col-span-1">
             <div class="panel-header"><h3 class="font-display text-lg font-bold uppercase">Inbox</h3><span class="badge-status badge-pending" id="unreadCount">0 baru</span></div>
@@ -900,7 +915,7 @@ Sumatera Selatan</div></div></div>
       </section>
       
       <section class="view" id="view-pengaturan">
-        <div class="mb-8"><div class="text-xs text-[var(--accent-2)] font-bold tracking-writer uppercase mb-1">— Konfigurasi Sistem</div><h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Pengaturan Sekolah</h1></div>
+        <div class="mb-6 md:mb-8"><div class="text-xs text-[var(--accent-2)] font-bold tracking-writer uppercase mb-1">— Konfigurasi Sistem</div><h1 class="font-display text-2xl md:text-3xl lg:text-4xl font-bold uppercase">Pengaturan Sekolah</h1></div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div class="lg:col-span-2 space-y-6">
             <div class="panel">
@@ -971,7 +986,7 @@ Sumatera Selatan</div></div></div>
       </section>
       
       <section class="view" id="view-laporan">
-        <div class="mb-8"><div class="text-xs text-[var(--accent-2)] font-bold tracking-writer uppercase mb-1">— Analisis Data</div><h1 class="font-display text-3xl lg:text-4xl font-bold uppercase">Laporan & Statistik</h1></div>
+        <div class="mb-6 md:mb-8"><div class="text-xs text-[var(--accent-2)] font-bold tracking-writer uppercase mb-1">— Analisis Data</div><h1 class="font-display text-2xl md:text-3xl lg:text-4xl font-bold uppercase">Laporan & Statistik</h1></div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <div class="panel"><div class="panel-header"><h3 class="font-display text-lg font-bold uppercase">Program Populer</h3></div><div class="p-5"><div class="chart-container"><canvas id="chartProgram"></canvas></div></div></div>
           <div class="panel"><div class="panel-header"><h3 class="font-display text-lg font-bold uppercase">Tren Kehadiran</h3></div><div class="p-5"><div class="chart-container"><canvas id="chartHadir"></canvas></div></div></div>
@@ -1770,6 +1785,11 @@ document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('
 
 function showPPDBForm() { document.getElementById('ppdbFormOverlay').classList.remove('is-hidden'); document.body.style.overflow = 'hidden'; }
 function hidePPDBForm() { document.getElementById('ppdbFormOverlay').classList.add('is-hidden'); document.body.style.overflow = ''; }
+function confirmExitPPDB() {
+  confirmAction('Konfirmasi Keluar', 'Apakah Anda yakin ingin keluar? Data pendaftaran yang belum dikirim akan hilang.', 'Ya, Keluar', () => {
+    hidePPDBForm();
+  });
+}
 function showPPDBCard(data) {
   document.getElementById('ppdbCardOverlay').classList.remove('is-hidden');
   const regNum = data.regNum || ('PPDB-' + new Date().getFullYear() + '-' + String(data.id).slice(-4));
@@ -1943,6 +1963,12 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 document.getElementById('togglePass').addEventListener('click', function() { const input = document.getElementById('loginPass'); const icon = this.querySelector('i'); if (input.type === 'password') { input.type = 'text'; icon.classList.remove('fa-eye'); icon.classList.add('fa-eye-slash'); } else { input.type = 'password'; icon.classList.remove('fa-eye-slash'); icon.classList.add('fa-eye'); } });
 function backToSite() { document.getElementById('adminLayout').classList.add('is-hidden'); document.getElementById('landingPage').style.display = 'block'; document.body.style.overflow = ''; window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
+function confirmBackToSite() {
+  confirmAction('Konfirmasi Keluar', 'Apakah Anda yakin ingin keluar dari Dashboard Admin?', 'Ya, Keluar', () => {
+    backToSite();
+  });
+}
+
 function logout() { 
   confirmAction('Konfirmasi Keluar', 'Apakah Anda yakin ingin keluar dari dashboard?', 'Keluar', () => {
     document.getElementById('adminLayout').classList.add('is-hidden'); 
@@ -1955,6 +1981,13 @@ function logout() {
 
 document.getElementById('adTitle')?.addEventListener('input', e => { const p = document.getElementById('adPreviewTitle'); if (p) p.textContent = e.target.value; });
 document.getElementById('adDesc')?.addEventListener('input', e => { const p = document.getElementById('adPreviewDesc'); if (p) p.textContent = e.target.value; });
+
+window.addEventListener('beforeunload', function (e) {
+    const confirmationMessage = 'Apakah Anda yakin ingin keluar dari halaman ini?';
+    e.preventDefault();
+    e.returnValue = confirmationMessage;
+    return confirmationMessage;
+});
 
 window.addEventListener('DOMContentLoaded', async () => {
   await fetchAllData();
