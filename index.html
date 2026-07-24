@@ -192,7 +192,7 @@
   .faq-q { padding: 14px 18px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 13px; }
   .faq-q:hover { background: var(--bg-2); }
   .faq-a { padding: 0 18px; max-height: 0; overflow: hidden; transition: all 0.3s; font-size: 13px; color: var(--fg-2); }
-  .faq-item.open .faq-a { padding: 0 18px 16px; max-height: 300px; }
+  .faq-item.open .faq-a { padding: 0 18px 16px; max-height: 500px; }
   .faq-item.open .faq-q i { transform: rotate(180deg); }
   .visitor-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); padding: 4px 10px; border-radius: 12px; font-size: 11px; color: rgba(255,255,255,0.8); font-weight: 600; }
   .ad-card { background: linear-gradient(135deg, var(--card) 0%, var(--bg-2) 100%); border: 1px dashed var(--accent); border-radius: 12px; padding: 20px; position: relative; overflow: hidden; }
@@ -898,6 +898,9 @@ Sumatera Selatan</div></div></div>
       <div class="nav-section-title">Sistem</div>
       <div class="nav-link" data-view="pengaturan"><i class="fa-solid fa-gear"></i> Pengaturan</div>
       <div class="nav-link" data-view="laporan"><i class="fa-solid fa-chart-pie"></i> Laporan</div>
+      <!-- ===== TAMBAHAN BARU: LINK TUTORIAL DI SIDEBAR ===== -->
+      <div class="nav-link" onclick="openTutorialModal()"><i class="fa-solid fa-circle-question"></i> Tutorial</div>
+      <!-- ===== AKHIR TAMBAHAN ===== -->
     </nav>
     <div class="p-3 border-t border-white/10">
       <div class="nav-link" onclick="confirmBackToSite()"><i class="fa-solid fa-globe"></i> Lihat Situs</div>
@@ -911,7 +914,14 @@ Sumatera Selatan</div></div></div>
       <button class="btn-icon" title="Kembali ke Situs" onclick="confirmBackToSite()"><i class="fa-solid fa-arrow-left"></i></button>
       <div class="search-box"><i class="fa-solid fa-search"></i><input type="text" class="input" placeholder="Cari siswa, guru, pesan..."></div>
       <div class="flex-1"></div>
+      
+      <!-- TOMBOL PENGUMUMAN (TETAP, TIDAK DIUBAH) -->
       <button class="btn-icon hidden md:inline-flex" title="Iklan & Pengumuman" onclick="openAdModal()"><i class="fa-solid fa-bullhorn"></i></button>
+      
+      <!-- ===== TAMBAHAN BARU: TOMBOL TUTORIAL DENGAN IKON TANDA TANYA ===== -->
+      <button class="btn-icon hidden md:inline-flex" title="Tutorial Sistem" onclick="openTutorialModal()" style="background: rgba(212,175,55,0.12); color: var(--accent-2); border-color: rgba(212,175,55,0.4);"><i class="fa-solid fa-circle-question"></i></button>
+      <!-- ===== AKHIR TAMBAHAN ===== -->
+      
       <div class="dropdown" id="notifDropdown">
         <button class="btn-icon relative" title="Notifikasi" onclick="document.getElementById('notifDropdown').classList.toggle('open')">
           <i class="fa-solid fa-bell"></i>
@@ -923,7 +933,10 @@ Sumatera Selatan</div></div></div>
           <div class="p-3 border-t border-[var(--border)] text-center"><button class="text-xs font-bold text-[var(--accent-2)] uppercase" onclick="switchView('pesan')">Lihat Semua Pesan</button></div>
         </div>
       </div>
+      
+      <!-- TOMBOL BANTUAN (TETAP, TIDAK DIUBAH) -->
       <button class="btn-icon hidden md:inline-flex" title="Bantuan" onclick="openHelpModal()"><i class="fa-solid fa-circle-question"></i></button>
+      
       <div class="dropdown" id="profileDropdown">
         <button class="flex items-center gap-3 p-1 pr-3 rounded-lg hover:bg-[var(--bg-2)] transition" onclick="document.getElementById('profileDropdown').classList.toggle('open')">
           <div class="avatar">AD</div>
@@ -1242,6 +1255,238 @@ Sumatera Selatan</div></div></div>
     <div class="modal-footer"><button class="btn btn-primary" onclick="closeModal('modalHelp')"><i class="fa-solid fa-check"></i> Mengerti</button></div>
   </div>
 </div>
+
+<!-- ===== TAMBAHAN BARU: MODAL TUTORIAL ===== -->
+<div class="modal-overlay" id="modalTutorial">
+  <div class="help-modal" style="max-width: 820px;">
+    <div class="modal-header">
+      <h3 class="font-display text-xl font-bold uppercase"><i class="fa-solid fa-circle-question text-[var(--accent-2)] mr-2"></i> Tutorial Sistem Admin</h3>
+      <button class="btn-icon" onclick="closeModal('modalTutorial')"><i class="fa-solid fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <!-- Video Tutorial -->
+      <div class="mb-6">
+        <div class="text-xs font-bold uppercase tracking-wider text-[var(--accent-2)] mb-3"><i class="fa-solid fa-play-circle mr-1"></i> Video Tutorial</div>
+        <div style="position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+          <iframe src="https://www.youtube.com/embed/OB5rULDPpPo?rel=0&modestbranding=1" title="Tutorial Sistem Admin SMP NU Tugasari" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"></iframe>
+        </div>
+        <p class="text-xs text-[var(--muted)] mt-2 font-medium text-center">Tonton video profil sekolah untuk mengenal lebih dekat suasana belajar di SMP NU Tugasari.</p>
+      </div>
+
+      <div class="border-t border-[var(--border)] pt-5 mb-4">
+        <div class="text-xs font-bold uppercase tracking-wider text-[var(--accent-2)] mb-3"><i class="fa-solid fa-list-ol mr-1"></i> Panduan Langkah demi Langkah</div>
+      </div>
+
+      <div id="tutorialList">
+        <!-- Tutorial 1: Dashboard -->
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+            <span><i class="fa-solid fa-gauge-high text-[var(--accent-2)] mr-2"></i> 1. Mengenal Dashboard</span>
+            <i class="fa-solid fa-chevron-down transition"></i>
+          </div>
+          <div class="faq-a">
+            <p class="mb-2">Dashboard adalah halaman utama admin yang menampilkan ringkasan statistik sekolah:</p>
+            <ul class="list-disc list-inside space-y-1 ml-2">
+              <li><strong>Statistik Kartu:</strong> Menampilkan total siswa aktif, pendaftar PPDB baru, guru & staf, pesan belum dibaca, dan pengunjung hari ini.</li>
+              <li><strong>Grafik Tren PPDB:</strong> Memvisualisasikan jumlah pendaftar dalam 6 bulan terakhir.</li>
+              <li><strong>Distribusi Siswa:</strong> Grafik donat yang menunjukkan pembagian siswa per kelas (VII, VIII, IX).</li>
+              <li><strong>Pendaftar Terbaru:</strong> Tabel 5 pendaftar PPDB paling baru dengan statusnya.</li>
+              <li><strong>Aktivitas Terbaru:</strong> Log aktivitas terkini di sistem.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Tutorial 2: PPDB -->
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+            <span><i class="fa-solid fa-user-plus text-[var(--accent-2)] mr-2"></i> 2. Mengelola Pendaftar PPDB</span>
+            <i class="fa-solid fa-chevron-down transition"></i>
+          </div>
+          <div class="faq-a">
+            <p class="mb-2"><strong>Menyetujui/Menolak Pendaftar:</strong></p>
+            <ol class="list-decimal list-inside space-y-1 ml-2">
+              <li>Klik menu <strong>PPDB</strong> di sidebar kiri.</li>
+              <li>Gunakan filter <strong>"Pending"</strong> untuk melihat pendaftar yang belum diproses.</li>
+              <li>Klik ikon <i class="fa-solid fa-check text-[var(--success)]"></i> (centang hijau) untuk <strong>menyetujui</strong>, atau ikon <i class="fa-solid fa-times text-[var(--danger)]"></i> (silang merah) untuk <strong>menolak</strong>.</li>
+            </ol>
+            <p class="mt-2 mb-1"><strong>Menambah Pendaftar Manual:</strong></p>
+            <ol class="list-decimal list-inside space-y-1 ml-2">
+              <li>Klik tombol <strong>+ Tambah Pendaftar</strong> di pojok kanan atas.</li>
+              <li>Isi formulir (nama, asal sekolah, orang tua, telepon, tanggal daftar, status).</li>
+              <li>Klik <strong>Simpan</strong>.</li>
+            </ol>
+            <p class="mt-2"><strong>Export Data:</strong> Klik tombol <strong>Export CSV</strong> untuk mengunduh semua data pendaftar dalam format Excel/CSV.</p>
+          </div>
+        </div>
+
+        <!-- Tutorial 3: Siswa -->
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+            <span><i class="fa-solid fa-users text-[var(--accent-2)] mr-2"></i> 3. Mengelola Data Siswa</span>
+            <i class="fa-solid fa-chevron-down transition"></i>
+          </div>
+          <div class="faq-a">
+            <p class="mb-2"><strong>Menambah Siswa Baru:</strong></p>
+            <ol class="list-decimal list-inside space-y-1 ml-2">
+              <li>Klik menu <strong>Siswa</strong> di sidebar.</li>
+              <li>Klik tombol <strong>+ Tambah Siswa</strong>.</li>
+              <li>Isi NIS, nama lengkap, kelas, jenis kelamin, nama wali, dan status.</li>
+              <li>Upload foto siswa (opsional tapi disarankan).</li>
+              <li>Klik <strong>Simpan</strong>.</li>
+            </ol>
+            <p class="mt-2"><strong>Mencari Siswa:</strong> Gunakan kotak pencarian di pojok kiri atas tabel untuk mencari berdasarkan nama atau NIS. Gunakan filter kelas untuk menyaring berdasarkan kelas.</p>
+          </div>
+        </div>
+
+        <!-- Tutorial 4: Guru -->
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+            <span><i class="fa-solid fa-chalkboard-user text-[var(--accent-2)] mr-2"></i> 4. Mengelola Guru & Staf</span>
+            <i class="fa-solid fa-chevron-down transition"></i>
+          </div>
+          <div class="faq-a">
+            <p class="mb-2"><strong>Menambah Guru Baru:</strong></p>
+            <ol class="list-decimal list-inside space-y-1 ml-2">
+              <li>Klik menu <strong>Guru & Staf</strong> di sidebar.</li>
+              <li>Klik tombol <strong>+ Tambah Guru</strong>.</li>
+              <li>Isi nama lengkap, jabatan, mata pelajaran.</li>
+              <li>Upload foto guru (wajib).</li>
+              <li>Klik <strong>Simpan</strong>. Data guru akan otomatis tampil di halaman utama website.</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Tutorial 5: Galeri -->
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+            <span><i class="fa-solid fa-images text-[var(--accent-2)] mr-2"></i> 5. Upload Foto ke Galeri</span>
+            <i class="fa-solid fa-chevron-down transition"></i>
+          </div>
+          <div class="faq-a">
+            <ol class="list-decimal list-inside space-y-1 ml-2">
+              <li>Klik menu <strong>Galeri</strong> di sidebar.</li>
+              <li>Klik tombol <strong>+ Upload Foto</strong>.</li>
+              <li>Pilih file gambar dari perangkat Anda.</li>
+              <li>Isi judul foto, pilih kategori (Akademik / Keagamaan / Ekstrakurikuler), dan tulis deskripsi singkat.</li>
+              <li>Klik <strong>Simpan</strong>. Foto akan tampil di galeri halaman utama.</li>
+            </ol>
+            <p class="mt-2"><strong>Filter Galeri:</strong> Gunakan tombol filter di atas galeri untuk menampilkan foto berdasarkan kategori.</p>
+          </div>
+        </div>
+
+        <!-- Tutorial 6: Program -->
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+            <span><i class="fa-solid fa-book-open text-[var(--accent-2)] mr-2"></i> 6. Mengelola Program Unggulan</span>
+            <i class="fa-solid fa-chevron-down transition"></i>
+          </div>
+          <div class="faq-a">
+            <ol class="list-decimal list-inside space-y-1 ml-2">
+              <li>Klik menu <strong>Program</strong> di sidebar.</li>
+              <li>Klik tombol <strong>+ Tambah Program</strong>.</li>
+              <li>Isi nama program, deskripsi, pilih ikon FontAwesome (contoh: <code>fa-quran</code>, <code>fa-flag</code>, <code>fa-book</code>), dan warna (Emas/Hijau).</li>
+              <li>Klik <strong>Simpan</strong>. Program akan tampil di halaman utama website.</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Tutorial 7: Pengumuman -->
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+            <span><i class="fa-solid fa-bullhorn text-[var(--accent-2)] mr-2"></i> 7. Membuat Pengumuman / Banner</span>
+            <i class="fa-solid fa-chevron-down transition"></i>
+          </div>
+          <div class="faq-a">
+            <p class="mb-2"><strong>Cara 1 — Melalui Tombol di Topbar:</strong></p>
+            <ol class="list-decimal list-inside space-y-1 ml-2">
+              <li>Klik ikon <i class="fa-solid fa-bullhorn text-[var(--accent-2)]"></i> (pengumuman) di toolbar atas.</li>
+              <li>Isi judul, deskripsi, dan teks tombol.</li>
+              <li>Aktifkan toggle <strong>"Tampilkan Pengumuman"</strong>.</li>
+              <li>Lihat preview di bagian bawah modal.</li>
+              <li>Klik <strong>Simpan Pengumuman</strong>. Banner akan tampil di bagian atas halaman utama.</li>
+            </ol>
+            <p class="mt-2"><strong>Cara 2 — Melalui Pengaturan:</strong> Buka menu <strong>Pengaturan</strong> → scroll ke bagian <strong>"Publikasi Pengumuman"</strong> → isi form dan aktifkan toggle → klik <strong>Simpan Perubahan</strong>.</p>
+          </div>
+        </div>
+
+        <!-- Tutorial 8: Pesan -->
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+            <span><i class="fa-solid fa-envelope text-[var(--accent-2)] mr-2"></i> 8. Membalas Pesan dari Pengunjung</span>
+            <i class="fa-solid fa-chevron-down transition"></i>
+          </div>
+          <div class="faq-a">
+            <ol class="list-decimal list-inside space-y-1 ml-2">
+              <li>Klik menu <strong>Pesan</strong> di sidebar.</li>
+              <li>Pilih pesan dari daftar inbox di sebelah kiri. Pesan belum dibaca ditandai dengan titik emas.</li>
+              <li>Detail pesan akan tampil di panel sebelah kanan.</li>
+              <li>Klik tombol <strong>Balas</strong> untuk membuka aplikasi email dengan pesan otomatis.</li>
+              <li>Klik tombol <strong>Hapus</strong> untuk menghapus pesan.</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Tutorial 9: Pengaturan -->
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+            <span><i class="fa-solid fa-gear text-[var(--accent-2)] mr-2"></i> 9. Mengubah Pengaturan Sekolah</span>
+            <i class="fa-solid fa-chevron-down transition"></i>
+          </div>
+          <div class="faq-a">
+            <ol class="list-decimal list-inside space-y-1 ml-2">
+              <li>Klik menu <strong>Pengaturan</strong> di sidebar.</li>
+              <li>Ubah <strong>Profil Sekolah</strong> (nama, NPSN, alamat, telepon, email, dll).</li>
+              <li>Atur <strong>Pengaturan PPDB</strong> (tahun ajaran, kuota, tanggal buka/tutup, status PPDB).</li>
+              <li>Atur <strong>Publikasi Pengumuman</strong> (judul, deskripsi, teks tombol, status aktif).</li>
+              <li>Isi <strong>Media Sosial</strong> (Instagram, YouTube, Facebook, WhatsApp).</li>
+              <li>Klik <strong>Simpan Perubahan</strong> di pojok kanan bawah untuk menyimpan semua perubahan.</li>
+            </ol>
+            <p class="mt-2 text-[var(--warning)] font-medium"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Penting: Perubahan tidak tersimpan otomatis. Selalu klik "Simpan Perubahan" sebelum meninggalkan halaman.</p>
+          </div>
+        </div>
+
+        <!-- Tutorial 10: Laporan -->
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+            <span><i class="fa-solid fa-chart-pie text-[var(--accent-2)] mr-2"></i> 10. Melihat Laporan & Statistik</span>
+            <i class="fa-solid fa-chevron-down transition"></i>
+          </div>
+          <div class="faq-a">
+            <p>Klik menu <strong>Laporan</strong> di sidebar untuk melihat:</p>
+            <ul class="list-disc list-inside space-y-1 ml-2 mt-1">
+              <li>Grafik program populer (OSIS, Pramuka).</li>
+              <li>Tren kehadiran siswa per hari.</li>
+              <li>Ringkasan akademik per kelas (jumlah siswa, rata-rata nilai, kehadiran, prestasi).</li>
+              <li>Klik <strong>Download PDF</strong> untuk mengunduh laporan dalam format PDF.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tips Section -->
+      <div class="mt-6 p-4 bg-[var(--accent)]/10 border border-[var(--accent)]/30 rounded-lg">
+        <div class="text-xs font-bold uppercase tracking-wider text-[var(--accent-2)] mb-2"><i class="fa-solid fa-lightbulb mr-1"></i> Tips & Trik</div>
+        <ul class="text-xs text-[var(--fg-2)] font-medium space-y-1 ml-4 list-disc">
+          <li>Data tersimpan otomatis ke cloud Supabase secara real-time. Pastikan koneksi internet stabil.</li>
+          <li>Gunakan tombol <i class="fa-solid fa-bullhorn text-[var(--accent-2)]"></i> di topbar untuk membuat pengumuman dengan cepat.</li>
+          <li>Klik ikon <i class="fa-solid fa-bell text-[var(--accent-2)]"></i> untuk melihat notifikasi pendaftar dan pesan baru.</li>
+          <li>Gunakan fitur <strong>Export CSV</strong> untuk mencadangkan data PPDB.</li>
+          <li>Tombol <i class="fa-solid fa-moon text-[var(--accent-2)]"></i> di footer untuk mengganti tema gelap/terang.</li>
+        </ul>
+      </div>
+
+      <!-- Help Section -->
+      <div class="mt-4 p-4 bg-[var(--bg-2)] rounded-lg">
+        <div class="text-xs font-bold uppercase tracking-wider text-[var(--accent-2)] mb-2"><i class="fa-solid fa-headset mr-1"></i> Butuh Bantuan Lebih Lanjut?</div>
+        <p class="text-xs text-[var(--muted)] font-medium">Hubungi dukungan teknis di <strong>support@smpnutugasari.sch.id</strong> atau telepon <strong>(0281) 123456</strong> ext. 102</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" onclick="closeModal('modalTutorial')"><i class="fa-solid fa-check"></i> Mengerti</button>
+    </div>
+  </div>
+</div>
+<!-- ===== AKHIR MODAL TUTORIAL ===== -->
 
 <div class="modal-overlay" id="modalAd">
   <div class="modal">
@@ -2194,6 +2439,10 @@ function toggleTheme() {
     try { localStorage.setItem('theme', newTheme); } catch(e) {}
     applyTheme(newTheme);
 }
+
+// ===== TAMBAHAN BARU: FUNGSI TUTORIAL =====
+function openTutorialModal() { openModal('modalTutorial'); }
+// ===== AKHIR TAMBAHAN =====
 
 async function initApp() {
   let savedTheme = 'light';
