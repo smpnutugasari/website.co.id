@@ -432,6 +432,18 @@ body.dark-mode #qrcode img {
   body.dark-mode button[style*="background: var(--accent)"] {
     color: #000000 !important;
   }
+
+  /* ===== TAMBAHAN CSS UNTUK KOTAK PERINGATAN LOGIN ===== */
+  #loginError {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+  }
+  body.dark-mode #loginError {
+    background-color: rgba(220, 38, 38, 0.15);
+    color: #fca5a5;
+    border: 1px solid rgba(220, 38, 38, 0.5);
+  }
 </style>
 </head>
 <body>
@@ -896,6 +908,13 @@ Sumatera Selatan</div></div></div>
           <label class="flex items-center gap-2 cursor-pointer font-medium text-[var(--fg-2)]"><input type="checkbox" class="accent-[var(--accent)]"> Ingat saya</label>
           <a href="#" class="text-[var(--accent-2)] font-bold hover:underline">Lupa password?</a>
         </div>
+        
+        <!-- KOTAK PERINGATAN LOGIN -->
+        <div id="loginError" class="hidden items-center gap-2 px-4 py-3 rounded-md text-sm font-medium">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span>Username atau Password salah! Silakan coba lagi.</span>
+        </div>
+
         <button type="submit" class="btn btn-primary w-full" style="padding: 13px;"><i class="fa-solid fa-right-to-bracket"></i> Masuk</button>
       </form>
     </div>
@@ -2378,13 +2397,44 @@ async function checkVerification() {
 
 function showAdminLogin(view = 'dashboard') { document.getElementById('loginScreen').classList.remove('is-hidden'); document.body.style.overflow = 'hidden'; }
 function hideAdminLogin() { document.getElementById('loginScreen').classList.add('is-hidden'); document.body.style.overflow = ''; }
+
+// === SCRIPT LOGIN YANG TELAH DIMODIFIKASI ===
 document.getElementById('loginForm').addEventListener('submit', function(e) {
-  e.preventDefault(); const user = document.getElementById('loginUser').value.trim(); const pass = document.getElementById('loginPass').value.trim();
+  e.preventDefault(); 
+  const user = document.getElementById('loginUser').value.trim(); 
+  const pass = document.getElementById('loginPass').value.trim();
+  const errorBox = document.getElementById('loginError');
+  
   if (user === 'esempe' && pass === 'esempe123') {
-    document.getElementById('loginScreen').classList.add('is-hidden'); document.getElementById('landingPage').style.display = 'none'; document.getElementById('adminLayout').classList.remove('is-hidden'); document.body.style.overflow = '';
-    initDashboard(); showToast('Selamat datang, Admin!', 'success'); window.scrollTo({ top: 0 });
-  } else { showToast('Username atau password salah!', 'error'); }
+    errorBox.classList.add('hidden'); 
+    errorBox.classList.remove('flex');
+    document.getElementById('loginScreen').classList.add('is-hidden'); 
+    document.getElementById('landingPage').style.display = 'none'; 
+    document.getElementById('adminLayout').classList.remove('is-hidden'); 
+    document.body.style.overflow = '';
+    initDashboard(); 
+    showToast('Selamat datang, Admin!', 'success'); 
+    window.scrollTo({ top: 0 });
+  } else { 
+    errorBox.classList.remove('hidden');
+    errorBox.classList.add('flex');
+    showToast('Username atau password salah!', 'error'); 
+    document.getElementById('loginPass').value = '';
+  }
 });
+
+document.getElementById('loginUser').addEventListener('input', function() {
+  const errorBox = document.getElementById('loginError');
+  errorBox.classList.add('hidden');
+  errorBox.classList.remove('flex');
+});
+document.getElementById('loginPass').addEventListener('input', function() {
+  const errorBox = document.getElementById('loginError');
+  errorBox.classList.add('hidden');
+  errorBox.classList.remove('flex');
+});
+// === AKHIR MODIFIKASI SCRIPT LOGIN ===
+
 document.getElementById('togglePass').addEventListener('click', function() { const input = document.getElementById('loginPass'); const icon = this.querySelector('i'); if (input.type === 'password') { input.type = 'text'; icon.classList.remove('fa-eye'); icon.classList.add('fa-eye-slash'); } else { input.type = 'password'; icon.classList.remove('fa-eye-slash'); icon.classList.add('fa-eye'); } });
 function backToSite() { document.getElementById('adminLayout').classList.add('is-hidden'); document.getElementById('landingPage').style.display = 'block'; document.body.style.overflow = ''; window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
