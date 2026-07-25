@@ -176,9 +176,35 @@
   .ppdb-card-barcode p { font-size: 9px; color: var(--muted); margin-top: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; }
   .ppdb-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px dashed #ddd; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
   .ppdb-card-footer .accent-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; display: inline-block; margin-right: 6px; }
-  #qrcode { display: flex; justify-content: center; align-items: center; padding: 5px; background: #fff; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); width: 100px; height: 100px; margin: 0 auto; }
-  #qrcode canvas { display: block !important; width: 90px !important; height: 90px !important; }
-  #qrcode img { display: none !important; }
+ #qrcode { 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  padding: 8px; 
+  background: #fff; 
+  border-radius: 6px; 
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08); 
+  width: 140px; 
+  height: 140px; 
+  margin: 0 auto; 
+  border: 1px solid #e5e7eb;
+}
+#qrcode img { 
+  display: block !important; 
+  width: 124px !important; 
+  height: 124px !important; 
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+#qrcode canvas { 
+  display: none !important; 
+}
+/* PENTING: Exclude QR code dari filter dark mode */
+body.dark-mode #qrcode canvas,
+body.dark-mode #qrcode img { 
+  filter: none !important; 
+  -webkit-filter: none !important; 
+}
   .notif-dropdown { position: absolute; top: calc(100% + 8px); right: 0; width: 360px; max-height: 480px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); opacity: 0; visibility: hidden; transform: translateY(-8px); transition: all 0.25s; z-index: 100; overflow: hidden; }
   .notif-dropdown.open { opacity: 1; visibility: visible; transform: translateY(0); }
   .notif-item { padding: 14px 18px; border-bottom: 1px solid var(--bg-2); cursor: pointer; transition: all 0.2s; display: flex; gap: 12px; }
@@ -898,7 +924,9 @@ Sumatera Selatan</div></div></div>
       <div class="nav-section-title">Sistem</div>
       <div class="nav-link" data-view="pengaturan"><i class="fa-solid fa-gear"></i> Pengaturan</div>
       <div class="nav-link" data-view="laporan"><i class="fa-solid fa-chart-pie"></i> Laporan</div>
+      <!-- ===== TAMBAHAN BARU: LINK TUTORIAL DI SIDEBAR ===== -->
       <div class="nav-link" onclick="openTutorialModal()"><i class="fa-solid fa-circle-question"></i> Tutorial</div>
+      <!-- ===== AKHIR TAMBAHAN ===== -->
     </nav>
     <div class="p-3 border-t border-white/10">
       <div class="nav-link" onclick="confirmBackToSite()"><i class="fa-solid fa-globe"></i> Lihat Situs</div>
@@ -913,9 +941,12 @@ Sumatera Selatan</div></div></div>
       <div class="search-box"><i class="fa-solid fa-search"></i><input type="text" class="input" placeholder="Cari siswa, guru, pesan..."></div>
       <div class="flex-1"></div>
       
+      <!-- TOMBOL PENGUMUMAN (TETAP, TIDAK DIUBAH) -->
       <button class="btn-icon hidden md:inline-flex" title="Iklan & Pengumuman" onclick="openAdModal()"><i class="fa-solid fa-bullhorn"></i></button>
       
+      <!-- ===== TAMBAHAN BARU: TOMBOL TUTORIAL DENGAN IKON TANDA TANYA ===== -->
       <button class="btn-icon hidden md:inline-flex" title="Tutorial Sistem" onclick="openTutorialModal()" style="background: rgba(212,175,55,0.12); color: var(--accent-2); border-color: rgba(212,175,55,0.4);"><i class="fa-solid fa-circle-question"></i></button>
+      <!-- ===== AKHIR TAMBAHAN ===== -->
       
       <div class="dropdown" id="notifDropdown">
         <button class="btn-icon relative" title="Notifikasi" onclick="document.getElementById('notifDropdown').classList.toggle('open')">
@@ -929,6 +960,7 @@ Sumatera Selatan</div></div></div>
         </div>
       </div>
       
+      <!-- TOMBOL BANTUAN (TETAP, TIDAK DIUBAH) -->
       <button class="btn-icon hidden md:inline-flex" title="Bantuan" onclick="openHelpModal()"><i class="fa-solid fa-circle-question"></i></button>
       
       <div class="dropdown" id="profileDropdown">
@@ -1250,7 +1282,7 @@ Sumatera Selatan</div></div></div>
   </div>
 </div>
 
-<!-- ===== MODAL TUTORIAL (TANPA VIDEO) ===== -->
+<!-- ===== TAMBAHAN BARU: MODAL TUTORIAL ===== -->
 <div class="modal-overlay" id="modalTutorial">
   <div class="help-modal" style="max-width: 820px;">
     <div class="modal-header">
@@ -1258,6 +1290,15 @@ Sumatera Selatan</div></div></div>
       <button class="btn-icon" onclick="closeModal('modalTutorial')"><i class="fa-solid fa-times"></i></button>
     </div>
     <div class="modal-body">
+      <!-- Video Tutorial -->
+      <div class="mb-6">
+        <div class="text-xs font-bold uppercase tracking-wider text-[var(--accent-2)] mb-3"><i class="fa-solid fa-play-circle mr-1"></i> Video Tutorial</div>
+        <div style="position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+          <iframe src="https://www.youtube.com/embed/OB5rULDPpPo?rel=0&modestbranding=1" title="Tutorial Sistem Admin SMP NU Tugasari" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"></iframe>
+        </div>
+        <p class="text-xs text-[var(--muted)] mt-2 font-medium text-center">Tonton video profil sekolah untuk mengenal lebih dekat suasana belajar di SMP NU Tugasari.</p>
+      </div>
+
       <div class="border-t border-[var(--border)] pt-5 mb-4">
         <div class="text-xs font-bold uppercase tracking-wider text-[var(--accent-2)] mb-3"><i class="fa-solid fa-list-ol mr-1"></i> Panduan Langkah demi Langkah</div>
       </div>
@@ -1534,6 +1575,7 @@ function showToast(msg, type = 'success') {
 const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+// === PERBAIKAN INISIALISASI SUPABASE ===
 const SUPABASE_URL = 'https://movwdvfqwsiuovkxupnr.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vdndkdmZxd3NpdW92a3h1cG5yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3NzQ4MTMsImV4cCI6MjEwMDM1MDgxM30.aB-Xf0AjpF324B2Fst2QAmoDvDaDr_gj0O0HlnBrLNQ';
 let supabaseClient = null; 
@@ -1541,6 +1583,7 @@ let isSupabaseReady = false;
 
 function initSupabase() { 
   try { 
+    // Gunakan window.supabase untuk memastikan mengambil library globalnya
     if (window.supabase && window.supabase.createClient && SUPABASE_URL && SUPABASE_ANON_KEY) { 
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); 
       isSupabaseReady = true;
@@ -1554,6 +1597,7 @@ function initSupabase() {
 }
 initSupabase();
 
+// Sisa kode (Tidak ada perubahan, biarkan seperti original Anda)
 async function uploadImageToSupabase(file, bucketName, folderName) {
   if (!isSupabaseReady) return null;
   try {
@@ -2209,11 +2253,30 @@ function confirmExitPPDB() {
 function showPPDBCard(data) {
   document.getElementById('ppdbCardOverlay').classList.remove('is-hidden');
   const regNum = data.regNum || ('PPDB-' + new Date().getFullYear() + '-' + String(data.id).slice(-4));
-  document.getElementById('cardRegNum').textContent = regNum; document.getElementById('cardName').textContent = data.name; document.getElementById('cardSchool').textContent = data.school; document.getElementById('cardDate').textContent = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+  document.getElementById('cardRegNum').textContent = regNum; 
+  document.getElementById('cardName').textContent = data.name; 
+  document.getElementById('cardSchool').textContent = data.school; 
+  document.getElementById('cardDate').textContent = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
   const verifyUrl = window.location.href.split('?')[0] + '?verify=' + regNum;
   const qrContainer = document.getElementById('qrcode');
   qrContainer.innerHTML = ''; 
-  try { new QRCode(qrContainer, { text: verifyUrl, width: 90, height: 90, colorDark: "#1a1d21", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H, render: "canvas" }); } catch (e) { console.warn('QR Code error:', e); }
+  // Tunggu sebentar agar DOM bersih sebelum render QR
+  setTimeout(() => {
+    try { 
+      new QRCode(qrContainer, { 
+        text: verifyUrl, 
+        width: 124, 
+        height: 124, 
+        colorDark: "#000000",     // Hitam pekat (lebih baik dari #1a1d21)
+        colorLight: "#ffffff", 
+        correctLevel: QRCode.CorrectLevel.M  // 15% — modul lebih besar, mudah discan
+      }); 
+    } catch (e) { 
+      console.warn('QR Code error:', e); 
+      // Fallback: tampilkan link teks jika QR gagal
+      qrContainer.innerHTML = '<div style="font-size:9px;text-align:center;padding:10px;word-break:break-all;">' + verifyUrl + '</div>';
+    }
+  }, 50);
   document.body.style.overflow = 'hidden';
 }
 function hidePPDBCard() { document.getElementById('ppdbCardOverlay').classList.add('is-hidden'); document.body.style.overflow = ''; document.getElementById('ppdbPublicForm').reset(); }
@@ -2422,7 +2485,9 @@ function toggleTheme() {
     applyTheme(newTheme);
 }
 
+// ===== TAMBAHAN BARU: FUNGSI TUTORIAL =====
 function openTutorialModal() { openModal('modalTutorial'); }
+// ===== AKHIR TAMBAHAN =====
 
 async function initApp() {
   let savedTheme = 'light';
