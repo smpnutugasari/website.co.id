@@ -924,9 +924,9 @@ Sumatera Selatan</div></div></div>
       <div class="nav-section-title">Sistem</div>
       <div class="nav-link" data-view="pengaturan"><i class="fa-solid fa-gear"></i> Pengaturan</div>
       <div class="nav-link" data-view="laporan"><i class="fa-solid fa-chart-pie"></i> Laporan</div>
-      <!-- ===== TAMBAHAN BARU: LINK TUTORIAL DI SIDEBAR ===== -->
+      <!-- ===== LINK TUTORIAL DI SIDEBAR ===== -->
       <div class="nav-link" onclick="openTutorialModal()"><i class="fa-solid fa-circle-question"></i> Tutorial</div>
-      <!-- ===== AKHIR TAMBAHAN ===== -->
+      <!-- ===== AKHIR ===== -->
     </nav>
     <div class="p-3 border-t border-white/10">
       <div class="nav-link" onclick="confirmBackToSite()"><i class="fa-solid fa-globe"></i> Lihat Situs</div>
@@ -941,12 +941,11 @@ Sumatera Selatan</div></div></div>
       <div class="search-box"><i class="fa-solid fa-search"></i><input type="text" class="input" placeholder="Cari siswa, guru, pesan..."></div>
       <div class="flex-1"></div>
       
-      <!-- TOMBOL PENGUMUMAN (TETAP, TIDAK DIUBAH) -->
+      <!-- TOMBOL PENGUMUMAN (TETAP) -->
       <button class="btn-icon hidden md:inline-flex" title="Iklan & Pengumuman" onclick="openAdModal()"><i class="fa-solid fa-bullhorn"></i></button>
       
-      <!-- ===== TAMBAHAN BARU: TOMBOL TUTORIAL DENGAN IKON TANDA TANYA ===== -->
+      <!-- TOMBOL TUTORIAL DENGAN IKON TANDA TANYA (TETAP) -->
       <button class="btn-icon hidden md:inline-flex" title="Tutorial Sistem" onclick="openTutorialModal()" style="background: rgba(212,175,55,0.12); color: var(--accent-2); border-color: rgba(212,175,55,0.4);"><i class="fa-solid fa-circle-question"></i></button>
-      <!-- ===== AKHIR TAMBAHAN ===== -->
       
       <div class="dropdown" id="notifDropdown">
         <button class="btn-icon relative" title="Notifikasi" onclick="document.getElementById('notifDropdown').classList.toggle('open')">
@@ -959,9 +958,6 @@ Sumatera Selatan</div></div></div>
           <div class="p-3 border-t border-[var(--border)] text-center"><button class="text-xs font-bold text-[var(--accent-2)] uppercase" onclick="switchView('pesan')">Lihat Semua Pesan</button></div>
         </div>
       </div>
-      
-      <!-- TOMBOL BANTUAN (TETAP, TIDAK DIUBAH) -->
-      <button class="btn-icon hidden md:inline-flex" title="Bantuan" onclick="openHelpModal()"><i class="fa-solid fa-circle-question"></i></button>
       
       <div class="dropdown" id="profileDropdown">
         <button class="flex items-center gap-3 p-1 pr-3 rounded-lg hover:bg-[var(--bg-2)] transition" onclick="document.getElementById('profileDropdown').classList.toggle('open')">
@@ -1242,47 +1238,7 @@ Sumatera Selatan</div></div></div>
   </div>
 </div>
 
-<div class="modal-overlay" id="modalHelp">
-  <div class="help-modal">
-    <div class="modal-header"><h3 class="font-display text-xl font-bold uppercase"><i class="fa-solid fa-circle-question text-[var(--accent-2)] mr-2"></i> Pusat Bantuan</h3><button class="btn-icon" onclick="closeModal('modalHelp')"><i class="fa-solid fa-times"></i></button></div>
-    <div class="modal-body">
-      <p class="text-sm text-[var(--muted)] mb-6 font-medium">Selamat datang di pusat bantuan admin SMP NU Tugasari. Berikut panduan penggunaan sistem:</p>
-      <div id="faqList">
-        <div class="faq-item">
-          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Bagaimana cara menambahkan siswa baru? <i class="fa-solid fa-chevron-down transition"></i></div>
-          <div class="faq-a">Buka menu <strong>Siswa</strong> di sidebar, lalu klik tombol <strong>Tambah Siswa</strong> di pojok kanan atas. Isi formulir (NIS, nama, kelas, jenis kelamin, wali, status). Anda juga dapat mengupload foto siswa langsung dari perangkat Anda. Klik <strong>Simpan</strong> untuk menyimpan data.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Bagaimana cara menyetujui pendaftar PPDB? <i class="fa-solid fa-chevron-down transition"></i></div>
-          <div class="faq-a">Buka menu <strong>PPDB</strong>, cari pendaftar dengan status <strong>Pending</strong>, lalu klik ikon centang hijau untuk menyetujui atau ikon X merah untuk menolak. Anda juga dapat mengedit detail pendaftar dengan mengklik ikon pena.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Bagaimana cara membalas pesan dari pengunjung? <i class="fa-solid fa-chevron-down transition"></i></div>
-          <div class="faq-a">Buka menu <strong>Pesan</strong>, pilih pesan dari daftar inbox di sebelah kiri, lalu klik tombol <strong>Balas</strong> untuk membuka aplikasi email Anda dengan pesan otomatis.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Bagaimana cara mengupload foto ke galeri? <i class="fa-solid fa-chevron-down transition"></i></div>
-          <div class="faq-a">Buka menu <strong>Galeri</strong>, klik <strong>Upload Foto</strong>. Pilih file gambar dari perangkat Anda, isi judul, pilih kategori (Akademik, Keagamaan, Ekstrakurikuler), dan tambahkan deskripsi. Klik <strong>Simpan</strong>.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Bagaimana cara mengubah pengaturan sekolah? <i class="fa-solid fa-chevron-down transition"></i></div>
-          <div class="faq-a">Buka menu <strong>Pengaturan</strong>. Anda dapat mengubah profil sekolah, pengaturan PPDB, media sosial, dan keamanan. Jangan lupa klik <strong>Simpan Perubahan</strong> setelah selesai.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Apakah data tersimpan otomatis? <i class="fa-solid fa-chevron-down transition"></i></div>
-          <div class="faq-a">Ya, semua data disimpan langsung secara real-time ke dalam database Supabase. Pastikan koneksi internet Anda stabil agar tidak terjadi kegagalan penyimpanan.</div>
-        </div>
-      </div>
-      <div class="mt-6 p-4 bg-[var(--bg-2)] rounded-lg">
-        <div class="text-xs font-bold uppercase tracking-wider text-[var(--accent-2)] mb-2"><i class="fa-solid fa-headset mr-1"></i> Butuh Bantuan Lebih Lanjut?</div>
-        <p class="text-xs text-[var(--muted)] font-medium">Hubungi dukungan teknis di <strong>support@smpnutugasari.sch.id</strong> atau telepon <strong>(0281) 123456</strong> ext. 102</p>
-      </div>
-    </div>
-    <div class="modal-footer"><button class="btn btn-primary" onclick="closeModal('modalHelp')"><i class="fa-solid fa-check"></i> Mengerti</button></div>
-  </div>
-</div>
-
-<!-- ===== TAMBAHAN BARU: MODAL TUTORIAL ===== -->
+<!-- MODAL TUTORIAL (VIDEO DIHAPUS) -->
 <div class="modal-overlay" id="modalTutorial">
   <div class="help-modal" style="max-width: 820px;">
     <div class="modal-header">
@@ -1290,15 +1246,6 @@ Sumatera Selatan</div></div></div>
       <button class="btn-icon" onclick="closeModal('modalTutorial')"><i class="fa-solid fa-times"></i></button>
     </div>
     <div class="modal-body">
-      <!-- Video Tutorial -->
-      <div class="mb-6">
-        <div class="text-xs font-bold uppercase tracking-wider text-[var(--accent-2)] mb-3"><i class="fa-solid fa-play-circle mr-1"></i> Video Tutorial</div>
-        <div style="position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
-          <iframe src="https://www.youtube.com/embed/OB5rULDPpPo?rel=0&modestbranding=1" title="Tutorial Sistem Admin SMP NU Tugasari" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"></iframe>
-        </div>
-        <p class="text-xs text-[var(--muted)] mt-2 font-medium text-center">Tonton video profil sekolah untuk mengenal lebih dekat suasana belajar di SMP NU Tugasari.</p>
-      </div>
-
       <div class="border-t border-[var(--border)] pt-5 mb-4">
         <div class="text-xs font-bold uppercase tracking-wider text-[var(--accent-2)] mb-3"><i class="fa-solid fa-list-ol mr-1"></i> Panduan Langkah demi Langkah</div>
       </div>
@@ -1771,7 +1718,6 @@ function confirmAction(title, message, btnText, onConfirm) {
   openModal('modalDynamic');
 }
 
-function openHelpModal() { openModal('modalHelp'); }
 function openAdModal() { 
   const ad = DB.ad || {};
   document.getElementById('adTitle').value = ad.title || '';
@@ -2485,9 +2431,9 @@ function toggleTheme() {
     applyTheme(newTheme);
 }
 
-// ===== TAMBAHAN BARU: FUNGSI TUTORIAL =====
+// ===== FUNGSI TUTORIAL =====
 function openTutorialModal() { openModal('modalTutorial'); }
-// ===== AKHIR TAMBAHAN =====
+// ===== AKHIR =====
 
 async function initApp() {
   let savedTheme = 'light';
