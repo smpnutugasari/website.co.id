@@ -199,7 +199,6 @@
     image-rendering: pixelated;
     image-rendering: crisp-edges;
   }
-  /* EXCLUDE QRCODE DARI FILTER DARK MODE */
   body.dark-mode #qrcode canvas,
   body.dark-mode #qrcode img,
   #ppdbCardOverlay canvas,
@@ -436,7 +435,6 @@
     color: #000000 !important;
   }
 
-  /* ===== TAMBAHAN CSS UNTUK KOTAK PERINGATAN LOGIN ===== */
   #loginError {
     background-color: #fef2f2;
     color: #991b1b;
@@ -550,7 +548,7 @@
               <div class="absolute top-5 left-5 bg-white/95 backdrop-blur p-3 rounded-xl shadow-lg w-20 h-20 flex items-center justify-center logo-float">
                 <img src="https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png?auth_key=1884695660-de0f9328e4e64f548587c2bb93eb5fff-0-5c6e793dce6f3db7ea648add1ded676b" alt="Logo SMP NU Tugasari" class="w-full h-full object-contain">
               </div>
-              <div class="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
+              <div class="absolute bottom-0 left:0 right:0 p-4 md:p-6 text-white">
                 <div class="font-heading text-lg md:text-xl font-bold tracking-wider">SMP NU TUGASARI</div>
                 <div class="text-[10px] tracking-[0.2em] text-[var(--accent)] uppercase mt-1 font-bold">Yayasan Pendidikan Ma'arif</div>
               </div>
@@ -912,7 +910,6 @@ Sumatera Selatan</div></div></div>
           <a href="#" class="text-[var(--accent-2)] font-bold hover:underline">Lupa password?</a>
         </div>
         
-        <!-- KOTAK PERINGATAN LOGIN -->
         <div id="loginError" class="hidden items-center gap-2 px-4 py-3 rounded-md text-sm font-medium">
           <i class="fa-solid fa-triangle-exclamation"></i>
           <span>Username atau Password salah! Silakan coba lagi.</span>
@@ -946,9 +943,7 @@ Sumatera Selatan</div></div></div>
       <div class="nav-section-title">Sistem</div>
       <div class="nav-link" data-view="pengaturan"><i class="fa-solid fa-gear"></i> Pengaturan</div>
       <div class="nav-link" data-view="laporan"><i class="fa-solid fa-chart-pie"></i> Laporan</div>
-      <!-- ===== LINK TUTORIAL DI SIDEBAR ===== -->
       <div class="nav-link" onclick="openTutorialModal()"><i class="fa-solid fa-circle-question"></i> Tutorial</div>
-      <!-- ===== AKHIR ===== -->
     </nav>
     <div class="p-3 border-t border-white/10">
       <div class="nav-link" onclick="confirmBackToSite()"><i class="fa-solid fa-globe"></i> Lihat Situs</div>
@@ -962,13 +957,8 @@ Sumatera Selatan</div></div></div>
       <button class="btn-icon" title="Kembali ke Situs" onclick="confirmBackToSite()"><i class="fa-solid fa-arrow-left"></i></button>
       <div class="search-box"><i class="fa-solid fa-search"></i><input type="text" class="input" placeholder="Cari siswa, guru, pesan..."></div>
       <div class="flex-1"></div>
-      
-      <!-- TOMBOL PENGUMUMAN (TETAP) -->
       <button class="btn-icon hidden md:inline-flex" title="Iklan & Pengumuman" onclick="openAdModal()"><i class="fa-solid fa-bullhorn"></i></button>
-      
-      <!-- TOMBOL TUTORIAL DENGAN IKON TANDA TANYA (TETAP) -->
       <button class="btn-icon hidden md:inline-flex" title="Tutorial Sistem" onclick="openTutorialModal()" style="background: rgba(212,175,55,0.12); color: var(--accent-2); border-color: rgba(212,175,55,0.4);"><i class="fa-solid fa-circle-question"></i></button>
-      
       <div class="dropdown" id="notifDropdown">
         <button class="btn-icon relative" title="Notifikasi" onclick="document.getElementById('notifDropdown').classList.toggle('open')">
           <i class="fa-solid fa-bell"></i>
@@ -980,7 +970,6 @@ Sumatera Selatan</div></div></div>
           <div class="p-3 border-t border-[var(--border)] text-center"><button class="text-xs font-bold text-[var(--accent-2)] uppercase" onclick="switchView('pesan')">Lihat Semua Pesan</button></div>
         </div>
       </div>
-      
       <div class="dropdown" id="profileDropdown">
         <button class="flex items-center gap-3 p-1 pr-3 rounded-lg hover:bg-[var(--bg-2)] transition" onclick="document.getElementById('profileDropdown').classList.toggle('open')">
           <div class="avatar">AD</div>
@@ -1010,7 +999,6 @@ Sumatera Selatan</div></div></div>
             <button class="btn btn-accent" onclick="exportCSV('ppdb')"><i class="fa-solid fa-download"></i> Export Data</button>
           </div>
         </div>
-        
         <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-5 mb-6 md:mb-8">
           <div class="stat-card">
             <div class="flex items-center justify-between mb-3"><div class="w-11 h-11 rounded-lg bg-[var(--accent)]/15 flex items-center justify-center text-[var(--accent-2)] text-lg"><i class="fa-solid fa-users"></i></div><span class="text-[10px] font-bold text-[var(--success)] uppercase"><i class="fa-solid fa-arrow-up"></i> 12%</span></div>
@@ -1038,7 +1026,6 @@ Sumatera Selatan</div></div></div>
             <div class="text-xs text-[var(--muted)] uppercase font-bold tracking-wider mt-1">Pengunjung Hari Ini</div>
           </div>
         </div>
-        
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 md:mb-8">
           <div class="panel lg:col-span-2">
             <div class="panel-header">
@@ -1052,7 +1039,6 @@ Sumatera Selatan</div></div></div>
             <div class="p-5"><div class="chart-container"><canvas id="chartKelas"></canvas></div></div>
           </div>
         </div>
-        
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div class="panel lg:col-span-2">
             <div class="panel-header"><h3 class="font-display text-lg font-bold uppercase">Pendaftar PPDB Terbaru</h3><button class="btn btn-ghost btn-sm" onclick="switchView('ppdb')">Lihat Semua <i class="fa-solid fa-arrow-right"></i></button></div>
@@ -1260,7 +1246,6 @@ Sumatera Selatan</div></div></div>
   </div>
 </div>
 
-<!-- MODAL TUTORIAL (VIDEO DIHAPUS) -->
 <div class="modal-overlay" id="modalTutorial">
   <div class="help-modal" style="max-width: 820px;">
     <div class="modal-header">
@@ -1271,9 +1256,7 @@ Sumatera Selatan</div></div></div>
       <div class="border-t border-[var(--border)] pt-5 mb-4">
         <div class="text-xs font-bold uppercase tracking-wider text-[var(--accent-2)] mb-3"><i class="fa-solid fa-list-ol mr-1"></i> Panduan Langkah demi Langkah</div>
       </div>
-
       <div id="tutorialList">
-        <!-- Tutorial 1: Dashboard -->
         <div class="faq-item">
           <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
             <span><i class="fa-solid fa-gauge-high text-[var(--accent-2)] mr-2"></i> 1. Mengenal Dashboard</span>
@@ -1290,8 +1273,6 @@ Sumatera Selatan</div></div></div>
             </ul>
           </div>
         </div>
-
-        <!-- Tutorial 2: PPDB -->
         <div class="faq-item">
           <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
             <span><i class="fa-solid fa-user-plus text-[var(--accent-2)] mr-2"></i> 2. Mengelola Pendaftar PPDB</span>
@@ -1313,8 +1294,6 @@ Sumatera Selatan</div></div></div>
             <p class="mt-2"><strong>Export Data:</strong> Klik tombol <strong>Export CSV</strong> untuk mengunduh semua data pendaftar dalam format Excel/CSV.</p>
           </div>
         </div>
-
-        <!-- Tutorial 3: Siswa -->
         <div class="faq-item">
           <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
             <span><i class="fa-solid fa-users text-[var(--accent-2)] mr-2"></i> 3. Mengelola Data Siswa</span>
@@ -1332,8 +1311,6 @@ Sumatera Selatan</div></div></div>
             <p class="mt-2"><strong>Mencari Siswa:</strong> Gunakan kotak pencarian di pojok kiri atas tabel untuk mencari berdasarkan nama atau NIS. Gunakan filter kelas untuk menyaring berdasarkan kelas.</p>
           </div>
         </div>
-
-        <!-- Tutorial 4: Guru -->
         <div class="faq-item">
           <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
             <span><i class="fa-solid fa-chalkboard-user text-[var(--accent-2)] mr-2"></i> 4. Mengelola Guru & Staf</span>
@@ -1350,8 +1327,6 @@ Sumatera Selatan</div></div></div>
             </ol>
           </div>
         </div>
-
-        <!-- Tutorial 5: Galeri -->
         <div class="faq-item">
           <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
             <span><i class="fa-solid fa-images text-[var(--accent-2)] mr-2"></i> 5. Upload Foto ke Galeri</span>
@@ -1363,13 +1338,11 @@ Sumatera Selatan</div></div></div>
               <li>Klik tombol <strong>+ Upload Foto</strong>.</li>
               <li>Pilih file gambar dari perangkat Anda.</li>
               <li>Isi judul foto, pilih kategori (Akademik / Keagamaan / Ekstrakurikuler), dan tulis deskripsi singkat.</li>
-              <li>Klik <strong>Simpan</strong>. Foto akan tampil di galeri halaman utama.</li>
+              <li>Klik <strong>Simpan</strong>. Foto akan tampil di galeri halaman utama website.</li>
             </ol>
             <p class="mt-2"><strong>Filter Galeri:</strong> Gunakan tombol filter di atas galeri untuk menampilkan foto berdasarkan kategori.</p>
           </div>
         </div>
-
-        <!-- Tutorial 6: Program -->
         <div class="faq-item">
           <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
             <span><i class="fa-solid fa-book-open text-[var(--accent-2)] mr-2"></i> 6. Mengelola Program Unggulan</span>
@@ -1384,8 +1357,6 @@ Sumatera Selatan</div></div></div>
             </ol>
           </div>
         </div>
-
-        <!-- Tutorial 7: Pengumuman -->
         <div class="faq-item">
           <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
             <span><i class="fa-solid fa-bullhorn text-[var(--accent-2)] mr-2"></i> 7. Membuat Pengumuman / Banner</span>
@@ -1403,8 +1374,6 @@ Sumatera Selatan</div></div></div>
             <p class="mt-2"><strong>Cara 2 — Melalui Pengaturan:</strong> Buka menu <strong>Pengaturan</strong> → scroll ke bagian <strong>"Publikasi Pengumuman"</strong> → isi form dan aktifkan toggle → klik <strong>Simpan Perubahan</strong>.</p>
           </div>
         </div>
-
-        <!-- Tutorial 8: Pesan -->
         <div class="faq-item">
           <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
             <span><i class="fa-solid fa-envelope text-[var(--accent-2)] mr-2"></i> 8. Membalas Pesan dari Pengunjung</span>
@@ -1420,8 +1389,6 @@ Sumatera Selatan</div></div></div>
             </ol>
           </div>
         </div>
-
-        <!-- Tutorial 9: Pengaturan -->
         <div class="faq-item">
           <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
             <span><i class="fa-solid fa-gear text-[var(--accent-2)] mr-2"></i> 9. Mengubah Pengaturan Sekolah</span>
@@ -1439,8 +1406,6 @@ Sumatera Selatan</div></div></div>
             <p class="mt-2 text-[var(--warning)] font-medium"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Penting: Perubahan tidak tersimpan otomatis. Selalu klik "Simpan Perubahan" sebelum meninggalkan halaman.</p>
           </div>
         </div>
-
-        <!-- Tutorial 10: Laporan -->
         <div class="faq-item">
           <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
             <span><i class="fa-solid fa-chart-pie text-[var(--accent-2)] mr-2"></i> 10. Melihat Laporan & Statistik</span>
@@ -1457,8 +1422,6 @@ Sumatera Selatan</div></div></div>
           </div>
         </div>
       </div>
-
-      <!-- Tips Section -->
       <div class="mt-6 p-4 bg-[var(--accent)]/10 border border-[var(--accent)]/30 rounded-lg">
         <div class="text-xs font-bold uppercase tracking-wider text-[var(--accent-2)] mb-2"><i class="fa-solid fa-lightbulb mr-1"></i> Tips & Trik</div>
         <ul class="text-xs text-[var(--fg-2)] font-medium space-y-1 ml-4 list-disc">
@@ -1469,8 +1432,6 @@ Sumatera Selatan</div></div></div>
           <li>Tombol <i class="fa-solid fa-moon text-[var(--accent-2)]"></i> di footer untuk mengganti tema gelap/terang.</li>
         </ul>
       </div>
-
-      <!-- Help Section -->
       <div class="mt-4 p-4 bg-[var(--bg-2)] rounded-lg">
         <div class="text-xs font-bold uppercase tracking-wider text-[var(--accent-2)] mb-2"><i class="fa-solid fa-headset mr-1"></i> Butuh Bantuan Lebih Lanjut?</div>
         <p class="text-xs text-[var(--muted)] font-medium">Hubungi dukungan teknis di <strong>support@smpnutugasari.sch.id</strong> atau telepon <strong>(0281) 123456</strong> ext. 102</p>
@@ -1481,7 +1442,6 @@ Sumatera Selatan</div></div></div>
     </div>
   </div>
 </div>
-<!-- ===== AKHIR MODAL TUTORIAL ===== -->
 
 <div class="modal-overlay" id="modalAd">
   <div class="modal">
@@ -1544,7 +1504,6 @@ function showToast(msg, type = 'success') {
 const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// === PERBAIKAN INISIALISASI SUPABASE ===
 const SUPABASE_URL = 'https://movwdvfqwsiuovkxupnr.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vdndkdmZxd3NpdW92a3h1cG5yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3NzQ4MTMsImV4cCI6MjEwMDM1MDgxM30.aB-Xf0AjpF324B2Fst2QAmoDvDaDr_gj0O0HlnBrLNQ';
 let supabaseClient = null; 
@@ -1552,21 +1511,14 @@ let isSupabaseReady = false;
 
 function initSupabase() { 
   try { 
-    // Gunakan window.supabase untuk memastikan mengambil library globalnya
     if (window.supabase && window.supabase.createClient && SUPABASE_URL && SUPABASE_ANON_KEY) { 
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); 
       isSupabaseReady = true;
-      console.log("Supabase connected successfully!");
-    } else {
-      console.error("Supabase library belum termuat.");
-    }
-  } catch (e) { 
-    console.error('Supabase init failed:', e); 
-  } 
+    } 
+  } catch (e) { console.error('Supabase init failed:', e); } 
 }
 initSupabase();
 
-// Sisa kode (Tidak ada perubahan, biarkan seperti original Anda)
 async function uploadImageToSupabase(file, bucketName, folderName) {
   if (!isSupabaseReady) return null;
   try {
@@ -1575,10 +1527,7 @@ async function uploadImageToSupabase(file, bucketName, folderName) {
     if (error) throw error;
     const { data: publicUrlData } = supabaseClient.storage.from(bucketName).getPublicUrl(data.path);
     return publicUrlData.publicUrl;
-  } catch (e) { 
-    console.warn('Upload exception:', e.message); 
-    return null; 
-  }
+  } catch (e) { return null; }
 }
 
 function readFileAsDataURL(file) { return new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(file); }); }
@@ -1592,7 +1541,6 @@ function mapToSQL(table, record) {
   if (table === 'pesan') return { id: record.id, name: record.name, email: record.email, phone: record.phone, subject: record.subject, msg: record.msg, date: record.date, is_read: record.read };
   return record;
 }
-
 function mapFromSQL(table, record) {
   if (table === 'ppdb') return { id: record.id, regNum: record.reg_num, name: record.name, gender: record.gender, school: record.school, dob: record.dob, parent: record.parent, mother: record.mother, phone: record.phone, address: record.address, date: record.date, status: record.status };
   if (table === 'siswa') return { id: record.id, nis: record.nis, name: record.name, kelas: record.kelas, jk: record.jk, wali: record.wali, status: record.status, photo: record.photo };
@@ -1613,634 +1561,166 @@ async function fetchAllData() {
   if (!isSupabaseReady) return;
   try {
     const { data: configData } = await supabaseClient.from('app_config').select('*').eq('id', 'main_config').maybeSingle();
-    if (configData) {
-      if (configData.settings) DB.settings = { ...DB.settings, ...configData.settings };
-      if (configData.ad) DB.ad = { ...DB.ad, ...configData.ad };
-    } else {
-      await supabaseClient.from('app_config').upsert({ id: 'main_config', settings: DB.settings, ad: DB.ad });
-    }
-  } catch (e) { console.warn('Config error:', e); }
-
-  try {
-    const { data } = await supabaseClient.from('ppdb').select('*');
-    DB.ppdb = data ? data.map(p => mapFromSQL('ppdb', p)) : [];
-  } catch (e) { console.warn('PPDB error:', e); }
-
-  try {
-    const { data } = await supabaseClient.from('siswa').select('*');
-    DB.siswa = data ? data.map(s => mapFromSQL('siswa', s)) : [];
-  } catch (e) { console.warn('Siswa error:', e); }
-
-  try {
-    const { data } = await supabaseClient.from('guru').select('*');
-    DB.guru = data ? data.map(g => mapFromSQL('guru', g)) : [];
-  } catch (e) { console.warn('Guru error:', e); }
-
-  try {
-    const { data } = await supabaseClient.from('program').select('*');
-    DB.program = data ? data.map(p => mapFromSQL('program', p)) : [];
-  } catch (e) { console.warn('Program error:', e); }
-
-  try {
-    const { data } = await supabaseClient.from('galeri').select('*');
-    DB.galeri = data ? data.map(g => mapFromSQL('galeri', g)) : [];
-  } catch (e) { console.warn('Galeri error:', e); }
-
-  try {
-    const { data } = await supabaseClient.from('pesan').select('*');
-    DB.pesan = data ? data.map(p => mapFromSQL('pesan', p)) : [];
-  } catch (e) { console.warn('Pesan error:', e); }
+    if (configData) { if (configData.settings) DB.settings = { ...DB.settings, ...configData.settings }; if (configData.ad) DB.ad = { ...DB.ad, ...configData.ad }; } 
+    else { await supabaseClient.from('app_config').upsert({ id: 'main_config', settings: DB.settings, ad: DB.ad }); }
+  } catch (e) {}
+  try { const { data } = await supabaseClient.from('ppdb').select('*'); DB.ppdb = data ? data.map(p => mapFromSQL('ppdb', p)) : []; } catch (e) {}
+  try { const { data } = await supabaseClient.from('siswa').select('*'); DB.siswa = data ? data.map(s => mapFromSQL('siswa', s)) : []; } catch (e) {}
+  try { const { data } = await supabaseClient.from('guru').select('*'); DB.guru = data ? data.map(g => mapFromSQL('guru', g)) : []; } catch (e) {}
+  try { const { data } = await supabaseClient.from('program').select('*'); DB.program = data ? data.map(p => mapFromSQL('program', p)) : []; } catch (e) {}
+  try { const { data } = await supabaseClient.from('galeri').select('*'); DB.galeri = data ? data.map(g => mapFromSQL('galeri', g)) : []; } catch (e) {}
+  try { const { data } = await supabaseClient.from('pesan').select('*'); DB.pesan = data ? data.map(p => mapFromSQL('pesan', p)) : []; } catch (e) {}
 }
 
 let visitorStats = { total: 0, today: 0, date: '' };
-function getVisitorStats() {
-  const today = new Date().toDateString();
-  if (visitorStats.date !== today) { visitorStats.today = 0; visitorStats.date = today; }
-  visitorStats.total++; visitorStats.today++;
-  return visitorStats;
-}
-function updateVisitorDisplay() {
-  const stats = getVisitorStats();
-  const top = document.getElementById('visitorCountTop'); const footer = document.getElementById('visitorCountFooter'); const adminToday = document.getElementById('statVisitorToday');
-  if (top) top.textContent = stats.total.toLocaleString('id-ID');
-  if (footer) footer.textContent = stats.total.toLocaleString('id-ID');
-  if (adminToday) adminToday.textContent = stats.today.toLocaleString('id-ID');
-}
+function getVisitorStats() { const today = new Date().toDateString(); if (visitorStats.date !== today) { visitorStats.today = 0; visitorStats.date = today; } visitorStats.total++; visitorStats.today++; return visitorStats; }
+function updateVisitorDisplay() { const stats = getVisitorStats(); const top = document.getElementById('visitorCountTop'); const footer = document.getElementById('visitorCountFooter'); const adminToday = document.getElementById('statVisitorToday'); if (top) top.textContent = stats.total.toLocaleString('id-ID'); if (footer) footer.textContent = stats.total.toLocaleString('id-ID'); if (adminToday) adminToday.textContent = stats.today.toLocaleString('id-ID'); }
 
-function renderAdBanner() {
-  const ad = DB.ad || {};
-  const bar = document.getElementById('announcementBar');
-  const textEl = document.getElementById('announcementText');
-  const linkEl = document.getElementById('announcementLink');
-  if (ad.active && ad.title) {
-    textEl.innerHTML = `<strong>${ad.title}</strong> - ${ad.desc}`;
-    linkEl.textContent = ad.linkText || 'Klik di sini';
-    linkEl.style.display = 'inline-block';
-    bar.classList.add('show');
-  } else {
-    bar.classList.remove('show');
-  }
-}
+function renderAdBanner() { const ad = DB.ad || {}; const bar = document.getElementById('announcementBar'); const textEl = document.getElementById('announcementText'); const linkEl = document.getElementById('announcementLink'); if (ad.active && ad.title) { textEl.innerHTML = `<strong>${ad.title}</strong> - ${ad.desc}`; linkEl.textContent = ad.linkText || 'Klik di sini'; linkEl.style.display = 'inline-block'; bar.classList.add('show'); } else { bar.classList.remove('show'); } }
 
 document.querySelectorAll('.nav-link[data-view]').forEach(link => { link.addEventListener('click', () => switchView(link.dataset.view)); });
-function switchView(view) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.getElementById('view-' + view).classList.add('active');
-  document.querySelectorAll('.nav-link[data-view]').forEach(l => l.classList.remove('active'));
-  const activeLink = document.querySelector(`.nav-link[data-view="${view}"]`);
-  if (activeLink) activeLink.classList.add('active');
-  document.getElementById('sidebar').classList.remove('open');
-  window.scrollTo({top:0, behavior:'smooth'});
-}
+function switchView(view) { document.querySelectorAll('.view').forEach(v => v.classList.remove('active')); document.getElementById('view-' + view).classList.add('active'); document.querySelectorAll('.nav-link[data-view]').forEach(l => l.classList.remove('active')); const activeLink = document.querySelector(`.nav-link[data-view="${view}"]`); if (activeLink) activeLink.classList.add('active'); document.getElementById('sidebar').classList.remove('open'); window.scrollTo({top:0, behavior:'smooth'}); }
 document.getElementById('sidebarToggle').addEventListener('click', () => { document.getElementById('sidebar').classList.toggle('open'); });
-document.addEventListener('click', (e) => {
-  const dd = document.getElementById('profileDropdown'); if (dd && !dd.contains(e.target)) dd.classList.remove('open');
-  const nd = document.getElementById('notifDropdown'); if (nd && !nd.contains(e.target)) nd.classList.remove('open');
-});
+document.addEventListener('click', (e) => { const dd = document.getElementById('profileDropdown'); if (dd && !dd.contains(e.target)) dd.classList.remove('open'); const nd = document.getElementById('notifDropdown'); if (nd && !nd.contains(e.target)) nd.classList.remove('open'); });
 
 function openModal(id) { document.getElementById(id).classList.add('show'); }
 function closeModal(id) { document.getElementById(id).classList.remove('show'); }
 document.querySelectorAll('.modal-overlay').forEach(m => { m.addEventListener('click', (e) => { if (e.target === m) m.classList.remove('show'); }); });
 
-function openImageViewer(src, title = 'Gambar', desc = '') {
-  document.getElementById('imageViewerSrc').src = src;
-  document.getElementById('imageViewerTitle').textContent = title;
-  document.getElementById('imageViewerDesc').textContent = desc;
-  openModal('modalImageViewer');
-}
+function openImageViewer(src, title = 'Gambar', desc = '') { document.getElementById('imageViewerSrc').src = src; document.getElementById('imageViewerTitle').textContent = title; document.getElementById('imageViewerDesc').textContent = desc; openModal('modalImageViewer'); }
 
-function setupModal(title, bodyHtml, onSave) {
-  document.getElementById('modalTitle').textContent = title; 
-  document.getElementById('modalBody').innerHTML = bodyHtml;
-  const saveBtn = document.getElementById('modalSaveBtn'); 
-  const newSaveBtn = saveBtn.cloneNode(true); 
-  saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
-  newSaveBtn.innerHTML = '<i class="fa-solid fa-save"></i> Simpan';
-  newSaveBtn.className = 'btn btn-primary';
-  newSaveBtn.addEventListener('click', onSave); 
-  openModal('modalDynamic');
-}
+function setupModal(title, bodyHtml, onSave) { document.getElementById('modalTitle').textContent = title; document.getElementById('modalBody').innerHTML = bodyHtml; const saveBtn = document.getElementById('modalSaveBtn'); const newSaveBtn = saveBtn.cloneNode(true); saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn); newSaveBtn.innerHTML = '<i class="fa-solid fa-save"></i> Simpan'; newSaveBtn.className = 'btn btn-primary'; newSaveBtn.addEventListener('click', onSave); openModal('modalDynamic'); }
+function confirmAction(title, message, btnText, onConfirm) { document.getElementById('modalTitle').textContent = title; document.getElementById('modalBody').innerHTML = `<div class="text-center py-4"><div class="w-16 h-16 mx-auto rounded-full bg-red-100 flex items-center justify-center text-[var(--danger)] text-2xl mb-4"><i class="fa-solid fa-triangle-exclamation"></i></div><p class="text-sm text-[var(--fg-2)] font-medium">${message}</p></div>`; const saveBtn = document.getElementById('modalSaveBtn'); const newSaveBtn = saveBtn.cloneNode(true); saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn); newSaveBtn.innerHTML = `<i class="fa-solid fa-check"></i> ${btnText}`; newSaveBtn.className = 'btn btn-danger'; newSaveBtn.addEventListener('click', () => { onConfirm(); closeModal('modalDynamic'); }); openModal('modalDynamic'); }
 
-function confirmAction(title, message, btnText, onConfirm) {
-  document.getElementById('modalTitle').textContent = title;
-  document.getElementById('modalBody').innerHTML = `
-    <div class="text-center py-4">
-      <div class="w-16 h-16 mx-auto rounded-full bg-red-100 flex items-center justify-center text-[var(--danger)] text-2xl mb-4">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-      </div>
-      <p class="text-sm text-[var(--fg-2)] font-medium">${message}</p>
-    </div>
-  `;
-  const saveBtn = document.getElementById('modalSaveBtn'); 
-  const newSaveBtn = saveBtn.cloneNode(true); 
-  saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
-  newSaveBtn.innerHTML = `<i class="fa-solid fa-check"></i> ${btnText}`;
-  newSaveBtn.className = 'btn btn-danger';
-  newSaveBtn.addEventListener('click', () => { onConfirm(); closeModal('modalDynamic'); });
-  openModal('modalDynamic');
-}
+function openAdModal() { const ad = DB.ad || {}; document.getElementById('adTitle').value = ad.title || ''; document.getElementById('adDesc').value = ad.desc || ''; document.getElementById('adLinkText').value = ad.linkText || ''; document.getElementById('adActive').checked = ad.active !== false; document.getElementById('adPreviewTitle').textContent = ad.title || ''; document.getElementById('adPreviewDesc').textContent = ad.desc || ''; openModal('modalAd'); }
+async function saveAd() { try { DB.ad = { title: document.getElementById('adTitle').value, desc: document.getElementById('adDesc').value, linkText: document.getElementById('adLinkText').value, active: document.getElementById('adActive').checked }; renderAdBanner(); closeModal('modalAd'); const { error } = await supabaseClient.from('app_config').upsert({ id: 'main_config', settings: DB.settings, ad: DB.ad }); if (error) throw error; showToast('Pengumuman berhasil disimpan.', 'success'); } catch (err) { showToast('Gagal simpan iklan: ' + err.message, 'error'); } }
 
-function openAdModal() { 
-  const ad = DB.ad || {};
-  document.getElementById('adTitle').value = ad.title || '';
-  document.getElementById('adDesc').value = ad.desc || '';
-  document.getElementById('adLinkText').value = ad.linkText || '';
-  document.getElementById('adActive').checked = ad.active !== false;
-  document.getElementById('adPreviewTitle').textContent = ad.title || '';
-  document.getElementById('adPreviewDesc').textContent = ad.desc || '';
-  openModal('modalAd'); 
-}
+function openChangePasswordModal() { setupModal('Ubah Password', `<div class="space-y-4"><div><label class="label">Password Lama</label><input type="password" class="input" id="oldPass" placeholder="Masukkan password lama"></div><div><label class="label">Password Baru</label><input type="password" class="input" id="newPass" placeholder="Masukkan password baru"></div><div><label class="label">Konfirmasi Password Baru</label><input type="password" class="input" id="confirmPass" placeholder="Ulangi password baru"></div></div>`, () => { const oldP = document.getElementById('oldPass').value; const newP = document.getElementById('newPass').value; const confP = document.getElementById('confirmPass').value; if (!oldP || !newP || !confP) { showToast('Semua field wajib diisi.', 'error'); return; } if (newP !== confP) { showToast('Konfirmasi password tidak cocok.', 'error'); return; } if (newP.length < 6) { showToast('Password baru minimal 6 karakter.', 'error'); return; } closeModal('modalDynamic'); showToast('Password berhasil diubah.', 'success'); }); }
 
-async function saveAd() {
-  try {
-    DB.ad = {
-      title: document.getElementById('adTitle').value,
-      desc: document.getElementById('adDesc').value,
-      linkText: document.getElementById('adLinkText').value,
-      active: document.getElementById('adActive').checked
-    };
-    renderAdBanner(); closeModal('modalAd');
-    const { error } = await supabaseClient.from('app_config').upsert({ id: 'main_config', settings: DB.settings, ad: DB.ad });
-    if (error) throw error;
-    showToast('Pengumuman berhasil disimpan.', 'success');
-  } catch (err) { showToast('Gagal simpan iklan: ' + err.message, 'error'); }
-}
-
-function openChangePasswordModal() {
-  setupModal('Ubah Password', `
-    <div class="space-y-4">
-      <div><label class="label">Password Lama</label><input type="password" class="input" id="oldPass" placeholder="Masukkan password lama"></div>
-      <div><label class="label">Password Baru</label><input type="password" class="input" id="newPass" placeholder="Masukkan password baru"></div>
-      <div><label class="label">Konfirmasi Password Baru</label><input type="password" class="input" id="confirmPass" placeholder="Ulangi password baru"></div>
-    </div>
-  `, () => {
-    const oldP = document.getElementById('oldPass').value; const newP = document.getElementById('newPass').value; const confP = document.getElementById('confirmPass').value;
-    if (!oldP || !newP || !confP) { showToast('Semua field wajib diisi.', 'error'); return; }
-    if (newP !== confP) { showToast('Konfirmasi password tidak cocok.', 'error'); return; }
-    if (newP.length < 6) { showToast('Password baru minimal 6 karakter.', 'error'); return; }
-    closeModal('modalDynamic'); showToast('Password berhasil diubah.', 'success');
-  });
-}
-
-async function initDashboard() {
-  await fetchAllData();
-  renderRecentPPDB(); renderPPDBTable(); renderSiswaTable(); renderGuru(); renderProgram(); renderGaleri('all'); renderPesan(); renderNotifications(); renderActivities(); loadSettingsForm(); updateBadges(); initCharts(); updateVisitorDisplay();
-}
-function updateBadges() {
-  const pendingCount = DB.ppdb.filter(p => p.status === 'pending').length; const unreadCount = DB.pesan.filter(p => !p.read).length;
-  document.getElementById('ppdbBadge').textContent = pendingCount; document.getElementById('pesanBadge').textContent = unreadCount;
-  document.getElementById('statPPDB').textContent = pendingCount; document.getElementById('statPesan').textContent = unreadCount;
-  document.getElementById('unreadCount').textContent = unreadCount + ' baru'; document.getElementById('notifCount').textContent = pendingCount + unreadCount;
-  document.getElementById('cntAll').textContent = DB.ppdb.length; document.getElementById('cntPending').textContent = pendingCount;
-  document.getElementById('cntApproved').textContent = DB.ppdb.filter(p => p.status === 'approved').length; document.getElementById('cntRejected').textContent = DB.ppdb.filter(p => p.status === 'rejected').length;
-  document.getElementById('statSiswa').textContent = DB.siswa.length; document.getElementById('statGuru').textContent = DB.guru.length;
-  document.getElementById('cntKelasVII').textContent = DB.siswa.filter(s => s.kelas.startsWith('VII')).length;
-  document.getElementById('cntKelasVIII').textContent = DB.siswa.filter(s => s.kelas.startsWith('VIII')).length;
-  document.getElementById('cntKelasIX').textContent = DB.siswa.filter(s => s.kelas.startsWith('IX')).length;
-  document.getElementById('cntRatio').textContent = `${DB.siswa.filter(s => s.jk === 'L').length} : ${DB.siswa.filter(s => s.jk === 'P').length}`;
-}
+async function initDashboard() { await fetchAllData(); renderRecentPPDB(); renderPPDBTable(); renderSiswaTable(); renderGuru(); renderProgram(); renderGaleri('all'); renderPesan(); renderNotifications(); renderActivities(); loadSettingsForm(); updateBadges(); initCharts(); updateVisitorDisplay(); }
+function updateBadges() { const pendingCount = DB.ppdb.filter(p => p.status === 'pending').length; const unreadCount = DB.pesan.filter(p => !p.read).length; document.getElementById('ppdbBadge').textContent = pendingCount; document.getElementById('pesanBadge').textContent = unreadCount; document.getElementById('statPPDB').textContent = pendingCount; document.getElementById('statPesan').textContent = unreadCount; document.getElementById('unreadCount').textContent = unreadCount + ' baru'; document.getElementById('notifCount').textContent = pendingCount + unreadCount; document.getElementById('cntAll').textContent = DB.ppdb.length; document.getElementById('cntPending').textContent = pendingCount; document.getElementById('cntApproved').textContent = DB.ppdb.filter(p => p.status === 'approved').length; document.getElementById('cntRejected').textContent = DB.ppdb.filter(p => p.status === 'rejected').length; document.getElementById('statSiswa').textContent = DB.siswa.length; document.getElementById('statGuru').textContent = DB.guru.length; document.getElementById('cntKelasVII').textContent = DB.siswa.filter(s => s.kelas.startsWith('VII')).length; document.getElementById('cntKelasVIII').textContent = DB.siswa.filter(s => s.kelas.startsWith('VIII')).length; document.getElementById('cntKelasIX').textContent = DB.siswa.filter(s => s.kelas.startsWith('IX')).length; document.getElementById('cntRatio').textContent = `${DB.siswa.filter(s => s.jk === 'L').length} : ${DB.siswa.filter(s => s.jk === 'P').length}`; }
 function renderRecentPPDB() { document.getElementById('recentPPDB').innerHTML = DB.ppdb.slice(0, 5).map(p => `<tr><td><div class="font-bold">${p.name}</div></td><td>${p.school}</td><td>${p.date}</td><td><span class="badge-status badge-${p.status}">${p.status}</span></td></tr>`).join(''); }
-function renderActivities() {
-  const activities = [
-    { color: 'var(--accent)', shadow: 'rgba(212,175,55,0.2)', text: `Pendaftar baru: <span class="text-[var(--accent-2)]">${DB.ppdb[0]?.name || '-'}</span>`, time: 'Baru saja' },
-    { color: 'var(--nu-green)', shadow: 'rgba(0,106,62,0.2)', text: `Pesan baru dari <span class="text-[var(--accent-2)]">${DB.pesan.find(p=>!p.read)?.name || 'Tidak ada'}</span>`, time: '25 menit lalu' },
-    { color: 'var(--info)', shadow: 'rgba(37,99,235,0.2)', text: `Guru baru ditambahkan: <span class="text-[var(--accent-2)]">${DB.guru[0]?.name || '-'}</span>`, time: '1 jam lalu' },
-    { color: 'var(--success)', shadow: 'rgba(22,163,74,0.2)', text: `PPDB disetujui: <span class="text-[var(--accent-2)]">${DB.ppdb.filter(p=>p.status==='approved').length} siswa</span>`, time: '3 jam lalu' },
-    { color: 'var(--warning)', shadow: 'rgba(234,88,12,0.2)', text: `Galeri diperbarui: <span class="text-[var(--accent-2)]">${DB.galeri.length} foto</span>`, time: '5 jam lalu' }
-  ];
-  document.getElementById('activityList').innerHTML = activities.map(a => `<div class="activity-item"><div class="activity-dot" style="background:${a.color};box-shadow:0 0 0 3px ${a.shadow};"></div><div><div class="text-xs font-semibold">${a.text}</div><div class="text-[10px] text-[var(--muted)] mt-0.5">${a.time}</div></div></div>`).join('');
-}
-function renderNotifications() {
-  const notifs = [];
-  DB.ppdb.filter(p => p.status === 'pending').slice(0, 3).forEach(p => notifs.push({ type: 'ppdb', icon: 'fa-user-plus', color: 'var(--warning)', bg: '#fff7ed', title: p.name, desc: `Pendaftar baru dari ${p.school}`, time: p.date, id: p.id }));
-  DB.pesan.filter(p => !p.read).slice(0, 3).forEach(p => notifs.push({ type: 'pesan', icon: 'fa-envelope', color: 'var(--info)', bg: '#eff6ff', title: p.name, desc: p.subject, time: p.date, id: p.id }));
-  const list = document.getElementById('notifList');
-  if (notifs.length === 0) { list.innerHTML = '<div class="p-8 text-center text-[var(--muted)]"><i class="fa-solid fa-bell-slash text-3xl mb-3 opacity-30"></i><p class="text-sm font-medium">Tidak ada notifikasi baru</p></div>'; return; }
-  list.innerHTML = notifs.map(n => `<div class="notif-item unread" onclick="handleNotifClick('${n.type}', ${n.id})"><div class="notif-icon" style="background:${n.bg};color:${n.color};"><i class="fa-solid ${n.icon}"></i></div><div class="flex-1 min-w-0"><div class="font-bold text-sm truncate">${n.title}</div><div class="text-xs text-[var(--muted)] truncate">${n.desc}</div><div class="text-[10px] text-[var(--muted)] mt-1">${n.time}</div></div></div>`).join('');
-}
+function renderActivities() { const activities = [ { color: 'var(--accent)', shadow: 'rgba(212,175,55,0.2)', text: `Pendaftar baru: <span class="text-[var(--accent-2)]">${DB.ppdb[0]?.name || '-'}</span>`, time: 'Baru saja' }, { color: 'var(--nu-green)', shadow: 'rgba(0,106,62,0.2)', text: `Pesan baru dari <span class="text-[var(--accent-2)]">${DB.pesan.find(p=>!p.read)?.name || 'Tidak ada'}</span>`, time: '25 menit lalu' }, { color: 'var(--info)', shadow: 'rgba(37,99,235,0.2)', text: `Guru baru ditambahkan: <span class="text-[var(--accent-2)]">${DB.guru[0]?.name || '-'}</span>`, time: '1 jam lalu' }, { color: 'var(--success)', shadow: 'rgba(22,163,74,0.2)', text: `PPDB disetujui: <span class="text-[var(--accent-2)]">${DB.ppdb.filter(p=>p.status==='approved').length} siswa</span>`, time: '3 jam lalu' }, { color: 'var(--warning)', shadow: 'rgba(234,88,12,0.2)', text: `Galeri diperbarui: <span class="text-[var(--accent-2)]">${DB.galeri.length} foto</span>`, time: '5 jam lalu' } ]; document.getElementById('activityList').innerHTML = activities.map(a => `<div class="activity-item"><div class="activity-dot" style="background:${a.color};box-shadow:0 0 0 3px ${a.shadow};"></div><div><div class="text-xs font-semibold">${a.text}</div><div class="text-[10px] text-[var(--muted)] mt-0.5">${a.time}</div></div></div>`).join(''); }
+function renderNotifications() { const notifs = []; DB.ppdb.filter(p => p.status === 'pending').slice(0, 3).forEach(p => notifs.push({ type: 'ppdb', icon: 'fa-user-plus', color: 'var(--warning)', bg: '#fff7ed', title: p.name, desc: `Pendaftar baru dari ${p.school}`, time: p.date, id: p.id })); DB.pesan.filter(p => !p.read).slice(0, 3).forEach(p => notifs.push({ type: 'pesan', icon: 'fa-envelope', color: 'var(--info)', bg: '#eff6ff', title: p.name, desc: p.subject, time: p.date, id: p.id })); const list = document.getElementById('notifList'); if (notifs.length === 0) { list.innerHTML = '<div class="p-8 text-center text-[var(--muted)]"><i class="fa-solid fa-bell-slash text-3xl mb-3 opacity-30"></i><p class="text-sm font-medium">Tidak ada notifikasi baru</p></div>'; return; } list.innerHTML = notifs.map(n => `<div class="notif-item unread" onclick="handleNotifClick('${n.type}', ${n.id})"><div class="notif-icon" style="background:${n.bg};color:${n.color};"><i class="fa-solid ${n.icon}"></i></div><div class="flex-1 min-w-0"><div class="font-bold text-sm truncate">${n.title}</div><div class="text-xs text-[var(--muted)] truncate">${n.desc}</div><div class="text-[10px] text-[var(--muted)] mt-1">${n.time}</div></div></div>`).join(''); }
 function handleNotifClick(type, id) { document.getElementById('notifDropdown').classList.remove('open'); if (type === 'ppdb') switchView('ppdb'); else if (type === 'pesan') { switchView('pesan'); setTimeout(() => readPesan(id), 300); } }
-async function markAllReadNotif() { 
-  for (const p of DB.pesan.filter(p => !p.read)) {
-    p.read = true;
-    await supabaseClient.from('pesan').update({ is_read: true }).eq('id', p.id);
-  }
-  renderNotifications(); updateBadges(); showToast('Semua notifikasi ditandai dibaca.', 'success'); 
-}
+async function markAllReadNotif() { for (const p of DB.pesan.filter(p => !p.read)) { p.read = true; await supabaseClient.from('pesan').update({ is_read: true }).eq('id', p.id); } renderNotifications(); updateBadges(); showToast('Semua notifikasi ditandai dibaca.', 'success'); }
 
 let ppdbFilter = 'all';
-function renderPPDBTable() {
-  let data = DB.ppdb; if (ppdbFilter !== 'all') data = data.filter(p => p.status === ppdbFilter);
-  const search = document.getElementById('searchPPDB')?.value.toLowerCase() || ''; if (search) data = data.filter(p => p.name.toLowerCase().includes(search) || p.school.toLowerCase().includes(search));
-  document.getElementById('ppdbTable').innerHTML = data.length ? data.map(p => `<tr><td><input type="checkbox" class="accent-[var(--accent)]"></td><td><div class="flex items-center gap-3"><div class="avatar avatar-sm">${p.name.charAt(0)}</div><div><div class="font-bold">${p.name}</div><div class="text-[10px] text-[var(--muted)]">${p.phone || '-'}</div></div></div></td><td>${p.school}</td><td>${p.parent || '-'}</td><td>${p.date}</td><td><span class="badge-status badge-${p.status}">${p.status}</span></td><td><div class="flex gap-1">${p.status === 'pending' ? `<button class="btn-icon btn-sm" title="Setujui" onclick="updatePPDBStatus(${p.id}, 'approved')"><i class="fa-solid fa-check"></i></button><button class="btn-icon btn-sm" title="Tolak" onclick="updatePPDBStatus(${p.id}, 'rejected')"><i class="fa-solid fa-times"></i></button>` : ''}<button class="btn-icon btn-sm" title="Edit" onclick="openPPDBModal(${p.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger" title="Hapus" onclick="deletePPDB(${p.id})"><i class="fa-solid fa-trash"></i></button></div></td></tr>`).join('') : `<tr><td colspan="7" class="text-center py-8 text-[var(--muted)]">Tidak ada data ditemukan.</td></tr>`;
-}
-function openPPDBModal(id = null) {
-  const p = id ? DB.ppdb.find(x => x.id === id) : {};
-  setupModal(id ? 'Edit Pendaftar PPDB' : 'Tambah Pendaftar PPDB', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="ppdbName" value="${p.name || ''}" placeholder="Nama calon siswa"></div><div><label class="label">Asal Sekolah</label><input type="text" class="input" id="ppdbSchool" value="${p.school || ''}" placeholder="SD Asal"></div><div><label class="label">Nama Orang Tua</label><input type="text" class="input" id="ppdbParent" value="${p.parent || ''}" placeholder="Nama wali"></div><div><label class="label">No. Telepon</label><input type="text" class="input" id="ppdbPhone" value="${p.phone || ''}" placeholder="08xx"></div><div><label class="label">Tanggal Daftar</label><input type="date" class="input" id="ppdbDate" value="${p.date || new Date().toISOString().split('T')[0]}"></div><div><label class="label">Status</label><select class="select" id="ppdbStatus"><option value="pending" ${p.status === 'pending' ? 'selected' : ''}>Pending</option><option value="approved" ${p.status === 'approved' ? 'selected' : ''}>Disetujui</option><option value="rejected" ${p.status === 'rejected' ? 'selected' : ''}>Ditolak</option></select></div></div>`, async () => {
-    const name = document.getElementById('ppdbName').value; const school = document.getElementById('ppdbSchool').value; if (!name || !school) { showToast('Nama dan Asal Sekolah wajib diisi.', 'error'); return; }
-    const data = { name, school, parent: document.getElementById('ppdbParent').value, phone: document.getElementById('ppdbPhone').value, date: document.getElementById('ppdbDate').value, status: document.getElementById('ppdbStatus').value };
-    const newId = id || Date.now();
-    const recordToSave = { id: newId, ...data };
-    try {
-      const { error } = await supabaseClient.from('ppdb').upsert(mapToSQL('ppdb', recordToSave));
-      if (error) throw error;
-      if (id) { Object.assign(DB.ppdb.find(x => x.id === id), data); showToast('Data PPDB diperbarui.', 'success'); } 
-      else { DB.ppdb.unshift(recordToSave); showToast('Pendaftar baru ditambahkan.', 'success'); }
-      renderPPDBTable(); renderRecentPPDB(); updateBadges(); renderNotifications(); closeModal('modalDynamic');
-    } catch (e) { showToast('Gagal menyimpan: ' + e.message, 'error'); }
-  });
-}
-async function updatePPDBStatus(id, status) { 
-  try {
-    const { error } = await supabaseClient.from('ppdb').update({ status }).eq('id', id);
-    if (error) throw error;
-    const p = DB.ppdb.find(x => x.id === id); if(p) p.status = status; 
-    renderPPDBTable(); renderRecentPPDB(); updateBadges(); renderNotifications(); 
-    showToast(`Status pendaftar diperbarui menjadi ${status}.`, 'success'); 
-  } catch (e) { showToast('Gagal update status: ' + e.message, 'error'); }
-}
-function deletePPDB(id) { 
-  confirmAction('Hapus Pendaftar', 'Apakah Anda yakin ingin menghapus data pendaftar ini? Data yang dihapus tidak bisa dikembalikan.', 'Hapus', async () => {
-    try {
-      const { error } = await supabaseClient.from('ppdb').delete().eq('id', id);
-      if (error) throw error;
-      DB.ppdb = DB.ppdb.filter(p => p.id !== id);
-      renderPPDBTable(); renderRecentPPDB(); updateBadges(); renderNotifications(); showToast('Data pendaftar dihapus.', 'success'); 
-    } catch (e) { showToast('Gagal menghapus: ' + e.message, 'error'); }
-  });
-}
+function renderPPDBTable() { let data = DB.ppdb; if (ppdbFilter !== 'all') data = data.filter(p => p.status === ppdbFilter); const search = document.getElementById('searchPPDB')?.value.toLowerCase() || ''; if (search) data = data.filter(p => p.name.toLowerCase().includes(search) || p.school.toLowerCase().includes(search)); document.getElementById('ppdbTable').innerHTML = data.length ? data.map(p => `<tr><td><input type="checkbox" class="accent-[var(--accent)]"></td><td><div class="flex items-center gap-3"><div class="avatar avatar-sm">${p.name.charAt(0)}</div><div><div class="font-bold">${p.name}</div><div class="text-[10px] text-[var(--muted)]">${p.phone || '-'}</div></div></div></td><td>${p.school}</td><td>${p.parent || '-'}</td><td>${p.date}</td><td><span class="badge-status badge-${p.status}">${p.status}</span></td><td><div class="flex gap-1">${p.status === 'pending' ? `<button class="btn-icon btn-sm" title="Setujui" onclick="updatePPDBStatus(${p.id}, 'approved')"><i class="fa-solid fa-check"></i></button><button class="btn-icon btn-sm" title="Tolak" onclick="updatePPDBStatus(${p.id}, 'rejected')"><i class="fa-solid fa-times"></i></button>` : ''}<button class="btn-icon btn-sm" title="Edit" onclick="openPPDBModal(${p.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger" title="Hapus" onclick="deletePPDB(${p.id})"><i class="fa-solid fa-trash"></i></button></div></td></tr>`).join('') : `<tr><td colspan="7" class="text-center py-8 text-[var(--muted)]">Tidak ada data ditemukan.</td></tr>`; }
+function openPPDBModal(id = null) { const p = id ? DB.ppdb.find(x => x.id === id) : {}; setupModal(id ? 'Edit Pendaftar PPDB' : 'Tambah Pendaftar PPDB', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="ppdbName" value="${p.name || ''}" placeholder="Nama calon siswa"></div><div><label class="label">Asal Sekolah</label><input type="text" class="input" id="ppdbSchool" value="${p.school || ''}" placeholder="SD Asal"></div><div><label class="label">Nama Orang Tua</label><input type="text" class="input" id="ppdbParent" value="${p.parent || ''}" placeholder="Nama wali"></div><div><label class="label">No. Telepon</label><input type="text" class="input" id="ppdbPhone" value="${p.phone || ''}" placeholder="08xx"></div><div><label class="label">Tanggal Daftar</label><input type="date" class="input" id="ppdbDate" value="${p.date || new Date().toISOString().split('T')[0]}"></div><div><label class="label">Status</label><select class="select" id="ppdbStatus"><option value="pending" ${p.status === 'pending' ? 'selected' : ''}>Pending</option><option value="approved" ${p.status === 'approved' ? 'selected' : ''}>Disetujui</option><option value="rejected" ${p.status === 'rejected' ? 'selected' : ''}>Ditolak</option></select></div></div>`, async () => { const name = document.getElementById('ppdbName').value; const school = document.getElementById('ppdbSchool').value; if (!name || !school) { showToast('Nama dan Asal Sekolah wajib diisi.', 'error'); return; } const data = { name, school, parent: document.getElementById('ppdbParent').value, phone: document.getElementById('ppdbPhone').value, date: document.getElementById('ppdbDate').value, status: document.getElementById('ppdbStatus').value }; const newId = id || Date.now(); const recordToSave = { id: newId, ...data }; try { const { error } = await supabaseClient.from('ppdb').upsert(mapToSQL('ppdb', recordToSave)); if (error) throw error; if (id) { Object.assign(DB.ppdb.find(x => x.id === id), data); showToast('Data PPDB diperbarui.', 'success'); } else { DB.ppdb.unshift(recordToSave); showToast('Pendaftar baru ditambahkan.', 'success'); } renderPPDBTable(); renderRecentPPDB(); updateBadges(); renderNotifications(); closeModal('modalDynamic'); } catch (e) { showToast('Gagal menyimpan: ' + e.message, 'error'); } }); }
+async function updatePPDBStatus(id, status) { try { const { error } = await supabaseClient.from('ppdb').update({ status }).eq('id', id); if (error) throw error; const p = DB.ppdb.find(x => x.id === id); if(p) p.status = status; renderPPDBTable(); renderRecentPPDB(); updateBadges(); renderNotifications(); showToast(`Status pendaftar diperbarui menjadi ${status}.`, 'success'); } catch (e) { showToast('Gagal update status: ' + e.message, 'error'); } }
+function deletePPDB(id) { confirmAction('Hapus Pendaftar', 'Apakah Anda yakin ingin menghapus data pendaftar ini? Data yang dihapus tidak bisa dikembalikan.', 'Hapus', async () => { try { const { error } = await supabaseClient.from('ppdb').delete().eq('id', id); if (error) throw error; DB.ppdb = DB.ppdb.filter(p => p.id !== id); renderPPDBTable(); renderRecentPPDB(); updateBadges(); renderNotifications(); showToast('Data pendaftar dihapus.', 'success'); } catch (e) { showToast('Gagal menghapus: ' + e.message, 'error'); } }); }
 document.querySelectorAll('.filter-ppdb').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.filter-ppdb').forEach(b => { b.classList.remove('btn-primary'); b.classList.add('btn-ghost'); }); btn.classList.remove('btn-ghost'); btn.classList.add('btn-primary'); ppdbFilter = btn.dataset.status; renderPPDBTable(); }); });
 document.getElementById('searchPPDB')?.addEventListener('input', renderPPDBTable);
 
-function renderSiswaTable() {
-  let data = DB.siswa; const search = document.getElementById('searchSiswa')?.value.toLowerCase() || ''; const kelas = document.getElementById('filterKelasSiswa')?.value || 'all';
-  if (search) data = data.filter(s => s.name.toLowerCase().includes(search) || s.nis.includes(search)); if (kelas !== 'all') data = data.filter(s => s.kelas.startsWith(kelas));
-  document.getElementById('siswaTable').innerHTML = data.length ? data.map(s => `<tr><td><strong>${s.nis}</strong></td><td>${s.photo ? `<img src="${s.photo}" class="w-10 h-10 rounded-full object-cover border-2 border-[var(--accent)]">` : `<div class="avatar avatar-sm" style="background:${s.jk==='L'?'linear-gradient(135deg,#2563eb,#1e40af)':'linear-gradient(135deg,#db2777,#9d174d)'}">${s.name.charAt(0)}</div>`}</td><td><span class="font-bold">${s.name}</span></td><td><span class="badge-status badge-verified">${s.kelas}</span></td><td>${s.jk === 'L' ? 'Laki-laki' : 'Perempuan'}</td><td>${s.wali}</td><td><span class="badge-status badge-${s.status==='Aktif'?'approved':'rejected'}">${s.status}</span></td><td><div class="flex gap-1"><button class="btn-icon btn-sm" title="Edit" onclick="openSiswaModal(${s.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger" title="Hapus" onclick="deleteSiswa(${s.id})"><i class="fa-solid fa-trash"></i></button></div></td></tr>`).join('') : `<tr><td colspan="8" class="text-center py-8 text-[var(--muted)]">Tidak ada data ditemukan.</td></tr>`;
-}
-function openSiswaModal(id = null) {
-  const s = id ? DB.siswa.find(x => x.id === id) : {};
-  setupModal(id ? 'Edit Siswa' : 'Tambah Siswa Baru', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4><div><label class="label">NIS</label><input type="text" class="input" id="siswaNis" value="${s.nis || ''}" placeholder="2024001"></div><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="siswaName" value="${s.name || ''}" placeholder="Nama siswa"></div><div><label class="label">Kelas</label><select class="select" id="siswaKelas">${['VII A','VII B','VIII A','VIII B','IX A','IX B'].map(k => `<option value="${k}" ${s.kelas === k ? 'selected' : ''}>${k}</option>`).join('')}</select></div><div><label class="label">Jenis Kelamin</label><select class="select" id="siswaJk"><option value="L" ${s.jk === 'L' ? 'selected' : ''}>Laki-laki</option><option value="P" ${s.jk === 'P' ? 'selected' : ''}>Perempuan</option></select></div><div><label class="label">Nama Wali</label><input type="text" class="input" id="siswaWali" value="${s.wali || ''}" placeholder="Nama orang tua"></div><div><label class="label">Status</label><select class="select" id="siswaStatus"><option value="Aktif" ${s.status === 'Aktif' ? 'selected' : ''}>Aktif</option><option value="Non-Aktif" ${s.status === 'Non-Aktif' ? 'selected' : ''}>Non-Aktif</option></select></div><div class="md:col-span-2"><label class="label">Foto Siswa</label><input type="file" class="input" id="siswaPhotoFile" accept="image/*">${s.photo ? `<div class="mt-2 flex items-center gap-3"><img src="${s.photo}" class="w-16 h-16 rounded-lg object-cover border-2 border-[var(--accent)]"><span class="text-xs text-[var(--muted)]">Foto saat ini</span></div>` : '<div class="mt-2 text-xs text-[var(--muted)]">Belum ada foto. Upload foto dari perangkat Anda.</div>'}</div></div>`, async () => {
-    const name = document.getElementById('siswaName').value; const nis = document.getElementById('siswaNis').value; if (!name || !nis) { showToast('Nama dan NIS wajib diisi.', 'error'); return; }
-    let photo = s.photo || ''; const fileInput = document.getElementById('siswaPhotoFile'); 
-    if (fileInput.files && fileInput.files[0]) {
-      const file = fileInput.files[0]; showToast('Mengupload foto...', 'success');
-      const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'students');
-      if (uploadedUrl) photo = uploadedUrl;
-      else { 
-        photo = await readFileAsDataURL(file); 
-        showToast('Storage bermasalah, foto disimpan sebagai base64.', 'warning'); 
-      }
-    }
-    const data = { nis, name, kelas: document.getElementById('siswaKelas').value, jk: document.getElementById('siswaJk').value, wali: document.getElementById('siswaWali').value, status: document.getElementById('siswaStatus').value, photo };
-    const newId = id || Date.now();
-    const recordToSave = { id: newId, ...data };
-    try {
-      const { error } = await supabaseClient.from('siswa').upsert(mapToSQL('siswa', recordToSave));
-      if (error) throw error;
-      if (id) { Object.assign(DB.siswa.find(x => x.id === id), data); showToast('Data siswa diperbarui.', 'success'); } 
-      else { DB.siswa.push(recordToSave); showToast('Siswa baru ditambahkan.', 'success'); }
-      renderSiswaTable(); updateBadges(); closeModal('modalDynamic');
-    } catch (e) { showToast('Gagal menyimpan: ' + e.message, 'error'); }
-  });
-}
-function deleteSiswa(id) { 
-  confirmAction('Hapus Siswa', 'Apakah Anda yakin ingin menghapus data siswa ini?', 'Hapus', async () => {
-    try {
-      const { error } = await supabaseClient.from('siswa').delete().eq('id', id);
-      if (error) throw error;
-      DB.siswa = DB.siswa.filter(s => s.id !== id);
-      renderSiswaTable(); updateBadges(); showToast('Data siswa dihapus.', 'success'); 
-    } catch (e) { showToast('Gagal menghapus: ' + e.message, 'error'); }
-  });
-}
+function renderSiswaTable() { let data = DB.siswa; const search = document.getElementById('searchSiswa')?.value.toLowerCase() || ''; const kelas = document.getElementById('filterKelasSiswa')?.value || 'all'; if (search) data = data.filter(s => s.name.toLowerCase().includes(search) || s.nis.includes(search)); if (kelas !== 'all') data = data.filter(s => s.kelas.startsWith(kelas)); document.getElementById('siswaTable').innerHTML = data.length ? data.map(s => `<tr><td><strong>${s.nis}</strong></td><td>${s.photo ? `<img src="${s.photo}" class="w-10 h-10 rounded-full object-cover border-2 border-[var(--accent)]">` : `<div class="avatar avatar-sm" style="background:${s.jk==='L'?'linear-gradient(135deg,#2563eb,#1e40af)':'linear-gradient(135deg,#db2777,#9d174d)'}">${s.name.charAt(0)}</div>`}</td><td><span class="font-bold">${s.name}</span></td><td><span class="badge-status badge-verified">${s.kelas}</span></td><td>${s.jk === 'L' ? 'Laki-laki' : 'Perempuan'}</td><td>${s.wali}</td><td><span class="badge-status badge-${s.status==='Aktif'?'approved':'rejected'}">${s.status}</span></td><td><div class="flex gap-1"><button class="btn-icon btn-sm" title="Edit" onclick="openSiswaModal(${s.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger" title="Hapus" onclick="deleteSiswa(${s.id})"><i class="fa-solid fa-trash"></i></button></div></td></tr>`).join('') : `<tr><td colspan="8" class="text-center py-8 text-[var(--muted)]">Tidak ada data ditemukan.</td></tr>`; }
+function openSiswaModal(id = null) { const s = id ? DB.siswa.find(x => x.id === id) : {}; setupModal(id ? 'Edit Siswa' : 'Tambah Siswa Baru', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4><div><label class="label">NIS</label><input type="text" class="input" id="siswaNis" value="${s.nis || ''}" placeholder="2024001"></div><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="siswaName" value="${s.name || ''}" placeholder="Nama siswa"></div><div><label class="label">Kelas</label><select class="select" id="siswaKelas">${['VII A','VII B','VIII A','VIII B','IX A','IX B'].map(k => `<option value="${k}" ${s.kelas === k ? 'selected' : ''}>${k}</option>`).join('')}</select></div><div><label class="label">Jenis Kelamin</label><select class="select" id="siswaJk"><option value="L" ${s.jk === 'L' ? 'selected' : ''}>Laki-laki</option><option value="P" ${s.jk === 'P' ? 'selected' : ''}>Perempuan</option></select></div><div><label class="label">Nama Wali</label><input type="text" class="input" id="siswaWali" value="${s.wali || ''}" placeholder="Nama orang tua"></div><div><label class="label">Status</label><select class="select" id="siswaStatus"><option value="Aktif" ${s.status === 'Aktif' ? 'selected' : ''}>Aktif</option><option value="Non-Aktif" ${s.status === 'Non-Aktif' ? 'selected' : ''}>Non-Aktif</option></select></div><div class="md:col-span-2"><label class="label">Foto Siswa</label><input type="file" class="input" id="siswaPhotoFile" accept="image/*">${s.photo ? `<div class="mt-2 flex items-center gap-3"><img src="${s.photo}" class="w-16 h-16 rounded-lg object-cover border-2 border-[var(--accent)]"><span class="text-xs text-[var(--muted)]">Foto saat ini</span></div>` : '<div class="mt-2 text-xs text-[var(--muted)]">Belum ada foto. Upload foto dari perangkat Anda.</div>'}</div></div>`, async () => { const name = document.getElementById('siswaName').value; const nis = document.getElementById('siswaNis').value; if (!name || !nis) { showToast('Nama dan NIS wajib diisi.', 'error'); return; } let photo = s.photo || ''; const fileInput = document.getElementById('siswaPhotoFile'); if (fileInput.files && fileInput.files[0]) { const file = fileInput.files[0]; showToast('Mengupload foto...', 'success'); const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'students'); if (uploadedUrl) photo = uploadedUrl; else { photo = await readFileAsDataURL(file); showToast('Storage bermasalah, foto disimpan sebagai base64.', 'warning'); } } const data = { nis, name, kelas: document.getElementById('siswaKelas').value, jk: document.getElementById('siswaJk').value, wali: document.getElementById('siswaWali').value, status: document.getElementById('siswaStatus').value, photo }; const newId = id || Date.now(); const recordToSave = { id: newId, ...data }; try { const { error } = await supabaseClient.from('siswa').upsert(mapToSQL('siswa', recordToSave)); if (error) throw error; if (id) { Object.assign(DB.siswa.find(x => x.id === id), data); showToast('Data siswa diperbarui.', 'success'); } else { DB.siswa.push(recordToSave); showToast('Siswa baru ditambahkan.', 'success'); } renderSiswaTable(); updateBadges(); closeModal('modalDynamic'); } catch (e) { showToast('Gagal menyimpan: ' + e.message, 'error'); } }); }
+function deleteSiswa(id) { confirmAction('Hapus Siswa', 'Apakah Anda yakin ingin menghapus data siswa ini?', 'Hapus', async () => { try { const { error } = await supabaseClient.from('siswa').delete().eq('id', id); if (error) throw error; DB.siswa = DB.siswa.filter(s => s.id !== id); renderSiswaTable(); updateBadges(); showToast('Data siswa dihapus.', 'success'); } catch (e) { showToast('Gagal menghapus: ' + e.message, 'error'); } }); }
 document.getElementById('searchSiswa')?.addEventListener('input', renderSiswaTable);
 document.getElementById('filterKelasSiswa')?.addEventListener('change', renderSiswaTable);
 
-function renderGuru() { 
-  const grid = document.getElementById('guruGrid');
-  if (!grid) return;
-  if (DB.guru.length === 0) {
-    grid.innerHTML = '<div class="col-span-full text-center py-12 text-[var(--muted)]"><i class="fa-solid fa-users-slash text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada data guru. Tambahkan dari panel admin.</p></div>';
-    return;
-  }
-  grid.innerHTML = DB.guru.map(g => `<div class="panel overflow-hidden"><div class="relative"><img src="${g.img}" alt="${g.name}" class="w-full aspect-square object-cover"><div class="absolute top-3 right-3"><span class="badge-status badge-approved">${g.role.split(' ')[0]}</span></div></div><div class="p-5"><div class="text-[10px] uppercase tracking-wider text-[var(--accent-2)] font-bold mb-1">${g.role}</div><h4 class="font-display text-lg font-bold uppercase leading-tight mb-2">${g.name}</h4>${g.subject !== '-' ? `<div class="text-xs text-[var(--muted)] font-medium mb-3"><i class="fa-solid fa-book mr-1"></i> ${g.subject}</div>` : '<div class="mb-3"></div>'}<div class="flex gap-1"><button class="btn-icon btn-sm flex-1" title="Edit" onclick="openGuruModal(${g.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger flex-1" title="Hapus" onclick="deleteGuru(${g.id})"><i class="fa-solid fa-trash"></i></button></div></div></div>`).join(''); 
-}
-function openGuruModal(id = null) {
-  const g = id ? DB.guru.find(x => x.id === id) : {};
-  setupModal(id ? 'Edit Guru / Staf' : 'Tambah Guru / Staf', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="guruName" value="${g.name || ''}" placeholder="Dr. ..."></div><div><label class="label">Jabatan</label><input type="text" class="input" id="guruRole" value="${g.role || ''}" placeholder="Guru Matematika"></div><div><label class="label">Mata Pelajaran</label><input type="text" class="input" id="guruSubject" value="${g.subject || ''}" placeholder="Matematika"></div><div><label class="label">Upload Foto</label><input type="file" class="input" id="guruImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-16 h-16 rounded-lg object-cover"></div>` : ''}</div></div>`, async () => {
-    const name = document.getElementById('guruName').value; const role = document.getElementById('guruRole').value; if (!name || !role) { showToast('Nama dan Jabatan wajib diisi.', 'error'); return; }
-    let img = g.img || ''; const fileInput = document.getElementById('guruImgFile'); 
-    if (fileInput.files && fileInput.files[0]) {
-      const file = fileInput.files[0]; showToast('Mengupload foto...', 'success');
-      const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'teachers');
-      if (uploadedUrl) img = uploadedUrl;
-      else { img = await readFileAsDataURL(file); showToast('Storage bermasalah, foto disimpan sebagai base64.', 'warning'); }
-    } else if (!img) { showToast('Foto wajib diupload.', 'error'); return; }
-    const data = { name, role, subject: document.getElementById('guruSubject').value || '-', img };
-    const newId = id || Date.now();
-    const recordToSave = { id: newId, ...data };
-    try {
-      const { error } = await supabaseClient.from('guru').upsert(mapToSQL('guru', recordToSave));
-      if (error) throw error;
-      if (id) { Object.assign(DB.guru.find(x => x.id === id), data); showToast('Data guru diperbarui.', 'success'); } 
-      else { DB.guru.push(recordToSave); showToast('Guru baru ditambahkan.', 'success'); }
-      renderGuru(); updateBadges(); renderLandingTeachers(); closeModal('modalDynamic');
-    } catch (e) { showToast('Gagal menyimpan: ' + e.message, 'error'); }
-  });
-}
-function deleteGuru(id) { 
-  confirmAction('Hapus Guru', 'Apakah Anda yakin ingin menghapus data guru ini?', 'Hapus', async () => {
-    try {
-      const { error } = await supabaseClient.from('guru').delete().eq('id', id);
-      if (error) throw error;
-      DB.guru = DB.guru.filter(g => g.id !== id);
-      renderGuru(); updateBadges(); renderLandingTeachers(); showToast('Data guru dihapus.', 'success'); 
-    } catch (e) { showToast('Gagal menghapus: ' + e.message, 'error'); }
-  });
-}
+function renderGuru() { const grid = document.getElementById('guruGrid'); if (!grid) return; if (DB.guru.length === 0) { grid.innerHTML = '<div class="col-span-full text-center py-12 text-[var(--muted)]"><i class="fa-solid fa-users-slash text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada data guru. Tambahkan dari panel admin.</p></div>'; return; } grid.innerHTML = DB.guru.map(g => `<div class="panel overflow-hidden"><div class="relative"><img src="${g.img}" alt="${g.name}" class="w-full aspect-square object-cover"><div class="absolute top-3 right-3"><span class="badge-status badge-approved">${g.role.split(' ')[0]}</span></div></div><div class="p-5"><div class="text-[10px] uppercase tracking-wider text-[var(--accent-2)] font-bold mb-1">${g.role}</div><h4 class="font-display text-lg font-bold uppercase leading-tight mb-2">${g.name}</h4>${g.subject !== '-' ? `<div class="text-xs text-[var(--muted)] font-medium mb-3"><i class="fa-solid fa-book mr-1"></i> ${g.subject}</div>` : '<div class="mb-3"></div>'}<div class="flex gap-1"><button class="btn-icon btn-sm flex-1" title="Edit" onclick="openGuruModal(${g.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger flex-1" title="Hapus" onclick="deleteGuru(${g.id})"><i class="fa-solid fa-trash"></i></button></div></div></div>`).join(''); }
+function openGuruModal(id = null) { const g = id ? DB.guru.find(x => x.id === id) : {}; setupModal(id ? 'Edit Guru / Staf' : 'Tambah Guru / Staf', `<div class="grid grid-cols-1 md:grid-cols-2 gap-4><div><label class="label">Nama Lengkap</label><input type="text" class="input" id="guruName" value="${g.name || ''}" placeholder="Dr. ..."></div><div><label class="label">Jabatan</label><input type="text" class="input" id="guruRole" value="${g.role || ''}" placeholder="Guru Matematika"></div><div><label class="label">Mata Pelajaran</label><input type="text" class="input" id="guruSubject" value="${g.subject || ''}" placeholder="Matematika"></div><div><label class="label">Upload Foto</label><input type="file" class="input" id="guruImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-16 h-16 rounded-lg object-cover"></div>` : ''}</div></div>`, async () => { const name = document.getElementById('guruName').value; const role = document.getElementById('guruRole').value; if (!name || !role) { showToast('Nama dan Jabatan wajib diisi.', 'error'); return; } let img = g.img || ''; const fileInput = document.getElementById('guruImgFile'); if (fileInput.files && fileInput.files[0]) { const file = fileInput.files[0]; showToast('Mengupload foto...', 'success'); const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'teachers'); if (uploadedUrl) img = uploadedUrl; else { img = await readFileAsDataURL(file); showToast('Storage bermasalah, foto disimpan sebagai base64.', 'warning'); } } else if (!img) { showToast('Foto wajib diupload.', 'error'); return; } const data = { name, role, subject: document.getElementById('guruSubject').value || '-', img }; const newId = id || Date.now(); const recordToSave = { id: newId, ...data }; try { const { error } = await supabaseClient.from('guru').upsert(mapToSQL('guru', recordToSave)); if (error) throw error; if (id) { Object.assign(DB.guru.find(x => x.id === id), data); showToast('Data guru diperbarui.', 'success'); } else { DB.guru.push(recordToSave); showToast('Guru baru ditambahkan.', 'success'); } renderGuru(); updateBadges(); renderLandingTeachers(); closeModal('modalDynamic'); } catch (e) { showToast('Gagal menyimpan: ' + e.message, 'error'); } }); }
+function deleteGuru(id) { confirmAction('Hapus Guru', 'Apakah Anda yakin ingin menghapus data guru ini?', 'Hapus', async () => { try { const { error } = await supabaseClient.from('guru').delete().eq('id', id); if (error) throw error; DB.guru = DB.guru.filter(g => g.id !== id); renderGuru(); updateBadges(); renderLandingTeachers(); showToast('Data guru dihapus.', 'success'); } catch (e) { showToast('Gagal menghapus: ' + e.message, 'error'); } }); }
 
-function renderProgram() { 
-  const grid = document.getElementById('programGrid');
-  if (!grid) return;
-  if (DB.program.length === 0) {
-    grid.innerHTML = '<div class="col-span-full text-center py-12 text-[var(--muted)]"><i class="fa-solid fa-book-bookmark text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada program. Tambahkan dari panel admin.</p></div>';
-    return;
-  }
-  grid.innerHTML = DB.program.map(p => `<div class="panel p-6"><div class="flex items-start justify-between mb-4"><div class="w-12 h-12 rounded-xl ${p.color==='gold'?'bg-[var(--accent)]/10 text-[var(--accent-2)]':'bg-[var(--nu-green)]/10 text-[var(--nu-green)]'} flex items-center justify-center text-xl"><i class="fa-solid ${p.icon}"></i></div><div class="flex gap-1"><button class="btn-icon btn-sm" title="Edit" onclick="openProgramModal(${p.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger" title="Hapus" onclick="deleteProgram(${p.id})"><i class="fa-solid fa-trash"></i></button></div></div><h4 class="font-display text-xl font-bold uppercase mb-2">${p.title}</h4><p class="text-xs text-[var(--muted)] leading-relaxed font-medium mb-4">${p.desc}</p><div class="flex items-center justify-between text-xs"><span class="text-[var(--muted)] font-medium"><i class="fa-solid fa-users mr-1"></i> ${Math.floor(Math.random()*50)+30} siswa</span><span class="badge-status badge-approved">Aktif</span></div></div>`).join(''); 
-}
-function openProgramModal(id = null) {
-  const p = id ? DB.program.find(x => x.id === id) : {};
-  setupModal(id ? 'Edit Program' : 'Tambah Program', `<div class="space-y-4"><div><label class="label">Nama Program</label><input type="text" class="input" id="progTitle" value="${p.title || ''}" placeholder="Contoh: OSIS"></div><div><label class="label">Deskripsi Singkat</label><textarea class="textarea" rows="3" id="progDesc" placeholder="Deskripsi program...">${p.desc || ''}</textarea></div><div class="grid grid-cols-2 gap-4"><div><label class="label">Ikon (FontAwesome)</label><input type="text" class="input" id="progIcon" value="${p.icon || 'fa-book'}" placeholder="fa-quran"></div><div><label class="label">Warna</label><select class="select" id="progColor"><option value="gold" ${p.color === 'gold' ? 'selected' : ''}>Emas</option><option value="green" ${p.color === 'green' ? 'selected' : ''}>Hijau NU</option></select></div></div></div>`, async () => {
-    const title = document.getElementById('progTitle').value; if (!title) { showToast('Nama program wajib diisi.', 'error'); return; }
-    const data = { title, desc: document.getElementById('progDesc').value, icon: document.getElementById('progIcon').value, color: document.getElementById('progColor').value };
-    const newId = id || Date.now();
-    const recordToSave = { id: newId, ...data };
-    try {
-      const { error } = await supabaseClient.from('program').upsert(mapToSQL('program', recordToSave));
-      if (error) throw error;
-      if (id) { Object.assign(DB.program.find(x => x.id === id), data); showToast('Program diperbarui.', 'success'); } 
-      else { DB.program.push(recordToSave); showToast('Program baru ditambahkan.', 'success'); }
-      renderProgram(); renderLandingPrograms(); closeModal('modalDynamic');
-    } catch (e) { showToast('Gagal menyimpan: ' + e.message, 'error'); }
-  });
-}
-function deleteProgram(id) { 
-  confirmAction('Hapus Program', 'Apakah Anda yakin ingin menghapus program ini?', 'Hapus', async () => {
-    try {
-      const { error } = await supabaseClient.from('program').delete().eq('id', id);
-      if (error) throw error;
-      DB.program = DB.program.filter(p => p.id !== id);
-      renderProgram(); renderLandingPrograms(); showToast('Program dihapus.', 'success'); 
-    } catch (e) { showToast('Gagal menghapus: ' + e.message, 'error'); }
-  });
-}
+function renderProgram() { const grid = document.getElementById('programGrid'); if (!grid) return; if (DB.program.length === 0) { grid.innerHTML = '<div class="col-span-full text-center py-12 text-[var(--muted)]"><i class="fa-solid fa-book-bookmark text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada program. Tambahkan dari panel admin.</p></div>'; return; } grid.innerHTML = DB.program.map(p => `<div class="panel p-6"><div class="flex items-start justify-between mb-4"><div class="w-12 h-12 rounded-xl ${p.color==='gold'?'bg-[var(--accent)]/10 text-[var(--accent-2)]':'bg-[var(--nu-green)]/10 text-[var(--nu-green)]'} flex items-center justify-center text-xl"><i class="fa-solid ${p.icon}"></i></div><div class="flex gap-1"><button class="btn-icon btn-sm" title="Edit" onclick="openProgramModal(${p.id})"><i class="fa-solid fa-pen"></i></button><button class="btn-icon btn-sm danger" title="Hapus" onclick="deleteProgram(${p.id})"><i class="fa-solid fa-trash"></i></button></div></div><h4 class="font-display text-xl font-bold uppercase mb-2">${p.title}</h4><p class="text-xs text-[var(--muted)] leading-relaxed font-medium mb-4">${p.desc}</p><div class="flex items-center justify-between text-xs"><span class="text-[var(--muted)] font-medium"><i class="fa-solid fa-users mr-1"></i> ${Math.floor(Math.random()*50)+30} siswa</span><span class="badge-status badge-approved">Aktif</span></div></div>`).join(''); }
+function openProgramModal(id = null) { const p = id ? DB.program.find(x => x.id === id) : {}; setupModal(id ? 'Edit Program' : 'Tambah Program', `<div class="space-y-4"><div><label class="label">Nama Program</label><input type="text" class="input" id="progTitle" value="${p.title || ''}" placeholder="Contoh: OSIS"></div><div><label class="label">Deskripsi Singkat</label><textarea class="textarea" rows="3" id="progDesc" placeholder="Deskripsi program...">${p.desc || ''}</textarea></div><div class="grid grid-cols-2 gap-4"><div><label class="label">Ikon (FontAwesome)</label><input type="text" class="input" id="progIcon" value="${p.icon || 'fa-book'}" placeholder="fa-quran"></div><div><label class="label">Warna</label><select class="select" id="progColor"><option value="gold" ${p.color === 'gold' ? 'selected' : ''}>Emas</option><option value="green" ${p.color === 'green' ? 'selected' : ''}>Hijau NU</option></select></div></div></div>`, async () => { const title = document.getElementById('progTitle').value; if (!title) { showToast('Nama program wajib diisi.', 'error'); return; } const data = { title, desc: document.getElementById('progDesc').value, icon: document.getElementById('progIcon').value, color: document.getElementById('progColor').value }; const newId = id || Date.now(); const recordToSave = { id: newId, ...data }; try { const { error } = await supabaseClient.from('program').upsert(mapToSQL('program', recordToSave)); if (error) throw error; if (id) { Object.assign(DB.program.find(x => x.id === id), data); showToast('Program diperbarui.', 'success'); } else { DB.program.push(recordToSave); showToast('Program baru ditambahkan.', 'success'); } renderProgram(); renderLandingPrograms(); closeModal('modalDynamic'); } catch (e) { showToast('Gagal menyimpan: ' + e.message, 'error'); } }); }
+function deleteProgram(id) { confirmAction('Hapus Program', 'Apakah Anda yakin ingin menghapus program ini?', 'Hapus', async () => { try { const { error } = await supabaseClient.from('program').delete().eq('id', id); if (error) throw error; DB.program = DB.program.filter(p => p.id !== id); renderProgram(); renderLandingPrograms(); showToast('Program dihapus.', 'success'); } catch (e) { showToast('Gagal menghapus: ' + e.message, 'error'); } }); }
 
 let galeriFilter = 'all';
-function renderGaleri(cat) {
-  if (cat) galeriFilter = cat; 
-  let data = DB.galeri; 
-  if (galeriFilter !== 'all') data = data.filter(g => g.cat === galeriFilter);
-  document.getElementById('galeriGrid').innerHTML = data.length ? data.map(g => {
-    const safeTitle = (g.title || '').replace(/'/g, "\\'");
-    const safeDesc = (g.desc || '').replace(/'/g, "\\'");
-    return `<div class="gallery-card">
-      <div class="relative">
-        <img src="${g.img}" alt="${g.title}" style="cursor:pointer;" onclick="openImageViewer('${g.img}', '${safeTitle}', '${safeDesc}')">
-        <div class="absolute top-2 right-2 flex gap-1">
-          <button class="btn-icon btn-sm" title="Lihat" onclick="event.stopPropagation(); openImageViewer('${g.img}', '${safeTitle}', '${safeDesc}')"><i class="fa-solid fa-eye"></i></button>
-          <button class="btn-icon btn-sm danger" onclick="deleteGaleri(${g.id})" title="Hapus"><i class="fa-solid fa-trash"></i></button>
-        </div>
-        <div class="absolute top-2 left-2"><span class="badge-status badge-approved">${g.cat}</span></div>
-      </div>
-      <div class="p-3">
-        <h4 class="font-display text-sm font-bold uppercase leading-tight mb-1">${g.title}</h4>
-        <p class="text-[10px] text-[var(--muted)] font-medium line-clamp-2">${g.desc}</p>
-        <button class="btn btn-ghost btn-sm w-full mt-2" onclick="openGaleriModal(${g.id})"><i class="fa-solid fa-pen mr-1"></i> Edit</button>
-      </div>
-    </div>`;
-  }).join('') : `<div class="col-span-full text-center py-16 text-[var(--muted)]"><i class="fa-solid fa-images text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada foto.</p></div>`;
-}
-function openGaleriModal(id = null) {
-  const g = id ? DB.galeri.find(x => x.id === id) : {};
-  setupModal(id ? 'Edit Foto Galeri' : 'Upload Foto Galeri', `<div class="space-y-4"><div><label class="label">Upload Gambar</label><input type="file" class="input" id="galImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-32 h-20 rounded-lg object-cover"></div>` : ''}</div><div><label class="label">Judul Foto</label><input type="text" class="input" id="galTitle" value="${g.title || ''}" placeholder="Contoh: Pesantren Ramadhan"></div><div><label class="label">Kategori</label><select class="select" id="galCat"><option value="akademik" ${g.cat === 'akademik' ? 'selected' : ''}>Akademik</option><option value="religi" ${g.cat === 'religi' ? 'selected' : ''}>Keagamaan</option><option value="ekskul" ${g.cat === 'ekskul' ? 'selected' : ''}>Ekstrakurikuler</option></select></div><div><label class="label">Deskripsi</label><textarea class="textarea" rows="2" id="galDesc" placeholder="Deskripsi singkat...">${g.desc || ''}</textarea></div></div>`, async () => {
-    const title = document.getElementById('galTitle').value; if (!title) { showToast('Judul wajib diisi.', 'error'); return; }
-    let img = g.img || ''; const fileInput = document.getElementById('galImgFile'); 
-    if (fileInput.files && fileInput.files[0]) {
-      const file = fileInput.files[0]; showToast('Mengupload foto...', 'success');
-      const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'gallery');
-      if (uploadedUrl) img = uploadedUrl;
-      else { img = await readFileAsDataURL(file); showToast('Storage bermasalah, foto disimpan sebagai base64.', 'warning'); }
-    } else if (!img) { showToast('Foto wajib diupload.', 'error'); return; }
-    const data = { img, title, cat: document.getElementById('galCat').value, desc: document.getElementById('galDesc').value };
-    const newId = id || Date.now();
-    const recordToSave = { id: newId, ...data };
-    try {
-      const { error } = await supabaseClient.from('galeri').upsert(mapToSQL('galeri', recordToSave));
-      if (error) throw error;
-      if (id) { Object.assign(DB.galeri.find(x => x.id === id), data); showToast('Foto diperbarui.', 'success'); } 
-      else { DB.galeri.unshift(recordToSave); showToast('Foto ditambahkan.', 'success'); }
-      renderGaleri(); renderLandingGallery(landingGalleryFilter); closeModal('modalDynamic');
-    } catch (e) { showToast('Gagal menyimpan: ' + e.message, 'error'); }
-  });
-}
-function deleteGaleri(id) { 
-  confirmAction('Hapus Foto', 'Apakah Anda yakin ingin menghapus foto ini?', 'Hapus', async () => {
-    try {
-      const { error } = await supabaseClient.from('galeri').delete().eq('id', id);
-      if (error) throw error;
-      DB.galeri = DB.galeri.filter(g => g.id !== id);
-      renderGaleri(); renderLandingGallery(landingGalleryFilter); showToast('Foto dihapus.', 'success'); 
-    } catch (e) { showToast('Gagal menghapus: ' + e.message, 'error'); }
-  });
-}
+function renderGaleri(cat) { if (cat) galeriFilter = cat; let data = DB.galeri; if (galeriFilter !== 'all') data = data.filter(g => g.cat === galeriFilter); document.getElementById('galeriGrid').innerHTML = data.length ? data.map(g => { const safeTitle = (g.title || '').replace(/'/g, "\\'"); const safeDesc = (g.desc || '').replace(/'/g, "\\'"); return `<div class="gallery-card"><div class="relative"><img src="${g.img}" alt="${g.title}" style="cursor:pointer;" onclick="openImageViewer('${g.img}', '${safeTitle}', '${safeDesc}')"><div class="absolute top-2 right-2 flex gap-1"><button class="btn-icon btn-sm" title="Lihat" onclick="event.stopPropagation(); openImageViewer('${g.img}', '${safeTitle}', '${safeDesc}')"><i class="fa-solid fa-eye"></i></button><button class="btn-icon btn-sm danger" onclick="deleteGaleri(${g.id})" title="Hapus"><i class="fa-solid fa-trash"></i></button></div><div class="absolute top-2 left-2"><span class="badge-status badge-approved">${g.cat}</span></div></div><div class="p-3"><h4 class="font-display text-sm font-bold uppercase leading-tight mb-1">${g.title}</h4><p class="text-[10px] text-[var(--muted)] font-medium line-clamp-2">${g.desc}</p><button class="btn btn-ghost btn-sm w-full mt-2" onclick="openGaleriModal(${g.id})"><i class="fa-solid fa-pen mr-1"></i> Edit</button></div></div>`; }).join('') : `<div class="col-span-full text-center py-16 text-[var(--muted)]"><i class="fa-solid fa-images text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada foto.</p></div>`; }
+function openGaleriModal(id = null) { const g = id ? DB.galeri.find(x => x.id === id) : {}; setupModal(id ? 'Edit Foto Galeri' : 'Upload Foto Galeri', `<div class="space-y-4"><div><label class="label">Upload Gambar</label><input type="file" class="input" id="galImgFile" accept="image/*">${g.img ? `<div class="mt-2"><img src="${g.img}" class="w-32 h-20 rounded-lg object-cover"></div>` : ''}</div><div><label class="label">Judul Foto</label><input type="text" class="input" id="galTitle" value="${g.title || ''}" placeholder="Contoh: Pesantren Ramadhan"></div><div><label class="label">Kategori</label><select class="select" id="galCat"><option value="akademik" ${g.cat === 'akademik' ? 'selected' : ''}>Akademik</option><option value="religi" ${g.cat === 'religi' ? 'selected' : ''}>Keagamaan</option><option value="ekskul" ${g.cat === 'ekskul' ? 'selected' : ''}>Ekstrakurikuler</option></select></div><div><label class="label">Deskripsi</label><textarea class="textarea" rows="2" id="galDesc" placeholder="Deskripsi singkat...">${g.desc || ''}</textarea></div></div>`, async () => { const title = document.getElementById('galTitle').value; if (!title) { showToast('Judul wajib diisi.', 'error'); return; } let img = g.img || ''; const fileInput = document.getElementById('galImgFile'); if (fileInput.files && fileInput.files[0]) { const file = fileInput.files[0]; showToast('Mengupload foto...', 'success'); const uploadedUrl = await uploadImageToSupabase(file, 'gallery', 'gallery'); if (uploadedUrl) img = uploadedUrl; else { img = await readFileAsDataURL(file); showToast('Storage bermasalah, foto disimpan sebagai base64.', 'warning'); } } else if (!img) { showToast('Foto wajib diupload.', 'error'); return; } const data = { img, title, cat: document.getElementById('galCat').value, desc: document.getElementById('galDesc').value }; const newId = id || Date.now(); const recordToSave = { id: newId, ...data }; try { const { error } = await supabaseClient.from('galeri').upsert(mapToSQL('galeri', recordToSave)); if (error) throw error; if (id) { Object.assign(DB.galeri.find(x => x.id === id), data); showToast('Foto diperbarui.', 'success'); } else { DB.galeri.unshift(recordToSave); showToast('Foto ditambahkan.', 'success'); } renderGaleri(); renderLandingGallery(landingGalleryFilter); closeModal('modalDynamic'); } catch (e) { showToast('Gagal menyimpan: ' + e.message, 'error'); } }); }
+function deleteGaleri(id) { confirmAction('Hapus Foto', 'Apakah Anda yakin ingin menghapus foto ini?', 'Hapus', async () => { try { const { error } = await supabaseClient.from('galeri').delete().eq('id', id); if (error) throw error; DB.galeri = DB.galeri.filter(g => g.id !== id); renderGaleri(); renderLandingGallery(landingGalleryFilter); showToast('Foto dihapus.', 'success'); } catch (e) { showToast('Gagal menghapus: ' + e.message, 'error'); } }); }
 document.querySelectorAll('.filter-gallery').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.filter-gallery').forEach(b => { b.classList.remove('btn-primary'); b.classList.add('btn-ghost'); }); btn.classList.remove('btn-ghost'); btn.classList.add('btn-primary'); renderGaleri(btn.dataset.cat); }); });
 
 function renderPesan() { document.getElementById('pesanList').innerHTML = DB.pesan.map(p => `<div class="p-4 border-b border-[var(--bg-2)] cursor-pointer hover:bg-[var(--bg-2)] transition ${!p.read ? 'bg-[var(--accent)]/5' : ''}" onclick="readPesan(${p.id})"><div class="flex items-start gap-3"><div class="avatar avatar-sm">${p.name.charAt(0)}</div><div class="flex-1 min-w-0"><div class="flex items-center justify-between gap-2"><div class="font-bold text-sm ${!p.read ? 'text-[var(--fg)]' : 'text-[var(--fg-2)]'} truncate">${p.name}</div>${!p.read ? '<div class="w-2 h-2 rounded-full bg-[var(--accent)] flex-shrink-0"></div>' : ''}</div><div class="text-xs font-semibold text-[var(--accent-2)] truncate mt-0.5">${p.subject}</div><div class="text-[10px] text-[var(--muted)] truncate mt-1">${p.msg.substring(0, 60)}...</div><div class="text-[10px] text-[var(--muted)] mt-1">${p.date}</div></div></div></div>`).join(''); }
-async function readPesan(id) {
-  const p = DB.pesan.find(x => x.id === id); if (!p) return;
-  if (!p.read) {
-    try {
-      await supabaseClient.from('pesan').update({ is_read: true }).eq('id', id);
-      p.read = true;
-    } catch (e) { console.warn('Failed to mark as read', e) }
-  }
-  document.getElementById('pesanAvatar').textContent = p.name.charAt(0); document.getElementById('pesanSender').textContent = p.name; document.getElementById('pesanEmail').textContent = p.email + ' • ' + p.phone;
-  document.getElementById('pesanDetail').innerHTML = `<div class="mb-4 pb-4 border-b border-[var(--border)]"><div class="text-[10px] uppercase tracking-wider text-[var(--accent-2)] font-bold mb-1">Subjek</div><h4 class="font-display text-xl font-bold uppercase">${p.subject}</h4><div class="text-xs text-[var(--muted)] mt-2"><i class="fa-solid fa-clock mr-1"></i> ${p.date}</div></div><div class="mb-6"><div class="text-sm text-[var(--fg-2)] leading-relaxed font-medium">${p.msg}</div></div><div class="bg-[var(--bg-2)] rounded-lg p-4 mb-4"><div class="text-[10px] uppercase tracking-wider text-[var(--muted)] font-bold mb-2">Kontak Pengirim</div><div class="grid grid-cols-2 gap-3 text-xs"><div><i class="fa-solid fa-envelope text-[var(--accent-2)] mr-2"></i> ${p.email}</div><div><i class="fa-solid fa-phone text-[var(--accent-2)] mr-2"></i> ${p.phone}</div></div></div><div class="flex gap-2"><button class="btn btn-primary" onclick="showToast('Email client dibuka untuk membalas pesan.', 'success')"><i class="fa-solid fa-reply"></i> Balas</button><button class="btn btn-ghost" onclick="deletePesan(${p.id})"><i class="fa-solid fa-trash"></i> Hapus</button></div>`;
-  updateBadges(); renderPesan(); renderNotifications();
-}
-function deletePesan(id) {
-  confirmAction('Hapus Pesan', 'Apakah Anda yakin ingin menghapus pesan ini?', 'Hapus', async () => {
-    try {
-      const { error } = await supabaseClient.from('pesan').delete().eq('id', id);
-      if (error) throw error;
-      DB.pesan = DB.pesan.filter(p => p.id != id);
-      document.getElementById('pesanDetail').innerHTML = `<div class="text-center py-16 text-[var(--muted)]"><i class="fa-solid fa-envelope-open text-5xl mb-4 opacity-30"></i><p class="font-medium">Pilih pesan dari daftar untuk membaca</p></div>`;
-      document.getElementById('pesanAvatar').textContent = '?'; document.getElementById('pesanSender').textContent = 'Pilih Pesan'; document.getElementById('pesanEmail').textContent = '—';
-      renderPesan(); updateBadges(); renderNotifications(); showToast('Pesan dihapus.', 'success');
-    } catch (e) { showToast('Gagal menghapus: ' + e.message, 'error'); }
-  });
-}
+async function readPesan(id) { const p = DB.pesan.find(x => x.id === id); if (!p) return; if (!p.read) { try { await supabaseClient.from('pesan').update({ is_read: true }).eq('id', id); p.read = true; } catch (e) {} } document.getElementById('pesanAvatar').textContent = p.name.charAt(0); document.getElementById('pesanSender').textContent = p.name; document.getElementById('pesanEmail').textContent = p.email + ' • ' + p.phone; document.getElementById('pesanDetail').innerHTML = `<div class="mb-4 pb-4 border-b border-[var(--border)]"><div class="text-[10px] uppercase tracking-wider text-[var(--accent-2)] font-bold mb-1">Subjek</div><h4 class="font-display text-xl font-bold uppercase">${p.subject}</h4><div class="text-xs text-[var(--muted)] mt-2"><i class="fa-solid fa-clock mr-1"></i> ${p.date}</div></div><div class="mb-6"><div class="text-sm text-[var(--fg-2)] leading-relaxed font-medium">${p.msg}</div></div><div class="bg-[var(--bg-2)] rounded-lg p-4 mb-4"><div class="text-[10px] uppercase tracking-wider text-[var(--muted)] font-bold mb-2">Kontak Pengirim</div><div class="grid grid-cols-2 gap-3 text-xs"><div><i class="fa-solid fa-envelope text-[var(--accent-2)] mr-2"></i> ${p.email}</div><div><i class="fa-solid fa-phone text-[var(--accent-2)] mr-2"></i> ${p.phone}</div></div></div><div class="flex gap-2"><button class="btn btn-primary" onclick="showToast('Email client dibuka untuk membalas pesan.', 'success')"><i class="fa-solid fa-reply"></i> Balas</button><button class="btn btn-ghost" onclick="deletePesan(${p.id})"><i class="fa-solid fa-trash"></i> Hapus</button></div>`; updateBadges(); renderPesan(); renderNotifications(); }
+function deletePesan(id) { confirmAction('Hapus Pesan', 'Apakah Anda yakin ingin menghapus pesan ini?', 'Hapus', async () => { try { const { error } = await supabaseClient.from('pesan').delete().eq('id', id); if (error) throw error; DB.pesan = DB.pesan.filter(p => p.id != id); document.getElementById('pesanDetail').innerHTML = `<div class="text-center py-16 text-[var(--muted)]"><i class="fa-solid fa-envelope-open text-5xl mb-4 opacity-30"></i><p class="font-medium">Pilih pesan dari daftar untuk membaca</p></div>`; document.getElementById('pesanAvatar').textContent = '?'; document.getElementById('pesanSender').textContent = 'Pilih Pesan'; document.getElementById('pesanEmail').textContent = '—'; renderPesan(); updateBadges(); renderNotifications(); showToast('Pesan dihapus.', 'success'); } catch (e) { showToast('Gagal menghapus: ' + e.message, 'error'); } }); }
 
-function loadSettingsForm() {
-  const s = DB.settings; if (!s) return;
-  document.getElementById('setSchoolName').value = s.schoolName || ''; 
-  document.getElementById('setNpsn').value = s.npsn || ''; 
-  document.getElementById('setAddress').value = s.address || ''; 
-  document.getElementById('setPhone').value = s.phone || '';
-  document.getElementById('setEmail').value = s.email || ''; 
-  document.getElementById('setYear').value = s.year || ''; 
-  document.getElementById('setAkreditasi').value = s.akreditasi || 'A'; 
-  document.getElementById('setTA').value = s.ta || '';
-  document.getElementById('setKuota').value = s.kuota || ''; 
-  document.getElementById('setBuka').value = s.buka || ''; 
-  document.getElementById('setTutup').value = s.tutup || ''; 
-  document.getElementById('setPPDBStatus').checked = s.statusPPDB !== undefined ? s.statusPPDB : true;
-  document.getElementById('setIg').value = s.ig || ''; 
-  document.getElementById('setYt').value = s.yt || ''; 
-  document.getElementById('setFb').value = s.fb || ''; 
-  document.getElementById('setWa').value = s.wa || '';
-  
-  const ad = DB.ad || {};
-  const setPublishAd = document.getElementById('setPublishAd');
-  const setAdTitle = document.getElementById('setAdTitle');
-  const setAdDesc = document.getElementById('setAdDesc');
-  const setAdLinkText = document.getElementById('setAdLinkText');
-  if (setPublishAd) setPublishAd.checked = ad.active !== false;
-  if (setAdTitle) setAdTitle.value = ad.title || '';
-  if (setAdDesc) setAdDesc.value = ad.desc || '';
-  if (setAdLinkText) setAdLinkText.value = ad.linkText || 'Klik di sini';
-}
+function loadSettingsForm() { const s = DB.settings; if (!s) return; document.getElementById('setSchoolName').value = s.schoolName || ''; document.getElementById('setNpsn').value = s.npsn || ''; document.getElementById('setAddress').value = s.address || ''; document.getElementById('setPhone').value = s.phone || ''; document.getElementById('setEmail').value = s.email || ''; document.getElementById('setYear').value = s.year || ''; document.getElementById('setAkreditasi').value = s.akreditasi || 'A'; document.getElementById('setTA').value = s.ta || ''; document.getElementById('setKuota').value = s.kuota || ''; document.getElementById('setBuka').value = s.buka || ''; document.getElementById('setTutup').value = s.tutop || ''; document.getElementById('setPPDBStatus').checked = s.statusPPDB !== undefined ? s.statusPPDB : true; document.getElementById('setIg').value = s.ig || ''; document.getElementById('setYt').value = s.yt || ''; document.getElementById('setFb').value = s.fb || ''; document.getElementById('setWa').value = s.wa || ''; const ad = DB.ad || {}; const setPublishAd = document.getElementById('setPublishAd'); const setAdTitle = document.getElementById('setAdTitle'); const setAdDesc = document.getElementById('setAdDesc'); const setAdLinkText = document.getElementById('setAdLinkText'); if (setPublishAd) setPublishAd.checked = ad.active !== false; if (setAdTitle) setAdTitle.value = ad.title || ''; if (setAdDesc) setAdDesc.value = ad.desc || ''; if (setAdLinkText) setAdLinkText.value = ad.linkText || 'Klik di sini'; }
+async function saveSettings() { try { DB.settings = { schoolName: document.getElementById('setSchoolName').value, npsn: document.getElementById('setNpsn').value, address: document.getElementById('setAddress').value, phone: document.getElementById('setPhone').value, email: document.getElementById('setEmail').value, year: document.getElementById('setYear').value, akreditasi: document.getElementById('setAkreditasi').value, ta: document.getElementById('setTA').value, kuota: document.getElementById('setKuota').value, buka: document.getElementById('setBuka').value, tutup: document.getElementById('setTutup').value, statusPPDB: document.getElementById('setPPDBStatus').checked, ig: document.getElementById('setIg').value, yt: document.getElementById('setYt').value, fb: document.getElementById('setFb').value, wa: document.getElementById('setWa').value }; const setPublishAd = document.getElementById('setPublishAd'); const setAdTitle = document.getElementById('setAdTitle'); const setAdDesc = document.getElementById('setAdDesc'); const setAdLinkText = document.getElementById('setAdLinkText'); if (setPublishAd) { DB.ad = { title: setAdTitle ? setAdTitle.value : (DB.ad?.title || ''), desc: setAdDesc ? setAdDesc.value : (DB.ad?.desc || ''), linkText: setAdLinkText ? setAdLinkText.value : (DB.ad?.linkText || 'Klik di sini'), active: setPublishAd.checked }; renderAdBanner(); } const { error } = await supabaseClient.from('app_config').upsert({ id: 'main_config', settings: DB.settings, ad: DB.ad }); if (error) throw error; showToast('Pengaturan & status publish berhasil disimpan.', 'success'); } catch (err) { showToast('Gagal simpan ke cloud: ' + err.message, 'error'); } }
 
-async function saveSettings() {
-  try {
-    DB.settings = { 
-      schoolName: document.getElementById('setSchoolName').value, 
-      npsn: document.getElementById('setNpsn').value, 
-      address: document.getElementById('setAddress').value, 
-      phone: document.getElementById('setPhone').value, 
-      email: document.getElementById('setEmail').value, 
-      year: document.getElementById('setYear').value, 
-      akreditasi: document.getElementById('setAkreditasi').value, 
-      ta: document.getElementById('setTA').value, 
-      kuota: document.getElementById('setKuota').value, 
-      buka: document.getElementById('setBuka').value, 
-      tutup: document.getElementById('setTutup').value, 
-      statusPPDB: document.getElementById('setPPDBStatus').checked, 
-      ig: document.getElementById('setIg').value, 
-      yt: document.getElementById('setYt').value, 
-      fb: document.getElementById('setFb').value, 
-      wa: document.getElementById('setWa').value 
-    };
-    
-    const setPublishAd = document.getElementById('setPublishAd');
-    const setAdTitle = document.getElementById('setAdTitle');
-    const setAdDesc = document.getElementById('setAdDesc');
-    const setAdLinkText = document.getElementById('setAdLinkText');
-    if (setPublishAd) {
-      DB.ad = {
-        title: setAdTitle ? setAdTitle.value : (DB.ad?.title || ''),
-        desc: setAdDesc ? setAdDesc.value : (DB.ad?.desc || ''),
-        linkText: setAdLinkText ? setAdLinkText.value : (DB.ad?.linkText || 'Klik di sini'),
-        active: setPublishAd.checked
-      };
-      renderAdBanner();
-    }
-    
-    const { error } = await supabaseClient.from('app_config').upsert({ id: 'main_config', settings: DB.settings, ad: DB.ad });
-    if (error) throw error;
-    showToast('Pengaturan & status publish berhasil disimpan.', 'success');
-  } catch (err) { 
-    showToast('Gagal simpan ke cloud: ' + err.message, 'error'); 
-  }
-}
-
-function initCharts() {
-  Chart.defaults.font.family = 'Inter, sans-serif'; Chart.defaults.font.size = 11; Chart.defaults.color = '#8b929b';
-  const ctx1 = document.getElementById('chartPPDB'); if (ctx1) new Chart(ctx1, { type: 'line', data: { labels: ['Aug', 'Sep', 'Okt', 'Nov', 'Des', 'Jan'], datasets: [{ label: 'Pendaftar', data: [8, 15, 22, 18, 28, DB.ppdb.length], borderColor: '#d4af37', backgroundColor: 'rgba(212,175,55,0.1)', fill: true, tension: 0.4, borderWidth: 3, pointBackgroundColor: '#d4af37', pointBorderColor: '#fff', pointBorderWidth: 2, pointRadius: 5, pointHoverRadius: 7 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#e9ecef' } }, x: { grid: { display: false } } } } });
-  const ctx2 = document.getElementById('chartKelas'); if (ctx2) new Chart(ctx2, { type: 'doughnut', data: { labels: ['Kelas VII', 'Kelas VIII', 'Kelas IX'], datasets: [{ data: [DB.siswa.filter(s=>s.kelas.startsWith('VII')).length, DB.siswa.filter(s=>s.kelas.startsWith('VIII')).length, DB.siswa.filter(s=>s.kelas.startsWith('IX')).length], backgroundColor: ['#d4af37', '#006a3e', '#1a1d21'], borderWidth: 0, hoverOffset: 8 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'bottom', labels: { padding: 15, font: { size: 11, weight: 600 } } } } } });
-  const ctx3 = document.getElementById('chartProgram'); if (ctx3) new Chart(ctx3, { type: 'bar', data: { labels: ['OSIS', 'PRAMUKA'], datasets: [{ data: [180, 95], backgroundColor: ['#d4af37', '#006a3e'], borderRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#e9ecef' } }, x: { grid: { display: false } } } } });
-  const ctx4 = document.getElementById('chartHadir'); if (ctx4) new Chart(ctx4, { type: 'line', data: { labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'], datasets: [{ label: 'Hadir', data: [445, 442, 448, 440, 438, 430], borderColor: '#16a34a', backgroundColor: 'rgba(22,163,74,0.1)', fill: true, tension: 0.4, borderWidth: 2 }, { label: 'Absen', data: [5, 8, 2, 10, 12, 20], borderColor: '#dc2626', backgroundColor: 'rgba(220,38,38,0.1)', fill: true, tension: 0.4, borderWidth: 2 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { size: 11 } } } }, scales: { y: { beginAtZero: true, grid: { color: '#e9ecef' } }, x: { grid: { display: false } } } } });
-}
-function exportCSV(type) {
-  if (type === 'ppdb') { let csv = 'Nama,Asal Sekolah,Orang Tua,Telepon,Tanggal,Status\n'; DB.ppdb.forEach(p => { csv += `${p.name},${p.school},${p.parent || '-'},${p.phone || '-'},${p.date},${p.status}\n`; }); const blob = new Blob([csv], { type: 'text/csv' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'ppdb-data.csv'; a.click(); showToast('Data PPDB berhasil diexport ke CSV.', 'success'); }
-}
+function initCharts() { Chart.defaults.font.family = 'Inter, sans-serif'; Chart.defaults.font.size = 11; Chart.defaults.color = '#8b929b'; const ctx1 = document.getElementById('chartPPDB'); if (ctx1) new Chart(ctx1, { type: 'line', data: { labels: ['Aug', 'Sep', 'Okt', 'Nov', 'Des', 'Jan'], datasets: [{ label: 'Pendaftar', data: [8, 15, 22, 18, 28, DB.ppdb.length], borderColor: '#d4af37', backgroundColor: 'rgba(212,175,55,0.1)', fill: true, tension: 0.4, borderWidth: 3, pointBackgroundColor: '#d4af37', pointBorderColor: '#fff', pointBorderWidth: 2, pointRadius: 5, pointHoverRadius: 7 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#e9ecef' } }, x: { grid: { display: false } } } } }); const ctx2 = document.getElementById('chartKelas'); if (ctx2) new Chart(ctx2, { type: 'doughnut', data: { labels: ['Kelas VII', 'Kelas VIII', 'Kelas IX'], datasets: [{ data: [DB.siswa.filter(s=>s.kelas.startsWith('VII')).length, DB.siswa.filter(s=>s.kelas.startsWith('VIII')).length, DB.siswa.filter(s=>s.kelas.startsWith('IX')).length], backgroundColor: ['#d4af37', '#006a3e', '#1a1d21'], borderWidth: 0, hoverOffset: 8 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'bottom', labels: { padding: 15, font: { size: 11, weight: 600 } } } } } }); const ctx3 = document.getElementById('chartProgram'); if (ctx3) new Chart(ctx3, { type: 'bar', data: { labels: ['OSIS', 'PRAMUKA'], datasets: [{ data: [180, 95], backgroundColor: ['#d4af37', '#006a3e'], borderRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#e9ecef' } }, x: { grid: { display: false } } } } }); const ctx4 = document.getElementById('chartHadir'); if (ctx4) new Chart(ctx4, { type: 'line', data: { labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'], datasets: [{ label: 'Hadir', data: [445, 442, 448, 440, 438, 430], borderColor: '#16a34a', backgroundColor: 'rgba(22,163,74,0.1)', fill: true, tension: 0.4, borderWidth: 2 }, { label: 'Absen', data: [5, 8, 2, 10, 12, 20], borderColor: '#dc2626', backgroundColor: 'rgba(220,38,38,0.1)', fill: true, tension: 0.4, borderWidth: 2 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { size: 11 } } } }, scales: { y: { beginAtZero: true, grid: { color: '#e9ecef' } }, x: { grid: { display: false } } } } }); }
+function exportCSV(type) { if (type === 'ppdb') { let csv = 'Nama,Asal Sekolah,Orang Tua,Telepon,Tanggal,Status\n'; DB.ppdb.forEach(p => { csv += `${p.name},${p.school},${p.parent || '-'},${p.phone || '-'},${p.date},${p.status}\n`; }); const blob = new Blob([csv], { type: 'text/csv' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'ppdb-data.csv'; a.click(); showToast('Data PPDB berhasil diexport ke CSV.', 'success'); } }
 
 let landingGalleryFilter = 'all';
-function renderLandingPrograms() { 
-  const grid = document.getElementById('landingProgramGrid'); 
-  if (!grid) return; 
-  if (DB.program.length === 0) {
-    grid.innerHTML = '<div class="col-span-full text-center py-12 text-[var(--muted)]"><i class="fa-solid fa-book-bookmark text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada program unggulan.</p></div>';
-    return;
-  }
-  grid.innerHTML = DB.program.map(p => `<div class="card p-8 reveal visible"><div class="flex items-start gap-5"><div class="w-14 h-14 rounded-xl ${p.color==='gold'?'bg-[var(--accent)]/10 text-[var(--accent-2)]':'bg-[var(--nu-green)]/10 text-[var(--nu-green)]'} flex items-center justify-center text-2xl flex-shrink-0"><i class="fa-solid ${p.icon}"></i></div><div class="flex-1"><h4 class="font-display text-2xl font-bold uppercase mb-2">${p.title}</h4><p class="text-sm text-[var(--fg-2)] leading-relaxed font-medium mb-4">${p.desc}</p><span class="pill pill-accent">Program Unggulan</span></div></div></div>`).join(''); 
-}
-function renderLandingTeachers() { 
-  const grid = document.getElementById('landingTeacherGrid'); 
-  if (!grid) return; 
-  if (DB.guru.length === 0) {
-    grid.innerHTML = '<div class="col-span-full text-center py-12 text-[var(--muted)]"><i class="fa-solid fa-users-slash text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada data tim pendidik.</p></div>';
-    return;
-  }
-  grid.innerHTML = DB.guru.slice(0, 8).map(g => `<div class="card overflow-hidden reveal visible"><div class="photo-frame"><img src="${g.img}" alt="${g.name}"></div><div class="p-5"><div class="text-[10px] uppercase tracking-wider text-[var(--accent-2)] font-bold mb-1">${g.role}</div><h4 class="font-display text-lg font-bold uppercase leading-tight mb-1">${g.name}</h4>${g.subject && g.subject !== '-' ? `<div class="text-xs text-[var(--muted)] font-medium"><i class="fa-solid fa-book mr-1"></i> ${g.subject}</div>` : ''}</div></div>`).join(''); 
-}
-function renderLandingGallery(filter) {
-  if (filter) landingGalleryFilter = filter; 
-  const grid = document.getElementById('landingGalleryGrid'); 
-  if (!grid) return; 
-  let data = DB.galeri; 
-  if (landingGalleryFilter !== 'all') data = data.filter(g => g.cat === landingGalleryFilter);
-  grid.innerHTML = data.length ? data.map(g => {
-    const safeTitle = (g.title || '').replace(/'/g, "\\'");
-    const safeDesc = (g.desc || '').replace(/'/g, "\\'");
-    return `<div class="gallery-card reveal visible" style="cursor:pointer;" onclick="openImageViewer('${g.img}', '${safeTitle}', '${safeDesc}')">
-      <div class="relative">
-        <img src="${g.img}" alt="${g.title}">
-        <div class="absolute top-2 left-2"><span class="badge-status badge-approved">${g.cat}</span></div>
-        <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition" style="background:rgba(26,29,33,0.5);">
-          <div class="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center text-[var(--fg)]">
-            <i class="fa-solid fa-magnifying-glass-plus text-lg"></i>
-          </div>
-        </div>
-      </div>
-      <div class="p-4">
-        <h4 class="font-display text-sm font-bold uppercase leading-tight mb-1">${g.title}</h4>
-        <p class="text-xs text-[var(--muted)] font-medium">${g.desc}</p>
-      </div>
-    </div>`;
-  }).join('') : '<div class="col-span-full text-center py-12 text-[var(--muted)]"><i class="fa-solid fa-images text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada foto</p></div>';
-}
+function renderLandingPrograms() { const grid = document.getElementById('landingProgramGrid'); if (!grid) return; if (DB.program.length === 0) { grid.innerHTML = '<div class="col-span-full text-center py-12 text-[var(--muted)]"><i class="fa-solid fa-book-bookmark text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada program unggulan.</p></div>'; return; } grid.innerHTML = DB.program.map(p => `<div class="card p-8 reveal visible"><div class="flex items-start gap-5"><div class="w-14 h-14 rounded-xl ${p.color==='gold'?'bg-[var(--accent)]/10 text-[var(--accent-2)]':'bg-[var(--nu-green)]/10 text-[var(--nu-green)]'} flex items-center justify-center text-2xl flex-shrink-0"><i class="fa-solid ${p.icon}"></i></div><div class="flex-1"><h4 class="font-display text-2xl font-bold uppercase mb-2">${p.title}</h4><p class="text-sm text-[var(--fg-2)] leading-relaxed font-medium mb-4">${p.desc}</p><span class="pill pill-accent">Program Unggulan</span></div></div></div>`).join(''); }
+function renderLandingTeachers() { const grid = document.getElementById('landingTeacherGrid'); if (!grid) return; if (DB.guru.length === 0) { grid.innerHTML = '<div class="col-span-full text-center py-12 text-[var(--muted)]"><i class="fa-solid fa-users-slash text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada data tim pendidik.</p></div>'; return; } grid.innerHTML = DB.guru.slice(0, 8).map(g => `<div class="card overflow-hidden reveal visible"><div class="photo-frame"><img src="${g.img}" alt="${g.name}"></div><div class="p-5"><div class="text-[10px] uppercase tracking-wider text-[var(--accent-2)] font-bold mb-1">${g.role}</div><h4 class="font-display text-lg font-bold uppercase leading-tight mb-1">${g.name}</h4>${g.subject && g.subject !== '-' ? `<div class="text-xs text-[var(--muted)] font-medium"><i class="fa-solid fa-book mr-1"></i> ${g.subject}</div>` : ''}</div></div>`).join(''); }
+function renderLandingGallery(filter) { if (filter) landingGalleryFilter = filter; const grid = document.getElementById('landingGalleryGrid'); if (!grid) return; let data = DB.galeri; if (landingGalleryFilter !== 'all') data = data.filter(g => g.cat === landingGalleryFilter); grid.innerHTML = data.length ? data.map(g => { const safeTitle = (g.title || '').replace(/'/g, "\\'"); const safeDesc = (g.desc || '').replace(/'/g, "\\'"); return `<div class="gallery-card reveal visible" style="cursor:pointer;" onclick="openImageViewer('${g.img}', '${safeTitle}', '${safeDesc}')"><div class="relative"><img src="${g.img}" alt="${g.title}"><div class="absolute top-2 left-2"><span class="badge-status badge-approved">${g.cat}</span></div><div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition" style="background:rgba(26,29,33,0.5);"><div class="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center text-[var(--fg)]"><i class="fa-solid fa-magnifying-glass-plus text-lg"></i></div></div></div><div class="p-4"><h4 class="font-display text-sm font-bold uppercase leading-tight mb-1">${g.title}</h4><p class="text-xs text-[var(--muted)] font-medium">${g.desc}</p></div></div>`; }).join('') : '<div class="col-span-full text-center py-12 text-[var(--muted)]"><i class="fa-solid fa-images text-5xl mb-4 opacity-30"></i><p class="font-medium">Belum ada foto</p></div>'; }
 document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.filter-btn').forEach(b => { b.classList.remove('border-[var(--accent)]', 'bg-[var(--accent)]', 'text-[var(--fg)]'); b.classList.add('border-[var(--border-2)]', 'text-[var(--fg-2)]'); }); btn.classList.add('border-[var(--accent)]', 'bg-[var(--accent)]', 'text-[var(--fg)]'); btn.classList.remove('border-[var(--border-2)]', 'text-[var(--fg-2)]'); renderLandingGallery(btn.dataset.filter); }); });
 
 function showPPDBForm() { document.getElementById('ppdbFormOverlay').classList.remove('is-hidden'); document.body.style.overflow = 'hidden'; }
 function hidePPDBForm() { document.getElementById('ppdbFormOverlay').classList.add('is-hidden'); document.body.style.overflow = ''; }
-function confirmExitPPDB() {
-  confirmAction('Konfirmasi Keluar', 'Apakah Anda yakin ingin keluar? Data pendaftaran yang belum dikirim akan hilang.', 'Ya, Keluar', () => {
-    hidePPDBForm();
+function confirmExitPPDB() { confirmAction('Konfirmasi Keluar', 'Apakah Anda yakin ingin keluar? Data pendaftaran yang belum dikirim akan hilang.', 'Ya, Keluar', () => { hidePPDBForm(); }); }
+
+// === PERBAIKAN CORS MENGGUNAKAN PROXY ===
+async function imageToBase64(url) {
+  return new Promise((resolve) => {
+    if (!url) return resolve(null);
+    try {
+      const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(url)}`;
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = function () {
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth || 200;
+          canvas.height = img.naturalHeight || 200;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+          resolve(canvas.toDataURL('image/png'));
+        } catch (e) {
+          console.warn('Canvas toDataURL gagal:', e);
+          resolve(null);
+        }
+      };
+      img.onerror = () => resolve(null);
+      img.src = proxyUrl;
+    } catch (e) {
+      console.warn('imageToBase64 error:', e);
+      resolve(null);
+    }
   });
 }
+
 function showPPDBCard(data) {
   document.getElementById('ppdbCardOverlay').classList.remove('is-hidden');
   const regNum = data.regNum || ('PPDB-' + new Date().getFullYear() + '-' + String(data.id).slice(-4));
-  document.getElementById('cardRegNum').textContent = regNum; 
-  document.getElementById('cardName').textContent = data.name; 
-  document.getElementById('cardSchool').textContent = data.school; 
+  document.getElementById('cardRegNum').textContent = regNum;
+  document.getElementById('cardName').textContent = data.name;
+  document.getElementById('cardSchool').textContent = data.school;
   document.getElementById('cardDate').textContent = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+
   const verifyUrl = window.location.href.split('?')[0] + '?verify=' + regNum;
   const qrContainer = document.getElementById('qrcode');
-  qrContainer.innerHTML = ''; 
-  // Tunggu sebentar agar DOM bersih sebelum render QR
+  qrContainer.innerHTML = '';
+
+  // Preload Logo
+  const logoImg = document.querySelector('#ppdbCard .ppdb-card-logo');
+  const logoUrl = 'https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png?auth_key=1884695660-de0f9328e4e64f548587c2bb93eb5fff-0-5c6e793dce6f3db7ea648add1ded676b';
+  if (logoImg) {
+    logoImg.dataset.originalSrc = logoImg.src;
+    imageToBase64(logoUrl).then(b64 => {
+      if (b64) {
+        logoImg.src = b64;
+        logoImg.dataset.base64 = b64;
+      }
+    });
+  }
+
+  // Render QR Code
   setTimeout(() => {
-    try { 
-      new QRCode(qrContainer, { 
-        text: verifyUrl, 
-        width: 124, 
-        height: 124, 
-        colorDark: "#000000",     // Hitam pekat (lebih baik dari #1a1d21)
-        colorLight: "#ffffff",    // Putih
-        correctLevel: QRCode.CorrectLevel.M  // 15% — modul lebih besar, mudah discan
-      }); 
-      
-      // Paksa mengubah canvas menjadi gambar (img) agar html2canvas bisa membacanya saat download PDF
+    try {
+      new QRCode(qrContainer, {
+        text: verifyUrl,
+        width: 124,
+        height: 124,
+        colorDark: '#000000',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+
+      // Ubah canvas ke img secara permanen agar html2canvas bisa membacanya
       setTimeout(() => {
         const canvasEl = qrContainer.querySelector('canvas');
         if (canvasEl) {
@@ -2249,62 +1729,91 @@ function showPPDBCard(data) {
           imgEl.style.width = '124px';
           imgEl.style.height = '124px';
           imgEl.style.display = 'block';
-          qrContainer.innerHTML = ''; // Bersihkan canvas
-          qrContainer.appendChild(imgEl); // Masukkan gambar
+          imgEl.dataset.qr = '1';
+          qrContainer.innerHTML = '';
+          qrContainer.appendChild(imgEl);
         }
-      }, 100);
-
-    } catch (e) { 
-      console.warn('QR Code error:', e); 
-      // Fallback: tampilkan link teks jika QR gagal
+      }, 150);
+    } catch (e) {
+      console.warn('QR Code error:', e);
       qrContainer.innerHTML = '<div style="font-size:9px;text-align:center;padding:10px;word-break:break-all;">' + verifyUrl + '</div>';
     }
   }, 50);
+
   document.body.style.overflow = 'hidden';
 }
 function hidePPDBCard() { document.getElementById('ppdbCardOverlay').classList.add('is-hidden'); document.body.style.overflow = ''; document.getElementById('ppdbPublicForm').reset(); }
 
 async function downloadPPDBCard() {
-  const card = document.getElementById('ppdbCard'); if (!card) return; showToast('Membuat dokumen, mohon tunggu...', 'success');
-  const logoImg = card.querySelector('.ppdb-card-logo'); const originalSrc = logoImg ? logoImg.src : null;
-  if (logoImg && originalSrc) {
-    try {
-      const response = await fetch(originalSrc); const blob = await response.blob();
-      const base64 = await new Promise((resolve, reject) => { const reader = new FileReader(); reader.onloadend = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(blob); });
-      logoImg.src = base64;
-    } catch (e) {
-      try {
-        const base64 = await new Promise((resolve, reject) => {
-          const img = new Image(); img.crossOrigin = 'anonymous';
-          img.onload = function() { const c = document.createElement('canvas'); c.width = img.naturalWidth || 200; c.height = img.naturalHeight || 200; const ctx = c.getContext('2d'); ctx.drawImage(img, 0, 0); resolve(c.toDataURL('image/png')); };
-          img.onerror = reject; img.src = originalSrc;
-        });
-        logoImg.src = base64;
-      } catch (e2) { console.warn('Logo preload gagal total, lanjut dengan src asli:', e2); }
+  const card = document.getElementById('ppdbCard');
+  if (!card) return;
+  showToast('Membuat dokumen, mohon tunggu...', 'success');
+
+  const logoImg = card.querySelector('.ppdb-card-logo');
+
+  // Pastikan logo sudah base64
+  if (logoImg && !logoImg.dataset.base64) {
+    const b64 = await imageToBase64(logoImg.dataset.originalSrc || logoImg.src);
+    if (b64) {
+      logoImg.src = b64;
+      logoImg.dataset.base64 = b64;
     }
   }
-  await new Promise(resolve => setTimeout(resolve, 500));
+
+  // Tunggu logo load
+  await new Promise((resolve) => {
+    if (logoImg && !logoImg.complete) {
+      logoImg.onload = resolve;
+      logoImg.onerror = resolve;
+      setTimeout(resolve, 2000);
+    } else {
+      resolve();
+    }
+  });
+
+  // Tunggu QR code render
+  await new Promise((resolve) => setTimeout(resolve, 300));
+
   try {
-    const canvas = await html2canvas(card, { scale: 2, backgroundColor: '#ffffff', useCORS: true, allowTaint: true, logging: false });
-    if (logoImg && originalSrc) logoImg.src = originalSrc;
-    const imgData = canvas.toDataURL('image/png'); 
+    const canvas = await html2canvas(card, {
+      scale: 2,
+      backgroundColor: '#ffffff',
+      useCORS: false,
+      allowTaint: false,
+      logging: false,
+      imageTimeout: 0
+    });
+
+    const imgData = canvas.toDataURL('image/png');
+
     if (window.jspdf) {
       try {
-        const { jsPDF } = window.jspdf; const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-        const imgWidth = 90; const imgHeight = (canvas.height * imgWidth) / canvas.width; const x = (210 - imgWidth) / 2; const y = 40;
-        pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight); pdf.save('Kartu-PPDB-SMP-NU-Tugasari.pdf'); 
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+        const imgWidth = 90;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        const x = (210 - imgWidth) / 2;
+        const y = 40;
+        pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
+        pdf.save('Kartu-PPDB-SMP-NU-Tugasari.pdf');
         showToast('Kartu PPDB berhasil didownload (PDF)!', 'success');
       } catch (e) {
-        const link = document.createElement('a'); link.download = 'Kartu-PPDB-SMP-NU-Tugasari.png'; link.href = imgData; link.click();
+        const link = document.createElement('a');
+        link.download = 'Kartu-PPDB-SMP-NU-Tugasari.png';
+        link.href = imgData;
+        link.click();
         showToast('Kartu PPDB berhasil didownload (PNG)!', 'success');
       }
     } else {
-      const link = document.createElement('a'); link.download = 'Kartu-PPDB-SMP-NU-Tugasari.png'; link.href = imgData; link.click();
+      const link = document.createElement('a');
+      link.download = 'Kartu-PPDB-SMP-NU-Tugasari.png';
+      link.href = imgData;
+      link.click();
       showToast('Kartu PPDB berhasil didownload (PNG)!', 'success');
     }
-  } catch (err) { 
-    if (logoImg && originalSrc) logoImg.src = originalSrc;
-    console.error('html2canvas error:', err); showToast('Gagal membuat dokumen. Coba screenshot kartu secara manual.', 'error');
+  } catch (err) {
+    console.error('html2canvas error:', err);
+    showToast('Gagal membuat dokumen. Coba screenshot kartu secara manual.', 'error');
   }
 }
 
@@ -2326,7 +1835,6 @@ document.getElementById('ppdbPublicForm').addEventListener('submit', async funct
     status: 'pending' 
   };
   if (!data.name || !data.school) { showToast('Nama dan asal sekolah wajib diisi.', 'error'); return; }
-  
   try {
     const { error } = await supabaseClient.from('ppdb').insert(mapToSQL('ppdb', data));
     if (error) throw error;
@@ -2366,11 +1874,7 @@ async function submitContactMessage(e) {
 }
 
 function showVerifyOverlay() { document.getElementById('verifyOverlay').classList.remove('is-hidden'); document.body.style.overflow = 'hidden'; }
-function hideVerifyOverlay() { 
-  document.getElementById('verifyOverlay').classList.add('is-hidden'); 
-  document.body.style.overflow = ''; 
-  window.history.replaceState({}, document.title, window.location.pathname);
-}
+function hideVerifyOverlay() { document.getElementById('verifyOverlay').classList.add('is-hidden'); document.body.style.overflow = ''; window.history.replaceState({}, document.title, window.location.pathname); }
 
 async function checkVerification() {
   const params = new URLSearchParams(window.location.search);
@@ -2383,7 +1887,7 @@ async function checkVerification() {
       try {
         const { data } = await supabaseClient.from('ppdb').select('*').eq('reg_num', verifyCode).maybeSingle();
         if (data) { record = mapFromSQL('ppdb', data); }
-      } catch (e) { console.warn('Supabase verify error:', e); }
+      } catch (e) {}
     }
     if (record) {
       const statusBadge = record.status === 'approved' ? 'badge-approved' : (record.status === 'rejected' ? 'badge-rejected' : 'badge-pending');
@@ -2416,13 +1920,11 @@ async function checkVerification() {
 function showAdminLogin(view = 'dashboard') { document.getElementById('loginScreen').classList.remove('is-hidden'); document.body.style.overflow = 'hidden'; }
 function hideAdminLogin() { document.getElementById('loginScreen').classList.add('is-hidden'); document.body.style.overflow = ''; }
 
-// === SCRIPT LOGIN YANG TELAH DIMODIFIKASI ===
 document.getElementById('loginForm').addEventListener('submit', function(e) {
   e.preventDefault(); 
   const user = document.getElementById('loginUser').value.trim(); 
   const pass = document.getElementById('loginPass').value.trim();
   const errorBox = document.getElementById('loginError');
-  
   if (user === 'esempe' && pass === 'esempe123') {
     errorBox.classList.add('hidden'); 
     errorBox.classList.remove('flex');
@@ -2440,80 +1942,30 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     document.getElementById('loginPass').value = '';
   }
 });
-
-document.getElementById('loginUser').addEventListener('input', function() {
-  const errorBox = document.getElementById('loginError');
-  errorBox.classList.add('hidden');
-  errorBox.classList.remove('flex');
-});
-document.getElementById('loginPass').addEventListener('input', function() {
-  const errorBox = document.getElementById('loginError');
-  errorBox.classList.add('hidden');
-  errorBox.classList.remove('flex');
-});
-// === AKHIR MODIFIKASI SCRIPT LOGIN ===
+document.getElementById('loginUser').addEventListener('input', function() { const errorBox = document.getElementById('loginError'); errorBox.classList.add('hidden'); errorBox.classList.remove('flex'); });
+document.getElementById('loginPass').addEventListener('input', function() { const errorBox = document.getElementById('loginError'); errorBox.classList.add('hidden'); errorBox.classList.remove('flex'); });
 
 document.getElementById('togglePass').addEventListener('click', function() { const input = document.getElementById('loginPass'); const icon = this.querySelector('i'); if (input.type === 'password') { input.type = 'text'; icon.classList.remove('fa-eye'); icon.classList.add('fa-eye-slash'); } else { input.type = 'password'; icon.classList.remove('fa-eye-slash'); icon.classList.add('fa-eye'); } });
 function backToSite() { document.getElementById('adminLayout').classList.add('is-hidden'); document.getElementById('landingPage').style.display = 'block'; document.body.style.overflow = ''; window.scrollTo({ top: 0, behavior: 'smooth' }); }
-
-function confirmBackToSite() {
-  confirmAction('Konfirmasi Keluar', 'Apakah Anda yakin ingin keluar dari Dashboard Admin?', 'Ya, Keluar', () => {
-    backToSite();
-  });
-}
-
-function logout() { 
-  confirmAction('Konfirmasi Keluar', 'Apakah Anda yakin ingin keluar dari dashboard?', 'Keluar', () => {
-    document.getElementById('adminLayout').classList.add('is-hidden'); 
-    document.getElementById('landingPage').style.display = 'block'; 
-    document.body.style.overflow = ''; 
-    window.scrollTo({ top: 0, behavior: 'smooth' }); 
-    showToast('Anda telah keluar dari sistem.', 'success'); 
-  });
-}
+function confirmBackToSite() { confirmAction('Konfirmasi Keluar', 'Apakah Anda yakin ingin keluar dari Dashboard Admin?', 'Ya, Keluar', () => { backToSite(); }); }
+function logout() { confirmAction('Konfirmasi Keluar', 'Apakah Anda yakin ingin keluar dari dashboard?', 'Keluar', () => { document.getElementById('adminLayout').classList.add('is-hidden'); document.getElementById('landingPage').style.display = 'block'; document.body.style.overflow = ''; window.scrollTo({ top: 0, behavior: 'smooth' }); showToast('Anda telah keluar dari sistem.', 'success'); }); }
 
 document.getElementById('adTitle')?.addEventListener('input', e => { const p = document.getElementById('adPreviewTitle'); if (p) p.textContent = e.target.value; });
 document.getElementById('adDesc')?.addEventListener('input', e => { const p = document.getElementById('adPreviewDesc'); if (p) p.textContent = e.target.value; });
 
-// ===== DARK MODE TOGGLE SCRIPT =====
-function applyTheme(theme) {
-    const body = document.body;
-    const iconTop = document.querySelector('#themeToggle i');
-    const iconFooter = document.querySelector('#themeToggleFooter i');
-    
-    if (theme === 'dark') {
-        body.classList.add('dark-mode');
-        if(iconTop) { iconTop.classList.remove('fa-moon'); iconTop.classList.add('fa-sun'); }
-        if(iconFooter) { iconFooter.classList.remove('fa-moon'); iconFooter.classList.add('fa-sun'); }
-    } else {
-        body.classList.remove('dark-mode');
-        if(iconTop) { iconTop.classList.remove('fa-sun'); iconTop.classList.add('fa-moon'); }
-        if(iconFooter) { iconFooter.classList.remove('fa-sun'); iconFooter.classList.add('fa-moon'); }
-    }
-}
+function applyTheme(theme) { const body = document.body; const iconTop = document.querySelector('#themeToggle i'); const iconFooter = document.querySelector('#themeToggleFooter i'); if (theme === 'dark') { body.classList.add('dark-mode'); if(iconTop) { iconTop.classList.remove('fa-moon'); iconTop.classList.add('fa-sun'); } if(iconFooter) { iconFooter.classList.remove('fa-moon'); iconFooter.classList.add('fa-sun'); } } else { body.classList.remove('dark-mode'); if(iconTop) { iconTop.classList.remove('fa-sun'); iconTop.classList.add('fa-moon'); } if(iconFooter) { iconFooter.classList.remove('fa-sun'); iconFooter.classList.add('fa-moon'); } } }
+function toggleTheme() { const isDark = document.body.classList.contains('dark-mode'); const newTheme = isDark ? 'light' : 'dark'; try { localStorage.setItem('theme', newTheme); } catch(e) {} applyTheme(newTheme); }
 
-function toggleTheme() {
-    const isDark = document.body.classList.contains('dark-mode');
-    const newTheme = isDark ? 'light' : 'dark';
-    try { localStorage.setItem('theme', newTheme); } catch(e) {}
-    applyTheme(newTheme);
-}
-
-// ===== FUNGSI TUTORIAL =====
 function openTutorialModal() { openModal('modalTutorial'); }
-// ===== AKHIR =====
 
 async function initApp() {
   let savedTheme = 'light';
   try { savedTheme = localStorage.getItem('theme') || 'light'; } catch(e) {}
   applyTheme(savedTheme);
-  
   const toggleBtn = document.getElementById('themeToggle');
   if (toggleBtn) toggleBtn.addEventListener('click', toggleTheme);
-  
   const footerToggle = document.getElementById('themeToggleFooter');
   if (footerToggle) footerToggle.addEventListener('click', toggleTheme);
-
   await fetchAllData();
   renderLandingPrograms(); 
   renderLandingTeachers(); 
