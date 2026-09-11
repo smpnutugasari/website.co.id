@@ -176,35 +176,38 @@
   .ppdb-card-barcode p { font-size: 9px; color: var(--muted); margin-top: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; }
   .ppdb-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px dashed #ddd; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
   .ppdb-card-footer .accent-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; display: inline-block; margin-right: 6px; }
- #qrcode { 
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  padding: 8px; 
-  background: #fff; 
-  border-radius: 6px; 
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08); 
-  width: 140px; 
-  height: 140px; 
-  margin: 0 auto; 
-  border: 1px solid #e5e7eb;
-}
-#qrcode img { 
-  display: block !important; 
-  width: 124px !important; 
-  height: 124px !important; 
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
-}
-#qrcode canvas { 
-  display: none !important; 
-}
-/* PENTING: Exclude QR code dari filter dark mode */
-body.dark-mode #qrcode canvas,
-body.dark-mode #qrcode img { 
-  filter: none !important; 
-  -webkit-filter: none !important; 
-}
+  
+  /* PERBAIKAN CSS QRCODE */
+  #qrcode { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 8px; 
+    background: #fff; 
+    border-radius: 6px; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08); 
+    width: 140px; 
+    height: 140px; 
+    margin: 0 auto; 
+    border: 1px solid #e5e7eb;
+  }
+  #qrcode canvas, 
+  #qrcode img { 
+    display: block !important; 
+    width: 124px !important; 
+    height: 124px !important; 
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+  /* EXCLUDE QRCODE DARI FILTER DARK MODE */
+  body.dark-mode #qrcode canvas,
+  body.dark-mode #qrcode img,
+  #ppdbCardOverlay canvas,
+  #ppdbCardOverlay img { 
+    filter: none !important; 
+    -webkit-filter: none !important; 
+  }
+
   .notif-dropdown { position: absolute; top: calc(100% + 8px); right: 0; width: 360px; max-height: 480px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); opacity: 0; visibility: hidden; transform: translateY(-8px); transition: all 0.25s; z-index: 100; overflow: hidden; }
   .notif-dropdown.open { opacity: 1; visibility: visible; transform: translateY(0); }
   .notif-item { padding: 14px 18px; border-bottom: 1px solid var(--bg-2); cursor: pointer; transition: all 0.2s; display: flex; gap: 12px; }
@@ -2233,9 +2236,24 @@ function showPPDBCard(data) {
         width: 124, 
         height: 124, 
         colorDark: "#000000",     // Hitam pekat (lebih baik dari #1a1d21)
-        colorLight: "#ffffff", 
+        colorLight: "#ffffff",    // Putih
         correctLevel: QRCode.CorrectLevel.M  // 15% — modul lebih besar, mudah discan
       }); 
+      
+      // Paksa mengubah canvas menjadi gambar (img) agar html2canvas bisa membacanya saat download PDF
+      setTimeout(() => {
+        const canvasEl = qrContainer.querySelector('canvas');
+        if (canvasEl) {
+          const imgEl = document.createElement('img');
+          imgEl.src = canvasEl.toDataURL('image/png');
+          imgEl.style.width = '124px';
+          imgEl.style.height = '124px';
+          imgEl.style.display = 'block';
+          qrContainer.innerHTML = ''; // Bersihkan canvas
+          qrContainer.appendChild(imgEl); // Masukkan gambar
+        }
+      }, 100);
+
     } catch (e) { 
       console.warn('QR Code error:', e); 
       // Fallback: tampilkan link teks jika QR gagal
