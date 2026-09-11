@@ -853,7 +853,7 @@ Sumatera Selatan</div></div></div>
         <div class="ppdb-card-corner"></div>
         <div class="ppdb-card-content">
           <div class="ppdb-card-header">
-            <img src="https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png?auth_key=1884695660-de0f9328e4e64f548587c2bb93eb5fff-0-5c6e793dce6f3db7ea648add1ded676b" alt="Logo" class="ppdb-card-logo">
+            <img id="cardLogoImg" src="https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png?auth_key=1884695660-de0f9328e4e64f548587c2bb93eb5fff-0-5c6e793dce6f3db7ea648add1ded676b" alt="Logo" class="ppdb-card-logo">
             <div><div class="ppdb-card-title">SMP NU TUGASARI</div><div class="ppdb-card-subtitle">Kartu Pendaftaran PPDB</div></div>
           </div>
           <div class="ppdb-card-body">
@@ -1490,6 +1490,10 @@ Sumatera Selatan</div></div></div>
 </div>
 
 <script>
+// URL Logo Asli
+const LOGO_URL = 'https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png?auth_key=1884695660-de0f9328e4e64f548587c2bb93eb5fff-0-5c6e793dce6f3db7ea648add1ded676b';
+let LOGO_BASE64_CACHE = null; // Variabel global untuk menyimpan cache Base64 logo
+
 document.getElementById('menuBtn').addEventListener('click', () => { document.getElementById('mobileMenu').classList.toggle('hidden'); });
 document.getElementById('mobileMenu').addEventListener('click', (e) => { if (e.target.tagName === 'A' || e.target.closest('button')) document.getElementById('mobileMenu').classList.add('hidden'); });
 
@@ -1653,34 +1657,30 @@ function showPPDBForm() { document.getElementById('ppdbFormOverlay').classList.r
 function hidePPDBForm() { document.getElementById('ppdbFormOverlay').classList.add('is-hidden'); document.body.style.overflow = ''; }
 function confirmExitPPDB() { confirmAction('Konfirmasi Keluar', 'Apakah Anda yakin ingin keluar? Data pendaftaran yang belum dikirim akan hilang.', 'Ya, Keluar', () => { hidePPDBForm(); }); }
 
-// === PERBAIKAN CORS MENGGUNAKAN PROXY ===
-async function imageToBase64(url) {
-  return new Promise((resolve) => {
-    if (!url) return resolve(null);
-    try {
-      const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(url)}`;
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.onload = function () {
+// === PERBAIKAN CORS MENGGUNAKAN FETCH & PROXY ===
+async function getBase64Image(url) {
+    const proxies = [
+        `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+        `https://corsproxy.io/?url=${encodeURIComponent(url)}`
+    ];
+    
+    for (let proxy of proxies) {
         try {
-          const canvas = document.createElement('canvas');
-          canvas.width = img.naturalWidth || 200;
-          canvas.height = img.naturalHeight || 200;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0);
-          resolve(canvas.toDataURL('image/png'));
+            const response = await fetch(proxy);
+            if (!response.ok) continue;
+            const blob = await response.blob();
+            const base64 = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.onerror = () => resolve(null);
+                reader.readAsDataURL(blob);
+            });
+            if (base64) return base64;
         } catch (e) {
-          console.warn('Canvas toDataURL gagal:', e);
-          resolve(null);
+            console.warn('Gagal fetch via proxy:', e);
         }
-      };
-      img.onerror = () => resolve(null);
-      img.src = proxyUrl;
-    } catch (e) {
-      console.warn('imageToBase64 error:', e);
-      resolve(null);
     }
-  });
+    return null;
 }
 
 function showPPDBCard(data) {
@@ -1695,15 +1695,15 @@ function showPPDBCard(data) {
   const qrContainer = document.getElementById('qrcode');
   qrContainer.innerHTML = '';
 
-  // Preload Logo
-  const logoImg = document.querySelector('#ppdbCard .ppdb-card-logo');
-  const logoUrl = 'https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png?auth_key=1884695660-de0f9328e4e64f548587c2bb93eb5fff-0-5c6e793dce6f3db7ea648add1ded676b';
+  const logoImg = document.getElementById('cardLogoImg');
+  
+  // Langsung pakai Base64 Bawaan agar pasti terbaca saat di html2canvas tanpa internet
   if (logoImg) {
-    logoImg.dataset.originalSrc = logoImg.src;
-    imageToBase64(logoUrl).then(b64 => {
+    logoImg.src = LOGO_URL; // Load langsung sebagai fallback
+    getBase64Image(LOGO_URL).then(b64 => {
       if (b64) {
         logoImg.src = b64;
-        logoImg.dataset.base64 = b64;
+        logoImg.dataset.base64 = b64; // Penanda bahwa ini sudah Base64
       }
     });
   }
@@ -1742,43 +1742,46 @@ function showPPDBCard(data) {
 
   document.body.style.overflow = 'hidden';
 }
-function hidePPDBCard() { document.getElementById('ppdbCardOverlay').classList.add('is-hidden'); document.body.style.overflow = ''; document.getElementById('ppdbPublicForm').reset(); }
+function hidePPDBCard() { 
+  document.getElementById('ppdbCardOverlay').classList.add('is-hidden'); 
+  document.body.style.overflow = ''; 
+  document.getElementById('ppdbPublicForm').reset(); 
+}
 
 async function downloadPPDBCard() {
   const card = document.getElementById('ppdbCard');
   if (!card) return;
   showToast('Membuat dokumen, mohon tunggu...', 'success');
 
-  const logoImg = card.querySelector('.ppdb-card-logo');
+  const logoImg = document.getElementById('cardLogoImg');
 
-  // Pastikan logo sudah base64
-  if (logoImg && !logoImg.dataset.base64) {
-    const b64 = await imageToBase64(logoImg.dataset.originalSrc || logoImg.src);
-    if (b64) {
-      logoImg.src = b64;
-      logoImg.dataset.base64 = b64;
+  // Pastikan logo sudah menjadi Base64 asli dan benar-benar terload di DOM
+  if (logoImg) {
+    if (!logoImg.dataset.base64) {
+      const b64 = await getBase64Image(LOGO_URL);
+      if (b64) {
+        logoImg.src = b64;
+        logoImg.dataset.base64 = b64;
+      }
     }
+    
+    // Tunggu hingga browser selesai merender gambar ke layar
+    await new Promise((resolve) => {
+      const tempImg = new Image();
+      tempImg.onload = () => resolve();
+      tempImg.onerror = () => resolve();
+      tempImg.src = logoImg.src;
+    });
   }
 
-  // Tunggu logo load
-  await new Promise((resolve) => {
-    if (logoImg && !logoImg.complete) {
-      logoImg.onload = resolve;
-      logoImg.onerror = resolve;
-      setTimeout(resolve, 2000);
-    } else {
-      resolve();
-    }
-  });
-
-  // Tunggu QR code render
-  await new Promise((resolve) => setTimeout(resolve, 300));
+  // Tunggu QR code dan gambar logo benar-benar stabil di DOM
+  await new Promise((resolve) => setTimeout(resolve, 500));
 
   try {
     const canvas = await html2canvas(card, {
       scale: 2,
       backgroundColor: '#ffffff',
-      useCORS: false,
+      useCORS: true,
       allowTaint: false,
       logging: false,
       imageTimeout: 0
@@ -1892,12 +1895,16 @@ async function checkVerification() {
     if (record) {
       const statusBadge = record.status === 'approved' ? 'badge-approved' : (record.status === 'rejected' ? 'badge-rejected' : 'badge-pending');
       const statusText = record.status === 'approved' ? 'Diverifikasi / Disetujui' : (record.status === 'rejected' ? 'Ditolak' : 'Menunggu Verifikasi');
+      
+      // Gunakan base64 cache jika sudah ada
+      const logoSrc = LOGO_BASE64_CACHE || LOGO_URL;
+      
       document.getElementById('verifyContent').innerHTML = `
         <div class="flex items-center justify-center gap-2 text-[var(--success)] font-bold font-display text-xl uppercase mb-6"><i class="fa-solid fa-shield-halved"></i> Hasil Verifikasi Kartu</div>
         <div class="ppdb-card-container" style="max-width: 100%; border: 3px solid var(--accent);">
           <div class="ppdb-card-content">
             <div class="ppdb-card-header" style="border-bottom-color: var(--accent);">
-              <img src="https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png?auth_key=1884695660-de0f9328e4e64f548587c2bb93eb5fff-0-5c6e793dce6f3db7ea648add1ded676b" alt="Logo" class="ppdb-card-logo">
+              <img src="${logoSrc}" alt="Logo" class="ppdb-card-logo">
               <div><div class="ppdb-card-title" style="color: var(--fg);">SMP NU TUGASARI</div><div class="ppdb-card-subtitle">Data Pendaftar PPDB</div></div>
             </div>
             <div class="ppdb-card-body">
