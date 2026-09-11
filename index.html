@@ -1696,16 +1696,13 @@ function showPPDBCard(data) {
   qrContainer.innerHTML = '';
 
   const logoImg = document.getElementById('cardLogoImg');
+  const originalLogoUrl = 'https://z-cdn-media.chatglm.cn/files/260cdb8d-3f87-4d0c-963f-0b72c224efbc.png?auth_key=1884695660-de0f9328e4e64f548587c2bb93eb5fff-0-5c6e793dce6f3db7ea648add1ded676b';
   
-  // Langsung pakai Base64 Bawaan agar pasti terbaca saat di html2canvas tanpa internet
+  // GUNAKAN PROXY WESERV.NL AGAR CORS TERLEWATI DAN HTML2CANVAS BISA BACA 100%
   if (logoImg) {
-    logoImg.src = LOGO_URL; // Load langsung sebagai fallback
-    getBase64Image(LOGO_URL).then(b64 => {
-      if (b64) {
-        logoImg.src = b64;
-        logoImg.dataset.base64 = b64; // Penanda bahwa ini sudah Base64
-      }
-    });
+    logoImg.crossOrigin = "anonymous"; 
+    const proxyLogoUrl = `https://images.weserv.nl/?url=${encodeURIComponent(originalLogoUrl)}`;
+    logoImg.src = proxyLogoUrl;
   }
 
   // Render QR Code
@@ -1720,7 +1717,7 @@ function showPPDBCard(data) {
         correctLevel: QRCode.CorrectLevel.M
       });
 
-      // Ubah canvas ke img secara permanen agar html2canvas bisa membacanya
+      // Ubah canvas ke img secara permanen agar html2canvas bisa membacanya tanpa error
       setTimeout(() => {
         const canvasEl = qrContainer.querySelector('canvas');
         if (canvasEl) {
@@ -1747,44 +1744,40 @@ function hidePPDBCard() {
   document.body.style.overflow = ''; 
   document.getElementById('ppdbPublicForm').reset(); 
 }
-
 async function downloadPPDBCard() {
   const card = document.getElementById('ppdbCard');
   if (!card) return;
+  
+  // Tampilkan loading pada tombol download
+  const downloadBtn = document.querySelector('#ppdbCardOverlay .btn-accent');
+  if (downloadBtn) {
+    downloadBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memproses...';
+    downloadBtn.disabled = true;
+  }
+  
   showToast('Membuat dokumen, mohon tunggu...', 'success');
 
   const logoImg = document.getElementById('cardLogoImg');
-
-  // Pastikan logo sudah menjadi Base64 asli dan benar-benar terload di DOM
-  if (logoImg) {
-    if (!logoImg.dataset.base64) {
-      const b64 = await getBase64Image(LOGO_URL);
-      if (b64) {
-        logoImg.src = b64;
-        logoImg.dataset.base64 = b64;
-      }
-    }
-    
-    // Tunggu hingga browser selesai merender gambar ke layar
+  
+  // Pastikan gambar logo selesai dimuat oleh browser sebelum di-capture
+  if (logoImg && !logoImg.complete) {
     await new Promise((resolve) => {
-      const tempImg = new Image();
-      tempImg.onload = () => resolve();
-      tempImg.onerror = () => resolve();
-      tempImg.src = logoImg.src;
+      logoImg.onload = resolve;
+      logoImg.onerror = resolve;
     });
   }
 
-  // Tunggu QR code dan gambar logo benar-benar stabil di DOM
+  // Tunggu QR code dan gambar dirender secara stabil oleh DOM
   await new Promise((resolve) => setTimeout(resolve, 500));
 
   try {
     const canvas = await html2canvas(card, {
       scale: 2,
       backgroundColor: '#ffffff',
-      useCORS: true,
-      allowTaint: false,
+      useCORS: true, // Izinkan proxy weserv.nl termuat
+      allowTaint: false, // Harus false agar jsPDF tidak error
       logging: false,
-      imageTimeout: 0
+      imageTimeout: 15000 // Beri waktu 15 detik
     });
 
     const imgData = canvas.toDataURL('image/png');
@@ -1817,9 +1810,14 @@ async function downloadPPDBCard() {
   } catch (err) {
     console.error('html2canvas error:', err);
     showToast('Gagal membuat dokumen. Coba screenshot kartu secara manual.', 'error');
+  } finally {
+    // Kembalikan tombol ke keadaan semula
+    if (downloadBtn) {
+      downloadBtn.innerHTML = '<i class="fa-solid fa-download mr-2"></i> Download PDF';
+      downloadBtn.disabled = false;
+    }
   }
 }
-
 document.getElementById('ppdbPublicForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   const data = { 
