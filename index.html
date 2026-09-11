@@ -2265,113 +2265,81 @@ function showPPDBCard(data) {
 function hidePPDBCard() { document.getElementById('ppdbCardOverlay').classList.add('is-hidden'); document.body.style.overflow = ''; document.getElementById('ppdbPublicForm').reset(); }
 
 async function downloadPPDBCard() {
-  const card = document.getElementById('ppdbCard'); 
-  if (!card) return; 
-  showToast('Membuat dokumen, mohon tunggu...', 'success');
-  
-  const logoImg = card.querySelector('.ppdb-card-logo'); 
-  const originalSrc = logoImg ? logoImg.src : null;
-  
-  // === PERBAIKAN PASTI AGAR LOGO MASUK KE PDF ===
-  if (logoImg && originalSrc && !originalSrc.startsWith('data:')) {
-    let base64Url = null;
-    
-    // 1. Coba fetch langsung
+  const card = document.getElementById('ppdbCard'); if (!card) return; showToast('Membuat dokumen, mohon tunggu...', 'success');
+  const logoImg = card.querySelector('.ppdb-card-logo'); const originalSrc = logoImg ? logoImg.src : null;
+  if (logoImg && originalSrc) {
     try {
-      const response = await fetch(originalSrc); 
-      const blob = await response.blob();
-      base64Url = await new Promise((resolve, reject) => { 
-        const reader = new FileReader(); 
-        reader.onloadend = () => resolve(reader.result); 
-        reader.onerror = reject; 
-        reader.readAsDataURL(blob); 
-      });
+      const response = await fetch(originalSrc); const blob = await response.blob();
+      const base64 = await new Promise((resolve, reject) => { const reader = new FileReader(); reader.onloadend = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(blob); });
+      logoImg.src = base64;
     } catch (e) {
-      console.warn('Fetch langsung gagal (CORS), mencoba via proxy...', e);
-    }
-    
-    // 2. Jika gagal karena CORS, gunakan CORS Proxy
-    if (!base64Url) {
       try {
-        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(originalSrc)}`;
-        const response = await fetch(proxyUrl);
-        const blob = await response.blob();
-        base64Url = await new Promise((resolve, reject) => { 
-          const reader = new FileReader(); 
-          reader.onloadend = () => resolve(reader.result); 
-          reader.onerror = reject; 
-          reader.readAsDataURL(blob); 
+        const base64 = await new Promise((resolve, reject) => {
+          const img = new Image(); img.crossOrigin = 'anonymous';
+          img.onload = function() { const c = document.createElement('canvas'); c.width = img.naturalWidth || 200; c.height = img.naturalHeight || 200; const ctx = c.getContext('2d'); ctx.drawImage(img, 0, 0); resolve(c.toDataURL('image/png')); };
+          img.onerror = reject; img.src = originalSrc;
         });
-      } catch (e2) {
-        console.warn('Proxy fetch juga gagal:', e2);
-      }
-    }
-    
-    // 3. Jika Base64 berhasil didapat, wajibkan gambar untuk dimuat di DOM terlebih dahulu
-    if (base64Url) {
-      await new Promise((resolve) => {
-        const tempImg = new Image();
-        tempImg.onload = function() {
-          logoImg.src = base64Url;
-          resolve();
-        };
-        tempImg.onerror = resolve; // Jika gagal load, lanjut tetap jalan
-        tempImg.src = base64Url;
-      });
+        logoImg.src = base64;
+      } catch (e2) { console.warn('Logo preload gagal total, lanjut dengan src asli:', e2); }
     }
   }
-  
-  // Beri jeda waktu ekstra agar layout DOM sempurna
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
+  await new Promise(resolve => setTimeout(resolve, 500));
   try {
-    // Gunakan allowTaint: false (default) dan useCORS: true
-    const canvas = await html2canvas(card, { 
-      scale: 2, 
-      backgroundColor: '#ffffff', 
-      useCORS: true, 
-      allowTaint: false,
-      logging: false 
-    });
-    
-    const imgData = canvas.toDataURL('image/jpeg', 1.0); // Gunakan JPEG untuk kompresi lebih baik
-    
+    const canvas = await html2canvas(card, { scale: 2, backgroundColor: '#ffffff', useCORS: true, allowTaint: true, logging: false });
+    if (logoImg && originalSrc) logoImg.src = originalSrc;
+    const imgData = canvas.toDataURL('image/png'); 
     if (window.jspdf) {
       try {
-        const { jsPDF } = window.jspdf; 
-        const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-        const imgWidth = 90; 
-        const imgHeight = (canvas.height * imgWidth) / canvas.width; 
-        const x = (210 - imgWidth) / 2; 
-        const y = 40;
-        pdf.addImage(imgData, 'JPEG', x, y, imgWidth, imgHeight); 
-        pdf.save('Kartu-PPDB-SMP-NU-Tugasari.pdf'); 
+        const { jsPDF } = window.jspdf; const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+        const imgWidth = 90; const imgHeight = (canvas.height * imgWidth) / canvas.width; const x = (210 - imgWidth) / 2; const y = 40;
+        pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight); pdf.save('Kartu-PPDB-SMP-NU-Tugasari.pdf'); 
         showToast('Kartu PPDB berhasil didownload (PDF)!', 'success');
       } catch (e) {
-        console.error('PDF Error:', e);
-        const link = document.createElement('a'); 
-        link.download = 'Kartu-PPDB-SMP-NU-Tugasari.png'; 
-        link.href = imgData; 
-        link.click();
+        const link = document.createElement('a'); link.download = 'Kartu-PPDB-SMP-NU-Tugasari.png'; link.href = imgData; link.click();
         showToast('Kartu PPDB berhasil didownload (PNG)!', 'success');
       }
     } else {
-      const link = document.createElement('a'); 
-      link.download = 'Kartu-PPDB-SMP-NU-Tugasari.png'; 
-      link.href = imgData; 
-      link.click();
+      const link = document.createElement('a'); link.download = 'Kartu-PPDB-SMP-NU-Tugasari.png'; link.href = imgData; link.click();
       showToast('Kartu PPDB berhasil didownload (PNG)!', 'success');
     }
   } catch (err) { 
-    console.error('html2canvas error:', err); 
-    showToast('Gagal membuat dokumen. Coba screenshot kartu secara manual.', 'error');
-  } finally {
-    // Kembalikan logo ke URL asli setelah selesai
-    if (logoImg && originalSrc) {
-      setTimeout(() => { logoImg.src = originalSrc; }, 2000);
-    }
+    if (logoImg && originalSrc) logoImg.src = originalSrc;
+    console.error('html2canvas error:', err); showToast('Gagal membuat dokumen. Coba screenshot kartu secara manual.', 'error');
   }
 }
+
+document.getElementById('ppdbPublicForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const data = { 
+    id: Date.now(), 
+    regNum: 'PPDB-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-4), 
+    name: document.getElementById('regName').value.trim(), 
+    gender: document.getElementById('regGender').value, 
+    school: document.getElementById('regSchool').value.trim(), 
+    dob: document.getElementById('regDob').value, 
+    father: document.getElementById('regFather').value.trim(), 
+    mother: document.getElementById('regMother').value.trim(), 
+    parent: document.getElementById('regFather').value.trim(), 
+    phone: document.getElementById('regPhone').value.trim(), 
+    address: document.getElementById('regAddress').value.trim(), 
+    date: new Date().toISOString().split('T')[0], 
+    status: 'pending' 
+  };
+  if (!data.name || !data.school) { showToast('Nama dan asal sekolah wajib diisi.', 'error'); return; }
+  
+  try {
+    const { error } = await supabaseClient.from('ppdb').insert(mapToSQL('ppdb', data));
+    if (error) throw error;
+    DB.ppdb.unshift(data); 
+    if (!document.getElementById('adminLayout').classList.contains('is-hidden')) {
+      renderRecentPPDB(); renderPPDBTable(); updateBadges(); renderNotifications(); renderActivities();
+    }
+    hidePPDBForm(); showPPDBCard(data); 
+    showToast('Pendaftaran berhasil! Simpan kartu pendaftaran Anda.', 'success');
+  } catch (err) {
+    showToast('Gagal mendaftar: ' + err.message, 'error');
+  }
+});
 
 async function submitContactMessage(e) {
   e.preventDefault();
